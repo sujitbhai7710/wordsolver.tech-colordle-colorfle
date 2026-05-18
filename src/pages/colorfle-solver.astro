@@ -1,0 +1,98 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ColorfleSolver from '../components/ColorfleSolver.svelte';
+
+const schema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Colorfle Solver",
+      "description": "Solve Colorfle with target hex matching and combination elimination.",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "url": "https://wordsolver.tech/colorfle-solver"
+    },
+    {
+      "@type": "WebPage",
+      "name": "Colorfle Solver - Free Colorfle Helper Tool",
+      "description": "Use the Colorfle solver to match target hex colors, test Colorfle feedback, and narrow the correct three-color combination fast.",
+      "url": "https://wordsolver.tech/colorfle-solver"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wordsolver.tech" },
+        { "@type": "ListItem", "position": 2, "name": "Solver", "item": "https://wordsolver.tech/solver" },
+        { "@type": "ListItem", "position": 3, "name": "Colorfle Solver", "item": "https://wordsolver.tech/colorfle-solver" }
+      ]
+    }
+  ]
+});
+---
+
+<Layout
+  title="Colorfle Solver - Free Colorfle Helper Tool | WordSolver"
+  description="Use the Colorfle solver to match target hex colors, test Colorfle feedback, and narrow the correct three-color combination fast."
+  keywords="colorfle solver, colorfle helper, colorfle answer, colorfle color solver"
+  schema={schema}
+>
+  <section class="hero">
+    <div class="container">
+      <span class="hero-badge">Color Mixing Puzzle</span>
+      <h1>Colorfle Solver</h1>
+      <p>Paste your target hex or use the color picker to get matching three-color combinations. Refine with green, yellow, and gray feedback.</p>
+    </div>
+  </section>
+
+  <section class="container" style="padding-bottom:2rem;">
+    <ColorfleSolver client:load />
+  </section>
+
+  <section class="container" style="padding-bottom:3rem;">
+    <div class="content-section">
+      <h2>What Colorfle Is and Why It Is Harder Than It Looks</h2>
+      <p>Colorfle is a daily puzzle where you see one target color and must find the three source colors that mix to produce it. The twist: you pick from a fixed palette of about twenty colors, and the mixing uses weighted RGB averaging across both YCC and RGB color spaces. You have six guesses. Each guess shows three color swatches, and you get feedback on how close each one is to the answer. Green means exact match. Yellow means close. Gray means you are far off.</p>
+      <p>Most people expect to solve it like Wordle — just keep guessing until something clicks. They are wrong. The color space is large enough that brute-force guessing rarely works in six tries. The solver exists because finding the right three-color combination from twenty options across three weighted positions is a genuinely difficult combinatorial problem without computational help.</p>
+      <p>Here is why it trips people up: the game gives you feedback per color position, not per color. If your first color swatch is wrong, you mark it gray. If it is close, you mark it yellow. If it matches exactly, you mark it green. After two or three guesses, you have a dense web of constraints. The solver uses those constraints to eliminate impossible combinations and show you what remains.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Using the Solver: Hex-Solving vs. Feedback-Solving</h2>
+      <p>Hex-solving works when you have a target color but no guesses yet. Enter the hex code into the input field (or use the color picker to select it visually), click Solve, and the solver finds the five three-color combinations that produce the closest match. You can click "Use This" on any suggestion to add it as a guess.</p>
+      <p>Feedback-solving works after you have made guesses and marked each color swatch with green, yellow, or gray. Click each swatch in the guess row to cycle through feedback states. Once all three swatches in a guess have feedback set, the Refine button becomes active. Click it and the solver removes every combination that would produce different feedback than what you marked.</p>
+      <p>The two modes work together. Start with hex-solving to get initial candidates, then use feedback-solving to narrow them down. After two refinement cycles, you are usually looking at one or two combinations left. That is when you make your final guess with confidence.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>What the Green, Yellow, and Gray Feedback Actually Means</h2>
+      <p>Green means the color at that position matches exactly. The correct answer has the same color at the same position. This is the most useful feedback because it locks in one of the three slots. Yellow means the color exists somewhere in the answer but not at that position. Gray means the color does not appear in the answer at all.</p>
+      <p>The feedback follows the same rules as Wordle's letter feedback. If the answer is [Red, Blue, Yellow] and you guess [Blue, Red, Green], the feedback would be [yellow, yellow, gray]. Blue is in the answer but not at position 1. Red is in the answer but not at position 2. Green is not in the answer at all. Click each swatch to mark the correct feedback, then refine.</p>
+      <p>Getting the feedback wrong is the most common reason the solver returns "no matches found." If you mark a swatch green when it should be yellow, the solver eliminates the correct answer because no valid combination can be both green and yellow at the same position. Double-check your feedback markings before clicking Refine.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Why Your Target Might Show Multiple Plausible Combinations</h2>
+      <p>The color space in Colorfle is quantized. You pick from twenty specific colors, and mixing is done with weighted averaging. This means different three-color combinations can and do produce the same, or nearly the same, target color. The solver calls this "color degeneracy" — it is not a flaw, it is a property of the game.</p>
+      <p>When you enter a hex and see five suggestions that all look reasonable, that is the degeneracy at work. The mixed result of combination A might be #7a9c3e and combination B might be #7b9d3f. Visually identical on screen. The similarity score tells you how close each combination gets, but it cannot tell you which one is the official answer. You narrow that down through feedback, not through similarity alone.</p>
+      <p>Mid-range targets — colors that are neither very dark nor very saturated — tend to have the most degeneracy. Deep greens and bright reds tend to be more distinctive. If you are stuck between two suggestions, make one your next guess and pay attention to the feedback pattern. Small differences in feedback will quickly separate them.</p>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:2rem;">
+      <a href="/colorfle-answer-today" class="btn btn-secondary">Today's Answer</a>
+      <a href="/colorfle-unlimited" class="btn btn-secondary">Play Unlimited</a>
+      <a href="/colordle-solver" class="btn btn-secondary">Colordle Solver</a>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="author-card">
+      <div class="author-avatar">AR</div>
+      <div>
+        <div class="author-name">Alex Rivera</div>
+        <div class="author-desc">Color puzzle enthusiast. Plays Colordle and Colorfle daily. Built WordSolver after getting stuck at 98% one too many times.</div>
+      </div>
+    </div>
+  </section>
+</Layout>

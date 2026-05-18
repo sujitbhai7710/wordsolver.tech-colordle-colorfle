@@ -1,0 +1,166 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getColorfleTodayData, getRecentColorfleEntries } from '../lib/daily-data.js';
+
+const data = getColorfleTodayData();
+const recent = getRecentColorfleEntries(7);
+
+const schema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": `Colorfle Answer Today - ${data.formattedDate}`,
+      "description": `Today's Colorfle answer for ${data.formattedDate}. See the three source colors and target hex for puzzle #${data.puzzleNumber}.`,
+      "url": "https://wordsolver.tech/colorfle-answer-today",
+      "datePublished": `${data.date}T00:00:00Z`,
+      "dateModified": `${data.date}T00:00:00Z`,
+      "author": {
+        "@type": "Person",
+        "name": "Alex Rivera",
+        "description": "Color puzzle enthusiast and WordSolver editor."
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "WordSolver",
+        "logo": { "@type": "ImageObject", "url": "https://wordsolver.tech/favicon.svg" }
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wordsolver.tech" },
+        { "@type": "ListItem", "position": 2, "name": "Today", "item": "https://wordsolver.tech/today" },
+        { "@type": "ListItem", "position": 3, "name": "Colorfle Answer Today", "item": "https://wordsolver.tech/colorfle-answer-today" }
+      ]
+    }
+  ]
+});
+---
+
+<Layout
+  title={`Colorfle Answer Today (${data.formattedDate}) | WordSolver`}
+  description={`Today's Colorfle answer for ${data.formattedDate}. See the three source colors, weights, and target hex for puzzle #${data.puzzleNumber}.`}
+  keywords="colorfle answer today, colorfle solution, colorfle hint, daily color mixing puzzle"
+  schema={schema}
+>
+  <section class="hero">
+    <div class="container">
+      <span class="hero-badge">Daily Color Mixing Puzzle</span>
+      <h1>Colorfle Answer Today</h1>
+      <p>Puzzle #{data.puzzleNumber} — the three source colors that mix to create today's target. {data.formattedDate}.</p>
+    </div>
+  </section>
+
+  <!-- Answer Display -->
+  <section class="container" style="padding-bottom:2rem;">
+    <div class="card" style="text-align:center;padding:3rem 2rem;" id="answerCard">
+      <div id="hiddenAnswer" style="cursor:pointer;" onclick="document.getElementById('hiddenAnswer').style.display='none';document.getElementById('revealedAnswer').style.display='block';">
+        <div style="width:160px;height:160px;border-radius:50%;background:rgba(236,72,153,0.15);border:3px solid rgba(236,72,153,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:4rem;font-weight:900;color:var(--accent-pink);">?</div>
+        <div style="color:var(--text-muted);font-size:0.9rem;">Click to reveal today's Colorfle answer</div>
+      </div>
+      <div id="revealedAnswer" style="display:none;">
+        <!-- Color Circle -->
+        <div style="position:relative;width:160px;height:160px;margin:0 auto 1.5rem;">
+          <div style={`width:160px;height:160px;border-radius:50%;box-shadow:0 0 40px rgba(0,0,0,0.3);border:3px solid rgba(255,255,255,0.1);background:${data.targetColor.hex};`}></div>
+        </div>
+        
+        <!-- Source Colors -->
+        <div style="display:flex;justify-content:center;gap:1.5rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+          {data.colors.map((c, i) => (
+            <div style="text-align:center;">
+              <div style={`width:64px;height:64px;border-radius:12px;background:${c.hex};border:2px solid rgba(255,255,255,0.1);margin:0 auto 0.5rem;box-shadow:0 4px 12px ${c.hex}44;`}></div>
+              <div style="font-weight:700;font-size:0.9rem;">{c.name}</div>
+              <div style="font-size:0.75rem;color:var(--text-muted);font-family:monospace;">{c.hex}</div>
+              <div style="margin-top:0.25rem;padding:0.2rem 0.6rem;border-radius:6px;background:rgba(236,72,153,0.1);border:1px solid rgba(236,72,153,0.2);font-size:0.7rem;font-weight:700;color:var(--accent-pink);display:inline-block;">
+                {Math.round(c.weight * 100)}%
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Target -->
+        <div style="margin-top:1rem;">
+          <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">These three colors mix to produce:</div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:0.75rem;">
+            <div style={`width:40px;height:40px;border-radius:50%;background:${data.targetColor.hex};border:2px solid rgba(255,255,255,0.1);box-shadow:0 4px 12px ${data.targetColor.hex}44;`}></div>
+            <span style="font-family:monospace;font-size:1.25rem;font-weight:800;">{data.targetColor.hex}</span>
+          </div>
+        </div>
+        
+        <button onclick="document.getElementById('hiddenAnswer').style.display='block';document.getElementById('revealedAnswer').style.display='none';" style="margin-top:1.5rem;padding:0.5rem 1.25rem;border-radius:8px;background:var(--bg-card);border:1px solid var(--border-subtle);color:var(--text-secondary);cursor:pointer;font-size:0.8rem;">Hide Answer</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Links -->
+  <section class="container" style="padding-bottom:2rem;">
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;">
+      <a href="/colorfle-solver" class="btn btn-primary">Open Colorfle Solver</a>
+      <a href="/colordle-answer-today" class="btn btn-secondary">Colordle Answer Today</a>
+      <a href="/colorfle-unlimited" class="btn btn-secondary">Play Unlimited</a>
+    </div>
+  </section>
+
+  <!-- Recent Answers -->
+  <section class="container" style="padding-bottom:2rem;">
+    <div class="content-section">
+      <h2>Recent Colorfle Answers</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem;margin-top:1rem;">
+        {recent.map((entry) => (
+          <div style="background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:12px;padding:1rem;text-align:center;">
+            <div style={`width:48px;height:48px;border-radius:50%;background:${entry.targetColor.hex};margin:0 auto 0.5rem;border:2px solid rgba(255,255,255,0.1);box-shadow:0 4px 12px ${entry.targetColor.hex}33;`}></div>
+            <div style="display:flex;justify-content:center;gap:4px;margin-bottom:0.5rem;">
+              {entry.colors.map((c) => (
+                <div style={`width:20px;height:20px;border-radius:4px;background:${c.hex};border:1px solid rgba(255,255,255,0.1);`} title={c.name}></div>
+              ))}
+            </div>
+            <div style="font-size:0.75rem;font-weight:700;">#{entry.puzzleNumber}</div>
+            <div style="font-size:0.65rem;color:var(--text-muted);font-family:monospace;">{entry.targetColor.hex}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="container" style="padding-bottom:3rem;">
+    <div class="content-section">
+      <h2>What is Colorfle?</h2>
+      <p>Colorfle is a daily color-mixing puzzle. Each day, the game generates a target color and your job is to identify the three component colors that, when mixed together with specific weights, produce that target. The game uses a fixed palette of twenty named colors — White, Light Yellow, Pink, Light Green, Lavender, Cyan, Yellow, Lime, Orange, Green, Magenta, Olive, Teal, Brown, Red, Blue, Purple, Maroon, Navy, and Black. You guess which three of these twenty colors combine to make the daily target.</p>
+      <p>The mixing is not simple averaging. Colorfle uses weighted channel mixing across both YCC and RGB color spaces, then averages the two results. The weights are fixed: the first color contributes 50% of the final mix, the second contributes 34%, and the third contributes 16%. This weighted approach means the dominant color (the one in the first position) has an outsized influence on the result, while the third color adds subtle shading or undertone.</p>
+      <p>The game launched in April 2022 during the wave of daily puzzle spinoffs that followed Wordle's popularity. While most of those clones stuck to words, Colorfle carved out a niche by focusing entirely on color perception. The player base is smaller than Wordle's but noticeably dedicated — designers, artists, photographers, and front-end developers who work with color daily and enjoy having their perception tested.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Understanding Today's Colorfle Components</h2>
+      <p>The answer section above shows the three source colors with their names, hex codes, and weights. The weight tells you what percentage of the final mix each component represents. The first color carries 50% weight — it dominates the target. You should see that color's hue clearly in the result. The second color at 34% adds the secondary influence, and the third at 16% provides the subtle undertone or shading.</p>
+      <p>When you look at the target color hex and compare it to the three source colors, you can see how the mixing works. The dominant source pushes the target toward its hue family. The secondary source shifts the target in a different direction — if the dominant is a warm color and the secondary is cool, the target lands somewhere between. The tertiary source at 16% is often barely visible but adds a specific quality that distinguishes the target from a simple two-color mix.</p>
+      <p>Try browsing the recent answers grid above. Compare the source colors with the target for a few past puzzles and you will start seeing patterns in how certain combinations produce specific results. That pattern recognition is the core skill Colorfle tests, and it develops faster than you might expect with regular practice.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Strategy Tips for Colorfle</h2>
+      <p>Start by identifying the dominant hue in the target. Is it mostly blue? Mostly green? Does it lean warm or cool? The component with the 50% weight drives the hue, so if the target looks clearly blue, one of your three picks should be a strong blue from the palette. Then think about what modifies that dominant color. If the blue target has a greenish cast, the secondary component might be a green or teal. If it has a grayish quality, the secondary or tertiary might be a neutral like White or Black.</p>
+      <p>Color perception has three dimensions: hue (what color family), saturation (how vivid), and brightness (how light or dark). Address each dimension separately. The dominant color usually controls hue. A secondary or tertiary color adjusts saturation — mixing a vivid color with a neutral like White or Black changes how saturated the result looks. Brightness is a function of all three components together.</p>
+      <p>If the target is a desaturated gray or brown, the component colors likely include complementary pairs — colors that sit opposite each other on the color wheel. Mixing Red and Cyan, or Blue and Orange, produces neutral tones. Desaturated targets are the hardest to solve because the component colors can be surprising. The Colorfle solver is especially helpful for these cases because it can test all possible combinations mechanically.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>How Colorfle Mixing Actually Works</h2>
+      <p>Colorfle mixes colors in two different color spaces simultaneously and averages the results. In RGB space, each of the three source colors contributes its red, green, and blue channel values proportionally to its weight. So the first color's red channel is multiplied by 0.5, the second by 0.34, and the third by 0.16, and those values are summed to get the target's red channel. The same applies to green and blue.</p>
+      <p>Simultaneously, each source color is converted to YCC color space (a luminance-chrominance representation that separates brightness from color information), and the weighted mixing happens in YCC space too. The YCC result is then converted back to RGB. Finally, the RGB result and the YCC-derived RGB result are averaged together. This dual-space approach produces more visually accurate color mixing than pure RGB averaging, which tends to create muddy desaturated midtones.</p>
+      <p>This is why guessing the component colors from the target is hard — the relationship between the source colors and the target is not a simple linear mapping. Two very different sets of source colors can produce nearly identical targets. The solver handles this by checking all possible combinations and ranking them by similarity, but even the solver cannot always distinguish between two valid combinations without feedback from actual guesses.</p>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="author-card">
+      <div class="author-avatar">AR</div>
+      <div>
+        <div class="author-name">Alex Rivera</div>
+        <div class="author-desc">Color puzzle enthusiast. Plays Colordle and Colorfle daily. Built WordSolver after getting stuck at 98% one too many times.</div>
+      </div>
+    </div>
+  </section>
+</Layout>

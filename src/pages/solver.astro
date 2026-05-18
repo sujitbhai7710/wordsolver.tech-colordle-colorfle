@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const schema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "name": "Puzzle Solvers - Colordle & Colorfle Solver Tools",
+      "description": "Free solver tools for Colordle and Colorfle. Enter guesses and percentages to filter candidates, or match target hex colors to find the right combination.",
+      "url": "https://wordsolver.tech/solver"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wordsolver.tech" },
+        { "@type": "ListItem", "position": 2, "name": "Solver", "item": "https://wordsolver.tech/solver" }
+      ]
+    }
+  ]
+});
+---
+
+<Layout
+  title="Puzzle Solvers - Colordle & Colorfle Solver Tools | WordSolver"
+  description="Free solver tools for Colordle and Colorfle. Enter guesses and percentages to filter candidates, or match target hex colors to find combinations."
+  keywords="colordle solver, colorfle solver, color puzzle solver, colordle helper, colorfle helper"
+  schema={schema}
+>
+  <section class="hero">
+    <div class="container">
+      <span class="hero-badge">Solver Tools</span>
+      <h1>Puzzle Solvers</h1>
+      <p>Two powerful solvers for the two hardest daily color puzzles. Enter what you know, get back what you need.</p>
+    </div>
+  </section>
+
+  <section class="container" style="padding-bottom:3rem;">
+    <div class="grid-2">
+      <a href="/colordle-solver" class="card" style="text-decoration:none;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+          <div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#14b8a6,#3b82f6);display:flex;align-items:center;justify-content:center;font-size:2rem;">🔍</div>
+          <div>
+            <div class="card-title" style="color:var(--text-primary);font-size:1.75rem;">Colordle Solver</div>
+            <div style="font-size:0.85rem;color:var(--text-muted);">Filter by guess + percentage</div>
+          </div>
+        </div>
+        <p style="color:var(--text-secondary);font-size:0.95rem;line-height:1.7;margin-bottom:1.25rem;">Enter the color name you guessed and the similarity percentage Colordle gave you. The solver filters thousands of named colors to show only candidates that would produce the same score. Add multiple guesses to narrow the list down to the answer.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.25rem;">
+          <span style="padding:0.3rem 0.8rem;border-radius:8px;background:rgba(20,184,166,0.1);border:1px solid rgba(20,184,166,0.2);font-size:0.75rem;font-weight:600;color:var(--accent-teal);">Delta E CIE2000</span>
+          <span style="padding:0.3rem 0.8rem;border-radius:8px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);font-size:0.75rem;font-weight:600;color:var(--accent-blue);">Color Name Search</span>
+          <span style="padding:0.3rem 0.8rem;border-radius:8px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.2);font-size:0.75rem;font-weight:600;color:var(--accent-purple);">Multi-Guess Filter</span>
+        </div>
+        <span class="btn btn-primary" style="font-size:0.85rem;">Open Colordle Solver</span>
+      </a>
+
+      <a href="/colorfle-solver" class="card" style="text-decoration:none;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+          <div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#f97316,#eab308);display:flex;align-items:center;justify-content:center;font-size:2rem;">⚙️</div>
+          <div>
+            <div class="card-title" style="color:var(--text-primary);font-size:1.75rem;">Colorfle Solver</div>
+            <div style="font-size:0.85rem;color:var(--text-muted);">Hex matching + feedback refinement</div>
+          </div>
+        </div>
+        <p style="color:var(--text-secondary);font-size:0.95rem;line-height:1.7;margin-bottom:1.25rem;">Paste a target hex code or use the built-in color picker. The solver finds the five closest three-color combinations. Add a guess, mark green/yellow/gray feedback on each swatch, and refine to eliminate impossible combinations.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.25rem;">
+          <span style="padding:0.3rem 0.8rem;border-radius:8px;background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.2);font-size:0.75rem;font-weight:600;color:var(--accent-coral);">Color Picker</span>
+          <span style="padding:0.3rem 0.8rem;border-radius:8px;background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.2);font-size:0.75rem;font-weight:600;color:#eab308;">Feedback Elimination</span>
+          <span style="padding:0.3rem 0.8rem;border-radius:8px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.2);font-size:0.75rem;font-weight:600;color:var(--accent-purple);">Top 5 Matches</span>
+        </div>
+        <span class="btn btn-primary" style="font-size:0.85rem;">Open Colorfle Solver</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="container" style="padding-bottom:3rem;">
+    <div class="content-section">
+      <h2>Which Solver Should You Use?</h2>
+      <p>The Colordle solver is for the daily color guessing game where you type a color name and get back a similarity percentage. If your score is 85% on "teal" and you have no idea what the target could be, the Colordle solver will show you every named color that would produce that same 85% score. It works by inverting the Delta E CIE2000 calculation — the same perceptual distance formula Colordle itself uses. Add two or three guesses and the candidate list usually drops below ten colors.</p>
+      <p>The Colorfle solver is for the daily color mixing puzzle where you see a target color and need to find the three source colors that produce it. It has two modes. Hex-solving takes a target hex code and finds the five closest three-color combinations from the twenty-color palette. Feedback-solving lets you use a suggestion as a guess, mark green/yellow/gray on each color swatch, and eliminate every combination that contradicts your feedback. After two refinement cycles, you are usually looking at one or two remaining combinations.</p>
+      <p>Both solvers run entirely in your browser. No data leaves your device. The calculations happen locally using the exact same algorithms the games use, so the results are accurate. The solvers do not store state between sessions — refreshing the page resets everything. If you want to save your progress, take a screenshot.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>When Solvers Beat Guessing (And When They Don't)</h2>
+      <p>Solvers shine when you have partial information. If you have made one or two guesses in Colordle and the percentage is above 70%, the solver will usually identify the answer in a single filter step. Below 50%, the solver still helps by narrowing the hue family, but you will need more guesses to pinpoint the exact color. The sweet spot is entering two guesses from different color families — something like "blue" at 40% and "red" at 25% tells the solver exactly which quadrant of the color wheel to search.</p>
+      <p>For Colorfle, the solver is most useful after your first guess. Enter the target hex, get five suggestions, pick one as your guess in the actual game, then mark the feedback. One round of refinement typically eliminates 80% of possible combinations. Two rounds gets you to the answer in most cases. Without the solver, you are guessing from over a thousand possible three-color permutations, which is why most people run out of guesses.</p>
+      <p>The one scenario where solvers are less helpful: when you have zero information and haven't started the game yet. If you haven't made a single guess, the solver gives you the full list of candidates — which is just the entire color palette. Make at least one guess first, then come to the solver. That first guess gives you the percentage you need to start filtering.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>The Math Behind the Solvers</h2>
+      <p>The Colordle solver uses Delta E CIE2000, which calculates perceptual color distance in CIELAB color space. LAB space was designed to be perceptually uniform — a Delta E of 5 looks like the same visual gap whether you are comparing two reds or two blues. The percentage Colordle shows is derived from this Delta E value: percentage = max(0, 100 - DeltaE). The solver inverts this formula to find all colors that would produce a given percentage against a given guess.</p>
+      <p>The Colorfle solver uses weighted RGB channel averaging across both YCC and RGB color spaces, then averages the two results. This dual-space mixing is what makes Colorfle answers feel intuitive — pure RGB mixing tends to produce muddy midtones, while pure YCC mixing preserves hue relationships. By averaging both, the game gets the best of both approaches. The solver mirrors this exactly, so the colors it suggests will mix to produce the same target you see in the game.</p>
+      <p>Both solvers are deterministic. Given the same inputs, they always produce the same outputs. There is no randomness, no machine learning, no approximation. The results are mathematically exact within floating-point precision.</p>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="author-card">
+      <div class="author-avatar">AR</div>
+      <div>
+        <div class="author-name">Alex Rivera</div>
+        <div class="author-desc">Color puzzle enthusiast. Plays Colordle and Colorfle daily. Built WordSolver after getting stuck at 98% one too many times.</div>
+      </div>
+    </div>
+  </section>
+</Layout>

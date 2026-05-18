@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contact WordSolver" description="Get in touch with the WordSolver team. Report bugs, suggest features, or ask questions about our Colordle and Colorfle tools.">
+  <section class="hero"><div class="container">
+    <span class="hero-badge">Get In Touch</span>
+    <h1>Contact Us</h1>
+    <p>Questions, bugs, suggestions — we read everything.</p>
+  </div></section>
+
+  <section class="container" style="padding-bottom:3rem;">
+    <div class="content-section">
+      <h2>How to Reach Us</h2>
+      <p>The best way to contact the WordSolver team is by email. Send your message to <strong>hello@wordsolver.tech</strong> and we will get back to you within 48 hours. Include as much detail as you can — if you are reporting a bug, tell us which browser and device you are using, what you expected to happen, and what actually happened. Screenshots help enormously.</p>
+      <p>If you have a feature request, describe the problem you are trying to solve rather than just the feature you want. "I keep getting stuck at 95% on Colordle and wish there was a way to see the top 5 candidates" tells us more than "add a top 5 feature." The more context you give us, the better we can design a solution.</p>
+    </div>
+    <div class="content-section">
+      <h2>Common Questions</h2>
+      <p><strong>The daily answer is wrong.</strong> Double-check the date shown on the answer page. If the date matches today and the answer still seems wrong, the game may have updated its algorithm. Email us and we will investigate. Our answers are generated using the same logic the games use, but sometimes games change their target lists or seeding algorithms without notice.</p>
+      <p><strong>The solver gives different percentages than the game.</strong> This usually happens because of rounding differences. The game displays two decimal places, while the solver calculates with full precision. If the game shows 85.32% and the solver shows 85.31%, that is just rounding. If the difference is larger than 0.1%, there may be a browser color profile issue — try using a different browser or disabling custom color profiles in your display settings.</p>
+      <p><strong>Something is broken on mobile.</strong> Let us know which device and browser you are using. We test on iOS Safari, Chrome Android, and Firefox Mobile, but there are enough device combinations that edge cases slip through. A screenshot of the issue makes it much easier to diagnose.</p>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,122 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getColordleTodayData, getColorfleTodayData } from '../lib/daily-data.js';
+
+const colordle = getColordleTodayData();
+const colorfle = getColorfleTodayData();
+
+const schema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "name": `Today's Color Puzzle Answers - ${colordle.formattedDate}`,
+      "description": `Get today's Colordle and Colorfle answers for ${colordle.formattedDate}. Free daily puzzle solutions and solvers.`,
+      "url": "https://wordsolver.tech/today"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wordsolver.tech" },
+        { "@type": "ListItem", "position": 2, "name": "Today", "item": "https://wordsolver.tech/today" }
+      ]
+    }
+  ]
+});
+---
+
+<Layout
+  title={`Today's Color Puzzle Answers - ${colordle.formattedDate} | WordSolver`}
+  description={`Get today's Colordle and Colorfle answers for ${colordle.formattedDate}. Free daily puzzle solutions updated every day.`}
+  keywords="colordle answer today, colorfle answer today, daily puzzle answer, today color puzzle solution"
+  schema={schema}
+>
+  <section class="hero">
+    <div class="container">
+      <span class="hero-badge">Daily Updates</span>
+      <h1>Today's Answers</h1>
+      <p>Colordle and Colorfle answers for <strong>{colordle.formattedDate}</strong>. Click to reveal, or use the solvers if you prefer to work through it yourself.</p>
+    </div>
+  </section>
+
+  <!-- Game Answer Cards -->
+  <section class="container" style="padding-bottom:3rem;">
+    <div class="grid-2">
+      <!-- Colordle Card -->
+      <a href="/colordle-answer-today" class="card" style="text-decoration:none;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+          <div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#8b5cf6,#ec4899);display:flex;align-items:center;justify-content:center;font-size:2rem;">🎨</div>
+          <div>
+            <div class="card-title" style="color:var(--text-primary);font-size:1.75rem;">Colordle</div>
+            <div style="font-size:0.85rem;color:var(--text-muted);">Daily color guessing puzzle</div>
+          </div>
+        </div>
+        <div style="background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.2);border-radius:12px;padding:1.25rem;margin-bottom:1.25rem;">
+          <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--accent-purple);margin-bottom:0.5rem;">Today's Answer</div>
+          <div style="font-size:1.5rem;font-weight:800;color:var(--text-primary);">{colordle.colorName}</div>
+          <div style="font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;">Puzzle #{colordle.dayNum}</div>
+        </div>
+        <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;margin-bottom:1.25rem;">See the full answer with hex code, reveal animation, strategy tips, and a searchable archive of previous colors.</p>
+        <span class="btn btn-primary" style="font-size:0.85rem;">View Full Answer</span>
+      </a>
+
+      <!-- Colorfle Card -->
+      <a href="/colorfle-answer-today" class="card" style="text-decoration:none;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+          <div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#ec4899,#f97316);display:flex;align-items:center;justify-content:center;font-size:2rem;">🔮</div>
+          <div>
+            <div class="card-title" style="color:var(--text-primary);font-size:1.75rem;">Colorfle</div>
+            <div style="font-size:0.85rem;color:var(--text-muted);">Daily color mixing puzzle</div>
+          </div>
+        </div>
+        <div style="background:rgba(236,72,153,0.1);border:1px solid rgba(236,72,153,0.2);border-radius:12px;padding:1.25rem;margin-bottom:1.25rem;">
+          <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--accent-pink);margin-bottom:0.5rem;">Today's Answer</div>
+          <div style="display:flex;gap:0.75rem;align-items:center;margin-bottom:0.5rem;">
+            {colorfle.colors.map((c) => (
+              <div style="width:36px;height:36px;border-radius:8px;background:c.hex;border:2px solid rgba(255,255,255,0.1);" title={c.name}></div>
+            ))}
+            <span style="color:var(--text-muted);font-size:1.25rem;">→</span>
+            <div style="width:36px;height:36px;border-radius:8px;background:colorfle.targetColor.hex;border:2px solid rgba(255,255,255,0.1);" title={colorfle.targetColor.hex}></div>
+          </div>
+          <div style="font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;">Puzzle #{colorfle.puzzleNumber}</div>
+        </div>
+        <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;margin-bottom:1.25rem;">See the three source colors, their weights, the target hex, and a color circle reveal animation.</p>
+        <span class="btn btn-primary" style="font-size:0.85rem;">View Full Answer</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="container" style="padding-bottom:3rem;">
+    <div class="content-section">
+      <h2>How Daily Color Puzzles Work</h2>
+      <p>Both Colordle and Colorfle reset on a daily cycle. Colordle resets at midnight UTC, while Colorfle resets at midnight Japan Standard Time (15:00 UTC). Each day produces a single unique answer that every player sees — there is no variation between accounts or devices. The answers are determined algorithmically from the date, so they are predictable if you know the seed logic. That predictability is what makes daily answer pages possible.</p>
+      <p>Colordle assigns each day a target color from a curated list of named colors. The list cycles through hundreds of entries, so you rarely see the same color twice within a few months. Colorfle generates its daily puzzle using a seeded random number generator — the seed is derived from the date, which means the same three source colors appear for everyone on the same day. The mixing weights are fixed: the first color contributes 50%, the second 34%, and the third 16% of the final result.</p>
+      <p>This page updates automatically at build time. When the daily puzzle resets, the next build pulls the new answer. If you are seeing yesterday's answer, wait a few minutes for the build to refresh, or check the date shown on the answer card.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>When to Check Today's Answer vs. Using the Solver</h2>
+      <p>There are two schools of thought. Some people want the answer immediately — they check the daily page first thing, see the color, and move on with their day. That is a perfectly valid way to use this site. The reveal buttons give you the option to look or not look, so you control how much you see.</p>
+      <p>The other approach is to play the game first, then use the solver when you get stuck. If you have made two or three guesses and the percentage is hovering around 85-95%, the solver can usually narrow the answer down to one or two candidates within a single filter step. That approach keeps the puzzle-solving experience intact while saving you from the frustration of guessing randomly at near-miss percentages.</p>
+      <p>For Colorfle, the solver is more useful than the answer page if you have already started guessing. The feedback-based elimination mode is genuinely powerful — after two guesses with correct feedback markings, the solver typically filters down to a single combination. If you have not started guessing yet and just want to see the answer, the daily page is faster.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Understanding the Answer Displays</h2>
+      <p>The Colordle answer page shows the target color name, its hex code, and a large color swatch. The Colorfle answer page shows the three source colors with their names and hex codes, the weight each color carries in the mix, and the resulting target color as both a swatch and a hex value. Both pages include a reveal animation — the answer is hidden behind a "click to reveal" button so you can read the strategy content without accidentally seeing the solution.</p>
+      <p>The Colordle page also includes a guess trail — a simulated solve path showing how the game's own scoring logic would narrow down to the answer from a series of strategic guesses. This is not from the game itself; it is generated by our solver using the same Delta E calculation. The guess trail is useful for learning how color distance works in practice, not just in theory.</p>
+      <p>Both pages include recent answer history so you can browse previous days. The Colordle page has a searchable archive of the last 100 days. The Colorfle page shows the last seven days with mini target color circles and component color squares. If you missed a day, you can look it up without hunting through the game's interface.</p>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="author-card">
+      <div class="author-avatar">AR</div>
+      <div>
+        <div class="author-name">Alex Rivera</div>
+        <div class="author-desc">Color puzzle enthusiast. Plays Colordle and Colorfle daily. Built WordSolver after getting stuck at 98% one too many times.</div>
+      </div>
+    </div>
+  </section>
+</Layout>

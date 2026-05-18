@@ -1,0 +1,84 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ColorfleUnlimited from '../components/ColorfleUnlimited.svelte';
+
+const schema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Colorfle Unlimited",
+      "description": "Play Colorfle unlimited times. Guess the three source colors that mix to create the target color. Practice color mixing anytime.",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "url": "https://wordsolver.tech/colorfle-unlimited"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wordsolver.tech" },
+        { "@type": "ListItem", "position": 2, "name": "Colorfle Unlimited", "item": "https://wordsolver.tech/colorfle-unlimited" }
+      ]
+    }
+  ]
+});
+---
+
+<Layout
+  title="Colorfle Unlimited - Play Colorfle Without Limits | WordSolver"
+  description="Play Colorfle unlimited times. Guess the three source colors that mix to create the target. Practice color mixing and feedback-based elimination anytime."
+  keywords="colorfle unlimited, play colorfle free, colorfle practice, color mixing game unlimited"
+  schema={schema}
+>
+  <section class="hero">
+    <div class="container">
+      <span class="hero-badge">Unlimited Play</span>
+      <h1>Colorfle Unlimited</h1>
+      <p>Practice Colorfle without waiting for the daily reset. Get a random target color, guess the three source colors, and learn how mixing works through repetition.</p>
+    </div>
+  </section>
+
+  <section class="container" style="padding-bottom:2rem;">
+    <ColorfleUnlimited client:load />
+  </section>
+
+  <section class="container" style="padding-bottom:3rem;">
+    <div class="content-section">
+      <h2>Why Unlimited Colorfle Practice Helps</h2>
+      <p>Colorfle rewards pattern recognition. After you solve enough puzzles, you start seeing how certain combinations produce specific results. A target that looks like a muted olive green probably involves Yellow and Brown as source colors. A bright coral might combine Red and Orange. That intuition comes from repetition, and the daily format gives you only one puzzle per day. Unlimited mode lets you compress that learning curve into a single session.</p>
+      <p>When you play five rounds of Colorfle Unlimited, you encounter five different target colors, make fifteen to thirty guesses, and see the feedback patterns that distinguish correct combinations from near-misses. That density of experience is what makes unlimited practice effective. You are not just solving puzzles — you are building a mental model of how the twenty-color palette mixes under weighted RGB averaging.</p>
+      <p>The game uses the same color list, mixing weights, and feedback logic as the daily version. The only difference is the target selection: daily uses a date-seeded random number generator, unlimited uses a fresh random seed each round. The skills you develop here transfer directly to the daily puzzle.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>How to Play Colorfle Unlimited</h2>
+      <p>Each round presents a target color displayed as a colored circle. Your job is to guess which three colors from the palette of twenty mix together to produce that target. Use the dropdown menus to select three source colors, one for each position. The first position carries 50% weight, the second 34%, and the third 16%. Click Submit Guess to see feedback.</p>
+      <p>Feedback appears as colored borders around each source color swatch. Green means the correct color is in that exact position. Yellow means the color exists somewhere in the answer but not at that position. Gray means the color is not part of the answer at all. Use this feedback to adjust your next guess. Narrow your choices round by round until all three positions show green.</p>
+      <p>You have six guesses per round. The preview below your current selection shows what the mix of your chosen colors would look like, so you can visually compare it to the target before submitting. If you run out of guesses, the answer is revealed and you can start a new round immediately.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Understanding the Mixing Weights</h2>
+      <p>The three positions are not equal. The first color contributes 50% of the final mix — it dominates the result. The second contributes 34%, and the third only 16%. This means the first color you select has by far the largest influence on what the target looks like. When analyzing a target color, identify the dominant hue first, because that is likely the first color in the answer.</p>
+      <p>The mixing uses dual-space averaging: the colors are mixed in both YCC and RGB color spaces, and the results are averaged. YCC (luminance-chrominance) space preserves hue relationships better than RGB, which tends to produce muddy desaturated midtones. By averaging both, Colorfle gets results that feel more intuitive to the human eye. The solver on this site mirrors this exact mixing model.</p>
+      <p>The weights are fixed across all puzzles. Mode 0 uses three colors with weights [0.5, 0.34, 0.16]. Mode 1 (not used in the standard game) would use four colors with weights [0.4, 0.3, 0.2, 0.1]. All puzzles in Colorfle use Mode 0, so you always work with three colors and the same weight distribution.</p>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:2rem;">
+      <a href="/colorfle-answer-today" class="btn btn-secondary">Today's Answer</a>
+      <a href="/colorfle-solver" class="btn btn-secondary">Open Solver</a>
+      <a href="/colordle-unlimited" class="btn btn-secondary">Colordle Unlimited</a>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="author-card">
+      <div class="author-avatar">AR</div>
+      <div>
+        <div class="author-name">Alex Rivera</div>
+        <div class="author-desc">Color puzzle enthusiast. Plays Colordle and Colorfle daily. Built WordSolver after getting stuck at 98% one too many times.</div>
+      </div>
+    </div>
+  </section>
+</Layout>

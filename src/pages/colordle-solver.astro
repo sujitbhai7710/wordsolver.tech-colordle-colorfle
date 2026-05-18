@@ -1,0 +1,91 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ColordleSolver from '../components/ColordleSolver.svelte';
+
+const schema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Colordle Solver",
+      "description": "Filter Colordle candidates by entering your guess and percentage score. Find the daily color answer faster.",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "url": "https://wordsolver.tech/colordle-solver"
+    },
+    {
+      "@type": "WebPage",
+      "name": "Colordle Solver - Color Puzzle Helper",
+      "description": "Enter your Colordle guess and percentage. The solver filters thousands of named colors to find candidates matching your score.",
+      "url": "https://wordsolver.tech/colordle-solver"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wordsolver.tech" },
+        { "@type": "ListItem", "position": 2, "name": "Solver", "item": "https://wordsolver.tech/solver" },
+        { "@type": "ListItem", "position": 3, "name": "Colordle Solver", "item": "https://wordsolver.tech/colordle-solver" }
+      ]
+    }
+  ]
+});
+---
+
+<Layout
+  title="Colordle Solver - Color Puzzle Helper | WordSolver"
+  description="Enter your Colordle guess and percentage. The solver filters thousands of named colors to find candidates matching your score."
+  keywords="colordle solver, colordle helper, colordle answer, color puzzle solver"
+  schema={schema}
+>
+  <section class="hero">
+    <div class="container">
+      <span class="hero-badge">Daily Color Puzzle</span>
+      <h1>Colordle Solver</h1>
+      <p>Enter color guesses and their similarity percentages. The solver filters named colors by Delta E distance to find the exact daily answer.</p>
+    </div>
+  </section>
+
+  <section class="container" style="padding-bottom:2rem;">
+    <ColordleSolver client:load />
+  </section>
+
+  <section class="container" style="padding-bottom:3rem;">
+    <div class="content-section">
+      <h2>How the Colordle Solver Works</h2>
+      <p>Colordle has thousands of named colors. When you get 42% back on "Mauve" and 38% on "Dusty Rose," you can't manually cross-reference which one is closer. The solver does that work — it filters the list to show only colors that would return those same percentage scores. It uses Delta E CIE2000 in LAB color space, the same formula Colordle itself uses, so the scores match exactly.</p>
+      <p>The workflow is straightforward: make a guess in Colordle, note the percentage, enter both into the solver, and click Filter Results. The candidate list shrinks. Make another guess in the game, add it to the solver, filter again. After two or three guesses, you are usually looking at fewer than ten candidates. Pick one from the filtered list as your next guess and repeat until you hit 100%.</p>
+      <p>The color search dropdown lets you type partial names. If you type "sea," you will see "Sea Green," "Sea Foam," and any other color containing "sea" in its name. Select the one you guessed, enter the percentage, and filter. If you accidentally select the wrong color, just clear the input and search again.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Understanding Delta E and Color Distance</h2>
+      <p>Delta E CIE2000 is the industry standard for measuring perceptual color difference. A Delta E of 1.0 is roughly the smallest difference the human eye can detect. A Delta E of 10+ is a clearly different color. The percentage Colordle shows is derived from this distance: percentage = max(0, 100 - DeltaE). So a score of 85% means the Delta E between your guess and the target is about 15.</p>
+      <p>The math happens in LAB color space, not RGB. RGB hex values aren't perceptually uniform — jumping from #FF0000 to #FF1100 (a change of 1) is invisible, but the same numerical jump in a different color range might be obvious. LAB was designed to fix this. A Delta E of 5 means the same visual gap regardless of where in the color wheel you are. That is why the solver uses LAB — it produces the same percentages Colordle does.</p>
+      <p>When you enter your percentage, the solver inverts the formula to find colors with a matching Delta E. It is not approximating — it is calculating the exact same value the game would calculate. The tolerance is set to 0.02 percentage points to account for rounding in the game's display.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Tips for Getting Better at Colordle</h2>
+      <p>Start with primaries in separate guesses. If you get 20% on Red and 45% on Blue, the target is hue-adjacent to blue but not pure red. This costs you guesses but tells you the hue family fast. After 2-3 primaries, you know roughly where on the color wheel you are.</p>
+      <p>Percentage context matters. A 40% match on a muted color means something different than 40% on a saturated one. The solver handles this automatically, but when you are guessing manually, keep in mind that low-saturation colors cluster together — a 40% on "Ash Grey" and 42% on "Silver" could both point to the same target.</p>
+      <p>Learn the weird color names. Colordle pulls from a large list. Names that trip people up: "Celadon" (pale green), "Amaranth" (pinkish red), "Gamboge" (mustard yellow), "Vermilion" (bright orange-red), "Saffron" (deep yellow). If you don't know them, you can't guess them. Spend ten minutes reviewing a color name reference and it will pay off within a week of daily play.</p>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:2rem;">
+      <a href="/colordle-answer-today" class="btn btn-secondary">Today's Answer</a>
+      <a href="/colordle-unlimited" class="btn btn-secondary">Play Unlimited</a>
+      <a href="/colorfle-solver" class="btn btn-secondary">Colorfle Solver</a>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="author-card">
+      <div class="author-avatar">AR</div>
+      <div>
+        <div class="author-name">Alex Rivera</div>
+        <div class="author-desc">Color puzzle enthusiast. Plays Colordle and Colorfle daily. Built WordSolver after getting stuck at 98% one too many times.</div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,84 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ColordleUnlimited from '../components/ColordleUnlimited.svelte';
+
+const schema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Colordle Unlimited",
+      "description": "Play Colordle unlimited times. Guess named colors and get similarity percentages. Practice color perception anytime.",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "url": "https://wordsolver.tech/colordle-unlimited"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wordsolver.tech" },
+        { "@type": "ListItem", "position": 2, "name": "Colordle Unlimited", "item": "https://wordsolver.tech/colordle-unlimited" }
+      ]
+    }
+  ]
+});
+---
+
+<Layout
+  title="Colordle Unlimited - Play Colordle Without Limits | WordSolver"
+  description="Play Colordle unlimited times. Guess named colors, get similarity percentages, and practice your color perception anytime without waiting for daily reset."
+  keywords="colordle unlimited, play colordle free, colordle practice, color guessing game unlimited"
+  schema={schema}
+>
+  <section class="hero">
+    <div class="container">
+      <span class="hero-badge">Unlimited Play</span>
+      <h1>Colordle Unlimited</h1>
+      <p>Play Colordle as many times as you want. Each round picks a random target color. Type color names, get similarity scores, and try to hit 100%.</p>
+    </div>
+  </section>
+
+  <section class="container" style="padding-bottom:2rem;">
+    <ColordleUnlimited client:load />
+  </section>
+
+  <section class="container" style="padding-bottom:3rem;">
+    <div class="content-section">
+      <h2>Why Practice Matters in Color Games</h2>
+      <p>Color perception is a trainable skill. Unlike word games where vocabulary is mostly fixed, your ability to distinguish and name colors improves with practice. Designers who work with color palettes daily tend to solve Colordle faster than people who do not. That is not innate talent — it is accumulated experience. The unlimited mode gives you the repetition you need to develop that intuition without waiting for the daily reset.</p>
+      <p>When you play ten rounds of Colordle Unlimited, you encounter ten different target colors. Some will be easy — "red," "blue," "green." Others will be obscure — "celadon," "gamboge," "amaranth." Each time you encounter an unfamiliar color name and see its hex value displayed, you build a mental library of color-name associations. After a week of daily practice, you will notice yourself guessing colors you never would have thought of before.</p>
+      <p>The game uses the same Delta E CIE2000 scoring as the daily version. Your guess returns a percentage from 0% (completely different) to 100% (exact match). The unlimited mode generates a random target from the same pool of named colors the daily game uses, so the skills transfer directly.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>How to Use Unlimited Mode Effectively</h2>
+      <p>Start each round with a broad hue guess — red, blue, yellow, green, orange, or purple. The percentage tells you which color family the target belongs to. Then narrow within that family by guessing lighter and darker variants. If "blue" scores 65%, try "navy" (dark) and "sky blue" (light) to determine the brightness range.</p>
+      <p>Do not be afraid to guess wrong. The unlimited mode has no guess limit and no penalty for extra guesses. Each guess gives you information. Even a 20% match tells you something — the target is far from that color, which rules out an entire region of the color wheel. Treat each round as a learning opportunity, not a test.</p>
+      <p>Pay attention to the hex codes. When you see the answer displayed after solving, take a moment to look at the hex value and the color name together. Over time, you will develop an intuitive sense of which hex ranges correspond to which color names. That skill makes you faster not just at Colordle, but at any task involving color selection.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>The Difference Between Daily and Unlimited Colordle</h2>
+      <p>The daily Colordle gives everyone the same target color, which creates a shared experience. The unlimited mode gives you a random target each round, so there is no social component — you are competing against yourself. The scoring, the color pool, and the Delta E calculation are identical between both modes. The only difference is the target selection: daily uses a date-based index, unlimited uses random selection.</p>
+      <p>Some people prefer daily because they enjoy comparing results with friends. Others prefer unlimited because they want to play more than once a day or because they want focused practice on specific color families. Both approaches are valid. If you are trying to improve quickly, unlimited is more efficient because you get more reps per session.</p>
+      <p>The unlimited mode does not save your progress between sessions. If you close the browser tab, your current game is lost. Each page load starts fresh with a new target color. If you want to track your performance over time, take screenshots or keep a separate log.</p>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:2rem;">
+      <a href="/colordle-answer-today" class="btn btn-secondary">Today's Answer</a>
+      <a href="/colordle-solver" class="btn btn-secondary">Open Solver</a>
+      <a href="/colorfle-unlimited" class="btn btn-secondary">Colorfle Unlimited</a>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="author-card">
+      <div class="author-avatar">AR</div>
+      <div>
+        <div class="author-name">Alex Rivera</div>
+        <div class="author-desc">Color puzzle enthusiast. Plays Colordle and Colorfle daily. Built WordSolver after getting stuck at 98% one too many times.</div>
+      </div>
+    </div>
+  </section>
+</Layout>

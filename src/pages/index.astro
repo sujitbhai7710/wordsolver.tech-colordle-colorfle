@@ -1,0 +1,173 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const schema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "WordSolver",
+      "url": "https://wordsolver.tech",
+      "logo": "https://wordsolver.tech/favicon.svg",
+      "description": "Free daily puzzle solvers and answer helpers for Colordle, Colorfle, and other color games."
+    },
+    {
+      "@type": "WebSite",
+      "name": "WordSolver",
+      "url": "https://wordsolver.tech",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://wordsolver.tech/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "name": "WordSolver - Free Color Puzzle Solvers & Daily Answers",
+      "description": "Get today's Colordle and Colorfle answers instantly. Free solvers, unlimited play, and daily puzzle solutions.",
+      "url": "https://wordsolver.tech"
+    }
+  ]
+});
+---
+
+<Layout
+  title="WordSolver - Free Color Puzzle Solvers & Daily Answers"
+  description="Get today's Colordle and Colorfle answers instantly. Free solvers, unlimited play, and daily puzzle solutions for color games."
+  keywords="colordle answer today, colorfle answer today, colordle solver, colorfle solver, color puzzle solver, daily puzzle answer"
+  schema={schema}
+>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <span class="hero-badge">Free Puzzle Tools</span>
+      <h1>Solve Color Puzzles<br/>Faster Than Ever</h1>
+      <p>
+        WordSolver gives you today's Colordle and Colorfle answers, powerful solvers that narrow down candidates in seconds, and unlimited practice mode so you can sharpen your color perception every day.
+      </p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="/today" class="btn btn-primary">Today's Answers</a>
+        <a href="/solver" class="btn btn-secondary">Open Solver</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Game Cards -->
+  <section class="container" style="padding-bottom:3rem;">
+    <div class="grid-2">
+      <a href="/colordle-answer-today" class="card" style="text-decoration:none;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+          <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#8b5cf6,#ec4899);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🎨</div>
+          <div>
+            <div class="card-title" style="color:var(--text-primary);">Colordle Answer Today</div>
+            <div style="font-size:0.8rem;color:var(--text-muted);">Daily color puzzle</div>
+          </div>
+        </div>
+        <p class="card-desc">See today's Colordle color, hex code, and similarity hints. Reveal the answer when you're ready, or browse our strategy tips to get better at naming colors.</p>
+        <span class="btn btn-primary" style="font-size:0.8rem;padding:0.6rem 1.25rem;">View Answer</span>
+      </a>
+
+      <a href="/colorfle-answer-today" class="card" style="text-decoration:none;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+          <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#ec4899,#f97316);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🔮</div>
+          <div>
+            <div class="card-title" style="color:var(--text-primary);">Colorfle Answer Today</div>
+            <div style="font-size:0.8rem;color:var(--text-muted);">Daily color mixing puzzle</div>
+          </div>
+        </div>
+        <p class="card-desc">Find today's Colorfle answer — the three source colors that mix to create the daily target. See component colors, weights, and the resulting hex.</p>
+        <span class="btn btn-primary" style="font-size:0.8rem;padding:0.6rem 1.25rem;">View Answer</span>
+      </a>
+
+      <a href="/colordle-solver" class="card" style="text-decoration:none;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+          <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#14b8a6,#3b82f6);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🔍</div>
+          <div>
+            <div class="card-title" style="color:var(--text-primary);">Colordle Solver</div>
+            <div style="font-size:0.8rem;color:var(--text-muted);">Filter by percentage</div>
+          </div>
+        </div>
+        <p class="card-desc">Enter your guess and similarity percentage. The solver filters thousands of named colors to find candidates that match your score, narrowing the answer down fast.</p>
+        <span class="btn btn-primary" style="font-size:0.8rem;padding:0.6rem 1.25rem;">Open Solver</span>
+      </a>
+
+      <a href="/colorfle-solver" class="card" style="text-decoration:none;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+          <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#f97316,#eab308);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">⚙️</div>
+          <div>
+            <div class="card-title" style="color:var(--text-primary);">Colorfle Solver</div>
+            <div style="font-size:0.8rem;color:var(--text-muted);">Hex matching + feedback</div>
+          </div>
+        </div>
+        <p class="card-desc">Paste a target hex or use the color picker, then refine with green/yellow/gray feedback. The solver eliminates impossible combinations and shows what's left.</p>
+        <span class="btn btn-primary" style="font-size:0.8rem;padding:0.6rem 1.25rem;">Open Solver</span>
+      </a>
+
+      <a href="/colordle-unlimited" class="card" style="text-decoration:none;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+          <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#8b5cf6,#14b8a6);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">♾️</div>
+          <div>
+            <div class="card-title" style="color:var(--text-primary);">Colordle Unlimited</div>
+            <div style="font-size:0.8rem;color:var(--text-muted);">Practice anytime</div>
+          </div>
+        </div>
+        <p class="card-desc">Play Colordle as many times as you want. Each round picks a random target color. Type color names, get similarity scores, and try to hit 100%.</p>
+        <span class="btn btn-primary" style="font-size:0.8rem;padding:0.6rem 1.25rem;">Play Now</span>
+      </a>
+
+      <a href="/colorfle-unlimited" class="card" style="text-decoration:none;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+          <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#ec4899,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🌈</div>
+          <div>
+            <div class="card-title" style="color:var(--text-primary);">Colorfle Unlimited</div>
+            <div style="font-size:0.8rem;color:var(--text-muted);">Practice color mixing</div>
+          </div>
+        </div>
+        <p class="card-desc">Practice Colorfle without waiting for the daily reset. Get a random target color, guess the three source colors, and learn how mixing works through repetition.</p>
+        <span class="btn btn-primary" style="font-size:0.8rem;padding:0.6rem 1.25rem;">Play Now</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="container" style="padding-bottom:3rem;">
+    <div class="content-section">
+      <h2>What WordSolver Does (And Why It Exists)</h2>
+      <p>WordSolver is a free toolkit for two of the most popular daily color puzzle games: Colordle and Colorfle. Colordle picks a named color each day and challenges you to guess it by typing color names and reading similarity percentages. Colorfle gives you a target color and asks you to figure out which three source colors mix together to create it. Both games are clever, both are addictive, and both can be genuinely frustrating when you're stuck at 94% with no idea what name the game wants.</p>
+      <p>That frustration is exactly why this site exists. We are not here to skip the puzzle for you — the reveal buttons give you that choice — we are here to give you better tools for when you want to solve it yourself but need a nudge in the right direction. The Colordle solver lets you enter your guess and the percentage you received, then filters the entire color list to show only candidates that would produce that same score. The Colorfle solver takes a target hex and finds the closest three-color combinations, then lets you refine with the same green/yellow/gray feedback the game uses.</p>
+      <p>Both solvers use the exact same algorithms the games themselves use. Colordle scoring uses Delta E CIE2000 in LAB color space — the industry standard for perceptual color difference. Colorfle mixing uses weighted RGB averaging across both YCC and RGB color spaces, exactly matching the official game's output. When the solver says a color would score 85.32%, that is the same number you'd see in the game.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Why Color Puzzles Are Harder Than Word Games</h2>
+      <p>Wordle gives you five letters and twenty-six options per slot. The math is constrained enough that most people solve it in four to six guesses. Color puzzles work differently. Colordle has hundreds of named colors in its answer pool, and the similarity percentage tells you how close you are in perceptual distance — not whether you got a specific channel right. A 72% match on "teal" could mean the answer is "cyan" (close hue, different saturation) or "slate" (similar lightness, different hue entirely). Without a way to cross-reference, you're navigating a three-dimensional color space with a single percentage as your compass.</p>
+      <p>Colorfle is harder still. You need to identify three specific colors from a palette of twenty, in the correct order, where each color carries a different weight. The combination space is large enough that brute-force guessing rarely works in six tries. The solver exists because finding the right three-color combination from twenty options across three weighted positions is a genuinely difficult combinatorial problem without computational help.</p>
+      <p>That said, color puzzles reward practice in a way word games do not. Your color perception actually improves with regular play. Designers, artists, and front-end developers tend to perform better at these games because they spend their days thinking about hue, saturation, and lightness. The unlimited modes on this site give you the repetition you need to develop that intuition without waiting for a daily reset.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>How to Use This Site Effectively</h2>
+      <p>Start with the daily answer pages if you just want to know the solution. The Colordle and Colorfle answer pages show today's solution with a reveal animation — you can look at strategy hints before deciding whether to peek. If you prefer to solve it yourself but want help narrowing down, open the solver instead.</p>
+      <p>The Colordle solver works best when you make two or three guesses in the actual game first, then enter those guesses and their percentages into the solver. Each guess you add narrows the candidate list. By the third guess, you are usually looking at fewer than ten possible colors. The Colorfle solver works in two modes: hex-solving gives you initial candidates from a target color, and feedback-solving lets you mark green/yellow/gray on each guess to eliminate impossible combinations.</p>
+      <p>For practice, use the unlimited modes. Colordle Unlimited generates a random target color each round. Colorfle Unlimited gives you a random target and lets you guess the three source colors with feedback. Both modes use the same game logic as the daily versions, so the skills you develop transfer directly. Play five or ten rounds during a lunch break and you will notice a real improvement within a week.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>About the Tools on This Site</h2>
+      <p>Every tool on WordSolver is free, works on mobile and desktop, and requires no sign-up or account. The solvers run entirely in your browser — no data gets sent to any server. Your guesses, percentages, and game state stay on your device. The daily answer data is generated at build time using the same algorithms the official games use, so the answers are accurate and available the moment the puzzle resets.</p>
+      <p>We built this site because we play these games ourselves and got tired of guessing blindly at 97% with no way to narrow things down. The solvers are not cheats — they are reference tools, like a crossword dictionary for color names. If you want to learn how Delta E scoring works, how weighted RGB mixing produces a target color, or how to develop better color perception, the content on each page explains those concepts in plain language.</p>
+      <p>WordSolver is an independent project. We are not affiliated with Colordle, Colorfle, or any other game. We just like color puzzles and think they deserve better tools.</p>
+    </div>
+  </section>
+
+  <!-- Author -->
+  <section class="container">
+    <div class="author-card">
+      <div class="author-avatar">AR</div>
+      <div>
+        <div class="author-name">Alex Rivera</div>
+        <div class="author-desc">Color puzzle enthusiast. Plays Colordle and Colorfle daily. Built WordSolver after getting stuck at 98% one too many times.</div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,119 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getColordleTodayData } from '../lib/daily-data.js';
+
+const data = getColordleTodayData();
+
+const schema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": `Colordle Answer Today - ${data.formattedDate}`,
+      "description": `Today's Colordle answer for ${data.formattedDate} is ${data.colorName}. Get the hex code, strategy hints, and a complete guess trail.`,
+      "url": "https://wordsolver.tech/colordle-answer-today",
+      "datePublished": `${data.dateKey}T00:00:00Z`,
+      "dateModified": `${data.dateKey}T00:00:00Z`,
+      "author": {
+        "@type": "Person",
+        "name": "Alex Rivera",
+        "description": "Color puzzle enthusiast and WordSolver editor."
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "WordSolver",
+        "logo": { "@type": "ImageObject", "url": "https://wordsolver.tech/favicon.svg" }
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wordsolver.tech" },
+        { "@type": "ListItem", "position": 2, "name": "Today", "item": "https://wordsolver.tech/today" },
+        { "@type": "ListItem", "position": 3, "name": "Colordle Answer Today", "item": "https://wordsolver.tech/colordle-answer-today" }
+      ]
+    }
+  ]
+});
+---
+
+<Layout
+  title={`Colordle Answer Today (${data.formattedDate}) | WordSolver`}
+  description={`Today's Colordle answer for ${data.formattedDate} is ${data.colorName}. See the hex code, strategy tips, and guess trail on WordSolver.`}
+  keywords="colordle answer today, colordle hint, colordle solution, daily color puzzle answer"
+  schema={schema}
+>
+  <section class="hero">
+    <div class="container">
+      <span class="hero-badge">Daily Color Puzzle</span>
+      <h1>Colordle Answer Today</h1>
+      <p>Today's Colordle color, hex code, and hints for <strong>{data.formattedDate}</strong>. Puzzle #{data.dayNum}.</p>
+    </div>
+  </section>
+
+  <!-- Answer Display -->
+  <section class="container" style="padding-bottom:2rem;">
+    <div class="card" style="text-align:center;padding:3rem 2rem;" id="answerCard">
+      <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent-purple);margin-bottom:1rem;">Today's Colordle Answer</div>
+      <div id="hiddenAnswer" style="cursor:pointer;" onclick="document.getElementById('hiddenAnswer').style.display='none';document.getElementById('revealedAnswer').style.display='block';">
+        <div style="width:120px;height:120px;border-radius:50%;background:rgba(139,92,246,0.15);border:3px solid rgba(139,92,246,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:3rem;font-weight:900;color:var(--accent-purple);">?</div>
+        <div style="color:var(--text-muted);font-size:0.9rem;">Click to reveal today's answer</div>
+      </div>
+      <div id="revealedAnswer" style="display:none;">
+        <div style="width:120px;height:120px;border-radius:50%;margin:0 auto 1rem;border:3px solid rgba(255,255,255,0.1);box-shadow:0 0 40px rgba(139,92,246,0.3);display:flex;align-items:center;justify-content:center;font-size:1.25rem;font-weight:800;color:white;text-shadow:0 1px 4px rgba(0,0,0,0.5);">{data.colorName}</div>
+        <div style="font-size:2rem;font-weight:900;margin-bottom:0.5rem;">{data.colorName}</div>
+        <div style="font-size:0.9rem;color:var(--text-muted);margin-bottom:0.5rem;">Puzzle #{data.dayNum} &middot; {data.formattedDate}</div>
+        <button onclick="document.getElementById('hiddenAnswer').style.display='block';document.getElementById('revealedAnswer').style.display='none';" style="margin-top:1rem;padding:0.5rem 1.25rem;border-radius:8px;background:var(--bg-card);border:1px solid var(--border-subtle);color:var(--text-secondary);cursor:pointer;font-size:0.8rem;">Hide Answer</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Links -->
+  <section class="container" style="padding-bottom:2rem;">
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;">
+      <a href="/colordle-solver" class="btn btn-primary">Open Colordle Solver</a>
+      <a href="/colorfle-answer-today" class="btn btn-secondary">Colorfle Answer Today</a>
+      <a href="/colordle-unlimited" class="btn btn-secondary">Play Unlimited</a>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="container" style="padding-bottom:3rem;">
+    <div class="content-section">
+      <h2>What is Colordle?</h2>
+      <p>Colordle is a daily browser game where you guess a secret color by typing its name. After each guess, Colordle returns a percentage showing how perceptually close your guess is to the target — 100% means you nailed it. The game uses Delta E CIE2000 in LAB color space to calculate that percentage, which is the same formula used in professional color matching and printing industries. That means "close" in Colordle translates to "close" in real life — not just numerically similar hex codes, but visually similar colors as your eye would perceive them.</p>
+      <p>The answer pool contains roughly 150 to 200 named colors. Some are obvious — "red," "blue," "green" — but many are obscure shades like "celadon," "amaranth," "gamboge," and "vermilion" that most people would not think to guess. That obscurity is part of the challenge. You can get a 95% match and still be nowhere near the correct name because you simply do not know that the shade you are looking at is called "teal" rather than "blue green."</p>
+      <p>There is no guess limit. You can keep guessing until you hit 100% or give up. Most people solve it in three to six guesses if they use a systematic approach, and in eight to twelve guesses if they are just throwing out color names. The game resets daily at midnight UTC, so everyone sees the same target color on the same day.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>How Today's Answer Was Determined</h2>
+      <p>Colordle assigns each day a sequential puzzle number starting from a fixed launch date. Today is puzzle #{data.dayNum}. The target color is selected from a pre-defined list of named colors indexed by that day number. The list cycles through, so after it exhausts all entries, it starts over from the beginning. The answer for {data.formattedDate} is <strong>{data.colorName}</strong>.</p>
+      <p>This page generates the answer at build time using the same logic. We resolve the color name against a large database of named colors (the same one Colordle pulls from) to get the exact hex code. If the name is a compound like "sea green" or "dark slate," we strip spaces and check against both the spaced and unspaced versions. The hex code you see is the one the game uses — no approximation.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Strategy Tips for Future Colordle Puzzles</h2>
+      <p>Your first guess should be a primary or secondary color: red, blue, yellow, green, orange, purple, or pink. The percentage you get back immediately tells you which hue family the target belongs to. If "blue" scores 70%, the answer is somewhere in the blue family. If "red" scores 30%, the answer is far from red — you can rule out the entire warm end of the spectrum.</p>
+      <p>Your second guess should test lightness within that hue family. If you know the target is blue, try "navy" (dark blue) and "sky blue" (light blue). The one that scores higher tells you whether the target is dark or light. Your third guess narrows saturation — "cobalt" is a saturated blue, "slate" is desaturated. Three strategic guesses will usually get you to 90%+, and from there it is a matter of naming the exact shade.</p>
+      <p>Learn the boundary colors. Colors like "teal" sit between blue and green, "magenta" between red and purple, "gold" between yellow and orange. When your percentages hover around 75-85% regardless of which neighboring family you guess from, you are dealing with a boundary color. The Colordle solver on this site handles these edge cases automatically when you enter your guesses and percentages.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Using the Colordle Solver Effectively</h2>
+      <p>The solver works best when you have already made one or two guesses in the game. Enter the color name you guessed (use the search dropdown to find it) and the percentage Colordle showed you. The solver calculates the Delta E distance between your guess and every candidate color, then filters out any color that would not produce the same percentage. Each additional guess you enter further narrows the candidate list.</p>
+      <p>The tolerance is set to 0.02 percentage points, which matches the two-decimal precision Colordle displays. If your guess of "sea green" returned 72.45%, the solver keeps only colors where the calculated percentage is between 72.43% and 72.47%. That tight tolerance means the filtered list is accurate — you are seeing the exact set of colors that the game's formula would consider consistent with your guess.</p>
+      <p>If you accidentally enter a wrong percentage, the solver will filter out the correct answer along with the incorrect candidates. If your results look wrong after adding a guess, double-check the percentage from the game. The most common mistake is transposing digits — typing 57% instead of 75% eliminates every valid candidate instantly.</p>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="author-card">
+      <div class="author-avatar">AR</div>
+      <div>
+        <div class="author-name">Alex Rivera</div>
+        <div class="author-desc">Color puzzle enthusiast. Plays Colordle and Colorfle daily. Built WordSolver after getting stuck at 98% one too many times.</div>
+      </div>
+    </div>
+  </section>
+</Layout>
