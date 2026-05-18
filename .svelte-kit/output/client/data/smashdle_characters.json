@@ -1,0 +1,2116 @@
+[
+  {
+    "championName": "Banjo & Kazooie",
+    "universe": [
+      "Banjo-Kazooie"
+    ],
+    "availability": "Downloadable",
+    "final_smash": "The Mighty Jinjonator",
+    "jump_number": 3,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 106,
+    "gender": "Other",
+    "debut": "Diddy Kong Racing (1997, video game debut)\nBanjo-Kazooie (1998, home series debut)",
+    "platform_of_origin": [
+      "Nintendo 64"
+    ],
+    "species": [
+      "Bear",
+      "Bird"
+    ],
+    "placeOfOrigin": "Spiral Mountain",
+    "originDate": 1997
+  },
+  {
+    "championName": "Bayonetta",
+    "universe": [
+      "Bayonetta"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Infernal Climax",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 81,
+    "gender": "Female",
+    "debut": "Bayonetta (2009)",
+    "platform_of_origin": [
+      "PlayStation 3",
+      "Xbox 360"
+    ],
+    "species": [
+      "Augmented",
+      "Human"
+    ],
+    "placeOfOrigin": "Vigrid",
+    "originDate": 2009
+  },
+  {
+    "championName": "Bowser",
+    "universe": [
+      "Mario"
+    ],
+    "games": [
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Giga Bowser Punch",
+    "jump_number": 2,
+    "first_game": "SSB Melee",
+    "weight": 135,
+    "gender": "Male",
+    "debut": "Super Mario Bros. (1985)",
+    "platform_of_origin": [
+      "NES"
+    ],
+    "species": [
+      "Koopa"
+    ],
+    "placeOfOrigin": "Koopa Kingdom[1] (birthplace)\nBowser's Castle (surrogate home)",
+    "originDate": 1985
+  },
+  {
+    "championName": "Bowser Jr.",
+    "universe": [
+      "Mario"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Shadow Mario Paint",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 108,
+    "gender": "Selectable",
+    "debut": "Super Mario Sunshine (2002)",
+    "platform_of_origin": [
+      "GameCube"
+    ],
+    "species": [
+      "Koopa"
+    ],
+    "placeOfOrigin": "Bowser's Castle",
+    "originDate": 2002
+  },
+  {
+    "championName": "Byleth",
+    "universe": [
+      "Fire Emblem"
+    ],
+    "availability": "Downloadable",
+    "final_smash": "Progenitor God Ruptured Heaven",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 97,
+    "gender": "Selectable",
+    "debut": "Fire Emblem Heroes (2019, technical debut)\nFire Emblem: Three Houses (2019, proper debut)",
+    "platform_of_origin": [
+      "Android/iOS",
+      "Nintendo Switch"
+    ],
+    "species": [
+      "Human",
+      "God"
+    ],
+    "placeOfOrigin": "F\u00f3dlan",
+    "originDate": 2019
+  },
+  {
+    "championName": "Captain Falcon",
+    "universe": [
+      "F-Zero"
+    ],
+    "games": [
+      "64",
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Blue Falcon",
+    "jump_number": 2,
+    "first_game": "SSB 64",
+    "weight": 104,
+    "gender": "Male",
+    "debut": "F-Zero (1990)",
+    "platform_of_origin": [
+      "SNES"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Port Town",
+    "originDate": 1990
+  },
+  {
+    "championName": "Chrom",
+    "universe": [
+      "Fire Emblem"
+    ],
+    "availability": "Echo Fighter / Unlockable",
+    "final_smash": "Awakening Aether",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 95,
+    "gender": "Male",
+    "debut": "Fire Emblem Awakening (2012)",
+    "platform_of_origin": [
+      "3DS"
+    ],
+    "species": [
+      "Augmented",
+      "Human"
+    ],
+    "placeOfOrigin": "Ylisse",
+    "originDate": 2012
+  },
+  {
+    "championName": "Cloud",
+    "universe": [
+      "Final Fantasy"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Omnislash",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 100,
+    "gender": "Male",
+    "debut": "Final Fantasy VII (1997)",
+    "platform_of_origin": [
+      "PlayStation"
+    ],
+    "species": [
+      "Augmented",
+      "Human"
+    ],
+    "placeOfOrigin": "Nibelheim (birthplace)\nEdge (surrogate hometown)",
+    "originDate": 1997
+  },
+  {
+    "championName": "Corrin",
+    "universe": [
+      "Fire Emblem"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Torrential Roar",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 98,
+    "gender": "Selectable",
+    "debut": "Fire Emblem Fates (2015)",
+    "platform_of_origin": [
+      "3DS"
+    ],
+    "species": [
+      "Human",
+      "Dragon"
+    ],
+    "placeOfOrigin": "Valla (birthplace)\nNohr (surrogate home)\nHoshido (surrogate home)",
+    "originDate": 2015
+  },
+  {
+    "championName": "Daisy",
+    "universe": [
+      "Mario"
+    ],
+    "availability": "Echo Fighter / Unlockable",
+    "final_smash": "Daisy Blossom",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 89,
+    "gender": "Female",
+    "debut": "Super Mario Land (1989)",
+    "platform_of_origin": [
+      "Game Boy"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Sarasaland",
+    "originDate": 1989
+  },
+  {
+    "championName": "Dark Pit",
+    "universe": [
+      "Kid Icarus"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "availability": "Echo Fighter / Unlockable",
+    "final_smash": "Dark Pit Staff",
+    "jump_number": 4,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 96,
+    "gender": "Male",
+    "debut": "Kid Icarus: Uprising (2012)",
+    "platform_of_origin": [
+      "3DS"
+    ],
+    "species": [
+      "Angel"
+    ],
+    "placeOfOrigin": "N/A",
+    "originDate": 2012
+  },
+  {
+    "championName": "Dark Samus",
+    "universe": [
+      "Metroid"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Phazon Laser",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 108,
+    "gender": "Female",
+    "debut": "Metroid Prime (2002, cameo)\nMetroid Prime 2: Echoes (2004)",
+    "platform_of_origin": [
+      "GameCube"
+    ],
+    "species": [
+      "Metroid",
+      "Augmented",
+      "Human"
+    ],
+    "placeOfOrigin": "Tallon IV (Metroid Prime)\nPhaaze (Phazon)",
+    "originDate": 2002
+  },
+  {
+    "championName": "Diddy Kong",
+    "universe": [
+      "Donkey Kong"
+    ],
+    "games": [
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Hyper Rocketbarrel",
+    "jump_number": 2,
+    "first_game": "SSB Brawl",
+    "weight": 90,
+    "gender": "Male",
+    "debut": "Donkey Kong Country (1994)",
+    "platform_of_origin": [
+      "SNES"
+    ],
+    "species": [
+      "Kong"
+    ],
+    "placeOfOrigin": "Donkey Kong Island",
+    "originDate": 1994
+  },
+  {
+    "championName": "Donkey Kong",
+    "universe": [
+      "Donkey Kong"
+    ],
+    "games": [
+      "64",
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Starter",
+    "final_smash": "Jungle Rush",
+    "jump_number": 2,
+    "first_game": "SSB 64",
+    "weight": 127,
+    "gender": "Male",
+    "debut": "Donkey Kong (1981, original)\nDonkey Kong Country (1994, current)",
+    "platform_of_origin": [
+      "Arcade"
+    ],
+    "species": [
+      "Kong"
+    ],
+    "placeOfOrigin": "Donkey Kong Island",
+    "originDate": 1981
+  },
+  {
+    "championName": "Dr. Mario",
+    "universe": [
+      "Mario"
+    ],
+    "games": [
+      "Melee",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Doctor Finale",
+    "jump_number": 2,
+    "first_game": "SSB Melee",
+    "weight": 98,
+    "gender": "Male",
+    "debut": "Dr. Mario (1990)",
+    "platform_of_origin": [
+      "NES",
+      "Game Boy"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Mushroom Kingdom",
+    "originDate": 1990
+  },
+  {
+    "championName": "Duck Hunt",
+    "universe": [
+      "Duck Hunt"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "NES Zapper Posse",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 86,
+    "gender": "Other",
+    "debut": "Duck Hunt (1984)",
+    "platform_of_origin": [
+      "NES"
+    ],
+    "species": [
+      "Dog",
+      "Bird"
+    ],
+    "placeOfOrigin": "Earth",
+    "originDate": 1984
+  },
+  {
+    "championName": "Falco",
+    "universe": [
+      "Star Fox"
+    ],
+    "games": [
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Team Star Fox",
+    "jump_number": 2,
+    "first_game": "SSB Melee",
+    "weight": 82,
+    "gender": "Male",
+    "debut": "Star Fox (1993)",
+    "platform_of_origin": [
+      "SNES"
+    ],
+    "species": [
+      "Bird"
+    ],
+    "placeOfOrigin": "Corneria[2]",
+    "originDate": 1993
+  },
+  {
+    "championName": "Fox",
+    "universe": [
+      "Star Fox"
+    ],
+    "games": [
+      "64",
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Starter",
+    "final_smash": "Team Star Fox",
+    "jump_number": 2,
+    "first_game": "SSB 64",
+    "weight": 77,
+    "gender": "Male",
+    "debut": "Star Fox (1993)",
+    "platform_of_origin": [
+      "SNES"
+    ],
+    "species": [
+      "Fox"
+    ],
+    "placeOfOrigin": "Papetoon[1] (birthplace)\nCorneria[2] (surrogate homeworld)",
+    "originDate": 1993
+  },
+  {
+    "championName": "Ganondorf",
+    "universe": [
+      "The Legend of Zelda"
+    ],
+    "games": [
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Ganon, the Demon King",
+    "jump_number": 2,
+    "first_game": "SSB Melee",
+    "weight": 118,
+    "gender": "Male",
+    "debut": "The Legend of Zelda: Ocarina of Time (1998)",
+    "platform_of_origin": [
+      "Nintendo 64"
+    ],
+    "species": [
+      "Human",
+      "Demon"
+    ],
+    "placeOfOrigin": "Hyrule",
+    "originDate": 1998
+  },
+  {
+    "championName": "Greninja",
+    "universe": [
+      "Pok\u00e9mon"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Secret Ninja Attack",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 88,
+    "gender": "Other",
+    "debut": "Pok\u00e9mon X and Y (2013)",
+    "platform_of_origin": [
+      "3DS"
+    ],
+    "species": [
+      "Pok\u00e9mon"
+    ],
+    "placeOfOrigin": "Kalos",
+    "originDate": 2013
+  },
+  {
+    "championName": "Hero",
+    "universe": [
+      "Dragon Quest"
+    ],
+    "availability": "Downloadable",
+    "final_smash": "Gigaslash",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 101,
+    "gender": "Male",
+    "debut": "Dragon Quest (1986, general concept)\nDragon Quest III (1988, Erdrick)\nDragon Quest IV (1990, Solo)\nDragon Quest VIII (2004, Eight)\nDragon Quest XI (2017, Luminary)",
+    "platform_of_origin": [
+      "NES"
+    ],
+    "species": [
+      "Human",
+      "Hybrid"
+    ],
+    "placeOfOrigin": "N/A",
+    "originDate": 1986
+  },
+  {
+    "championName": "Ice Climbers",
+    "universe": [
+      "Ice Climber"
+    ],
+    "games": [
+      "Melee",
+      "Brawl"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Iceberg",
+    "jump_number": 2,
+    "first_game": "SSB Melee",
+    "weight": 92,
+    "gender": "Other",
+    "debut": "VS. Ice Climber (1984)",
+    "platform_of_origin": [
+      "Arcade"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Infinite Glacier",
+    "originDate": 1984
+  },
+  {
+    "championName": "Ike",
+    "universe": [
+      "Fire Emblem"
+    ],
+    "games": [
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Great Aether",
+    "jump_number": 2,
+    "first_game": "SSB Brawl",
+    "weight": 107,
+    "gender": "Male",
+    "debut": "Fire Emblem: Path of Radiance (2005)",
+    "platform_of_origin": [
+      "GameCube"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Gallia (birthplace)\nCrimea (surrogate home)",
+    "originDate": 2005
+  },
+  {
+    "championName": "Incineroar",
+    "universe": [
+      "Pok\u00e9mon"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Max Malicious Moonsault",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 116,
+    "gender": "Other",
+    "debut": "Pok\u00e9mon Sun and Moon (2016)",
+    "platform_of_origin": [
+      "3DS"
+    ],
+    "species": [
+      "Pok\u00e9mon"
+    ],
+    "placeOfOrigin": "Alola",
+    "originDate": 2016
+  },
+  {
+    "championName": "Inkling",
+    "universe": [
+      "Splatoon"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Killer Wail",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 94,
+    "gender": "Selectable",
+    "debut": "Splatoon (2015)",
+    "platform_of_origin": [
+      "Wii U"
+    ],
+    "species": [
+      "Inkling"
+    ],
+    "placeOfOrigin": "Earth\nInkopolis (surrogate home)\nSplatlands (surrogate home)",
+    "originDate": 2015
+  },
+  {
+    "championName": "Isabelle",
+    "universe": [
+      "Animal Crossing"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Dream Town Hall",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 88,
+    "gender": "Female",
+    "debut": "Animal Crossing: New Leaf (2012)",
+    "platform_of_origin": [
+      "3DS"
+    ],
+    "species": [
+      "Dog"
+    ],
+    "placeOfOrigin": "N/A",
+    "originDate": 2012
+  },
+  {
+    "championName": "Jigglypuff",
+    "universe": [
+      "Pok\u00e9mon"
+    ],
+    "games": [
+      "64",
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Puff Up",
+    "jump_number": 6,
+    "first_game": "SSB 64",
+    "weight": 68,
+    "gender": "Other",
+    "debut": "Pok\u00e9mon Red and Green Versions (1996)",
+    "platform_of_origin": [
+      "Game Boy"
+    ],
+    "species": [
+      "Pok\u00e9mon"
+    ],
+    "placeOfOrigin": "Kanto",
+    "originDate": 1996
+  },
+  {
+    "championName": "Joker",
+    "universe": [
+      "Persona"
+    ],
+    "availability": "Downloadable",
+    "final_smash": "All-Out Attack",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 93,
+    "gender": "Male",
+    "debut": "Persona 5 (2016)",
+    "platform_of_origin": [
+      "PlayStation 3",
+      "PlayStation 4"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Japan",
+    "originDate": 2016
+  },
+  {
+    "championName": "Kazuya",
+    "universe": [
+      "Tekken"
+    ],
+    "availability": "Downloadable",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 113,
+    "gender": "Male",
+    "debut": "Tekken (1994)",
+    "platform_of_origin": [
+      "Arcade"
+    ],
+    "species": [
+      "Human",
+      "Demon"
+    ],
+    "placeOfOrigin": "Japan",
+    "originDate": 1994
+  },
+  {
+    "championName": "Ken",
+    "universe": [
+      "Street Fighter"
+    ],
+    "availability": "Echo Fighter / Unlockable",
+    "final_smash": "Shinryuken / Shippu Jinraikyaku",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 103,
+    "gender": "Male",
+    "debut": "Street Fighter (1987)",
+    "platform_of_origin": [
+      "Arcade"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "United States",
+    "originDate": 1987
+  },
+  {
+    "championName": "King Dedede",
+    "universe": [
+      "Kirby"
+    ],
+    "games": [
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Dede-Rush",
+    "jump_number": 3,
+    "first_game": "SSB Brawl",
+    "weight": 127,
+    "gender": "Male",
+    "debut": "Kirby's Dream Land (1992)",
+    "platform_of_origin": [
+      "Game Boy"
+    ],
+    "species": [
+      "Bird"
+    ],
+    "place_of_origin": "Dream Land, Popstar",
+    "originDate": 1992
+  },
+  {
+    "championName": "King K. Rool",
+    "universe": [
+      "Donkey Kong"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Blast-O-Matic",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 133,
+    "gender": "Male",
+    "debut": "Donkey Kong Country (1994)",
+    "platform_of_origin": [
+      "SNES"
+    ],
+    "species": [
+      "Crocodile"
+    ],
+    "placeOfOrigin": "Crocodile Isle",
+    "originDate": 1994
+  },
+  {
+    "championName": "Kirby",
+    "universe": [
+      "Kirby"
+    ],
+    "games": [
+      "64",
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Starter",
+    "final_smash": "Ultra Sword",
+    "jump_number": 5,
+    "first_game": "SSB 64",
+    "weight": 79,
+    "gender": "Male",
+    "debut": "Kirby's Dream Land (1992)",
+    "platform_of_origin": [
+      "Game Boy"
+    ],
+    "species": [
+      "Kirby"
+    ],
+    "placeOfOrigin": "Dream Land, Popstar",
+    "originDate": 1992
+  },
+  {
+    "championName": "Link",
+    "universe": [
+      "The Legend of Zelda"
+    ],
+    "games": [
+      "64",
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Starter",
+    "final_smash": "Ancient Bow and Arrow",
+    "jump_number": 2,
+    "first_game": "SSB 64",
+    "weight": 104,
+    "gender": "Male",
+    "debut": "The Legend of Zelda (1986)",
+    "platform_of_origin": [
+      "NES"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Hyrule",
+    "originDate": 1986
+  },
+  {
+    "championName": "Little Mac",
+    "universe": [
+      "Punch-Out!!"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Giga Mac Rush",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 87,
+    "gender": "Male",
+    "debut": "Punch-Out!! (arcade)[1] (1984, technical debut)\nPunch-Out!! (NES) (1987, proper debut)",
+    "platform_of_origin": [
+      "NES"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "The Bronx, New York, United States",
+    "originDate": 1984
+  },
+  {
+    "championName": "Lucario",
+    "universe": [
+      "Pok\u00e9mon"
+    ],
+    "games": [
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Aura Storm",
+    "jump_number": 2,
+    "first_game": "SSB Brawl",
+    "weight": 92,
+    "gender": "Other",
+    "debut": "Pok\u00e9mon Mystery Dungeon: Red Rescue Team and Blue Rescue Team (2005, technical debut)\nPok\u00e9mon Diamond and Pearl Versions (2006, proper debut)",
+    "platform_of_origin": [
+      "Nintendo DS"
+    ],
+    "species": [
+      "Pok\u00e9mon"
+    ],
+    "placeOfOrigin": "Sinnoh",
+    "originDate": 2005
+  },
+  {
+    "championName": "Lucas",
+    "universe": [
+      "EarthBound"
+    ],
+    "games": [
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "PK Starstorm",
+    "jump_number": 2,
+    "first_game": "SSB Brawl",
+    "weight": 94,
+    "gender": "Male",
+    "debut": "Mother 3 (2006)",
+    "platform_of_origin": [
+      "GBA"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Tazmily Village, Nowhere Islands",
+    "originDate": 2006
+  },
+  {
+    "championName": "Lucina",
+    "universe": [
+      "Fire Emblem"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "availability": "Echo Fighter / Unlockable",
+    "final_smash": "Critical Hit",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 90,
+    "gender": "Female",
+    "debut": "Fire Emblem Awakening (2012)",
+    "platform_of_origin": [
+      "3DS"
+    ],
+    "species": [
+      "Augmented",
+      "Human"
+    ],
+    "placeOfOrigin": "Ylisse",
+    "originDate": 2012
+  },
+  {
+    "championName": "Luigi",
+    "universe": [
+      "Mario"
+    ],
+    "games": [
+      "64",
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Poltergust G-00",
+    "jump_number": 2,
+    "first_game": "SSB 64",
+    "weight": 97,
+    "gender": "Male",
+    "debut": "Mario Bros. (Game & Watch) (1983, technical debut)\nMario Bros. (1983, proper debut)",
+    "platform_of_origin": [
+      "Arcade"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Mushroom Kingdom",
+    "originDate": 1983
+  },
+  {
+    "championName": "Mario",
+    "universe": [
+      "Mario"
+    ],
+    "games": [
+      "64",
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Starter",
+    "final_smash": "Mario Finale",
+    "jump_number": 2,
+    "first_game": "SSB 64",
+    "weight": 98,
+    "gender": "Male",
+    "debut": "Donkey Kong (1981)",
+    "platform_of_origin": [
+      "Arcade"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Mushroom Kingdom",
+    "originDate": 1981
+  },
+  {
+    "championName": "Marth",
+    "universe": [
+      "Fire Emblem"
+    ],
+    "games": [
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Critical Hit",
+    "jump_number": 2,
+    "first_game": "SSB Melee",
+    "weight": 90,
+    "gender": "Male",
+    "debut": "Fire Emblem: Shadow Dragon and the Blade of Light (1990)",
+    "platform_of_origin": [
+      "NES"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Altea",
+    "originDate": 1990
+  },
+  {
+    "championName": "Mega Man",
+    "universe": [
+      "Mega Man"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Mega Legends",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 102,
+    "gender": "Male",
+    "debut": "Mega Man (1987)",
+    "platform_of_origin": [
+      "NES"
+    ],
+    "species": [
+      "Robot"
+    ],
+    "placeOfOrigin": "N/A",
+    "originDate": 1987
+  },
+  {
+    "championName": "Meta Knight",
+    "universe": [
+      "Kirby"
+    ],
+    "games": [
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Darkness Illusion",
+    "jump_number": 6,
+    "first_game": "SSB Brawl",
+    "weight": 80,
+    "gender": "Male",
+    "debut": "Kirby's Adventure (1993)",
+    "platform_of_origin": [
+      "NES"
+    ],
+    "species": [
+      "Unknown"
+    ],
+    "placeOfOrigin": "Dream Land, Popstar",
+    "originDate": 1993
+  },
+  {
+    "championName": "Mewtwo",
+    "universe": [
+      "Pok\u00e9mon"
+    ],
+    "games": [
+      "Melee",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Psystrike",
+    "jump_number": 2,
+    "first_game": "SSB Melee",
+    "weight": 79,
+    "gender": "Other",
+    "debut": "Pok\u00e9mon Red and Green Versions (1996)",
+    "platform_of_origin": [
+      "Game Boy"
+    ],
+    "species": [
+      "Pok\u00e9mon"
+    ],
+    "placeOfOrigin": "Kanto",
+    "originDate": 1996
+  },
+  {
+    "championName": "Mii Brawler",
+    "universe": [
+      "SSB"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "final_smash": "Omega Blitz",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 94,
+    "gender": "Selectable",
+    "debut": "Mii Channel (2006)\nWii Sports (in-game, 2006)\nSSB for 3DS (as Mii Fighters, 2014)",
+    "platform_of_origin": [
+      "Wii"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Mii Plaza",
+    "originDate": 2006
+  },
+  {
+    "championName": "Mii Swordfighter",
+    "universe": [
+      "SSB"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "final_smash": "Final Edge",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 100,
+    "gender": "Selectable",
+    "debut": "Mii Channel (2006)\nWii Sports (in-game, 2006)\nSSB for 3DS (as Mii Fighters, 2014)",
+    "platform_of_origin": [
+      "Wii"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Mii Plaza",
+    "originDate": 2006
+  },
+  {
+    "championName": "Mii Gunner",
+    "universe": [
+      "SSB"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "final_smash": "Full Blast",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 104,
+    "gender": "Selectable",
+    "debut": "Mii Channel (2006)\nWii Sports (in-game, 2006)\nSSB for 3DS (as Mii Fighters, 2014)",
+    "platform_of_origin": [
+      "Wii"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Mii Plaza",
+    "originDate": 2006
+  },
+  {
+    "championName": "Min Min",
+    "universe": [
+      "ARMS"
+    ],
+    "availability": "Downloadable (Fighters Pass Vol. 2)",
+    "final_smash": "ARMS Rush",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 104,
+    "gender": "Female",
+    "debut": "ARMS (2017)",
+    "platform_of_origin": [
+      "Nintendo Switch"
+    ],
+    "species": [
+      "Augmented",
+      "Human"
+    ],
+    "placeOfOrigin": "Mintendo Noodle House",
+    "originDate": 2017
+  },
+  {
+    "championName": "Mr. Game & Watch",
+    "universe": [
+      "Game & Watch"
+    ],
+    "games": [
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Octopus",
+    "jump_number": 2,
+    "first_game": "SSB Melee",
+    "weight": 75,
+    "gender": "Male",
+    "debut": "Ball (1980) (as a juggler)\nSSB Melee (2001) (as Mr. Game & Watch)",
+    "platform_of_origin": [
+      "Game & Watch"
+    ],
+    "species": [
+      "Monochrome"
+    ],
+    "placeOfOrigin": "Superflat World",
+    "originDate": 1980
+  },
+  {
+    "championName": "Ness",
+    "universe": [
+      "EarthBound"
+    ],
+    "games": [
+      "64",
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "PK Starstorm",
+    "jump_number": 2,
+    "first_game": "SSB 64",
+    "weight": 94,
+    "gender": "Male",
+    "debut": "EarthBound (1994)",
+    "platform_of_origin": [
+      "SNES"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Onett, Eagleland",
+    "originDate": 1994
+  },
+  {
+    "championName": "Olimar",
+    "universe": [
+      "Pikmin"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "End of Day",
+    "jump_number": 2,
+    "games": [
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "first_game": "SSB Brawl",
+    "weight": 79,
+    "gender": "Male",
+    "debut": "Pikmin (2001)",
+    "platform_of_origin": [
+      "GameCube"
+    ],
+    "species": [
+      "Hocotatian"
+    ],
+    "placeOfOrigin": "Hocotate",
+    "originDate": 2001
+  },
+  {
+    "championName": "Pac-Man",
+    "universe": [
+      "Pac-Man"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Super Pac-Man",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 95,
+    "gender": "Male",
+    "debut": "Pac-Man (1980)",
+    "platform_of_origin": [
+      "Arcade"
+    ],
+    "species": [
+      "Pac-Person"
+    ],
+    "placeOfOrigin": "Pac-Land",
+    "originDate": 1980
+  },
+  {
+    "championName": "Palutena",
+    "universe": [
+      "Kid Icarus"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Black Hole Laser",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 91,
+    "gender": "Female",
+    "debut": "Kid Icarus (1986)",
+    "platform_of_origin": [
+      "NES"
+    ],
+    "species": [
+      "God"
+    ],
+    "placeOfOrigin": "Skyworld",
+    "originDate": 1986
+  },
+  {
+    "championName": "Peach",
+    "universe": [
+      "Mario"
+    ],
+    "games": [
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Peach Blossom",
+    "jump_number": 2,
+    "first_game": "SSB Melee",
+    "weight": 89,
+    "gender": "Female",
+    "debut": "Super Mario Bros. (1985)",
+    "platform_of_origin": [
+      "NES"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Peach's Castle, Mushroom Kingdom",
+    "originDate": 1985
+  },
+  {
+    "championName": "Pichu",
+    "universe": [
+      "Pok\u00e9mon"
+    ],
+    "games": [
+      "Melee"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Volt Tackle",
+    "jump_number": 2,
+    "first_game": "SSB Melee",
+    "weight": 62,
+    "gender": "Other",
+    "debut": "Pok\u00e9mon Gold and Silver Versions (1999)",
+    "platform_of_origin": [
+      "Game Boy Color"
+    ],
+    "species": [
+      "Pok\u00e9mon"
+    ],
+    "placeOfOrigin": "Johto",
+    "originDate": 1999
+  },
+  {
+    "championName": "Pikachu",
+    "universe": [
+      "Pok\u00e9mon"
+    ],
+    "games": [
+      "64",
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Starter",
+    "final_smash": "Volt Tackle",
+    "jump_number": 2,
+    "first_game": "SSB 64",
+    "weight": 79,
+    "gender": "Other",
+    "debut": "Pok\u00e9mon Red and Green Versions (1996)",
+    "platform_of_origin": [
+      "Game Boy"
+    ],
+    "species": [
+      "Pok\u00e9mon"
+    ],
+    "placeOfOrigin": "Kanto",
+    "originDate": 1996
+  },
+  {
+    "championName": "Piranha Plant",
+    "universe": [
+      "Mario"
+    ],
+    "availability": "Downloadable, Formerly Part of Base Roster.",
+    "final_smash": "Petey Piranha",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 112,
+    "gender": "Other",
+    "debut": "Super Mario Bros. (1985)",
+    "platform_of_origin": [
+      "NES"
+    ],
+    "species": [
+      "Plant"
+    ],
+    "placeOfOrigin": "Mushroom Kingdom",
+    "originDate": 1985
+  },
+  {
+    "championName": "Pit",
+    "universe": [
+      "Kid Icarus"
+    ],
+    "games": [
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Lightning Chariot",
+    "jump_number": 4,
+    "first_game": "SSB Brawl",
+    "weight": 96,
+    "gender": "Male",
+    "debut": "Kid Icarus (1986)",
+    "platform_of_origin": [
+      "NES"
+    ],
+    "species": [
+      "Angel"
+    ],
+    "placeOfOrigin": "Skyworld",
+    "originDate": 1986
+  },
+  {
+    "championName": "Pok\u00e9mon Trainer",
+    "universe": [
+      "Pok\u00e9mon"
+    ],
+    "games": [
+      "Brawl"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Triple Finish",
+    "jump_number": 2,
+    "first_game": "SSB Brawl",
+    "weight": 75,
+    "gender": "Selectable",
+    "debut": "Pok\u00e9mon Red and Green Versions (1996, general concept and Red) \nPok\u00e9mon FireRed and LeafGreen Versions (2004, Leaf)",
+    "platform_of_origin": [
+      "Game Boy"
+    ],
+    "species": [
+      "Human",
+      "Pok\u00e9mon"
+    ],
+    "placeOfOrigin": "Pok\u00e9mon world (general concept)\nKanto (Red and Leaf)",
+    "originDate": 1996
+  },
+  {
+    "championName": "Pyra/Mythra",
+    "universe": [
+      "Xenoblade"
+    ],
+    "availability": "Downloadable",
+    "final_smash": "Burning Sword (Pyra) / Sacred Arrow (Mythra)",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 98,
+    "gender": "Female",
+    "debut": "Xenoblade Chronicles 2 (2017)",
+    "platform_of_origin": [
+      "Nintendo Switch"
+    ],
+    "species": [
+      "Human",
+      "Blade"
+    ],
+    "placeOfOrigin": "Alrest",
+    "originDate": 2017
+  },
+  {
+    "championName": "R.O.B.",
+    "universe": [
+      "R.O.B."
+    ],
+    "games": [
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Guided Robo Beam",
+    "jump_number": 2,
+    "first_game": "SSB Brawl",
+    "weight": 106,
+    "gender": "Male",
+    "debut": "Stack-Up (1985, as a peripheral)\nKirby's Dream Land 3 (1997, in-game cameo)",
+    "platform_of_origin": [
+      "NES"
+    ],
+    "species": [
+      "Robot"
+    ],
+    "placeOfOrigin": "Real world\nIsle of the Ancients (SSB series)",
+    "originDate": 1985
+  },
+  {
+    "championName": "Richter",
+    "universe": [
+      "Castlevania"
+    ],
+    "availability": "Echo Fighter / Unlockable",
+    "final_smash": "Grand Cross",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 107,
+    "gender": "Male",
+    "debut": "Castlevania: Rondo of Blood (1993)",
+    "platform_of_origin": [
+      "TurboGrafx-16"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Wallachia",
+    "originDate": 1993
+  },
+  {
+    "championName": "Ridley",
+    "universe": [
+      "Metroid"
+    ],
+    "games": [
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Plasma Scream",
+    "jump_number": 3,
+    "first_game": "SSB Ultimate",
+    "weight": 107,
+    "gender": "Male",
+    "debut": "Metroid (1986)",
+    "platform_of_origin": [
+      "NES"
+    ],
+    "species": [
+      "Unknown"
+    ],
+    "placeOfOrigin": "Zebes[1]",
+    "originDate": 1986
+  },
+  {
+    "championName": "Robin",
+    "universe": [
+      "Fire Emblem"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Pair Up",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 95,
+    "gender": "Selectable",
+    "debut": "Fire Emblem Awakening (2012)",
+    "platform_of_origin": [
+      "3DS"
+    ],
+    "species": [
+      "Augmented",
+      "Human"
+    ],
+    "placeOfOrigin": "Plegia",
+    "originDate": 2012
+  },
+  {
+    "championName": "Rosalina & Luma",
+    "universe": [
+      "Mario"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Power Star",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 82,
+    "gender": "Female",
+    "debut": "Super Mario Galaxy (2007)",
+    "platform_of_origin": [
+      "Wii"
+    ],
+    "species": [
+      "Human",
+      "Luma"
+    ],
+    "placeOfOrigin": "Earth (birthplace)\nComet Observatory (surrogate home)",
+    "originDate": 2007
+  },
+  {
+    "championName": "Roy",
+    "universe": [
+      "Fire Emblem"
+    ],
+    "games": [
+      "Melee",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Critical Hit",
+    "jump_number": 2,
+    "first_game": "SSB Melee",
+    "weight": 95,
+    "gender": "Male",
+    "debut": "SSB Melee (2001, video game debut)\nFire Emblem: The Binding Blade (2002, home series debut)",
+    "platform_of_origin": [
+      "GBA"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Lycia",
+    "originDate": 2001
+  },
+  {
+    "championName": "Ryu",
+    "universe": [
+      "Street Fighter"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Shinku Hadoken / Shin Shoryuken",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 103,
+    "gender": "Male",
+    "debut": "Street Fighter (1987)",
+    "platform_of_origin": [
+      "Arcade"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Japan",
+    "originDate": 1987
+  },
+  {
+    "championName": "Samus",
+    "universe": [
+      "Metroid"
+    ],
+    "games": [
+      "64",
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Starter",
+    "final_smash": "Zero Laser",
+    "jump_number": 2,
+    "first_game": "SSB 64",
+    "weight": 108,
+    "gender": "Female",
+    "debut": "Metroid (1986)",
+    "platform_of_origin": [
+      "NES"
+    ],
+    "species": [
+      "Augmented",
+      "Human"
+    ],
+    "placeOfOrigin": "K-2L (birthplace)\nZebes (surrogate homeworld)",
+    "originDate": 1986
+  },
+  {
+    "championName": "Sephiroth",
+    "universe": [
+      "Final Fantasy"
+    ],
+    "availability": "Downloadable",
+    "final_smash": "Supernova",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 79,
+    "gender": "Male",
+    "debut": "Final Fantasy VII (1997)",
+    "platform_of_origin": [
+      "PlayStation"
+    ],
+    "species": [
+      "Human",
+      "Jenova"
+    ],
+    "placeOfOrigin": "Nibelheim",
+    "originDate": 1997
+  },
+  {
+    "championName": "Sheik",
+    "universe": [
+      "The Legend of Zelda"
+    ],
+    "games": [
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Sheikah Dance",
+    "jump_number": 2,
+    "first_game": "SSB Melee",
+    "weight": 78,
+    "gender": "Female",
+    "debut": "The Legend of Zelda: Ocarina of Time (1998)",
+    "platform_of_origin": [
+      "Nintendo 64"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Hyrule",
+    "originDate": 1998
+  },
+  {
+    "championName": "Shulk",
+    "universe": [
+      "Xenoblade"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Chain Attack",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 97,
+    "gender": "Male",
+    "debut": "Xenoblade Chronicles (2010)",
+    "platform_of_origin": [
+      "Wii"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Bionis",
+    "originDate": 2010
+  },
+  {
+    "championName": "Simon",
+    "universe": [
+      "Castlevania"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Grand Cross",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 107,
+    "gender": "Male",
+    "debut": "Castlevania (1986)",
+    "platform_of_origin": [
+      "NES"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Wallachia",
+    "originDate": 1986
+  },
+  {
+    "championName": "Snake",
+    "universe": [
+      "Metal Gear Solid"
+    ],
+    "games": [
+      "Brawl"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Covering Fire",
+    "jump_number": 2,
+    "first_game": "SSB Brawl",
+    "weight": 106,
+    "gender": "Male",
+    "debut": "Metal Gear (1987)",
+    "platform_of_origin": [
+      "MSX2"
+    ],
+    "species": [
+      "Augmented",
+      "Human"
+    ],
+    "placeOfOrigin": "United States",
+    "originDate": 1987
+  },
+  {
+    "championName": "Sonic",
+    "universe": [
+      "Sonic the Hedgehog"
+    ],
+    "games": [
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Super Sonic",
+    "jump_number": 2,
+    "first_game": "SSB Brawl",
+    "weight": 86,
+    "gender": "Male",
+    "debut": "Rad Mobile (1990, technical debut)\nSonic the Hedgehog (1991, proper debut)",
+    "platform_of_origin": [
+      "Sega Genesis"
+    ],
+    "species": [
+      "Hedgehog"
+    ],
+    "placeOfOrigin": "Christmas Island[1]",
+    "originDate": 1991
+  },
+  {
+    "championName": "Sora",
+    "universe": [
+      "Kingdom Hearts"
+    ],
+    "availability": "Downloadable",
+    "final_smash": "Sealing the Keyhole",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 85,
+    "gender": "Male",
+    "debut": "Kingdom Hearts (2002)",
+    "platform_of_origin": [
+      "PlayStation 2"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Destiny Islands",
+    "originDate": 2002
+  },
+  {
+    "championName": "Steve",
+    "universe": [
+      "Minecraft"
+    ],
+    "availability": "Downloadable",
+    "final_smash": "House of Boom",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 92,
+    "gender": "Selectable",
+    "debut": "Minecraft (2009, technical debut; 2011, official debut, Steve; 2014, Alex)",
+    "platform_of_origin": [
+      "Computer"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Overworld",
+    "originDate": 2009
+  },
+  {
+    "championName": "Terry",
+    "universe": [
+      "The King of Fighters"
+    ],
+    "availability": "Downloadable",
+    "final_smash": "Triple Wolf",
+    "jump_number": 2,
+    "games": [],
+    "first_game": "SSB Ultimate",
+    "weight": 108,
+    "gender": "Male",
+    "debut": "Fatal Fury: King of Fighters (1991)",
+    "platform_of_origin": [
+      "Arcade"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "South Town, United States",
+    "originDate": 1991
+  },
+  {
+    "championName": "Toon Link",
+    "universe": [
+      "The Legend of Zelda"
+    ],
+    "games": [
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Triforce Slash",
+    "jump_number": 2,
+    "first_game": "SSB Brawl",
+    "weight": 91,
+    "gender": "Male",
+    "debut": "The Legend of Zelda: Four Swords (2002, art style)\nThe Legend of Zelda: The Wind Waker[1] (2002, Hero of Winds)",
+    "platform_of_origin": [
+      "GameCube"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Outset Island, Great Sea (Hero of Winds)\nAboda Village, New Hyrule (Engineer Link)\nHyrule (other incarnations)",
+    "originDate": 2002
+  },
+  {
+    "championName": "Villager",
+    "universe": [
+      "Animal Crossing"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Dream Home",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 92,
+    "gender": "Selectable",
+    "debut": "Doubutsu no Mori (2001)",
+    "platform_of_origin": [
+      "Nintendo 64"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Town",
+    "originDate": 2001
+  },
+  {
+    "championName": "Wario",
+    "universe": [
+      "Mario",
+      "Wario"
+    ],
+    "games": [
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Wario-Man",
+    "jump_number": 2,
+    "first_game": "SSB Brawl",
+    "weight": 107,
+    "gender": "Male",
+    "debut": "Super Mario Land 2: 6 Golden Coins (1992)",
+    "platform_of_origin": [
+      "Game Boy"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Diamond City",
+    "originDate": 1992
+  },
+  {
+    "championName": "Wii Fit Trainer",
+    "universe": [
+      "Wii Fit"
+    ],
+    "games": [
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Wii Fit",
+    "jump_number": 2,
+    "first_game": "SSB 3DS/Wii U",
+    "weight": 96,
+    "gender": "Selectable",
+    "debut": "Wii Fit (2007)",
+    "platform_of_origin": [
+      "Wii"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Wii Fit Studio",
+    "originDate": 2007
+  },
+  {
+    "championName": "Wolf",
+    "universe": [
+      "Star Fox"
+    ],
+    "games": [
+      "Brawl"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Team Star Wolf",
+    "jump_number": 2,
+    "first_game": "SSB Brawl",
+    "weight": 92,
+    "gender": "Male",
+    "debut": "Star Fox 64 (1997)",
+    "platform_of_origin": [
+      "Nintendo 64"
+    ],
+    "species": [
+      "Wolf"
+    ],
+    "placeOfOrigin": "Lylat System",
+    "originDate": 1997
+  },
+  {
+    "championName": "Yoshi",
+    "universe": [
+      "Yoshi",
+      "Mario"
+    ],
+    "games": [
+      "64",
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Starter",
+    "final_smash": "Stampede!",
+    "jump_number": 2,
+    "first_game": "SSB 64",
+    "weight": 104,
+    "gender": "Male",
+    "debut": "Super Mario World (1990)",
+    "platform_of_origin": [
+      "SNES"
+    ],
+    "species": [
+      "Yoshi"
+    ],
+    "placeOfOrigin": "Yoshi's Island",
+    "originDate": 1990
+  },
+  {
+    "championName": "Young Link",
+    "universe": [
+      "The Legend of Zelda"
+    ],
+    "games": [
+      "Melee"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Triforce Slash",
+    "jump_number": 2,
+    "first_game": "SSB Melee",
+    "weight": 88,
+    "gender": "Male",
+    "debut": "The Legend of Zelda: Ocarina of Time (1998)",
+    "platform_of_origin": [
+      "Nintendo 64"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Hyrule",
+    "originDate": 1998
+  },
+  {
+    "championName": "Zelda",
+    "universe": [
+      "The Legend of Zelda"
+    ],
+    "games": [
+      "Melee",
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Triforce of Wisdom",
+    "jump_number": 2,
+    "first_game": "SSB Melee",
+    "weight": 85,
+    "gender": "Female",
+    "debut": "The Legend of Zelda (1986)",
+    "platform_of_origin": [
+      "NES"
+    ],
+    "species": [
+      "Human"
+    ],
+    "placeOfOrigin": "Hyrule",
+    "originDate": 1986
+  },
+  {
+    "championName": "Zero Suit Samus",
+    "universe": [
+      "Metroid"
+    ],
+    "games": [
+      "Brawl",
+      "3DS/Wii U"
+    ],
+    "availability": "Unlockable",
+    "final_smash": "Zero Laser",
+    "jump_number": 2,
+    "first_game": "SSB Brawl",
+    "weight": 80,
+    "gender": "Female",
+    "debut": "Metroid (1986, unarmored Samus)\nMetroid: Zero Mission (2004, Zero Suit)",
+    "platform_of_origin": [
+      "GBA"
+    ],
+    "species": [
+      "Augmented",
+      "Human"
+    ],
+    "placeOfOrigin": "K-2L (birthplace)\nZebes (surrogate homeworld)",
+    "originDate": 1986
+  }
+]

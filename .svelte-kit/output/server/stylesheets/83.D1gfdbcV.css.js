@@ -1,0 +1,2 @@
+// 83.D1gfdbcV.css
+export default "@keyframes svelte-10sc0m-gradient{0%{background-position:0% 50%}50%{background-position:100% 50%}to{background-position:0% 50%}}\n";

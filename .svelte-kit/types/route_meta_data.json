@@ -1,0 +1,388 @@
+{
+	"/(interactive)": [
+		"src/routes/+layout.ts"
+	],
+	"/(content)": [
+		"src/routes/(content)/+page.ts",
+		"src/routes/(content)/+layout.ts",
+		"src/routes/+layout.ts",
+		"src/routes/(content)/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/": [
+		"src/routes/+layout.ts"
+	],
+	"/(content)/about": [
+		"src/routes/(content)/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/all-wordle-solver": [
+		"src/routes/(interactive)/all-wordle-solver/+page.ts",
+		"src/routes/(interactive)/all-wordle-solver/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/api/archive/[game]": [
+		"src/routes/api/archive/[game]/+server.ts"
+	],
+	"/api/colordle/today": [
+		"src/routes/api/colordle/today/+server.ts"
+	],
+	"/api/contexto/daily": [
+		"src/routes/api/contexto/daily/+server.ts"
+	],
+	"/api/framed/archive": [
+		"src/routes/api/framed/archive/+server.ts"
+	],
+	"/api/nerdle-answer": [
+		"src/routes/api/nerdle-answer/+server.ts"
+	],
+	"/api/squaredle-today": [
+		"src/routes/api/squaredle-today/+server.ts"
+	],
+	"/api/worldle-answer": [
+		"src/routes/api/worldle-answer/+server.ts"
+	],
+	"/(content)/archive": [
+		"src/routes/(content)/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/betweenle-answer-today": [
+		"src/routes/(interactive)/betweenle-answer-today/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/betweenle-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/betweenle": [
+		"src/routes/(interactive)/betweenle/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/boggle-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/canuckle-answer-today": [
+		"src/routes/(interactive)/canuckle-answer-today/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/canuckle-archive": [
+		"src/routes/(interactive)/canuckle-archive/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/canuckle": [
+		"src/routes/(interactive)/canuckle/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/colordle-answer-today": [
+		"src/routes/(interactive)/colordle-answer-today/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/colordle-archive": [
+		"src/routes/(interactive)/colordle-archive/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/colordle-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/colorfle-answer-today": [
+		"src/routes/(interactive)/colorfle-answer-today/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/colorfle-archive": [
+		"src/routes/(interactive)/colorfle-archive/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/colorfle-solver": [
+		"src/routes/(interactive)/colorfle-solver/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(content)/contact": [
+		"src/routes/(content)/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/contexto-answer-today": [
+		"src/routes/(interactive)/contexto-answer-today/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/contexto-archive": [
+		"src/routes/(interactive)/contexto-archive/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/countryle-answer-today": [
+		"src/routes/(interactive)/countryle-answer-today/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/countryle-archive": [
+		"src/routes/(interactive)/countryle-archive/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/countryle-solver": [
+		"src/routes/(interactive)/countryle-solver/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(content)/disclaimer": [
+		"src/routes/(content)/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(content)/dotadle-answer-today": [
+		"src/routes/(content)/dotadle-answer-today/+page.server.ts",
+		"src/routes/(content)/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/dotadle-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(content)/editorial-policy": [
+		"src/routes/(content)/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/framed-answer-today": [
+		"src/routes/(interactive)/framed-answer-today/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/framed-archive": [
+		"src/routes/(interactive)/framed-archive/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/globle-answer-today": [
+		"src/routes/(interactive)/globle-answer-today/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/globle-archive": [
+		"src/routes/(interactive)/globle-archive/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(content)/guides": [
+		"src/routes/(content)/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/hangman-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/kanoodle-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/light-out-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(content)/loldle-answer-today": [
+		"src/routes/(content)/loldle-answer-today/+page.server.ts",
+		"src/routes/(content)/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/loldle-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/minesweeper-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(content)/narutodle-answer-today": [
+		"src/routes/(content)/narutodle-answer-today/+page.server.ts",
+		"src/routes/(content)/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/narutodle-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/nerdle-answer-today": [
+		"src/routes/(interactive)/nerdle-answer-today/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/nerdle-archive": [
+		"src/routes/(interactive)/nerdle-archive/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/nerdle-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(content)/onepiecedle-answer-today": [
+		"src/routes/(content)/onepiecedle-answer-today/+page.server.ts",
+		"src/routes/(content)/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/onepiecedle-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/onepiedle-solver": [
+		"src/routes/(interactive)/onepiedle-solver/+page.ts",
+		"src/routes/(interactive)/onepiedle-solver/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/phoodle-answer-today": [
+		"src/routes/(interactive)/phoodle-answer-today/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/phoodle-archive": [
+		"src/routes/(interactive)/phoodle-archive/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/phoodle-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/phrazle-answer-today": [
+		"src/routes/(interactive)/phrazle-answer-today/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/phrazle-archive": [
+		"src/routes/(interactive)/phrazle-archive/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(content)/pokedle-answer-today": [
+		"src/routes/(content)/pokedle-answer-today/+page.server.ts",
+		"src/routes/(content)/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/pokedle-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(content)/privacy-policy": [
+		"src/routes/(content)/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/quordle-answer-today": [
+		"src/routes/(interactive)/quordle-answer-today/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/quordle-archive": [
+		"src/routes/(interactive)/quordle-archive/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/searchle-answer-today": [
+		"src/routes/(interactive)/searchle-answer-today/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/searchle-archive": [
+		"src/routes/(interactive)/searchle-archive/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/searchle-solver": [
+		"src/routes/(interactive)/searchle-solver/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/semantle-answer-today": [
+		"src/routes/(interactive)/semantle-answer-today/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/semantle-archive": [
+		"src/routes/(interactive)/semantle-archive/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/sitemap.xml": [
+		"src/routes/sitemap.xml/+server.ts"
+	],
+	"/(content)/smashdle-answer-today": [
+		"src/routes/(content)/smashdle-answer-today/+page.server.ts",
+		"src/routes/(content)/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/smashdle-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(content)/solver": [
+		"src/routes/(content)/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/soundmap-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/sportle-answer-today": [
+		"src/routes/(interactive)/sportle-answer-today/+page.ts",
+		"src/routes/(interactive)/sportle-answer-today/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/sportle-archive": [
+		"src/routes/(interactive)/sportle-archive/+page.ts",
+		"src/routes/(interactive)/sportle-archive/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/sportle-solver": [
+		"src/routes/(interactive)/sportle-solver/+page.ts",
+		"src/routes/(interactive)/sportle-solver/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/spotle-answer-today": [
+		"src/routes/(interactive)/spotle-answer-today/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/spotle-archive": [
+		"src/routes/(interactive)/spotle-archive/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/spotle-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/squaredle-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(content)/terms-of-service": [
+		"src/routes/(content)/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(content)/today": [
+		"src/routes/(content)/today/+page.ts",
+		"src/routes/(content)/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/waffle-answer-today": [
+		"src/routes/(interactive)/waffle-answer-today/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/waffle-archive": [
+		"src/routes/(interactive)/waffle-archive/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/waffle-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/weaver-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/word-ladder-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/wordle-analyzer": [
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/wordle-answer-archive": [
+		"src/routes/(interactive)/wordle-answer-archive/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/wordle-answer-today": [
+		"src/routes/(interactive)/wordle-answer-today/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/wordle-solver": [
+		"src/routes/(interactive)/wordle-solver/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/worgle-answer-today": [
+		"src/routes/(interactive)/worgle-answer-today/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/worgle-archive": [
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/worldle-answer-today": [
+		"src/routes/(interactive)/worldle-answer-today/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/worldle-archive": [
+		"src/routes/(interactive)/worldle-archive/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/worldle-solver": [
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/[wordLength=wordlebotLength]-letter-wordle-solver": [
+		"src/routes/(interactive)/[wordLength=wordlebotLength]-letter-wordle-solver/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(interactive)/[variant=wordlebotVariant]-solver": [
+		"src/routes/(interactive)/[variant=wordlebotVariant]-solver/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/(content)/[slug]": [
+		"src/routes/(content)/[slug]/+page.ts",
+		"src/routes/(content)/+layout.ts",
+		"src/routes/+layout.ts"
+	]
+}

@@ -1,0 +1,1 @@
+import{format as n}from"date-fns";import{b as r}from"./puzzle-window.js";const s=new Date("2022-02-15"),f=219;function T(t){const o=t.getTime()-s.getTime(),e=Math.floor(o/(1e3*60*60*24));return f+e}function m(){const t=r(),o=540,e=new Date(t.getTime()+(o+t.getTimezoneOffset())*6e4);return e.setHours(0,0,0,0),e}function c(t){return n(t,"MMMM d, yyyy")}export{m as a,c as f,T as g};

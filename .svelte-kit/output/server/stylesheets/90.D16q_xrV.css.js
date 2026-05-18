@@ -1,0 +1,2 @@
+// 90.D16q_xrV.css
+export default ".worgle-answer-tiles.svelte-1ev8lms{filter:blur(10px);transition:filter .3s ease;-webkit-user-select:none;-moz-user-select:none;user-select:none}.worgle-answer-tiles.revealed.svelte-1ev8lms{filter:none;-webkit-user-select:auto;-moz-user-select:auto;user-select:auto}\n";

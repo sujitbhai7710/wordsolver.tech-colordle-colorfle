@@ -1,0 +1,1 @@
+import{a as r,f as t}from"../chunks/DR1OH7a1.js";import"../chunks/BlomONCL.js";const a=!1,l=Object.freeze(Object.defineProperty({__proto__:null,prerender:a},Symbol.toStringTag,{value:"Module"}));var p=t("<p>Redirecting...</p>");function s(e){var o=p();r(e,o)}export{s as component,l as universal};

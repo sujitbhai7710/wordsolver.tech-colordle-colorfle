@@ -1,47 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ArchiveCalendar from '../components/ArchiveCalendar.svelte';
-import { getPuzzleAnswer, COLOR_NAMES, COLORS, WEIGHTS } from '../lib/colorfle.js';
-
-// Build a getAnswer function for Colorfle using getPuzzleAnswer
-function getColorfleAnswer(dateKey) {
-  const date = new Date(dateKey + 'T12:00:00Z');
-  const answer = getPuzzleAnswer(date, 0);
-  const formattedDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-
-  const colorBlocks = answer.colors.map((idx, i) => {
-    const name = answer.colorNames[i];
-    const hex = answer.colorHexes[i];
-    const weight = WEIGHTS[0][i];
-    return `<div style="text-align:center;">
-      <div style="width:56px;height:56px;border-radius:12px;background:${hex};border:2px solid var(--border-subtle);margin:0 auto 0.375rem;box-shadow:var(--shadow-sm);"></div>
-      <div style="font-weight:700;font-size:0.85rem;color:var(--text-primary);">${name}</div>
-      <div style="font-size:0.7rem;color:var(--text-muted);font-family:monospace;">${hex}</div>
-      <div style="margin-top:0.25rem;padding:0.15rem 0.5rem;border-radius:6px;background:rgba(236,72,153,0.08);border:1px solid rgba(236,72,153,0.12);font-size:0.65rem;font-weight:700;color:var(--accent-pink);display:inline-block;">
-        ${Math.round(weight * 100)}%
-      </div>
-    </div>`;
-  }).join('');
-
-  return {
-    html: `
-      <div style="text-align:center;">
-        <div style="width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;border:3px solid var(--border-subtle);box-shadow:var(--shadow-lg);background:${answer.targetHex};"></div>
-        <div style="display:flex;justify-content:center;gap:1.25rem;margin-bottom:1rem;flex-wrap:wrap;">
-          ${colorBlocks}
-        </div>
-        <div style="margin-top:0.75rem;">
-          <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:0.375rem;">Mixed to produce:</div>
-          <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
-            <div style="width:32px;height:32px;border-radius:50%;background:${answer.targetHex};border:2px solid var(--border-subtle);"></div>
-            <span style="font-family:monospace;font-size:1rem;font-weight:800;color:var(--text-primary);">${answer.targetHex}</span>
-          </div>
-        </div>
-        <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.75rem;">Puzzle #${answer.puzzleNumber} &middot; ${formattedDate}</div>
-      </div>
-    `,
-  };
-}
 
 const schema = JSON.stringify({
   "@context": "https://schema.org",
@@ -99,8 +58,8 @@ const schema = JSON.stringify({
       client:load
       gameName="Colorfle"
       gameColor="pink"
+      gameType="colorfle"
       startDate={new Date('2022-04-25')}
-      getAnswer={getColorfleAnswer}
     />
   </section>
 

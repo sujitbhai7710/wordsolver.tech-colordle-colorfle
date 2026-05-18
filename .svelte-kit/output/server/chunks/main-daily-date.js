@@ -1,0 +1,1 @@
+import{format as a}from"date-fns";import{g as n}from"./puzzle-window.js";function t(e=new Date){return n("wordle",e)}function i(e=new Date){return a(t(e),"yyyy-MM-dd")}function o(e=new Date){return a(t(e),"MMMM d, yyyy")}export{t as a,o as b,i as g};

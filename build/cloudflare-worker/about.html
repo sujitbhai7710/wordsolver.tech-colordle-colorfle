@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+        <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" /></noscript>
+        <style>
+                html {
+                        background: #ffffff;
+                }
+
+                body {
+                        margin: 0;
+                        min-height: 100vh;
+                        background: #ffffff;
+                        color: #0f172a;
+                        font-family:
+                                'Plus Jakarta Sans',
+                                'Segoe UI',
+                                system-ui,
+                                -apple-system,
+                                BlinkMacSystemFont,
+                                'Helvetica Neue',
+                                sans-serif;
+                        -webkit-font-smoothing: antialiased;
+                        -moz-osx-font-smoothing: grayscale;
+                }
+
+                a {
+                        color: inherit;
+                        text-decoration: none;
+                }
+
+                img {
+                        display: block;
+                        max-width: 100%;
+                        height: auto;
+                }
+
+                .site-shell {
+                        min-height: 100vh;
+                        display: flex;
+                        flex-direction: column;
+                        background: #ffffff;
+                }
+
+                .site-main {
+                        flex: 1 1 auto;
+                }
+
+                body[data-theme='dark'],
+                [data-theme='dark'] .site-shell {
+                        background: #0f172a;
+                        color: #f8fafc;
+                }
+        </style>
+        <script>
+                (function () {
+                        var GA_ID = 'G-8QRMXK049Z';
+                        window.dataLayer = window.dataLayer || [];
+                        window.__wordsolverxQueuedGtagCalls = window.__wordsolverxQueuedGtagCalls || [];
+
+                        function queueGtagCall() {
+                                var args = Array.prototype.slice.call(arguments);
+                                window.__wordsolverxQueuedGtagCalls.push(args);
+                        }
+
+                        window.gtag = window.gtag || queueGtagCall;
+
+                        function sendPageView() {
+                                if (!window.gtag) return;
+                                window.gtag('event', 'page_view', {
+                                        page_path: window.location.pathname + window.location.search,
+                                        page_location: window.location.href,
+                                        page_title: document.title
+                                });
+                        }
+
+                        function flushQueuedCalls() {
+                                var queue = window.__wordsolverxQueuedGtagCalls || [];
+                                var hadQueuedPageView = false;
+
+                                window.__wordsolverxQueuedGtagCalls = [];
+                                for (var i = 0; i < queue.length; i += 1) {
+                                        var args = queue[i];
+                                        if (args[0] === 'event' && args[1] === 'page_view') {
+                                                hadQueuedPageView = true;
+                                        }
+                                        window.gtag.apply(window, args);
+                                }
+
+                                if (!hadQueuedPageView) {
+                                        sendPageView();
+                                }
+                        }
+
+                        function loadAnalytics() {
+                                if (window.__wordsolverxAnalyticsLoaded) return;
+                                window.__wordsolverxAnalyticsLoaded = true;
+
+                                var script = document.createElement('script');
+                                script.async = true;
+                                script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+                                script.onload = function () {
+                                        window.gtag = function () {
+                                                window.dataLayer.push(arguments);
+                                        };
+                                        window.gtag('js', new Date());
+                                        window.gtag('config', GA_ID, { send_page_view: false });
+                                        flushQueuedCalls();
+                                };
+                                document.head.appendChild(script);
+                        }
+
+                        window.__wordsolverxLoadAnalytics = loadAnalytics;
+
+                        function scheduleAnalytics() {
+                                var interactionEvents = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
+                                var cleanup = function () {
+                                        for (var i = 0; i < interactionEvents.length; i += 1) {
+                                                window.removeEventListener(interactionEvents[i], loadAfterInteraction);
+                                        }
+                                };
+                                var loadAfterInteraction = function () {
+                                        cleanup();
+                                        loadAnalytics();
+                                };
+
+                                for (var i = 0; i < interactionEvents.length; i += 1) {
+                                        window.addEventListener(interactionEvents[i], loadAfterInteraction, {
+                                                once: true,
+                                                passive: true
+                                        });
+                                }
+
+                                window.addEventListener(
+                                        'load',
+                                        function () {
+                                                window.setTimeout(function () {
+                                                        cleanup();
+                                                        loadAnalytics();
+                                                }, 15000);
+                                        },
+                                        { once: true }
+                                );
+                        }
+
+                        scheduleAnalytics();
+
+                        function updateCardFilter(input) {
+                                var group = input.getAttribute('data-card-filter-input');
+                                if (!group) return;
+
+                                var query = input.value.trim().toLowerCase();
+                                var items = document.querySelectorAll('[data-card-filter-item="' + group + '"]');
+                                var visibleBySection = {};
+
+                                items.forEach(function (item) {
+                                        var haystack = (item.getAttribute('data-search-text') || '').toLowerCase();
+                                        var section = item.getAttribute('data-filter-section') || '';
+                                        var isVisible = !query || haystack.indexOf(query) !== -1;
+                                        item.hidden = !isVisible;
+                                        if (isVisible) {
+                                                visibleBySection[section] = true;
+                                        }
+                                });
+
+                                document
+                                        .querySelectorAll('[data-card-filter-empty="' + group + '"]')
+                                        .forEach(function (emptyState) {
+                                                var section = emptyState.getAttribute('data-empty-scope') || '';
+                                                emptyState.hidden = !query || Boolean(visibleBySection[section]);
+                                        });
+                        }
+
+                        function refreshAllCardFilters() {
+                                document.querySelectorAll('[data-card-filter-input]').forEach(function (input) {
+                                        updateCardFilter(input);
+                                });
+                        }
+
+                        document.addEventListener('input', function (event) {
+                                var target = event.target;
+                                if (target && target.matches && target.matches('[data-card-filter-input]')) {
+                                        updateCardFilter(target);
+                                }
+                        });
+
+                        document.addEventListener('submit', function (event) {
+                                var target = event.target;
+                                if (target && target.matches && target.matches('[data-card-filter-form]')) {
+                                        event.preventDefault();
+                                }
+                        });
+
+                        document.addEventListener('click', function (event) {
+                                var target = event.target;
+                                if (!target || !target.closest) return;
+
+                                var copyButton = target.closest('[data-copy-value]');
+                                if (copyButton) {
+                                        var textToCopy = copyButton.getAttribute('data-copy-value') || '';
+                                        if (!textToCopy || !navigator.clipboard || !navigator.clipboard.writeText) return;
+
+                                        var defaultLabel = copyButton.getAttribute('data-copy-default') || 'Copy';
+                                        var successLabel = copyButton.getAttribute('data-copy-success') || 'Copied';
+
+                                        navigator.clipboard.writeText(textToCopy).then(function () {
+                                                copyButton.textContent = successLabel;
+                                                window.setTimeout(function () {
+                                                        copyButton.textContent = defaultLabel;
+                                                }, 2000);
+                                        });
+                                        return;
+                                }
+
+                                var reloadButton = target.closest('[data-reload-page]');
+                                if (reloadButton) {
+                                        window.location.reload();
+                                }
+                        });
+
+                        if (document.readyState === 'loading') {
+                                document.addEventListener('DOMContentLoaded', refreshAllCardFilters, { once: true });
+                        } else {
+                                refreshAllCardFilters();
+                        }
+
+                        window.addEventListener('pageshow', refreshAllCardFilters);
+                })();
+        </script>
+
+        <!--1rfisux--><link rel="icon" type="image/webp" href="/wordsolverx-favicon.webp"/> <meta name="theme-color" content="#10b981"/> <meta property="og:site_name" content="WordSolverX"/> <meta property="og:locale" content="en_US"/> <meta property="og:image" content="https://wordsolverx.com/wordsolverx.webp"/> <meta property="og:image:width" content="1200"/> <meta property="og:image:height" content="630"/> <meta property="og:image:alt" content="WordSolverX - Daily Puzzle Answers and Solver Tools"/> <meta name="twitter:site" content="@WordSolverX"/> <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp"/> <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/> <link rel="apple-touch-icon" href="/wordsolverx-favicon.webp"/> <link rel="alternate" hreflang="en" href="https://wordsolverx.com/about"/> <link rel="alternate" hreflang="x-default" href="https://wordsolverx.com/about"/> <meta name="author" content="Preston Hayes"/> <!----><script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"WordSolverX","url":"https://wordsolverx.com","logo":"https://wordsolverx.com/wordsolverx.webp","sameAs":["https://www.facebook.com/wordsolverx/","https://www.pinterest.com/wordsolverx/","https://t.me/wordsolverx"]}</script><!----><!----><!--nkjhjh--><meta name="description" content="Learn about WordSolverX and how we publish daily puzzle answers, archives, Wordle solver tools, and guides for popular word games."/> <link rel="canonical" href="https://wordsolverx.com/about"/> <meta property="og:title" content="About WordSolverX | Puzzle Answers, Archives, and Solver Tools"/> <meta property="og:description" content="See what WordSolverX offers, which puzzle tools we cover, and how we keep the site updated."/> <meta property="og:type" content="website"/> <meta property="og:url" content="https://wordsolverx.com/about"/> <meta property="og:site_name" content="WordSolverX"/> <meta name="twitter:card" content="summary_large_image"/> <meta name="twitter:title" content="About WordSolverX | Puzzle Answers, Archives, and Solver Tools"/> <meta name="twitter:description" content="Learn about WordSolverX, our puzzle resources, and how the site helps players every day."/> <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp"/> <!----><script type="application/ld+json">[{"@context":"https://schema.org","@type":"AboutPage","name":"About WordSolverX","description":"About page for WordSolverX and its puzzle answer, archive, and solver content.","url":"https://wordsolverx.com/about"},{"@context":"https://schema.org","@type":"WebPage","name":"About WordSolverX","description":"Learn about WordSolverX, its puzzle answer pages, archives, solver tools, and guides.","url":"https://wordsolverx.com/about"},{"@context":"https://schema.org","@type":"Person","name":"Preston Hayes","url":"https://wordsolverx.com/about#preston-hayes","image":"https://wordsolverx.com/author-wordsolverx.webp","jobTitle":"Word Puzzle Analyst","knowsAbout":["Wordle","Word Puzzles","Daily Puzzle Answers","Puzzle Solver Tools","Information Theory"],"sameAs":["https://www.linkedin.com/in/preston-hayes-wordsolverx/","https://x.com/WordSolverX","https://www.facebook.com/wordsolverx/","https://t.me/wordsolverx"],"description":"Preston Hayes has been solving and analyzing daily word puzzles since Wordle launched in October 2021. He maintains a daily solving streak across Wordle, Quordle, and Nerdle, and has written over 500 daily puzzle guides. His approach focuses on statistical letter frequency and strategic elimination rather than guessing — the same logic that powers the solvers on this site.","worksFor":{"@type":"Organization","name":"WordSolverX","url":"https://wordsolverx.com"}}]</script><!----><!----><!--1jovwxm--><!--[0--><!----><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://wordsolverx.com"},{"@type":"ListItem","position":2,"name":"About","item":"https://wordsolverx.com/about"}]}</script><!----><!--]--><!----><title>About WordSolverX | Puzzle Answers, Archives, and Solver Tools</title>
+		<link href="./_app/immutable/assets/2.Crsk7s1s.css" rel="stylesheet">
+</head>
+
+<body data-sveltekit-preload-data="hover">
+        <div style="display: contents"><!--[--><!--[0--><!--[--><!--[0--><!--[--><!----> <div class="site-shell min-h-screen flex flex-col bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100"><nav class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/60 dark:border-slate-700/40 shadow-[0_1px_3px_rgb(0_0_0/0.06)]"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex justify-between h-[60px]"><div class="flex items-center gap-2.5"><a href="/" class="flex items-center gap-2.5 group"><div class="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-500 to-teal-700 flex items-center justify-center shadow-[0_2px_8px_rgb(20_184_166/0.3)] group-hover:shadow-[0_2px_12px_rgb(20_184_166/0.45)] transition-shadow duration-200"><span class="text-white font-extrabold text-sm leading-none">W</span></div> <span class="text-[1.15rem] font-extrabold tracking-tight"><span class="text-slate-900 dark:text-slate-50">Word</span><span class="text-teal-600 dark:text-teal-400">Solver</span><span class="text-amber-500 dark:text-amber-400">X</span></span></a></div> <div class="hidden lg:flex lg:items-center lg:gap-0.5"><!--[--><a href="/" class="relative px-3 py-1.5 rounded-md text-[0.8125rem] font-semibold transition-colors duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">Home <!--[-1--><!--]--></a><a href="/today" class="relative px-3 py-1.5 rounded-md text-[0.8125rem] font-semibold transition-colors duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">Today's Answers <!--[-1--><!--]--></a><a href="/solver" class="relative px-3 py-1.5 rounded-md text-[0.8125rem] font-semibold transition-colors duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">Solvers <!--[-1--><!--]--></a><a href="/archive" class="relative px-3 py-1.5 rounded-md text-[0.8125rem] font-semibold transition-colors duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">Archives <!--[-1--><!--]--></a><a href="/guides" class="relative px-3 py-1.5 rounded-md text-[0.8125rem] font-semibold transition-colors duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">Guides <!--[-1--><!--]--></a><a href="/about" class="relative px-3 py-1.5 rounded-md text-[0.8125rem] font-semibold transition-colors duration-200 text-teal-700 dark:text-teal-300">About <!--[0--><span class="absolute -bottom-[9px] left-2 right-2 h-0.5 rounded-full bg-teal-500 dark:bg-teal-400"></span><!--]--></a><!--]--></div> <details class="relative flex items-center lg:hidden svelte-1q3u7a3"><summary class="list-none p-2 -mr-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800 transition-colors cursor-pointer svelte-1q3u7a3"><span class="sr-only">Toggle menu</span> <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path></svg></summary> <div class="absolute top-full right-0 mt-1 w-64 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-xl p-2"><div class="space-y-0.5"><!--[--><a href="/" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">Home</a><a href="/today" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">Today's Answers</a><a href="/solver" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">Solvers</a><a href="/archive" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">Archives</a><a href="/guides" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">Guides</a><a href="/about" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-900/20">About</a><!--]--></div></div></details></div></div></nav><!----> <main class="site-main flex-grow"><div><!--[--><div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14"><!--[0--><nav class="flex mb-6 text-sm overflow-x-auto whitespace-nowrap pb-1" aria-label="Breadcrumb"><ol class="inline-flex items-center space-x-1.5"><li class="inline-flex items-center"><a href="/" class="inline-flex items-center text-slate-400 hover:text-teal-600 dark:text-slate-500 dark:hover:text-teal-400 transition-colors"><svg class="mr-1.5 h-3.5 w-3.5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg><!----> <span class="font-medium">Home</span></a></li> <!--[--><li class="flex items-center"><svg class="h-3 w-3 text-slate-300 dark:text-slate-600 mx-0.5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg><!----> <!--[0--><span class="text-slate-900 dark:text-slate-100 font-semibold ml-0.5">About</span><!--]--></li><!--]--></ol></nav><!--]--><!----> <div class="mb-10"><h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-slate-50 tracking-tight leading-[1.1]">About WordSolverX</h1> <p class="mt-3 text-lg text-slate-500 dark:text-slate-400 max-w-2xl">An independent puzzle resource built for people who play daily games and want answers, tools, and archives without the noise.</p></div> <div class="prose prose-slate dark:prose-invert max-w-none prose-headings:scroll-mt-20"><h2 class="text-slate-900 dark:text-slate-50">What WordSolverX Is</h2> <p>WordSolverX is a website that publishes daily puzzle answers, maintains answer archives, and provides solver tools for Wordle and 20+ other daily puzzle games. It's independent — not affiliated with The New York Times, any game publisher, or any puzzle platform. It exists because the existing options for finding puzzle answers were either slow, ad-heavy, inaccurate, or all three.</p> <p>The site covers three categories of content. First, daily answer pages — one for each game we track — that show today's answer immediately, no clicks required. Second, solver tools that let you work through a puzzle interactively instead of just reading the solution. Third, archives that let you look up any past answer by date, going back months or years depending on the game.</p> <p>Everything is free. There's no sign-up, no premium tier, no paywall. The site makes money through display advertising, which is kept to a level that doesn't interfere with the actual content. If the ads get in the way, that's a bug, not a feature — and you can tell us about it on the contact page.</p> <h2 class="text-slate-900 dark:text-slate-50">What You'll Find Here</h2> <p>The site is organized around four main sections, each accessible from the navigation above:</p> <p><strong>Today's Answers</strong> — A grid of every game we cover, each linking to its answer-today page. If you know which game you need, this is the fastest way there. Each answer page shows the answer first, followed by optional hints and a daily article with context about the specific puzzle.</p> <p><strong>Solver Tools</strong> — 44 tools (and growing) for different puzzle types. The Wordle solver alone covers nine different word lengths (3 through 11 letters). Beyond that, there are solvers for Quordle, Nerdle, Betweenle, Worldle, Phoodle, Waffle, Boggle, Hangman, Minesweeper, Kanoodle, and a long list of character-guessing games (LoLdle, Pokedle, Smashdle, Narutodle, Dotadle, Onepiecedle). Each solver runs in your browser using WebAssembly where needed, so there's no waiting for server responses.</p> <p><strong>Archives</strong> — Historical answer data for 18 games. The Wordle archive goes back to June 2021. Quordle, Nerdle, Phoodle, and most other games have similarly deep histories. Each archive page has a date picker or scrollable list, so you can find any specific day's answer without guessing at URLs or scrolling through hundreds of results.</p> <p><strong>Guides</strong> — Strategy content for the most popular games. Not generic "try common letters" advice, but specific, game-by-game breakdowns of how the mechanics work, where most players make mistakes, and how to improve. Each guide links to the relevant solver tool so you can practice immediately.</p> <h2 class="text-slate-900 dark:text-slate-50">How the Site Works Technically</h2> <p>WordSolverX is built on SvelteKit and deployed on Cloudflare Pages. If you're not a developer, none of this matters to you — the site should just work fast. If you are a developer, here's the architecture at a high level:</p> <p>Daily answer pages are statically generated at build time. The puzzle date calculation happens during the build, not in the browser, so the date shown on each page is baked into the HTML. This means answer pages load essentially instantly because there's no JavaScript that needs to execute before the content is visible.</p> <p>Interactive solver tools use a combination of client-side JavaScript and WebAssembly. The 5-letter Wordle solver, for instance, compiles the entire filtering algorithm to WASM so it runs in your browser without server round-trips. The word list for each solver is bundled at build time and loaded on demand. For games that require real-time data (like Squaredle, which generates a new board daily from an API), we use Cloudflare edge functions.</p> <p>The card filtering system — the search bars on the homepage, today page, and solver page — runs entirely in vanilla JavaScript defined in app.html. It filters visible cards based on a data attribute match against your search query. No frameworks, no virtual DOM diffing, just fast DOM manipulation. This was a deliberate choice: the filter needs to work on every page including statically generated ones, and a framework-independent approach guarantees that.</p> <h2 class="text-slate-900 dark:text-slate-50">Which Games We Cover</h2> <p>The game list grows as new puzzles gain enough daily players to justify coverage. As of this writing, we track answers and provide tools for:</p> <p>Word games: Wordle (3-11 letters), Canuckle, Betweenle, Quordle, Octordle, Dordle, Phrazle, Semantle, Contexto, Worgle, and various Wordle variants (Hardle, Warmle, Woodle, Wordle Peaks, Xordle, Fibble, Spotle Wordle).</p> <p>Non-word puzzles: Nerdle (all modes), Colordle, Colorfle, Waffle, Squaredle, Boggle, Hangman, Minesweeper, Kanoodle, Lights Out, Word Ladder, and Weaver.</p> <p>Geography and trivia: Worldle, Globle, Countryle, Framed (movies), Spotle (music artists), Searchle (autocomplete), and Soundmap (artist guessing).</p> <p>Character guessing: LoLdle (League of Legends), Pokedle (Pokemon), Smashdle (Super Smash Bros.), Narutodle (Naruto), Dotadle (Dota 2), and Onepiecedle (One Piece).</p> <h2 class="text-slate-900 dark:text-slate-50">How Answers Are Sourced</h2> <p>Answer data comes from each game's own source material. For Wordle, we decode the official answer list embedded in the game's client-side JavaScript. For Nerdle, we pull from the equation database. For geography games, we track the country selection algorithms. For character-guessing games, we maintain databases of all possible characters with their attributes.</p> <p>This means our answers are always in sync with the official games. When Wordle's answer list was modified by the New York Times (removing words like "SLAVE" and "WHORE"), our data reflected those changes immediately because we decode the current list at build time. We don't rely on manual updates or user submissions for core answer data — the source of truth is always the game itself.</p> <p>For games where the answer source is an API that we can't decode from the client side (like Contexto, which uses a proprietary word embedding model), we use automated scripts that fetch the daily answer at the appropriate time and store it for our pages. These scripts run as part of the build process, so the answer is available by the time the page is served.</p> <h2 class="text-slate-900 dark:text-slate-50">Content Methodology</h2> <p>Every piece of content on WordSolverX follows a clear methodology designed to keep information accurate and trustworthy. Answer data is always sourced from the official game itself — either decoded from client-side JavaScript, pulled from verified API endpoints, or extracted from the game's own databases. We never rely on user submissions, third-party forums, or unverified sources for core answer data. When a game changes its answer list or algorithm, our automated scripts pick up the change at the next build cycle, which typically runs within hours of the game's update.</p> <p>The contextual articles attached to daily answer pages are drafted using AI language models, then reviewed and edited by Preston Hayes before publication. These articles are for context and entertainment — they describe the puzzle's word, explain why it might have been tricky, or offer strategy tips. The answers themselves are never determined or influenced by AI. They come strictly from the game's source data. For full details on how we use AI tools and our editorial oversight process, see the <a href="/editorial-policy">Editorial Policy</a>.</p> <p>Solver tools are tested against known puzzle solutions to verify accuracy. When a solver's word list or algorithm produces incorrect results, we treat it as a bug with the same priority as a wrong answer. We maintain test cases for the most-used solvers and run validation checks as part of the build process.</p> <h2 class="text-slate-900 dark:text-slate-50">Independent Status</h2> <p>WordSolverX is not affiliated with The New York Times, the original Wordle creator (Josh Wardle), or the publishers of any of the games covered on this site. We don't have special access to game data, we don't receive compensation from game publishers, and we don't have any editorial relationship with them.</p> <p>Puzzle names, logos, and trademarks referenced on this site belong to their respective owners. We use them for identification and reference purposes only — not to imply endorsement or affiliation. If a game publisher objects to our coverage, we'll work with them to find a reasonable solution.</p> <h2 class="text-slate-900 dark:text-slate-50">Accuracy and Corrections</h2> <p>We aim for 100% accuracy on every answer page. When we fall short — and it does happen occasionally, usually because a game changed its answer source without notice — we want to know about it. The fastest way to report a wrong answer is through the contact page. Include the game name, the date, the answer we showed, and the correct answer. We'll verify and fix it, usually within a day.</p> <p>Solver tools can also produce incorrect results if the word list is outdated or if a game has changed its rules. If a solver suggests words that aren't valid guesses in the game you're playing, that's a bug we need to fix. Same process: contact page, details about what went wrong, and we'll investigate.</p> <p>For full details on our publishing and corrections process, see the <a href="/editorial-policy">Editorial Policy</a>.</p> <section id="preston-hayes" class="scroll-mt-20"><h2 class="text-slate-900 dark:text-slate-50">About Preston Hayes</h2> <p>Preston Hayes is the credited author behind our daily answer pages and puzzle content. His work focuses on making each page clear, accurate, and genuinely useful — not just keyword-stuffed for search engines. The daily articles attached to answer pages, the strategy guides, and the archive descriptions all reflect his approach: give players what they came for, then add value if they want to keep reading.</p> <p>Preston's content philosophy is straightforward: the answer comes first, context comes second, and neither should be buried under ads, pop-ups, or unnecessary prose. If a reader opens a Wordle answer page and gets what they need in under three seconds, the page has done its job. Everything below the fold is bonus.</p></section></div> <div class="mt-10"><section class="mx-auto w-full max-w-4xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-lg dark:border-slate-800 dark:bg-slate-900" aria-labelledby="author-heading"><div class="flex items-start gap-4 p-5 sm:gap-6 sm:p-7"><div class="shrink-0 rounded-3xl bg-gradient-to-br from-teal-50 via-white to-sky-50 p-2 shadow-sm ring-1 ring-black/5 dark:from-teal-950/30 dark:via-slate-900 dark:to-sky-950/30 dark:ring-white/10"><img src="/author-wordsolverx.webp" alt="Photo of Preston Hayes" width="96" height="96" class="h-20 w-20 rounded-full object-cover shadow-md sm:h-24 sm:w-24" loading="lazy" decoding="async"/></div> <div class="min-w-0 flex-1"><p class="text-xs font-semibold uppercase tracking-[0.28em] text-teal-600 dark:text-teal-400">Written by</p> <h2 id="author-heading" class="mt-2 text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 md:text-3xl">Preston Hayes</h2> <p class="mt-3 max-w-3xl text-base leading-7 text-slate-600 dark:text-slate-300 md:text-lg">Preston Hayes has been solving and analyzing daily word puzzles since Wordle launched in October 2021. He maintains a daily solving streak across Wordle, Quordle, and Nerdle, and has written over 500 daily puzzle guides. His approach focuses on statistical letter frequency and strategic elimination rather than guessing — the same logic that powers the solvers on this site.</p> <div class="mt-3 flex flex-wrap gap-3"><!--[--><a href="https://www.linkedin.com/in/preston-hayes-wordsolverx/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-600 dark:text-teal-400 hover:text-teal-800 dark:hover:text-teal-300 transition-colors">LinkedIn <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a><a href="https://x.com/WordSolverX" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-600 dark:text-teal-400 hover:text-teal-800 dark:hover:text-teal-300 transition-colors">X (Twitter) <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a><a href="https://www.facebook.com/wordsolverx/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-600 dark:text-teal-400 hover:text-teal-800 dark:hover:text-teal-300 transition-colors">Facebook <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a><a href="https://t.me/wordsolverx" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-600 dark:text-teal-400 hover:text-teal-800 dark:hover:text-teal-300 transition-colors">Telegram <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a><!--]--></div></div></div></section><!----></div></div><!--]--><!----></div> <!--[-1--><!--]--></main> <footer class="border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16"><div class="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12"><div class="col-span-2 md:col-span-1"><a href="/" class="inline-flex items-center gap-2 mb-4"><div class="w-7 h-7 rounded-md bg-gradient-to-br from-teal-500 to-teal-700 flex items-center justify-center"><span class="text-white font-extrabold text-xs leading-none">W</span></div> <span class="text-base font-extrabold tracking-tight text-slate-900 dark:text-slate-50">Word<span class="text-teal-600 dark:text-teal-400">Solver</span><span class="text-amber-500 dark:text-amber-400">X</span></span></a> <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-xs">Daily puzzle answers, solver tools, and strategy guides for word game enthusiasts who play every day.</p> <div class="mt-5 flex gap-2"><a href="https://www.facebook.com/wordsolverx/" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-400 hover:text-teal-600 hover:border-teal-300 dark:hover:text-teal-400 dark:hover:border-teal-700 transition-colors" aria-label="Facebook"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg></a> <a href="https://www.pinterest.com/wordsolverx/" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-400 hover:text-teal-600 hover:border-teal-300 dark:hover:text-teal-400 dark:hover:border-teal-700 transition-colors" aria-label="Pinterest"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12.017 24c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641 0 12.017 0z"></path></svg></a> <a href="https://t.me/wordsolverx" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-400 hover:text-teal-600 hover:border-teal-300 dark:hover:text-teal-400 dark:hover:border-teal-700 transition-colors" aria-label="Telegram"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"></path></svg></a></div></div> <div><h3 class="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider mb-4">Today's Answers</h3> <ul class="space-y-2.5"><li><a href="/wordle-answer-today" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Wordle Answer</a></li> <li><a href="/quordle-answer-today" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Quordle Answer</a></li> <li><a href="/nerdle-answer-today" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Nerdle Answer</a></li> <li><a href="/contexto-answer-today" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Contexto Answer</a></li> <li><a href="/today" class="text-sm text-teal-600 dark:text-teal-400 font-medium hover:text-teal-700 dark:hover:text-teal-300 transition-colors">View All →</a></li></ul></div> <div><h3 class="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider mb-4">Solver Tools</h3> <ul class="space-y-2.5"><li><a href="/5-letter-wordle-solver" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">5-Letter Wordle Solver</a></li> <li><a href="/quordle-solver" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Quordle Solver</a></li> <li><a href="/nerdle-solver" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Nerdle Solver</a></li> <li><a href="/wordle-analyzer" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Wordle Analyzer</a></li> <li><a href="/solver" class="text-sm text-teal-600 dark:text-teal-400 font-medium hover:text-teal-700 dark:hover:text-teal-300 transition-colors">View All →</a></li></ul></div> <div><h3 class="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider mb-4">Resources</h3> <ul class="space-y-2.5"><li><a href="/guides" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Guides &amp; Tips</a></li> <li><a href="/archive" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Answer Archives</a></li> <li><a href="/about" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">About</a></li> <li><a href="/contact" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Contact</a></li> <li><a href="/editorial-policy" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Editorial Policy</a></li> <li><a href="/privacy-policy" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Privacy</a></li> <li><a href="/terms-of-service" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Terms</a></li></ul></div></div> <div class="mt-12 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-3"><p class="text-xs text-slate-400 dark:text-slate-500">© 2026 WordSolverX. All rights reserved.</p> <p class="text-xs text-slate-400 dark:text-slate-500 text-center">Wordle is a trademark of The New York Times Company. WordSolverX is not affiliated with NYT.</p></div></div></footer><!----></div><!--]--><!--]--><!----><!--]--><!--]--> <!--[-1--><!--]--><!--]--></div>
+</body>
+
+</html>

@@ -1,0 +1,2 @@
+// QuordleAnswerCard.C0dDqS6F.css
+export default ".quordle-answer-spoiler.svelte-9h9fjm .answer-content:where(.svelte-9h9fjm){filter:blur(10px);-webkit-user-select:none;-moz-user-select:none;user-select:none;transition:filter .3s ease}.quordle-answer-spoiler.revealed.svelte-9h9fjm .answer-content:where(.svelte-9h9fjm){filter:none;-webkit-user-select:auto;-moz-user-select:auto;user-select:auto}\n";

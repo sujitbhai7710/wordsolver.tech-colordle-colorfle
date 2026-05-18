@@ -1,0 +1,1 @@
+import{R as r}from"../chunks/D0iwhpLH.js";function o(e,t){throw new r(e,t.toString())}const n=!1;function a(){throw o(301,"/betweenle-answer-today")}const l=Object.freeze(Object.defineProperty({__proto__:null,load:a,prerender:n},Symbol.toStringTag,{value:"Module"}));export{l as universal};

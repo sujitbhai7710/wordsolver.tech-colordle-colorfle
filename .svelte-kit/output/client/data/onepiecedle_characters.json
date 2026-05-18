@@ -1,0 +1,3095 @@
+[
+  {
+    "championId": 0,
+    "championName": "Roronoa Zoro",
+    "alias": [
+      "Zoro-juurou"
+    ],
+    "epithet": [
+      "Pirate Hunter Zoro"
+    ],
+    "gender": "Male",
+    "debut": 3,
+    "debutEpisode": 1,
+    "affiliation": "Straw Hat Pirates",
+    "origin": "East Blue",
+    "status": "Alive",
+    "height": 181,
+    "bloodType": "XF",
+    "bounty": 320000000,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Conqueror",
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 1,
+    "championName": "Nami",
+    "alias": [
+      "Namizo",
+      "O-Nami"
+    ],
+    "epithet": [
+      "Cat Burglar"
+    ],
+    "gender": "Female",
+    "debut": 8,
+    "debutEpisode": 1,
+    "affiliation": "Straw Hat Pirates",
+    "origin": "East Blue",
+    "status": "Alive",
+    "height": 170,
+    "bloodType": "X",
+    "bounty": 66000000,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 2,
+    "championName": "Nico Robin",
+    "alias": [
+      "Miss All Sunday",
+      "O-Robi"
+    ],
+    "epithet": [
+      "Devil Child",
+      "Light of the Revolution"
+    ],
+    "gender": "Female",
+    "debut": 114,
+    "debutEpisode": 67,
+    "affiliation": "Straw Hat Pirates",
+    "origin": "West Blue",
+    "status": "Alive",
+    "height": 188,
+    "bloodType": "S",
+    "bounty": 130000000,
+    "devilFruitName": "Flower-Flower Fruit",
+    "devilFruitJapaneseName": "Hana Hana no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 3,
+    "championName": "Boa Hancock",
+    "alias": [],
+    "epithet": [
+      "Snake Princess",
+      "Pirate Empress"
+    ],
+    "gender": "Female",
+    "debut": 516,
+    "debutEpisode": 409,
+    "affiliation": "Kuja",
+    "origin": "Calm Belt",
+    "status": "Alive",
+    "height": 191,
+    "bloodType": "S",
+    "bounty": 80000000,
+    "devilFruitName": "Love-Love Fruit",
+    "devilFruitJapaneseName": "Mero Mero no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Conqueror",
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 4,
+    "championName": "Carrot",
+    "alias": [],
+    "epithet": [],
+    "gender": "Female",
+    "debut": 804,
+    "debutEpisode": 753,
+    "affiliation": "Mokomo Dukedom",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 161,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 5,
+    "championName": "Sabo",
+    "alias": [
+      "Lucy"
+    ],
+    "epithet": [
+      "Flame Emperor"
+    ],
+    "gender": "Male",
+    "debut": 583,
+    "debutEpisode": 494,
+    "affiliation": "Revolutionary Army",
+    "origin": "East Blue",
+    "status": "Alive",
+    "height": 187,
+    "bloodType": "X",
+    "bounty": 602000000,
+    "devilFruitName": "Flame-Flame Fruit",
+    "devilFruitJapaneseName": "Mera Mera no Mi",
+    "devilFruitType": "Logia",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 6,
+    "championName": "Shanks",
+    "alias": [],
+    "epithet": [
+      "Red-Haired Shanks"
+    ],
+    "gender": "Male",
+    "debut": 1,
+    "debutEpisode": 4,
+    "affiliation": "Red Hair Pirates",
+    "origin": "West Blue",
+    "status": "Alive",
+    "height": 199,
+    "bloodType": "XF",
+    "bounty": 4048900000,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Conqueror",
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 7,
+    "championName": "Charlotte Katakuri",
+    "alias": [],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 860,
+    "debutEpisode": 825,
+    "affiliation": "Big Mom Pirates",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 509,
+    "bloodType": "XF",
+    "bounty": 1057000000,
+    "devilFruitName": "Mochi-Mochi Fruit",
+    "devilFruitJapaneseName": "Mochi Mochi no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Conqueror",
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 8,
+    "championName": "Usopp",
+    "alias": [
+      "Sogeking",
+      "Hana Arashi",
+      "Usoland",
+      "Uso-hachi"
+    ],
+    "epithet": [
+      "King of Snipers",
+      "God",
+      "Hana Arashi"
+    ],
+    "gender": "Male",
+    "debut": 23,
+    "debutEpisode": 8,
+    "affiliation": "Straw Hat Pirates",
+    "origin": "East Blue",
+    "status": "Alive",
+    "height": 176,
+    "bloodType": "S",
+    "bounty": 200000000,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Observation"
+    ]
+  },
+  {
+    "championId": 9,
+    "championName": "Tony Tony Chopper",
+    "alias": [
+      "Chopa-emon"
+    ],
+    "epithet": [
+      "Cotton Candy Lover"
+    ],
+    "gender": "Male",
+    "debut": 134,
+    "debutEpisode": 81,
+    "affiliation": "Straw Hat Pirates",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 90,
+    "bloodType": "X",
+    "bounty": 100,
+    "devilFruitName": "Human-Human Fruit",
+    "devilFruitJapaneseName": "Hito Hito no Mi",
+    "devilFruitType": "Zoan",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 10,
+    "championName": "Jinbe",
+    "alias": [],
+    "epithet": [
+      "Knight of the Sea Jinbe",
+      "Boss Jinbe"
+    ],
+    "gender": "Male",
+    "debut": 528,
+    "debutEpisode": 430,
+    "affiliation": "Straw Hat Pirates",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 301,
+    "bloodType": "F",
+    "bounty": 438000000,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 11,
+    "championName": "Marco",
+    "alias": [],
+    "epithet": [
+      "Marco the Phoenix"
+    ],
+    "gender": "Male",
+    "debut": 234,
+    "debutEpisode": 151,
+    "affiliation": "Whitebeard Pirates",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 203,
+    "bloodType": "X",
+    "bounty": 1374000000,
+    "devilFruitName": "Bird-Bird Fruit, Model: Phoenix",
+    "devilFruitJapaneseName": "Tori Tori no Mi, Model: Phoenix",
+    "devilFruitType": "Zoan",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 12,
+    "championName": "Donquixote Doflamingo",
+    "alias": [
+      "Joker"
+    ],
+    "epithet": [
+      "Heavenly Yaksha"
+    ],
+    "gender": "Male",
+    "debut": 233,
+    "debutEpisode": 151,
+    "affiliation": "Donquixote Pirates",
+    "origin": "Red Line",
+    "status": "Alive",
+    "height": 305,
+    "bloodType": "X",
+    "bounty": 340000000,
+    "devilFruitName": "String-String Fruit",
+    "devilFruitJapaneseName": "Ito Ito no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Conqueror",
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 13,
+    "championName": "Eustass Kid",
+    "alias": [],
+    "epithet": [
+      "Captain"
+    ],
+    "gender": "Male",
+    "debut": 498,
+    "debutEpisode": 392,
+    "affiliation": "Kid Pirates",
+    "origin": "South Blue",
+    "status": "Unknown",
+    "height": 205,
+    "bloodType": "F",
+    "bounty": 3000000000,
+    "devilFruitName": "Magnet-Magnet Fruit",
+    "devilFruitJapaneseName": "Jiki Jiki no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Conqueror",
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 14,
+    "championName": "Kozuki Oden",
+    "alias": [],
+    "epithet": [
+      "Idiot Lord"
+    ],
+    "gender": "Male",
+    "debut": 920,
+    "debutEpisode": 910,
+    "affiliation": "Kozuki Family",
+    "origin": "Grand Line",
+    "status": "Deceased",
+    "height": 382,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Conqueror",
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 15,
+    "championName": "Perona",
+    "alias": [],
+    "epithet": [
+      "Ghost Princess"
+    ],
+    "gender": "Female",
+    "debut": 443,
+    "debutEpisode": 338,
+    "affiliation": "Dracule Mihawk",
+    "origin": "West Blue",
+    "status": "Alive",
+    "height": 160,
+    "bloodType": "XF",
+    "bounty": 0,
+    "devilFruitName": "Hollow-Hollow Fruit",
+    "devilFruitJapaneseName": "Horo Horo no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 16,
+    "championName": "Brook",
+    "alias": [
+      "Hone-kichi",
+      "The Starving Skeleton"
+    ],
+    "epithet": [
+      "Humming Brook",
+      "Soul King"
+    ],
+    "gender": "Male",
+    "debut": 442,
+    "debutEpisode": 337,
+    "affiliation": "Straw Hat Pirates",
+    "origin": "West Blue",
+    "status": "Alive",
+    "height": 277,
+    "bloodType": "X",
+    "bounty": 83000000,
+    "devilFruitName": "Revive-Revive Fruit",
+    "devilFruitJapaneseName": "Yomi Yomi no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 17,
+    "championName": "Smoker",
+    "alias": [],
+    "epithet": [
+      "Smoker the White Hunter",
+      "White Chase Smoker",
+      "Smoke Hunter"
+    ],
+    "gender": "Male",
+    "debut": 97,
+    "debutEpisode": 48,
+    "affiliation": "Marines",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 209,
+    "bloodType": "XF",
+    "bounty": 0,
+    "devilFruitName": "Plume-Plume Fruit",
+    "devilFruitJapaneseName": "Moku Moku no Mi",
+    "devilFruitType": "Logia",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 18,
+    "championName": "Franky",
+    "alias": [
+      "Fra-nosuke"
+    ],
+    "epithet": [
+      "Iron Man Franky",
+      "Cyborg Franky"
+    ],
+    "gender": "Male",
+    "debut": 329,
+    "debutEpisode": 233,
+    "affiliation": "Straw Hat Pirates",
+    "origin": "South Blue",
+    "status": "Alive",
+    "height": 240,
+    "bloodType": "XF",
+    "bounty": 94000000,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 19,
+    "championName": "Buggy",
+    "alias": [],
+    "epithet": [
+      "Buggy the Clown",
+      "Buggy the Star Clown"
+    ],
+    "gender": "Male",
+    "debut": 9,
+    "debutEpisode": 4,
+    "affiliation": "Cross Guild",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 192,
+    "bloodType": "F",
+    "bounty": 15000000,
+    "devilFruitName": "Chop-Chop Fruit",
+    "devilFruitJapaneseName": "Bara Bara no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 20,
+    "championName": "Enel",
+    "alias": [],
+    "epithet": [
+      "God Enel"
+    ],
+    "gender": "Male",
+    "debut": 254,
+    "debutEpisode": 167,
+    "affiliation": "Automata",
+    "origin": "Sky Islands",
+    "status": "Alive",
+    "height": 266,
+    "bloodType": "S",
+    "bounty": 0,
+    "devilFruitName": "Rumble-Rumble Fruit",
+    "devilFruitJapaneseName": "Goro Goro no Mi",
+    "devilFruitType": "Logia",
+    "haki": [
+      "Observation"
+    ]
+  },
+  {
+    "championId": 21,
+    "championName": "Tashigi",
+    "alias": [],
+    "epithet": [],
+    "gender": "Female",
+    "debut": 96,
+    "debutEpisode": 48,
+    "affiliation": "Marines",
+    "origin": "East Blue",
+    "status": "Alive",
+    "height": 170,
+    "bloodType": "S",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 22,
+    "championName": "Vinsmoke Reiju",
+    "alias": [],
+    "epithet": [
+      "Poison Pink"
+    ],
+    "gender": "Female",
+    "debut": 826,
+    "debutEpisode": 784,
+    "affiliation": "Vinsmoke Family",
+    "origin": "North Blue",
+    "status": "Alive",
+    "height": 173,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 23,
+    "championName": "Bartolomeo",
+    "alias": [],
+    "epithet": [
+      "Bartolomeo the Cannibal"
+    ],
+    "gender": "Male",
+    "debut": 705,
+    "debutEpisode": 633,
+    "affiliation": "Barto Club",
+    "origin": "East Blue",
+    "status": "Alive",
+    "height": 220,
+    "bloodType": "X",
+    "bounty": 200000000,
+    "devilFruitName": "Barrier-Barrier Fruit",
+    "devilFruitJapaneseName": "Bari Bari no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 24,
+    "championName": "Rob Lucci",
+    "alias": [],
+    "epithet": [
+      "Massacre Weapon"
+    ],
+    "gender": "Male",
+    "debut": 323,
+    "debutEpisode": 230,
+    "affiliation": "CP0",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 212,
+    "bloodType": "XF",
+    "bounty": 0,
+    "devilFruitName": "Cat-Cat Fruit, Model: Leopard",
+    "devilFruitJapaneseName": "Neko Neko no Mi, Model: Leopard",
+    "devilFruitType": "Zoan",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 25,
+    "championName": "Charlotte Pudding",
+    "alias": [],
+    "epithet": [],
+    "gender": "Female",
+    "debut": 651,
+    "debutEpisode": 571,
+    "affiliation": "Big Mom Pirates",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 166,
+    "bloodType": "XF",
+    "bounty": 0,
+    "devilFruitName": "Memo-Memo Fruit",
+    "devilFruitJapaneseName": "Memo Memo no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 26,
+    "championName": "Shirahoshi",
+    "alias": [
+      "Poseidon"
+    ],
+    "epithet": [
+      "Mermaid Princess"
+    ],
+    "gender": "Female",
+    "debut": 612,
+    "debutEpisode": 531,
+    "affiliation": "Neptune Family",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 1187,
+    "bloodType": "X",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Observation"
+    ]
+  },
+  {
+    "championId": 27,
+    "championName": "Pedro",
+    "alias": [],
+    "epithet": [
+      "Pedro of the Treetops"
+    ],
+    "gender": "Male",
+    "debut": 805,
+    "debutEpisode": 754,
+    "affiliation": "Mokomo Dukedom",
+    "origin": "Grand Line",
+    "status": "Deceased",
+    "height": 233,
+    "bloodType": "F",
+    "bounty": 382000000,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 28,
+    "championName": "Kaido",
+    "alias": [],
+    "epithet": [
+      "Kaidou of the Beasts",
+      "The Strongest Creature",
+      "Wise King"
+    ],
+    "gender": "Male",
+    "debut": 795,
+    "debutEpisode": 736,
+    "affiliation": "Beasts Pirates",
+    "origin": "Grand Line",
+    "status": "Unknown",
+    "height": 710,
+    "bloodType": "F",
+    "bounty": 4611100000,
+    "devilFruitName": "Fish-Fish Fruit, Model: Azure Dragon",
+    "devilFruitJapaneseName": "Uo Uo no Mi, Model: Seiryu",
+    "devilFruitType": "Zoan",
+    "haki": [
+      "Conqueror",
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 29,
+    "championName": "Rebecca",
+    "alias": [],
+    "epithet": [
+      "The Undefeated Woman",
+      "The Phantom Princess"
+    ],
+    "gender": "Female",
+    "debut": 704,
+    "debutEpisode": 633,
+    "affiliation": "Dressrosa",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 171,
+    "bloodType": "S",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Observation"
+    ]
+  },
+  {
+    "championId": 30,
+    "championName": "Paulie",
+    "alias": [],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 323,
+    "debutEpisode": 230,
+    "affiliation": "Galley-La Company",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 195,
+    "bloodType": "S",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 31,
+    "championName": "Gecko Moria",
+    "alias": [],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 449,
+    "debutEpisode": 343,
+    "affiliation": "Thriller Bark Pirates",
+    "origin": "West Blue",
+    "status": "Alive",
+    "height": 692,
+    "bloodType": "X",
+    "bounty": 320000000,
+    "devilFruitName": "Shadow-Shadow Fruit",
+    "devilFruitJapaneseName": "Kage Kage no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 32,
+    "championName": "Monet",
+    "alias": [],
+    "epithet": [],
+    "gender": "Female",
+    "debut": 657,
+    "debutEpisode": 581,
+    "affiliation": "Donquixote Pirates",
+    "origin": "North Blue",
+    "status": "Deceased",
+    "height": 227,
+    "bloodType": "X",
+    "bounty": 0,
+    "devilFruitName": "Snow-Snow Fruit",
+    "devilFruitJapaneseName": "Yuki Yuki no Mi",
+    "devilFruitType": "Logia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 33,
+    "championName": "Kaku",
+    "alias": [],
+    "epithet": [
+      "Mountain Wind"
+    ],
+    "gender": "Male",
+    "debut": 323,
+    "debutEpisode": 230,
+    "affiliation": "CP0",
+    "origin": "East Blue",
+    "status": "Alive",
+    "height": 193,
+    "bloodType": "X",
+    "bounty": 0,
+    "devilFruitName": "Ox-Ox Fruit Giraffe Model",
+    "devilFruitJapaneseName": "Ushi Ushi no Mi, Model: Giraffe",
+    "devilFruitType": "Zoan",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 34,
+    "championName": "Gin",
+    "alias": [],
+    "epithet": [
+      "Gin the Man-Demon"
+    ],
+    "gender": "Male",
+    "debut": 44,
+    "debutEpisode": 21,
+    "affiliation": "Krieg Pirates",
+    "origin": "East Blue",
+    "status": "Unknown",
+    "height": 186,
+    "bloodType": "S",
+    "bounty": 12000000,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 35,
+    "championName": "Kin'emon",
+    "alias": [],
+    "epithet": [
+      "Foxfire Kin'emon"
+    ],
+    "gender": "Male",
+    "debut": 656,
+    "debutEpisode": 580,
+    "affiliation": "Kozuki Family",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 295,
+    "bloodType": "X",
+    "bounty": 0,
+    "devilFruitName": "Garb-Garb Fruit",
+    "devilFruitJapaneseName": "Fuku Fuku no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 36,
+    "championName": "Zeff",
+    "alias": [],
+    "epithet": [
+      "Red-Leg Zeff"
+    ],
+    "gender": "Male",
+    "debut": 43,
+    "debutEpisode": 20,
+    "affiliation": "Baratie",
+    "origin": "East Blue",
+    "status": "Alive",
+    "height": 189,
+    "bloodType": "XF",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 37,
+    "championName": "Kawamatsu",
+    "alias": [
+      "Gyukimaru"
+    ],
+    "epithet": [
+      "Kawamatsu the Kappa",
+      "Yokozuna Kawamatsu"
+    ],
+    "gender": "Male",
+    "debut": 920,
+    "debutEpisode": 910,
+    "affiliation": "Kozuki Family",
+    "origin": "Unknown",
+    "status": "Alive",
+    "height": 271,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 38,
+    "championName": "Monkey D. Luffy",
+    "alias": [
+      "Lucy",
+      "Luffy-tarou",
+      "Luffy-no-Umi",
+      "Joy Boy"
+    ],
+    "epithet": [
+      "Straw Hat Luffy"
+    ],
+    "gender": "Male",
+    "debut": 1,
+    "debutEpisode": 1,
+    "affiliation": "Straw Hat Pirates",
+    "origin": "East Blue",
+    "status": "Alive",
+    "height": 174,
+    "bloodType": "F",
+    "bounty": 3000000000,
+    "devilFruitName": "Gum-Gum Fruit",
+    "devilFruitJapaneseName": "Gomu Gomu no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Conqueror",
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 39,
+    "championName": "Vinsmoke Sanji",
+    "alias": [
+      "Mr. Prince",
+      "San-gorou",
+      "Osoba-mask"
+    ],
+    "epithet": [
+      "Black Leg"
+    ],
+    "gender": "Male",
+    "debut": 43,
+    "debutEpisode": 20,
+    "affiliation": "Straw Hat Pirates",
+    "origin": "North Blue",
+    "status": "Alive",
+    "height": 180,
+    "bloodType": "S (RH-)",
+    "bounty": 330000000,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 40,
+    "championName": "Trafalgar D. Water Law",
+    "alias": [],
+    "epithet": [
+      "Surgeon of Death"
+    ],
+    "gender": "Male",
+    "debut": 498,
+    "debutEpisode": 392,
+    "affiliation": "Heart Pirates",
+    "origin": "North Blue",
+    "status": "Alive",
+    "height": 191,
+    "bloodType": "F",
+    "bounty": 3000000000,
+    "devilFruitName": "Op-Op Fruit",
+    "devilFruitJapaneseName": "Ope Ope no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 41,
+    "championName": "Portgas D. Ace",
+    "alias": [],
+    "epithet": [
+      "Fire Fist Ace"
+    ],
+    "gender": "Male",
+    "debut": 154,
+    "debutEpisode": 91,
+    "affiliation": "Whitebeard Pirates",
+    "origin": "South Blue",
+    "status": "Deceased",
+    "height": 185,
+    "bloodType": "S",
+    "bounty": 550000000,
+    "devilFruitName": "Flame-Flame Fruit",
+    "devilFruitJapaneseName": "Mera Mera no Mi",
+    "devilFruitType": "Logia",
+    "haki": [
+      "Conqueror",
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 42,
+    "championName": "Yamato",
+    "alias": [
+      "Kozuki Oden"
+    ],
+    "epithet": [
+      "Oni Princess"
+    ],
+    "gender": "Female",
+    "debut": 971,
+    "debutEpisode": 972,
+    "affiliation": "Ninja-Pirate-Mink-Samurai Alliance",
+    "origin": "Unknown",
+    "status": "Alive",
+    "height": 263,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "Dog-Dog Fruit, Model: Okuchi-no-Makami",
+    "devilFruitJapaneseName": "Inu Inu no Mi, Model: Okuchi no Makami",
+    "devilFruitType": "Zoan",
+    "haki": [
+      "Conqueror",
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 43,
+    "championName": "Donquixote Rosinante",
+    "alias": [
+      "Corazon"
+    ],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 761,
+    "debutEpisode": 686,
+    "affiliation": "Marines",
+    "origin": "Red Line",
+    "status": "Deceased",
+    "height": 293,
+    "bloodType": "S",
+    "bounty": 0,
+    "devilFruitName": "Calm-Calm Fruit",
+    "devilFruitJapaneseName": "Nagi Nagi no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 44,
+    "championName": "Crocodile",
+    "alias": [
+      "Mr. 0"
+    ],
+    "epithet": [
+      "Sir Crocodile",
+      "Desert King"
+    ],
+    "gender": "Male",
+    "debut": 126,
+    "debutEpisode": 76,
+    "affiliation": "Cross Guild",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 253,
+    "bloodType": "S",
+    "bounty": 81000000,
+    "devilFruitName": "Sand-Sand Fruit",
+    "devilFruitJapaneseName": "Suna Suna no Mi",
+    "devilFruitType": "Logia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 45,
+    "championName": "Nefertari Vivi",
+    "alias": [
+      "Miss Wednesday",
+      "Ms. Wednesday"
+    ],
+    "epithet": [],
+    "gender": "Female",
+    "debut": 103,
+    "debutEpisode": 62,
+    "affiliation": "Arabasta Kingdom",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 169,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 46,
+    "championName": "Bentham",
+    "alias": [
+      "Mr. 2 Bon Kurei"
+    ],
+    "epithet": [
+      "Bentham of the Wild"
+    ],
+    "gender": "Male",
+    "debut": 129,
+    "debutEpisode": 78,
+    "affiliation": "Newkama Land",
+    "origin": "East Blue",
+    "status": "Alive",
+    "height": 238,
+    "bloodType": "F",
+    "bounty": 32000000,
+    "devilFruitName": "Clone-Clone Fruit",
+    "devilFruitJapaneseName": "Mane Mane no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 47,
+    "championName": "Gol D. Roger",
+    "alias": [
+      "Gold Roger"
+    ],
+    "epithet": [
+      "Pirate King"
+    ],
+    "gender": "Male",
+    "debut": 1,
+    "debutEpisode": 1,
+    "affiliation": "Roger Pirates",
+    "origin": "East Blue",
+    "status": "Deceased",
+    "height": 274,
+    "bloodType": "S",
+    "bounty": 5564800000,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Conqueror",
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 48,
+    "championName": "Dracule Mihawk",
+    "alias": [],
+    "epithet": [
+      "Hawk Eyes Mihawk",
+      "Strongest Swordsman in the World",
+      "Marine Hunter"
+    ],
+    "gender": "Male",
+    "debut": 49,
+    "debutEpisode": 23,
+    "affiliation": "Cross Guild",
+    "origin": "Unknown",
+    "status": "Alive",
+    "height": 198,
+    "bloodType": "S",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 49,
+    "championName": "Edward Newgate",
+    "alias": [],
+    "epithet": [
+      "Whitebeard",
+      "The Strongest Man in the World",
+      "The Man Closest to One Piece"
+    ],
+    "gender": "Male",
+    "debut": 159,
+    "debutEpisode": 95,
+    "affiliation": "Whitebeard Pirates",
+    "origin": "Grand Line",
+    "status": "Deceased",
+    "height": 666,
+    "bloodType": "F",
+    "bounty": 5046000000,
+    "devilFruitName": "Tremor-Tremor Fruit",
+    "devilFruitJapaneseName": "Gura Gura no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Conqueror",
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 50,
+    "championName": "Silvers Rayleigh",
+    "alias": [],
+    "epithet": [
+      "Right Hand of the Pirate King",
+      "Dark King"
+    ],
+    "gender": "Male",
+    "debut": 19,
+    "debutEpisode": 8,
+    "affiliation": "Roger Pirates",
+    "origin": "Unknown",
+    "status": "Alive",
+    "height": 188,
+    "bloodType": "XF",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Conqueror",
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 51,
+    "championName": "Kuzan",
+    "alias": [
+      "Aokiji"
+    ],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 303,
+    "debutEpisode": 225,
+    "affiliation": "Blackbeard Pirates",
+    "origin": "South Blue",
+    "status": "Alive",
+    "height": 298,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "Ice-Ice Fruit",
+    "devilFruitJapaneseName": "Hie Hie no Mi",
+    "devilFruitType": "Logia",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 52,
+    "championName": "X. Drake",
+    "alias": [
+      "Dory"
+    ],
+    "epithet": [
+      "Red Flag"
+    ],
+    "gender": "Male",
+    "debut": 498,
+    "debutEpisode": 392,
+    "affiliation": "Marines",
+    "origin": "North Blue",
+    "status": "Unknown",
+    "height": 233,
+    "bloodType": "X",
+    "bounty": 222000000,
+    "devilFruitName": "Dragon-Dragon Fruit, Model: Allosaurus",
+    "devilFruitJapaneseName": "Ryu Ryu no Mi, Model: Allosaurus",
+    "devilFruitType": "Zoan",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 53,
+    "championName": "Koby",
+    "alias": [],
+    "epithet": [
+      "Hero"
+    ],
+    "gender": "Male",
+    "debut": 2,
+    "debutEpisode": 1,
+    "affiliation": "Marines",
+    "origin": "East Blue",
+    "status": "Alive",
+    "height": 167,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 54,
+    "championName": "Monkey D. Garp",
+    "alias": [],
+    "epithet": [
+      "Garp the Fist",
+      "Hero of the Marines",
+      "Demon/Devil"
+    ],
+    "gender": "Male",
+    "debut": 92,
+    "debutEpisode": 68,
+    "affiliation": "Marines",
+    "origin": "East Blue",
+    "status": "Unknown",
+    "height": 287,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Conqueror",
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 55,
+    "championName": "Marshall D. Teach",
+    "alias": [],
+    "epithet": [
+      "Blackbeard"
+    ],
+    "gender": "Male",
+    "debut": 223,
+    "debutEpisode": 146,
+    "affiliation": "Blackbeard Pirates",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 344,
+    "bloodType": "F",
+    "bounty": 2247600000,
+    "devilFruitName": "Dark-Dark Fruit",
+    "devilFruitJapaneseName": "Yami Yami no Mi",
+    "devilFruitType": "Logia",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 56,
+    "championName": "Kikunojo",
+    "alias": [
+      "O-Kiku"
+    ],
+    "epithet": [
+      "Kikunojo of the Lingering Snow"
+    ],
+    "gender": "Female",
+    "debut": 913,
+    "debutEpisode": 899,
+    "affiliation": "Kozuki Family",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 287,
+    "bloodType": "XF",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 57,
+    "championName": "Kozuki Hiyori",
+    "alias": [
+      "Komurasaki"
+    ],
+    "epithet": [],
+    "gender": "Female",
+    "debut": 909,
+    "debutEpisode": 892,
+    "affiliation": "Kozuki Family",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 170,
+    "bloodType": "XF",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 58,
+    "championName": "Pell",
+    "alias": [],
+    "epithet": [
+      "Pell the Falcon"
+    ],
+    "gender": "Male",
+    "debut": 155,
+    "debutEpisode": 91,
+    "affiliation": "Arabasta Kingdom",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 189,
+    "bloodType": "X",
+    "bounty": 0,
+    "devilFruitName": "Bird-Bird Fruit, Model: Falcon",
+    "devilFruitJapaneseName": "Tori Tori no Mi, Model: Falcon",
+    "devilFruitType": "Zoan",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 59,
+    "championName": "Issho",
+    "alias": [
+      "Fujitora"
+    ],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 701,
+    "debutEpisode": 630,
+    "affiliation": "Marines",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 270,
+    "bloodType": "S",
+    "bounty": 0,
+    "devilFruitName": "Press-Press Fruit",
+    "devilFruitJapaneseName": "Zushi Zushi no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 60,
+    "championName": "Sakazuki",
+    "alias": [
+      "Akainu"
+    ],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 397,
+    "debutEpisode": 278,
+    "affiliation": "Marines",
+    "origin": "North Blue",
+    "status": "Alive",
+    "height": 306,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "Magma-Magma Fruit",
+    "devilFruitJapaneseName": "Magu Magu no Mi",
+    "devilFruitType": "Logia",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 61,
+    "championName": "Kurozumi Tama",
+    "alias": [],
+    "epithet": [],
+    "gender": "Female",
+    "debut": 911,
+    "debutEpisode": 893,
+    "affiliation": "Kurozumi Family",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 108,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "Millet-Millet Fruit",
+    "devilFruitJapaneseName": "Kibi Kibi no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 62,
+    "championName": "Killer",
+    "alias": [
+      "Kamazo the Manslayer"
+    ],
+    "epithet": [
+      "Massacre Soldier"
+    ],
+    "gender": "Male",
+    "debut": 498,
+    "debutEpisode": 392,
+    "affiliation": "Kid Pirates",
+    "origin": "South Blue",
+    "status": "Unknown",
+    "height": 195,
+    "bloodType": "X",
+    "bounty": 200000000,
+    "devilFruitName": "SMILE",
+    "devilFruitJapaneseName": "SMILE",
+    "devilFruitType": "Zoan",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 63,
+    "championName": "Ulti",
+    "alias": [],
+    "epithet": [],
+    "gender": "Female",
+    "debut": 977,
+    "debutEpisode": 982,
+    "affiliation": "Beasts Pirates",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 173,
+    "bloodType": "XF",
+    "bounty": 400000000,
+    "devilFruitName": "Dragon-Dragon Fruit, Pachycephalosaurus Model",
+    "devilFruitJapaneseName": "Ryu Ryu no Mi, Model: Pachycephalosaurus",
+    "devilFruitType": "Zoan",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 64,
+    "championName": "Benn. Beckman",
+    "alias": [],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 1,
+    "debutEpisode": 4,
+    "affiliation": "Red Hair Pirates",
+    "origin": "North Blue",
+    "status": "Alive",
+    "height": 206,
+    "bloodType": "X",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Armament"
+    ]
+  },
+  {
+    "championId": 65,
+    "championName": "Koala",
+    "alias": [],
+    "epithet": [],
+    "gender": "Female",
+    "debut": 622,
+    "debutEpisode": 541,
+    "affiliation": "Revolutionary Army",
+    "origin": "Unknown",
+    "status": "Alive",
+    "height": 160,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 66,
+    "championName": "Borsalino",
+    "alias": [
+      "Kizaru"
+    ],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 504,
+    "debutEpisode": 398,
+    "affiliation": "Marines",
+    "origin": "North Blue",
+    "status": "Alive",
+    "height": 302,
+    "bloodType": "XF",
+    "bounty": 0,
+    "devilFruitName": "Glint-Glint Fruit",
+    "devilFruitJapaneseName": "Pika Pika no Mi",
+    "devilFruitType": "Logia",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 67,
+    "championName": "Monkey D. Dragon",
+    "alias": [],
+    "epithet": [
+      "Rebellious Dragon",
+      "World's Worst Criminal"
+    ],
+    "gender": "Male",
+    "debut": 100,
+    "debutEpisode": 52,
+    "affiliation": "Revolutionary Army",
+    "origin": "East Blue",
+    "status": "Alive",
+    "height": 256,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 68,
+    "championName": "Bepo",
+    "alias": [],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 498,
+    "debutEpisode": 392,
+    "affiliation": "Heart Pirates",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 240,
+    "bloodType": "S",
+    "bounty": 500,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 69,
+    "championName": "Hiriluk",
+    "alias": [],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 141,
+    "debutEpisode": 85,
+    "affiliation": "None",
+    "origin": "Grand Line",
+    "status": "Deceased",
+    "height": 213,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 70,
+    "championName": "Urouge",
+    "alias": [],
+    "epithet": [
+      "Mad Monk"
+    ],
+    "gender": "Male",
+    "debut": 498,
+    "debutEpisode": 392,
+    "affiliation": "Fallen Monk Pirates",
+    "origin": "Sky Islands",
+    "status": "Alive",
+    "height": 388,
+    "bloodType": "S",
+    "bounty": 108000000,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "Unknown",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 71,
+    "championName": "Senor Pink",
+    "alias": [],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 702,
+    "debutEpisode": 632,
+    "affiliation": "Donquixote Pirates",
+    "origin": "North Blue",
+    "status": "Alive",
+    "height": 244,
+    "bloodType": "X",
+    "bounty": 58000000,
+    "devilFruitName": "Swim-Swim Fruit",
+    "devilFruitJapaneseName": "Sui Sui no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 72,
+    "championName": "Cavendish",
+    "alias": [
+      "Hakuba"
+    ],
+    "epithet": [
+      "Cavendish of the White Horse",
+      "Pirate Prince"
+    ],
+    "gender": "Male",
+    "debut": 704,
+    "debutEpisode": 632,
+    "affiliation": "Beautiful Pirates",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 208,
+    "bloodType": "XF",
+    "bounty": 330000000,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 73,
+    "championName": "Emporio Ivankov",
+    "alias": [],
+    "epithet": [
+      "Okama King",
+      "Miracle Person"
+    ],
+    "gender": "Male",
+    "debut": 537,
+    "debutEpisode": 438,
+    "affiliation": "Revolutionary Army",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 449,
+    "bloodType": "XF",
+    "bounty": 100000000,
+    "devilFruitName": "Horm-Horm Fruit",
+    "devilFruitJapaneseName": "Horu Horu no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 74,
+    "championName": "Morgans",
+    "alias": [],
+    "epithet": [
+      "Big News"
+    ],
+    "gender": "Male",
+    "debut": 860,
+    "debutEpisode": 828,
+    "affiliation": "World Economy News Paper",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 305,
+    "bloodType": "XF",
+    "bounty": 0,
+    "devilFruitName": "Bird-Bird Fruit Model Albatross",
+    "devilFruitJapaneseName": "Tori Tori no Mi, Model: Albatross",
+    "devilFruitType": "Zoan",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 75,
+    "championName": "Bellemere",
+    "alias": [],
+    "epithet": [],
+    "gender": "Female",
+    "debut": 77,
+    "debutEpisode": 32,
+    "affiliation": "Marines",
+    "origin": "East Blue",
+    "status": "Deceased",
+    "height": 186,
+    "bloodType": "S",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 76,
+    "championName": "Basil Hawkins",
+    "alias": [],
+    "epithet": [
+      "Magician"
+    ],
+    "gender": "Male",
+    "debut": 498,
+    "debutEpisode": 392,
+    "affiliation": "Hawkins Pirates",
+    "origin": "North Blue",
+    "status": "Unknown",
+    "height": 210,
+    "bloodType": "S",
+    "bounty": 320000000,
+    "devilFruitName": "Straw-Straw Fruit",
+    "devilFruitJapaneseName": "Wara Wara no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 77,
+    "championName": "Denjiro",
+    "alias": [
+      "Kyoshiro",
+      "Ushimitsu Kozo"
+    ],
+    "epithet": [
+      "Dozing Kyoshiro"
+    ],
+    "gender": "Male",
+    "debut": 919,
+    "debutEpisode": 909,
+    "affiliation": "Kozuki Family",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 306,
+    "bloodType": "XF",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 78,
+    "championName": "Jewelry. Bonney",
+    "alias": [
+      "Conney"
+    ],
+    "epithet": [
+      "Big Eater"
+    ],
+    "gender": "Female",
+    "debut": 498,
+    "debutEpisode": 392,
+    "affiliation": "Bonney Pirates",
+    "origin": "South Blue",
+    "status": "Alive",
+    "height": 174,
+    "bloodType": "F",
+    "bounty": 140000000,
+    "devilFruitName": "Age-Age Fruit",
+    "devilFruitJapaneseName": "Toshi Toshi no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Armament"
+    ]
+  },
+  {
+    "championId": 79,
+    "championName": "Charlotte Linlin",
+    "alias": [
+      "O-Lin"
+    ],
+    "epithet": [
+      "Big Mom",
+      "Evil Spirit"
+    ],
+    "gender": "Female",
+    "debut": 651,
+    "debutEpisode": 571,
+    "affiliation": "Big Mom Pirates",
+    "origin": "Grand Line",
+    "status": "Unknown",
+    "height": 880,
+    "bloodType": "X",
+    "bounty": 4388000000,
+    "devilFruitName": "Soul-Soul Fruit",
+    "devilFruitJapaneseName": "Soru Soru no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Conqueror",
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 80,
+    "championName": "Wyper",
+    "alias": [],
+    "epithet": [
+      "Berserker"
+    ],
+    "gender": "Male",
+    "debut": 237,
+    "debutEpisode": 153,
+    "affiliation": "Shandia",
+    "origin": "Sky Islands",
+    "status": "Alive",
+    "height": 183,
+    "bloodType": "X",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 81,
+    "championName": "Charlotte Mont d'Or",
+    "alias": [],
+    "epithet": [
+      "Scribe"
+    ],
+    "gender": "Male",
+    "debut": 829,
+    "debutEpisode": 789,
+    "affiliation": "Big Mom Pirates",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 260,
+    "bloodType": "X",
+    "bounty": 120000000,
+    "devilFruitName": "Book-Book Fruit",
+    "devilFruitJapaneseName": "Buku Buku no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 82,
+    "championName": "Caesar Clown",
+    "alias": [
+      "Cedar",
+      "'Gangster' Gastino"
+    ],
+    "epithet": [
+      "Master"
+    ],
+    "gender": "Male",
+    "debut": 658,
+    "debutEpisode": 581,
+    "affiliation": "Germa Kingdom",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 309,
+    "bloodType": "X",
+    "bounty": 300000000,
+    "devilFruitName": "Gas-Gas Fruit",
+    "devilFruitJapaneseName": "Gasu Gasu no Mi",
+    "devilFruitType": "Logia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 83,
+    "championName": "Charlotte Perospero",
+    "alias": [],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 834,
+    "debutEpisode": 795,
+    "affiliation": "Big Mom Pirates",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 333,
+    "bloodType": "X",
+    "bounty": 700000000,
+    "devilFruitName": "Lick-Lick Fruit",
+    "devilFruitJapaneseName": "Pero Pero no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 84,
+    "championName": "Bartholomew Kuma",
+    "alias": [
+      "PX-0"
+    ],
+    "epithet": [
+      "Tyrant"
+    ],
+    "gender": "Male",
+    "debut": 233,
+    "debutEpisode": 151,
+    "affiliation": "Revolutionary Army",
+    "origin": "South Blue",
+    "status": "Alive",
+    "height": 689,
+    "bloodType": "X",
+    "bounty": 296000000,
+    "devilFruitName": "Paw-Paw Fruit",
+    "devilFruitJapaneseName": "Nikyu Nikyu no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Armament"
+    ]
+  },
+  {
+    "championId": 85,
+    "championName": "Kyros",
+    "alias": [
+      "Thunder Soldier of Rage"
+    ],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 702,
+    "debutEpisode": 631,
+    "affiliation": "Riku Family",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 298,
+    "bloodType": "S",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 86,
+    "championName": "Arlong",
+    "alias": [],
+    "epithet": [
+      "Arlong the Saw"
+    ],
+    "gender": "Male",
+    "debut": 69,
+    "debutEpisode": 31,
+    "affiliation": "Arlong Pirates",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 263,
+    "bloodType": "F",
+    "bounty": 20000000,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 87,
+    "championName": "Iceburg",
+    "alias": [],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 323,
+    "debutEpisode": 230,
+    "affiliation": "Galley-La Company",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 199,
+    "bloodType": "X",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 88,
+    "championName": "Kalifa",
+    "alias": [],
+    "epithet": [],
+    "gender": "Female",
+    "debut": 323,
+    "debutEpisode": 230,
+    "affiliation": "CP0",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 185,
+    "bloodType": "XF",
+    "bounty": 0,
+    "devilFruitName": "Bubble-Bubble Fruit",
+    "devilFruitJapaneseName": "Awa Awa no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 89,
+    "championName": "Kozuki Momonosuke",
+    "alias": [],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 684,
+    "debutEpisode": 609,
+    "affiliation": "Kozuki Family",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 110,
+    "bloodType": "X",
+    "bounty": 0,
+    "devilFruitName": "Fish-Fish Fruit, Model: Azure Dragon",
+    "devilFruitJapaneseName": "Uo Uo no Mi, Model: Seiryu",
+    "devilFruitType": "Zoan",
+    "haki": [
+      "Observation"
+    ]
+  },
+  {
+    "championId": 90,
+    "championName": "Oars",
+    "alias": [],
+    "epithet": [
+      "Devil",
+      "Oars the Continent-Puller"
+    ],
+    "gender": "Male",
+    "debut": 456,
+    "debutEpisode": 350,
+    "affiliation": "Thriller Bark Pirates",
+    "origin": "North Blue",
+    "status": "Deceased",
+    "height": 6700,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 91,
+    "championName": "Galdino",
+    "alias": [
+      "Mr. 3"
+    ],
+    "epithet": [
+      "Loan Shark"
+    ],
+    "gender": "Male",
+    "debut": 117,
+    "debutEpisode": 70,
+    "affiliation": "Cross Guild",
+    "origin": "South Blue",
+    "status": "Alive",
+    "height": 179,
+    "bloodType": "F",
+    "bounty": 24000000,
+    "devilFruitName": "Wax-Wax Fruit",
+    "devilFruitJapaneseName": "Doru Doru no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 92,
+    "championName": "Hody Jones",
+    "alias": [],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 608,
+    "debutEpisode": 527,
+    "affiliation": "New Fish-Man Pirates",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 331,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 93,
+    "championName": "Capone Bege",
+    "alias": [],
+    "epithet": [
+      "Gang"
+    ],
+    "gender": "Male",
+    "debut": 498,
+    "debutEpisode": 392,
+    "affiliation": "Fire Tank Pirates",
+    "origin": "West Blue",
+    "status": "Alive",
+    "height": 166,
+    "bloodType": "S",
+    "bounty": 350000000,
+    "devilFruitName": "Castle-Castle Fruit",
+    "devilFruitJapaneseName": "Shiro Shiro no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 94,
+    "championName": "Blueno",
+    "alias": [],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 325,
+    "debutEpisode": 230,
+    "affiliation": "CP0",
+    "origin": "North Blue",
+    "status": "Alive",
+    "height": 258,
+    "bloodType": "X",
+    "bounty": 0,
+    "devilFruitName": "Door-Door Fruit",
+    "devilFruitJapaneseName": "Doa Doa no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 95,
+    "championName": "Camie",
+    "alias": [],
+    "epithet": [],
+    "gender": "Female",
+    "debut": 490,
+    "debutEpisode": 385,
+    "affiliation": "Takoyaki 8",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 197,
+    "bloodType": "X",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 96,
+    "championName": "Spandam",
+    "alias": [],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 355,
+    "debutEpisode": 249,
+    "affiliation": "CP0",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 192,
+    "bloodType": "XF",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 97,
+    "championName": "Don Krieg",
+    "alias": [],
+    "epithet": [
+      "Don Krieg",
+      "Pirate Fleet Admiral",
+      "Ruler of the East Blue",
+      "Foul Play Krieg"
+    ],
+    "gender": "Male",
+    "debut": 45,
+    "debutEpisode": 21,
+    "affiliation": "Krieg Pirates",
+    "origin": "East Blue",
+    "status": "Alive",
+    "height": 243,
+    "bloodType": "XF",
+    "bounty": 17000000,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 98,
+    "championName": "Viola",
+    "alias": [
+      "Violet"
+    ],
+    "epithet": [],
+    "gender": "Female",
+    "debut": 703,
+    "debutEpisode": 632,
+    "affiliation": "Riku Family",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 178,
+    "bloodType": "X",
+    "bounty": 0,
+    "devilFruitName": "Glare-Glare Fruit",
+    "devilFruitJapaneseName": "Giro Giro no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 99,
+    "championName": "Kuro",
+    "alias": [
+      "Klahadore"
+    ],
+    "epithet": [
+      "Kuro of a Hundred Plans"
+    ],
+    "gender": "Male",
+    "debut": 23,
+    "debutEpisode": 9,
+    "affiliation": "Black Cat Pirates",
+    "origin": "East Blue",
+    "status": "Alive",
+    "height": 207,
+    "bloodType": "X",
+    "bounty": 16000000,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 100,
+    "championName": "Kurozumi Kanjuro",
+    "alias": [],
+    "epithet": [
+      "Evening Shower",
+      "Ghost of Kibi"
+    ],
+    "gender": "Male",
+    "debut": 700,
+    "debutEpisode": 629,
+    "affiliation": "Kurozumi Family",
+    "origin": "Unknown",
+    "status": "Deceased",
+    "height": 347,
+    "bloodType": "X",
+    "bounty": 0,
+    "devilFruitName": "Brush-Brush Fruit",
+    "devilFruitJapaneseName": "Fude Fude no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 101,
+    "championName": "Bellamy",
+    "alias": [],
+    "epithet": [
+      "Bellamy the Hyena",
+      "Deadly Bullet of Dressrosa",
+      "The Big-Time Rookie"
+    ],
+    "gender": "Male",
+    "debut": 222,
+    "debutEpisode": 146,
+    "affiliation": "Donquixote Pirates",
+    "origin": "North Blue",
+    "status": "Alive",
+    "height": 240,
+    "bloodType": "F",
+    "bounty": 195000000,
+    "devilFruitName": "Spring-Spring Fruit",
+    "devilFruitJapaneseName": "Bane Bane no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 102,
+    "championName": "Inuarashi",
+    "alias": [],
+    "epithet": [
+      "Duke Inuarashi",
+      "Ruler of Day"
+    ],
+    "gender": "Male",
+    "debut": 808,
+    "debutEpisode": 756,
+    "affiliation": "Mokomo Dukedom",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 511,
+    "bloodType": "X",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 103,
+    "championName": "Sengoku",
+    "alias": [],
+    "epithet": [
+      "Sengoku the Buddha",
+      "The Resourceful General"
+    ],
+    "gender": "Male",
+    "debut": 234,
+    "debutEpisode": 151,
+    "affiliation": "Marines",
+    "origin": "South Blue",
+    "status": "Alive",
+    "height": 278,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "Human-Human Fruit, Model: Buddha",
+    "devilFruitJapaneseName": "Hito Hito no Mi, Model: Daibutsu",
+    "devilFruitType": "Zoan",
+    "haki": [
+      "Conqueror",
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 104,
+    "championName": "Foxy",
+    "alias": [],
+    "epithet": [
+      "Silver Fox"
+    ],
+    "gender": "Male",
+    "debut": 305,
+    "debutEpisode": 207,
+    "affiliation": "Foxy Pirates",
+    "origin": "South Blue",
+    "status": "Alive",
+    "height": 180,
+    "bloodType": "S",
+    "bounty": 24000000,
+    "devilFruitName": "Slow-Slow Fruit",
+    "devilFruitJapaneseName": "Noro Noro no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 105,
+    "championName": "Jabra",
+    "alias": [],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 375,
+    "debutEpisode": 264,
+    "affiliation": "CP9",
+    "origin": "North Blue",
+    "status": "Alive",
+    "height": 212,
+    "bloodType": "S",
+    "bounty": 0,
+    "devilFruitName": "Mutt-Mutt Fruit Wolf Model",
+    "devilFruitJapaneseName": "Inu Inu no Mi, Model: Wolf",
+    "devilFruitType": "Zoan",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 106,
+    "championName": "Nekomamushi",
+    "alias": [],
+    "epithet": [
+      "Master Nekomamushi",
+      "Ruler of Night"
+    ],
+    "gender": "Male",
+    "debut": 809,
+    "debutEpisode": 756,
+    "affiliation": "Mokomo Dukedom",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 522,
+    "bloodType": "S",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 107,
+    "championName": "Charlotte Brulee",
+    "alias": [],
+    "epithet": [],
+    "gender": "Female",
+    "debut": 831,
+    "debutEpisode": 791,
+    "affiliation": "Big Mom Pirates",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 350,
+    "bloodType": "S",
+    "bounty": 0,
+    "devilFruitName": "Mirror-Mirror Fruit",
+    "devilFruitJapaneseName": "Mira Mira no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 108,
+    "championName": "Daz Bones",
+    "alias": [
+      "Mr. 1"
+    ],
+    "epithet": [
+      "The Killer"
+    ],
+    "gender": "Male",
+    "debut": 160,
+    "debutEpisode": 103,
+    "affiliation": "Cross Guild",
+    "origin": "West Blue",
+    "status": "Alive",
+    "height": 212,
+    "bloodType": "F",
+    "bounty": 75000000,
+    "devilFruitName": "Dice-Dice Fruit",
+    "devilFruitJapaneseName": "Supa Supa no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 109,
+    "championName": "Kureha",
+    "alias": [
+      "Doctorine"
+    ],
+    "epithet": [
+      "Witch",
+      "Master of Doctors"
+    ],
+    "gender": "Female",
+    "debut": 134,
+    "debutEpisode": 80,
+    "affiliation": "Sakura Kingdom",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 188,
+    "bloodType": "S",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 110,
+    "championName": "Nojiko",
+    "alias": [],
+    "epithet": [],
+    "gender": "Female",
+    "debut": 70,
+    "debutEpisode": 31,
+    "affiliation": "None",
+    "origin": "East Blue",
+    "status": "Alive",
+    "height": 170,
+    "bloodType": "S",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 111,
+    "championName": "Raizo",
+    "alias": [],
+    "epithet": [
+      "Raizo of the Mist"
+    ],
+    "gender": "Male",
+    "debut": 817,
+    "debutEpisode": 768,
+    "affiliation": "Kozuki Family",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 311,
+    "bloodType": "X",
+    "bounty": 0,
+    "devilFruitName": "Scroll-Scroll Fruit",
+    "devilFruitJapaneseName": "Maki Maki no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 112,
+    "championName": "Mont Blanc Noland",
+    "alias": [],
+    "epithet": [
+      "Liar Noland"
+    ],
+    "gender": "Male",
+    "debut": 286,
+    "debutEpisode": 187,
+    "affiliation": "Lvneel",
+    "origin": "North Blue",
+    "status": "Deceased",
+    "height": 220,
+    "bloodType": "S",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 113,
+    "championName": "Kaya",
+    "alias": [],
+    "epithet": [],
+    "gender": "Female",
+    "debut": 23,
+    "debutEpisode": 9,
+    "affiliation": "None",
+    "origin": "East Blue",
+    "status": "Alive",
+    "height": 169,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 114,
+    "championName": "Magellan",
+    "alias": [],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 528,
+    "debutEpisode": 425,
+    "affiliation": "Impel Down",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 491,
+    "bloodType": "X",
+    "bounty": 0,
+    "devilFruitName": "Venom-Venom Fruit",
+    "devilFruitJapaneseName": "Doku Doku no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 115,
+    "championName": "Pekoms",
+    "alias": [
+      "Nazoms"
+    ],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 651,
+    "debutEpisode": 570,
+    "affiliation": "Big Mom Pirates",
+    "origin": "Grand Line",
+    "status": "Unknown",
+    "height": 232,
+    "bloodType": "S",
+    "bounty": 330000000,
+    "devilFruitName": "Turtle-Turtle Fruit",
+    "devilFruitJapaneseName": "Kame Kame no Mi",
+    "devilFruitType": "Zoan",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 116,
+    "championName": "Vinsmoke Judge",
+    "alias": [],
+    "epithet": [
+      "Garuda"
+    ],
+    "gender": "Male",
+    "debut": 832,
+    "debutEpisode": 793,
+    "affiliation": "Vinsmoke Family",
+    "origin": "North Blue",
+    "status": "Alive",
+    "height": 272,
+    "bloodType": "S",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Armament"
+    ]
+  },
+  {
+    "championId": 117,
+    "championName": "Diamante",
+    "alias": [],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 700,
+    "debutEpisode": 629,
+    "affiliation": "Donquixote Pirates",
+    "origin": "North Blue",
+    "status": "Alive",
+    "height": 525,
+    "bloodType": "S",
+    "bounty": 99000000,
+    "devilFruitName": "Ripple-Ripple Fruit",
+    "devilFruitJapaneseName": "Hira Hira no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 118,
+    "championName": "Pica",
+    "alias": [],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 700,
+    "debutEpisode": 629,
+    "affiliation": "Donquixote Pirates",
+    "origin": "North Blue",
+    "status": "Alive",
+    "height": 470,
+    "bloodType": "X",
+    "bounty": 99000000,
+    "devilFruitName": "Stone-Stone Fruit",
+    "devilFruitJapaneseName": "Ishi Ishi no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 119,
+    "championName": "Mont Blanc Cricket",
+    "alias": [],
+    "epithet": [],
+    "gender": "Male",
+    "debut": 227,
+    "debutEpisode": 148,
+    "affiliation": "Saruyama Alliance",
+    "origin": "North Blue",
+    "status": "Alive",
+    "height": 242,
+    "bloodType": "S",
+    "bounty": 25000000,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 120,
+    "championName": "Caribou",
+    "alias": [],
+    "epithet": [
+      "Wet-Haired Caribou"
+    ],
+    "gender": "Male",
+    "debut": 600,
+    "debutEpisode": 519,
+    "affiliation": "Caribou Pirates",
+    "origin": "North Blue",
+    "status": "Alive",
+    "height": 228,
+    "bloodType": "XF",
+    "bounty": 210000000,
+    "devilFruitName": "Swamp-Swamp Fruit",
+    "devilFruitJapaneseName": "Numa Numa no Mi",
+    "devilFruitType": "Logia",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 121,
+    "championName": "Charlotte Chiffon",
+    "alias": [],
+    "epithet": [],
+    "gender": "Female",
+    "debut": 825,
+    "debutEpisode": 783,
+    "affiliation": "Fire Tank Pirates",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 215,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 122,
+    "championName": "Wanda",
+    "alias": [],
+    "epithet": [],
+    "gender": "Female",
+    "debut": 804,
+    "debutEpisode": 753,
+    "affiliation": "Mokomo Dukedom",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 181,
+    "bloodType": "F",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 123,
+    "championName": "Hogback",
+    "alias": [],
+    "epithet": [
+      "Doctor Hogback",
+      "Genius Surgeon"
+    ],
+    "gender": "Male",
+    "debut": 446,
+    "debutEpisode": 340,
+    "affiliation": "Thriller Bark Pirates",
+    "origin": "West Blue",
+    "status": "Alive",
+    "height": 223,
+    "bloodType": "XF",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 124,
+    "championName": "Brogy",
+    "alias": [],
+    "epithet": [
+      "Brogy the Red Ogre"
+    ],
+    "gender": "Male",
+    "debut": 115,
+    "debutEpisode": 71,
+    "affiliation": "Giant Warrior Pirates",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 2130,
+    "bloodType": "F",
+    "bounty": 100000000,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 125,
+    "championName": "Jesus Burgess",
+    "alias": [
+      "Mr. Store"
+    ],
+    "epithet": [
+      "Champion"
+    ],
+    "gender": "Male",
+    "debut": 222,
+    "debutEpisode": 146,
+    "affiliation": "Blackbeard Pirates",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 355,
+    "bloodType": "F",
+    "bounty": 20000000,
+    "devilFruitName": "Strong-Strong Fruit",
+    "devilFruitJapaneseName": "Riki Riki no Mi",
+    "devilFruitType": "Paramecia",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 126,
+    "championName": "Ashura Doji",
+    "alias": [
+      "Shutenmaru"
+    ],
+    "epithet": [
+      "Strongest Monster of Kuri"
+    ],
+    "gender": "Male",
+    "debut": 920,
+    "debutEpisode": 910,
+    "affiliation": "Mt. Atama Thieves",
+    "origin": "Grand Line",
+    "status": "Deceased",
+    "height": 544,
+    "bloodType": "X",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Observation",
+      "Armament"
+    ]
+  },
+  {
+    "championId": 127,
+    "championName": "Dorry",
+    "alias": [],
+    "epithet": [
+      "Dorry the Blue Ogre"
+    ],
+    "gender": "Male",
+    "debut": 116,
+    "debutEpisode": 71,
+    "affiliation": "Giant Warrior Pirates",
+    "origin": "Grand Line",
+    "status": "Alive",
+    "height": 2260,
+    "bloodType": "F",
+    "bounty": 100000000,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "None"
+    ]
+  },
+  {
+    "championId": 128,
+    "championName": "Shimotsuki Ryuma",
+    "alias": [],
+    "epithet": [
+      "Legendary Samurai",
+      "Sword God",
+      "Ryuma de King"
+    ],
+    "gender": "Male",
+    "debut": 448,
+    "debutEpisode": 342,
+    "affiliation": "Thriller Bark Pirates",
+    "origin": "Grand Line",
+    "status": "Deceased",
+    "height": 179,
+    "bloodType": "XF",
+    "bounty": 0,
+    "devilFruitName": "None",
+    "devilFruitJapaneseName": "None",
+    "devilFruitType": "None",
+    "haki": [
+      "Armament"
+    ]
+  }
+]

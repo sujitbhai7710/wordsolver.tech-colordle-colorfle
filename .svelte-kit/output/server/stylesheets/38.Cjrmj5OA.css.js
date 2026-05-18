@@ -1,0 +1,2 @@
+// 38.Cjrmj5OA.css
+export default ".contexto-answer-word.svelte-1enn5fe{filter:blur(12px);transition:filter .3s ease;-webkit-user-select:none;-moz-user-select:none;user-select:none}.contexto-answer-word.revealed.svelte-1enn5fe{filter:none;-webkit-user-select:auto;-moz-user-select:auto;user-select:auto}\n";

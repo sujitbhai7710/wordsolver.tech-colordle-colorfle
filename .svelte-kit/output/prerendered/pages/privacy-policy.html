@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+        <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" /></noscript>
+        <style>
+                html {
+                        background: #ffffff;
+                }
+
+                body {
+                        margin: 0;
+                        min-height: 100vh;
+                        background: #ffffff;
+                        color: #0f172a;
+                        font-family:
+                                'Plus Jakarta Sans',
+                                'Segoe UI',
+                                system-ui,
+                                -apple-system,
+                                BlinkMacSystemFont,
+                                'Helvetica Neue',
+                                sans-serif;
+                        -webkit-font-smoothing: antialiased;
+                        -moz-osx-font-smoothing: grayscale;
+                }
+
+                a {
+                        color: inherit;
+                        text-decoration: none;
+                }
+
+                img {
+                        display: block;
+                        max-width: 100%;
+                        height: auto;
+                }
+
+                .site-shell {
+                        min-height: 100vh;
+                        display: flex;
+                        flex-direction: column;
+                        background: #ffffff;
+                }
+
+                .site-main {
+                        flex: 1 1 auto;
+                }
+
+                body[data-theme='dark'],
+                [data-theme='dark'] .site-shell {
+                        background: #0f172a;
+                        color: #f8fafc;
+                }
+        </style>
+        <script>
+                (function () {
+                        var GA_ID = 'G-8QRMXK049Z';
+                        window.dataLayer = window.dataLayer || [];
+                        window.__wordsolverxQueuedGtagCalls = window.__wordsolverxQueuedGtagCalls || [];
+
+                        function queueGtagCall() {
+                                var args = Array.prototype.slice.call(arguments);
+                                window.__wordsolverxQueuedGtagCalls.push(args);
+                        }
+
+                        window.gtag = window.gtag || queueGtagCall;
+
+                        function sendPageView() {
+                                if (!window.gtag) return;
+                                window.gtag('event', 'page_view', {
+                                        page_path: window.location.pathname + window.location.search,
+                                        page_location: window.location.href,
+                                        page_title: document.title
+                                });
+                        }
+
+                        function flushQueuedCalls() {
+                                var queue = window.__wordsolverxQueuedGtagCalls || [];
+                                var hadQueuedPageView = false;
+
+                                window.__wordsolverxQueuedGtagCalls = [];
+                                for (var i = 0; i < queue.length; i += 1) {
+                                        var args = queue[i];
+                                        if (args[0] === 'event' && args[1] === 'page_view') {
+                                                hadQueuedPageView = true;
+                                        }
+                                        window.gtag.apply(window, args);
+                                }
+
+                                if (!hadQueuedPageView) {
+                                        sendPageView();
+                                }
+                        }
+
+                        function loadAnalytics() {
+                                if (window.__wordsolverxAnalyticsLoaded) return;
+                                window.__wordsolverxAnalyticsLoaded = true;
+
+                                var script = document.createElement('script');
+                                script.async = true;
+                                script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+                                script.onload = function () {
+                                        window.gtag = function () {
+                                                window.dataLayer.push(arguments);
+                                        };
+                                        window.gtag('js', new Date());
+                                        window.gtag('config', GA_ID, { send_page_view: false });
+                                        flushQueuedCalls();
+                                };
+                                document.head.appendChild(script);
+                        }
+
+                        window.__wordsolverxLoadAnalytics = loadAnalytics;
+
+                        function scheduleAnalytics() {
+                                var interactionEvents = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
+                                var cleanup = function () {
+                                        for (var i = 0; i < interactionEvents.length; i += 1) {
+                                                window.removeEventListener(interactionEvents[i], loadAfterInteraction);
+                                        }
+                                };
+                                var loadAfterInteraction = function () {
+                                        cleanup();
+                                        loadAnalytics();
+                                };
+
+                                for (var i = 0; i < interactionEvents.length; i += 1) {
+                                        window.addEventListener(interactionEvents[i], loadAfterInteraction, {
+                                                once: true,
+                                                passive: true
+                                        });
+                                }
+
+                                window.addEventListener(
+                                        'load',
+                                        function () {
+                                                window.setTimeout(function () {
+                                                        cleanup();
+                                                        loadAnalytics();
+                                                }, 15000);
+                                        },
+                                        { once: true }
+                                );
+                        }
+
+                        scheduleAnalytics();
+
+                        function updateCardFilter(input) {
+                                var group = input.getAttribute('data-card-filter-input');
+                                if (!group) return;
+
+                                var query = input.value.trim().toLowerCase();
+                                var items = document.querySelectorAll('[data-card-filter-item="' + group + '"]');
+                                var visibleBySection = {};
+
+                                items.forEach(function (item) {
+                                        var haystack = (item.getAttribute('data-search-text') || '').toLowerCase();
+                                        var section = item.getAttribute('data-filter-section') || '';
+                                        var isVisible = !query || haystack.indexOf(query) !== -1;
+                                        item.hidden = !isVisible;
+                                        if (isVisible) {
+                                                visibleBySection[section] = true;
+                                        }
+                                });
+
+                                document
+                                        .querySelectorAll('[data-card-filter-empty="' + group + '"]')
+                                        .forEach(function (emptyState) {
+                                                var section = emptyState.getAttribute('data-empty-scope') || '';
+                                                emptyState.hidden = !query || Boolean(visibleBySection[section]);
+                                        });
+                        }
+
+                        function refreshAllCardFilters() {
+                                document.querySelectorAll('[data-card-filter-input]').forEach(function (input) {
+                                        updateCardFilter(input);
+                                });
+                        }
+
+                        document.addEventListener('input', function (event) {
+                                var target = event.target;
+                                if (target && target.matches && target.matches('[data-card-filter-input]')) {
+                                        updateCardFilter(target);
+                                }
+                        });
+
+                        document.addEventListener('submit', function (event) {
+                                var target = event.target;
+                                if (target && target.matches && target.matches('[data-card-filter-form]')) {
+                                        event.preventDefault();
+                                }
+                        });
+
+                        document.addEventListener('click', function (event) {
+                                var target = event.target;
+                                if (!target || !target.closest) return;
+
+                                var copyButton = target.closest('[data-copy-value]');
+                                if (copyButton) {
+                                        var textToCopy = copyButton.getAttribute('data-copy-value') || '';
+                                        if (!textToCopy || !navigator.clipboard || !navigator.clipboard.writeText) return;
+
+                                        var defaultLabel = copyButton.getAttribute('data-copy-default') || 'Copy';
+                                        var successLabel = copyButton.getAttribute('data-copy-success') || 'Copied';
+
+                                        navigator.clipboard.writeText(textToCopy).then(function () {
+                                                copyButton.textContent = successLabel;
+                                                window.setTimeout(function () {
+                                                        copyButton.textContent = defaultLabel;
+                                                }, 2000);
+                                        });
+                                        return;
+                                }
+
+                                var reloadButton = target.closest('[data-reload-page]');
+                                if (reloadButton) {
+                                        window.location.reload();
+                                }
+                        });
+
+                        if (document.readyState === 'loading') {
+                                document.addEventListener('DOMContentLoaded', refreshAllCardFilters, { once: true });
+                        } else {
+                                refreshAllCardFilters();
+                        }
+
+                        window.addEventListener('pageshow', refreshAllCardFilters);
+                })();
+        </script>
+
+        <!--1rfisux--><link rel="icon" type="image/webp" href="/wordsolverx-favicon.webp"/> <meta name="theme-color" content="#10b981"/> <meta property="og:site_name" content="WordSolverX"/> <meta property="og:locale" content="en_US"/> <meta property="og:image" content="https://wordsolverx.com/wordsolverx.webp"/> <meta property="og:image:width" content="1200"/> <meta property="og:image:height" content="630"/> <meta property="og:image:alt" content="WordSolverX - Daily Puzzle Answers and Solver Tools"/> <meta name="twitter:site" content="@WordSolverX"/> <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp"/> <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/> <link rel="apple-touch-icon" href="/wordsolverx-favicon.webp"/> <link rel="alternate" hreflang="en" href="https://wordsolverx.com/privacy-policy"/> <link rel="alternate" hreflang="x-default" href="https://wordsolverx.com/privacy-policy"/> <meta name="author" content="Preston Hayes"/> <!----><script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"WordSolverX","url":"https://wordsolverx.com","logo":"https://wordsolverx.com/wordsolverx.webp","sameAs":["https://www.facebook.com/wordsolverx/","https://www.pinterest.com/wordsolverx/","https://t.me/wordsolverx"]}</script><!----><!----><!--hqn2sl--><meta name="description" content="Read the WordSolverX privacy policy to understand what information may be collected, how site preferences are stored, and how to contact us about privacy questions."/> <link rel="canonical" href="https://wordsolverx.com/privacy-policy"/> <meta property="og:title" content="Privacy Policy - WordSolverX"/> <meta property="og:description" content="Review the current privacy policy for WordSolverX, including browser storage, technical logs, and contact information."/> <meta property="og:type" content="website"/> <meta property="og:url" content="https://wordsolverx.com/privacy-policy"/> <meta property="og:site_name" content="WordSolverX"/> <meta name="twitter:card" content="summary_large_image"/> <meta name="twitter:title" content="Privacy Policy - WordSolverX"/> <meta name="twitter:description" content="See how WordSolverX handles privacy, browser preferences, and contact requests."/> <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp"/> <!----><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Privacy Policy - WordSolverX","description":"Privacy policy and data handling information for WordSolverX.","url":"https://wordsolverx.com/privacy-policy"}</script><!----><!----><!--1jovwxm--><!--[0--><!----><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://wordsolverx.com"},{"@type":"ListItem","position":2,"name":"Privacy Policy","item":"https://wordsolverx.com/privacy-policy"}]}</script><!----><!--]--><!----><title>Privacy Policy - WordSolverX</title>
+		<link href="./_app/immutable/assets/2.Crsk7s1s.css" rel="stylesheet">
+</head>
+
+<body data-sveltekit-preload-data="hover">
+        <div style="display: contents"><!--[--><!--[0--><!--[--><!--[0--><!--[--><!----> <div class="site-shell min-h-screen flex flex-col bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100"><nav class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/60 dark:border-slate-700/40 shadow-[0_1px_3px_rgb(0_0_0/0.06)]"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex justify-between h-[60px]"><div class="flex items-center gap-2.5"><a href="/" class="flex items-center gap-2.5 group"><div class="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-500 to-teal-700 flex items-center justify-center shadow-[0_2px_8px_rgb(20_184_166/0.3)] group-hover:shadow-[0_2px_12px_rgb(20_184_166/0.45)] transition-shadow duration-200"><span class="text-white font-extrabold text-sm leading-none">W</span></div> <span class="text-[1.15rem] font-extrabold tracking-tight"><span class="text-slate-900 dark:text-slate-50">Word</span><span class="text-teal-600 dark:text-teal-400">Solver</span><span class="text-amber-500 dark:text-amber-400">X</span></span></a></div> <div class="hidden lg:flex lg:items-center lg:gap-0.5"><!--[--><a href="/" class="relative px-3 py-1.5 rounded-md text-[0.8125rem] font-semibold transition-colors duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">Home <!--[-1--><!--]--></a><a href="/today" class="relative px-3 py-1.5 rounded-md text-[0.8125rem] font-semibold transition-colors duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">Today's Answers <!--[-1--><!--]--></a><a href="/solver" class="relative px-3 py-1.5 rounded-md text-[0.8125rem] font-semibold transition-colors duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">Solvers <!--[-1--><!--]--></a><a href="/archive" class="relative px-3 py-1.5 rounded-md text-[0.8125rem] font-semibold transition-colors duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">Archives <!--[-1--><!--]--></a><a href="/guides" class="relative px-3 py-1.5 rounded-md text-[0.8125rem] font-semibold transition-colors duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">Guides <!--[-1--><!--]--></a><a href="/about" class="relative px-3 py-1.5 rounded-md text-[0.8125rem] font-semibold transition-colors duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">About <!--[-1--><!--]--></a><!--]--></div> <details class="relative flex items-center lg:hidden svelte-1q3u7a3"><summary class="list-none p-2 -mr-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800 transition-colors cursor-pointer svelte-1q3u7a3"><span class="sr-only">Toggle menu</span> <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path></svg></summary> <div class="absolute top-full right-0 mt-1 w-64 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-xl p-2"><div class="space-y-0.5"><!--[--><a href="/" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">Home</a><a href="/today" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">Today's Answers</a><a href="/solver" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">Solvers</a><a href="/archive" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">Archives</a><a href="/guides" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">Guides</a><a href="/about" class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">About</a><!--]--></div></div></details></div></div></nav><!----> <main class="site-main flex-grow"><div><!--[--><div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14"><!--[0--><nav class="flex mb-6 text-sm overflow-x-auto whitespace-nowrap pb-1" aria-label="Breadcrumb"><ol class="inline-flex items-center space-x-1.5"><li class="inline-flex items-center"><a href="/" class="inline-flex items-center text-slate-400 hover:text-teal-600 dark:text-slate-500 dark:hover:text-teal-400 transition-colors"><svg class="mr-1.5 h-3.5 w-3.5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg><!----> <span class="font-medium">Home</span></a></li> <!--[--><li class="flex items-center"><svg class="h-3 w-3 text-slate-300 dark:text-slate-600 mx-0.5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg><!----> <!--[0--><span class="text-slate-900 dark:text-slate-100 font-semibold ml-0.5">Privacy Policy</span><!--]--></li><!--]--></ol></nav><!--]--><!----> <div class="mb-10"><h1 class="text-4xl font-extrabold text-slate-900 dark:text-slate-50 tracking-tight">Privacy Policy</h1> <p class="mt-3 text-slate-500 dark:text-slate-400">Last updated: March 14, 2026</p></div> <div class="border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800/50 p-6 sm:p-8"><div class="prose prose-slate dark:prose-invert max-w-none"><p class="lead text-lg">This Privacy Policy explains how WordSolverX may collect, use, and store information when
+        you visit https://wordsolverx.com, use our puzzle pages, or contact us directly.</p> <h2>1. Information You Provide Voluntarily</h2> <p>If you email WordSolverX, we may receive the information you include in that message, such
+        as your name, email address, the content of your message, and any other details you choose
+        to send.</p> <h2>2. Technical Data and Hosting Logs</h2> <p>Like most websites, WordSolverX and its hosting providers may automatically record basic
+        technical information such as IP address, browser type, device type, referring page,
+        timestamps, and requested pages. This information is used for site operations, security,
+        troubleshooting, and general performance review.</p> <h2>3. Browser Storage and Site Preferences</h2> <p>Some tools on WordSolverX store preferences directly in your browser so the experience
+        works smoothly the next time you visit. For example, solver tools may save preferences such
+        as selected modes, answer set settings, or word length choices using browser storage.</p> <p>These settings stay in your browser unless you clear them yourself through your browser
+        settings.</p> <h2>4. Cookies and Embedded Content</h2> <p>WordSolverX may use basic browser storage and may include embedded content from third-party
+        services, such as video embeds. If you interact with embedded third-party content, those
+        services may collect data according to their own privacy policies.</p> <h2>5. How We Use Information</h2> <p>We may use information described in this policy to:</p> <ul><li>Operate, maintain, and improve WordSolverX</li> <li>Remember simple tool preferences inside your browser</li> <li>Respond to support, correction, or business inquiries</li> <li>Review technical issues, abuse, and security events</li></ul> <h2>6. Data Sharing</h2> <p>WordSolverX does not sell your personal information. Information may be processed by
+        hosting, infrastructure, or embedded service providers only as needed to operate the site.</p> <h2>7. Data Retention</h2> <p>Email messages and related correspondence may be kept for as long as reasonably necessary to
+        respond, maintain records, or follow up on a site issue. Browser-stored preferences remain
+        on your device until you clear them.</p> <h2>8. Your Rights and Choices</h2> <p>Depending on where you live, you may have rights related to access, correction, or deletion
+        of personal information you have provided to us. To make a request, email <a href="mailto:wordsolverx@gmail.com">wordsolverx@gmail.com</a>.</p> <h2>9. Children's Privacy</h2> <p>WordSolverX is not directed specifically to children under 13, and we do not knowingly
+        collect personal information from children through this website.</p> <h2>10. Changes to This Policy</h2> <p>We may update this Privacy Policy from time to time as the site changes. Any updates will be
+        posted on this page with a revised last updated date.</p> <h2>11. Contact</h2> <p>If you have questions about this Privacy Policy, contact us at <a href="mailto:wordsolverx@gmail.com">wordsolverx@gmail.com</a>.</p></div></div></div><!--]--><!----></div> <!--[-1--><!--]--></main> <footer class="border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16"><div class="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12"><div class="col-span-2 md:col-span-1"><a href="/" class="inline-flex items-center gap-2 mb-4"><div class="w-7 h-7 rounded-md bg-gradient-to-br from-teal-500 to-teal-700 flex items-center justify-center"><span class="text-white font-extrabold text-xs leading-none">W</span></div> <span class="text-base font-extrabold tracking-tight text-slate-900 dark:text-slate-50">Word<span class="text-teal-600 dark:text-teal-400">Solver</span><span class="text-amber-500 dark:text-amber-400">X</span></span></a> <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-xs">Daily puzzle answers, solver tools, and strategy guides for word game enthusiasts who play every day.</p> <div class="mt-5 flex gap-2"><a href="https://www.facebook.com/wordsolverx/" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-400 hover:text-teal-600 hover:border-teal-300 dark:hover:text-teal-400 dark:hover:border-teal-700 transition-colors" aria-label="Facebook"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg></a> <a href="https://www.pinterest.com/wordsolverx/" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-400 hover:text-teal-600 hover:border-teal-300 dark:hover:text-teal-400 dark:hover:border-teal-700 transition-colors" aria-label="Pinterest"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12.017 24c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641 0 12.017 0z"></path></svg></a> <a href="https://t.me/wordsolverx" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-400 hover:text-teal-600 hover:border-teal-300 dark:hover:text-teal-400 dark:hover:border-teal-700 transition-colors" aria-label="Telegram"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"></path></svg></a></div></div> <div><h3 class="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider mb-4">Today's Answers</h3> <ul class="space-y-2.5"><li><a href="/wordle-answer-today" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Wordle Answer</a></li> <li><a href="/quordle-answer-today" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Quordle Answer</a></li> <li><a href="/nerdle-answer-today" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Nerdle Answer</a></li> <li><a href="/contexto-answer-today" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Contexto Answer</a></li> <li><a href="/today" class="text-sm text-teal-600 dark:text-teal-400 font-medium hover:text-teal-700 dark:hover:text-teal-300 transition-colors">View All →</a></li></ul></div> <div><h3 class="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider mb-4">Solver Tools</h3> <ul class="space-y-2.5"><li><a href="/5-letter-wordle-solver" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">5-Letter Wordle Solver</a></li> <li><a href="/quordle-solver" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Quordle Solver</a></li> <li><a href="/nerdle-solver" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Nerdle Solver</a></li> <li><a href="/wordle-analyzer" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Wordle Analyzer</a></li> <li><a href="/solver" class="text-sm text-teal-600 dark:text-teal-400 font-medium hover:text-teal-700 dark:hover:text-teal-300 transition-colors">View All →</a></li></ul></div> <div><h3 class="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider mb-4">Resources</h3> <ul class="space-y-2.5"><li><a href="/guides" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Guides &amp; Tips</a></li> <li><a href="/archive" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Answer Archives</a></li> <li><a href="/about" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">About</a></li> <li><a href="/contact" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Contact</a></li> <li><a href="/editorial-policy" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Editorial Policy</a></li> <li><a href="/privacy-policy" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Privacy</a></li> <li><a href="/terms-of-service" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Terms</a></li></ul></div></div> <div class="mt-12 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-3"><p class="text-xs text-slate-400 dark:text-slate-500">© 2026 WordSolverX. All rights reserved.</p> <p class="text-xs text-slate-400 dark:text-slate-500 text-center">Wordle is a trademark of The New York Times Company. WordSolverX is not affiliated with NYT.</p></div></div></footer><!----></div><!--]--><!--]--><!----><!--]--><!--]--> <!--[-1--><!--]--><!--]--></div>
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Betweenle Solver - WordSolverX</title>
+  <desc id="desc">Betweenle Solver OG image with gradient background and solver theme.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e1b4b" />
+      <stop offset="50%" stop-color="#7c3aed" />
+      <stop offset="100%" stop-color="#db2777" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect x="64" y="72" width="1072" height="486" rx="28" fill="rgba(15,23,42,0.22)" stroke="rgba(255,255,255,0.18)" />
+  <text x="112" y="190" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="32" font-weight="700">WordSolverX</text>
+  <text x="112" y="300" fill="#ffffff" font-family="Arial, sans-serif" font-size="74" font-weight="800">Betweenle Solver</text>
+  <text x="112" y="376" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="36" font-weight="600">Find the best next guess in seconds</text>
+  <text x="112" y="452" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="28">wordsolverx.com</text>
+</svg>

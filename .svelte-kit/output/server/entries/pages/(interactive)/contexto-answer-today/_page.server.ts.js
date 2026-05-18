@@ -1,0 +1,1 @@
+import{b as e}from"../../../../chunks/contexto-api.js";import{f as o,a as r}from"../../../../chunks/contexto.js";const i=async({setHeaders:a})=>{try{const t=await e();return a({"X-Puzzle-Date":t.date}),{initialAnswer:t,latestDate:t.date,error:null}}catch{return{initialAnswer:null,latestDate:o(r()),error:"Failed to load Contexto answer"}}};export{i as load};

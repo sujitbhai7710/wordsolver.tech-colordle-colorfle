@@ -1,0 +1,1 @@
+import{b as n}from"../../../../chunks/route-config.js";import{W as o}from"../../../../chunks/routes.js";function i(){return o.map(r=>({variant:r}))}function e({params:r}){return{config:n(r.variant)}}export{i as entries,e as load};

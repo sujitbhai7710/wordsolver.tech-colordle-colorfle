@@ -1,8 +1,11 @@
 <script>
+  import { getTargetColors } from '../lib/colordle.js';
+  import { getPuzzleAnswer, COLOR_NAMES, COLORS, WEIGHTS } from '../lib/colorfle.js';
+
   let {
     gameName = 'Puzzle',
     gameColor = 'teal',
-    getAnswer = null,
+    gameType = 'colordle', // 'colordle' or 'colorfle'
     startDate = new Date('2024-01-01'),
     today = new Date(),
   } = $props();
@@ -24,6 +27,12 @@
   };
 
   let theme = $derived(colorThemes[gameColor] || colorThemes.teal);
+
+  // Pre-compute colordle targets once
+  let colordleTargets = $derived.by(() => {
+    if (gameType !== 'colordle') return [];
+    return getTargetColors();
+  });
 
   let calendarDays = $derived.by(() => {
     const year = currentMonth.getFullYear();
@@ -118,12 +127,88 @@
     currentMonth = new Date(date.getFullYear(), date.getMonth(), 1);
   }
 
+  function computeAnswer(dateKey) {
+    if (gameType === 'colordle') {
+      return computeColordleAnswer(dateKey);
+    } else if (gameType === 'colorfle') {
+      return computeColorfleAnswer(dateKey);
+    }
+    return null;
+  }
+
+  function computeColordleAnswer(dateKey) {
+    try {
+      const date = new Date(dateKey + 'T12:00:00Z');
+      const sd = new Date('2024-01-01T12:00:00Z');
+      const dayNum = Math.floor((date.getTime() - sd.getTime()) / 86400000);
+      const color = colordleTargets[Math.abs(dayNum) % colordleTargets.length];
+      const formattedDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+      return {
+        html: `
+          <div style="text-align:center;">
+            <div style="width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;border:3px solid var(--border-subtle);box-shadow:var(--shadow-lg);display:flex;align-items:center;justify-content:center;background:${color.hex};font-size:0.85rem;font-weight:800;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.3);">${color.name}</div>
+            <div style="font-size:1.5rem;font-weight:800;margin-bottom:0.375rem;color:var(--text-primary);">${color.name}</div>
+            <div style="font-family:monospace;font-size:0.9rem;color:var(--text-muted);margin-bottom:0.25rem;">${color.hex}</div>
+            <div style="font-size:0.8rem;color:var(--text-muted);">Puzzle #${dayNum} &middot; ${formattedDate}</div>
+          </div>
+        `,
+      };
+    } catch (e) {
+      console.error('Error computing colordle answer:', e);
+      return null;
+    }
+  }
+
+  function computeColorfleAnswer(dateKey) {
+    try {
+      const date = new Date(dateKey + 'T12:00:00Z');
+      const answer = getPuzzleAnswer(date, 0);
+      const formattedDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+      const colorBlocks = answer.colors.map((idx, i) => {
+        const name = answer.colorNames[i];
+        const hex = answer.colorHexes[i];
+        const weight = WEIGHTS[0][i];
+        return `<div style="text-align:center;">
+          <div style="width:56px;height:56px;border-radius:12px;background:${hex};border:2px solid var(--border-subtle);margin:0 auto 0.375rem;box-shadow:var(--shadow-sm);"></div>
+          <div style="font-weight:700;font-size:0.85rem;color:var(--text-primary);">${name}</div>
+          <div style="font-size:0.7rem;color:var(--text-muted);font-family:monospace;">${hex}</div>
+          <div style="margin-top:0.25rem;padding:0.15rem 0.5rem;border-radius:6px;background:rgba(236,72,153,0.08);border:1px solid rgba(236,72,153,0.12);font-size:0.65rem;font-weight:700;color:var(--accent-pink);display:inline-block;">
+            ${Math.round(weight * 100)}%
+          </div>
+        </div>`;
+      }).join('');
+
+      return {
+        html: `
+          <div style="text-align:center;">
+            <div style="width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;border:3px solid var(--border-subtle);box-shadow:var(--shadow-lg);background:${answer.targetHex};"></div>
+            <div style="display:flex;justify-content:center;gap:1.25rem;margin-bottom:1rem;flex-wrap:wrap;">
+              ${colorBlocks}
+            </div>
+            <div style="margin-top:0.75rem;">
+              <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:0.375rem;">Mixed to produce:</div>
+              <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+                <div style="width:32px;height:32px;border-radius:50%;background:${answer.targetHex};border:2px solid var(--border-subtle);"></div>
+                <span style="font-family:monospace;font-size:1rem;font-weight:800;color:var(--text-primary);">${answer.targetHex}</span>
+              </div>
+            </div>
+            <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.75rem;">Puzzle #${answer.puzzleNumber} &middot; ${formattedDate}</div>
+          </div>
+        `,
+      };
+    } catch (e) {
+      console.error('Error computing colorfle answer:', e);
+      return null;
+    }
+  }
+
   function handleDateClick(dateKey) {
-    if (!getAnswer) return;
     selectedDate = dateKey;
     answerRevealed = false;
     try {
-      selectedAnswer = getAnswer(dateKey);
+      selectedAnswer = computeAnswer(dateKey);
     } catch (e) {
       console.error('Error getting answer:', e);
       selectedAnswer = null;
@@ -638,6 +723,13 @@
     letter-spacing: 0.15em;
     color: var(--theme-primary, var(--accent-teal));
     margin-bottom: 1.25rem;
+  }
+
+  .reveal-checkbox {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
   }
 
   .reveal-circle {

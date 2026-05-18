@@ -1,0 +1,1 @@
+export { default as component } from "../../../../src/routes/(interactive)/worgle-archive/+page.svelte";

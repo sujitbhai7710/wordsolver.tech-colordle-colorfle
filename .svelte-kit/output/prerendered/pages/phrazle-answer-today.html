@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+        <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" /></noscript>
+        <style>
+                html {
+                        background: #ffffff;
+                }
+
+                body {
+                        margin: 0;
+                        min-height: 100vh;
+                        background: #ffffff;
+                        color: #0f172a;
+                        font-family:
+                                'Plus Jakarta Sans',
+                                'Segoe UI',
+                                system-ui,
+                                -apple-system,
+                                BlinkMacSystemFont,
+                                'Helvetica Neue',
+                                sans-serif;
+                        -webkit-font-smoothing: antialiased;
+                        -moz-osx-font-smoothing: grayscale;
+                }
+
+                a {
+                        color: inherit;
+                        text-decoration: none;
+                }
+
+                img {
+                        display: block;
+                        max-width: 100%;
+                        height: auto;
+                }
+
+                .site-shell {
+                        min-height: 100vh;
+                        display: flex;
+                        flex-direction: column;
+                        background: #ffffff;
+                }
+
+                .site-main {
+                        flex: 1 1 auto;
+                }
+
+                body[data-theme='dark'],
+                [data-theme='dark'] .site-shell {
+                        background: #0f172a;
+                        color: #f8fafc;
+                }
+        </style>
+        <script>
+                (function () {
+                        var GA_ID = 'G-8QRMXK049Z';
+                        window.dataLayer = window.dataLayer || [];
+                        window.__wordsolverxQueuedGtagCalls = window.__wordsolverxQueuedGtagCalls || [];
+
+                        function queueGtagCall() {
+                                var args = Array.prototype.slice.call(arguments);
+                                window.__wordsolverxQueuedGtagCalls.push(args);
+                        }
+
+                        window.gtag = window.gtag || queueGtagCall;
+
+                        function sendPageView() {
+                                if (!window.gtag) return;
+                                window.gtag('event', 'page_view', {
+                                        page_path: window.location.pathname + window.location.search,
+                                        page_location: window.location.href,
+                                        page_title: document.title
+                                });
+                        }
+
+                        function flushQueuedCalls() {
+                                var queue = window.__wordsolverxQueuedGtagCalls || [];
+                                var hadQueuedPageView = false;
+
+                                window.__wordsolverxQueuedGtagCalls = [];
+                                for (var i = 0; i < queue.length; i += 1) {
+                                        var args = queue[i];
+                                        if (args[0] === 'event' && args[1] === 'page_view') {
+                                                hadQueuedPageView = true;
+                                        }
+                                        window.gtag.apply(window, args);
+                                }
+
+                                if (!hadQueuedPageView) {
+                                        sendPageView();
+                                }
+                        }
+
+                        function loadAnalytics() {
+                                if (window.__wordsolverxAnalyticsLoaded) return;
+                                window.__wordsolverxAnalyticsLoaded = true;
+
+                                var script = document.createElement('script');
+                                script.async = true;
+                                script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+                                script.onload = function () {
+                                        window.gtag = function () {
+                                                window.dataLayer.push(arguments);
+                                        };
+                                        window.gtag('js', new Date());
+                                        window.gtag('config', GA_ID, { send_page_view: false });
+                                        flushQueuedCalls();
+                                };
+                                document.head.appendChild(script);
+                        }
+
+                        window.__wordsolverxLoadAnalytics = loadAnalytics;
+
+                        function scheduleAnalytics() {
+                                var interactionEvents = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
+                                var cleanup = function () {
+                                        for (var i = 0; i < interactionEvents.length; i += 1) {
+                                                window.removeEventListener(interactionEvents[i], loadAfterInteraction);
+                                        }
+                                };
+                                var loadAfterInteraction = function () {
+                                        cleanup();
+                                        loadAnalytics();
+                                };
+
+                                for (var i = 0; i < interactionEvents.length; i += 1) {
+                                        window.addEventListener(interactionEvents[i], loadAfterInteraction, {
+                                                once: true,
+                                                passive: true
+                                        });
+                                }
+
+                                window.addEventListener(
+                                        'load',
+                                        function () {
+                                                window.setTimeout(function () {
+                                                        cleanup();
+                                                        loadAnalytics();
+                                                }, 15000);
+                                        },
+                                        { once: true }
+                                );
+                        }
+
+                        scheduleAnalytics();
+
+                        function updateCardFilter(input) {
+                                var group = input.getAttribute('data-card-filter-input');
+                                if (!group) return;
+
+                                var query = input.value.trim().toLowerCase();
+                                var items = document.querySelectorAll('[data-card-filter-item="' + group + '"]');
+                                var visibleBySection = {};
+
+                                items.forEach(function (item) {
+                                        var haystack = (item.getAttribute('data-search-text') || '').toLowerCase();
+                                        var section = item.getAttribute('data-filter-section') || '';
+                                        var isVisible = !query || haystack.indexOf(query) !== -1;
+                                        item.hidden = !isVisible;
+                                        if (isVisible) {
+                                                visibleBySection[section] = true;
+                                        }
+                                });
+
+                                document
+                                        .querySelectorAll('[data-card-filter-empty="' + group + '"]')
+                                        .forEach(function (emptyState) {
+                                                var section = emptyState.getAttribute('data-empty-scope') || '';
+                                                emptyState.hidden = !query || Boolean(visibleBySection[section]);
+                                        });
+                        }
+
+                        function refreshAllCardFilters() {
+                                document.querySelectorAll('[data-card-filter-input]').forEach(function (input) {
+                                        updateCardFilter(input);
+                                });
+                        }
+
+                        document.addEventListener('input', function (event) {
+                                var target = event.target;
+                                if (target && target.matches && target.matches('[data-card-filter-input]')) {
+                                        updateCardFilter(target);
+                                }
+                        });
+
+                        document.addEventListener('submit', function (event) {
+                                var target = event.target;
+                                if (target && target.matches && target.matches('[data-card-filter-form]')) {
+                                        event.preventDefault();
+                                }
+                        });
+
+                        document.addEventListener('click', function (event) {
+                                var target = event.target;
+                                if (!target || !target.closest) return;
+
+                                var copyButton = target.closest('[data-copy-value]');
+                                if (copyButton) {
+                                        var textToCopy = copyButton.getAttribute('data-copy-value') || '';
+                                        if (!textToCopy || !navigator.clipboard || !navigator.clipboard.writeText) return;
+
+                                        var defaultLabel = copyButton.getAttribute('data-copy-default') || 'Copy';
+                                        var successLabel = copyButton.getAttribute('data-copy-success') || 'Copied';
+
+                                        navigator.clipboard.writeText(textToCopy).then(function () {
+                                                copyButton.textContent = successLabel;
+                                                window.setTimeout(function () {
+                                                        copyButton.textContent = defaultLabel;
+                                                }, 2000);
+                                        });
+                                        return;
+                                }
+
+                                var reloadButton = target.closest('[data-reload-page]');
+                                if (reloadButton) {
+                                        window.location.reload();
+                                }
+                        });
+
+                        if (document.readyState === 'loading') {
+                                document.addEventListener('DOMContentLoaded', refreshAllCardFilters, { once: true });
+                        } else {
+                                refreshAllCardFilters();
+                        }
+
+                        window.addEventListener('pageshow', refreshAllCardFilters);
+                })();
+        </script>
+
+        <link href="./_app/immutable/entry/start.CSwhJVYv.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/CEH1_9TU.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/B--w_SLd.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/B2nBMHGc.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/D0iwhpLH.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/ZbSRU1JC.js" rel="modulepreload">
+		<link href="./_app/immutable/entry/app.f0LioCkd.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/PPVm8Dsz.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/CACuO2kX.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/bF8CWp0D.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/DR1OH7a1.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/CqI6-il_.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/e2E2YOnE.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/DNDffsb-.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/DYzIav86.js" rel="modulepreload">
+		<link href="./_app/immutable/nodes/0.BwHrRAkb.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/DG-OD9wC.js" rel="modulepreload">
+		<link href="./_app/immutable/nodes/3.B97cX86T.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/C4f3LgLL.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/A0YgUgat.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/BRqQ6-OE.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/bUzHQsEo.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/av1N2TzY.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/eRagSt5I.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/BlomONCL.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/D927XTUg.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/CrI2TgwW.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/Dtn69KIy.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/CX6TY1qA.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/SHN4ISZu.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/CiCbGlC6.js" rel="modulepreload">
+		<link href="./_app/immutable/nodes/62.CuMG0eDc.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/BsOgXVUG.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/pliNg_H4.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/BK5EyvHp.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/BDBhBMIH.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/DxvHG1zc.js" rel="modulepreload">
+		<link href="./_app/immutable/chunks/ACsmL9sb.js" rel="modulepreload">
+		<!--1rfisux--><link rel="icon" type="image/webp" href="/wordsolverx-favicon.webp"/> <meta name="theme-color" content="#10b981"/> <meta property="og:site_name" content="WordSolverX"/> <meta property="og:locale" content="en_US"/> <meta property="og:image" content="https://wordsolverx.com/wordsolverx.webp"/> <meta property="og:image:width" content="1200"/> <meta property="og:image:height" content="630"/> <meta property="og:image:alt" content="WordSolverX - Daily Puzzle Answers and Solver Tools"/> <meta name="twitter:site" content="@WordSolverX"/> <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp"/> <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/> <link rel="apple-touch-icon" href="/wordsolverx-favicon.webp"/> <link rel="alternate" hreflang="en" href="https://wordsolverx.com/phrazle-answer-today"/> <link rel="alternate" hreflang="x-default" href="https://wordsolverx.com/phrazle-answer-today"/> <meta name="author" content="Preston Hayes"/> <!----><script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"WordSolverX","url":"https://wordsolverx.com","logo":"https://wordsolverx.com/wordsolverx.webp","sameAs":["https://www.facebook.com/wordsolverx/","https://www.pinterest.com/wordsolverx/","https://t.me/wordsolverx"]}</script><!----><!----><!--yt34u4--><meta name="description" content="Get Phrazle hints and the confirmed morning and afternoon Phrazle answers for today, May 19, 2026. Use the dedicated archive page for older phrase pairs."/> <meta name="keywords" content="phrazle answer today, phrazle answer, phrazle hint, phrazle hint today, phrazle answer for May 19, 2026"/> <meta property="og:title" content="Phrazle Answer Today (May 19, 2026) - Morning and Afternoon Answers"/> <meta property="og:description" content="Get Phrazle hints and the confirmed morning and afternoon Phrazle answers for today, May 19, 2026. Use the dedicated archive page for older phrase pairs."/> <meta property="og:type" content="article"/> <meta property="og:url" content="https://wordsolverx.com/phrazle-answer-today"/> <meta property="og:site_name" content="WordSolverX"/> <meta property="og:image" content="https://wordsolverx.com/images/phrazle-answer-today.webp"/> <meta name="twitter:card" content="summary_large_image"/> <meta name="twitter:title" content="Phrazle Answer Today (May 19, 2026) - Morning and Afternoon Answers"/> <meta name="twitter:description" content="Get Phrazle hints and the confirmed morning and afternoon Phrazle answers for today, May 19, 2026. Use the dedicated archive page for older phrase pairs."/> <link rel="canonical" href="https://wordsolverx.com/phrazle-answer-today"/> <!----><script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebPage","name":"Phrazle Answer Today (May 19, 2026)","description":"Get Phrazle hints and the confirmed morning and afternoon Phrazle answers for today, May 19, 2026. Use the dedicated archive page for older phrase pairs.","url":"https://wordsolverx.com/phrazle-answer-today"},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is Phrazle?","acceptedAnswer":{"@type":"Answer","text":"Phrazle is a daily phrase guessing game with two puzzles each day, a morning puzzle and an afternoon puzzle."}},{"@type":"Question","name":"How are Phrazle answers calculated?","acceptedAnswer":{"@type":"Answer","text":"Answers are mapped by date using the official Phrazle phrase list and the game schedule."}},{"@type":"Question","name":"Can I view previous Phrazle answers?","acceptedAnswer":{"@type":"Answer","text":"Yes. Use the Phrazle archive page to see both the morning and afternoon answers for older dates."}},{"@type":"Question","name":"Why are there two puzzles?","acceptedAnswer":{"@type":"Answer","text":"Phrazle releases two puzzles per day, so each date has a morning phrase and an afternoon phrase."}}]},{"@context":"https://schema.org","@type":"HowTo","name":"How to use the Phrazle answer page","step":[{"@type":"HowToStep","name":"Check both puzzles","text":"Review the morning and afternoon answer cards for today’s date.","position":1},{"@type":"HowToStep","name":"Reveal or copy","text":"Use the buttons to hide, reveal, or copy either phrase.","position":2},{"@type":"HowToStep","name":"Open the archive","text":"Use the dedicated archive page when you need an older Phrazle answer pair.","position":3}]}]</script><!----><!----><!--1na7z0w--><!--[0--><meta property="article:published_time" content="2026-05-19T00:00:00Z"/><!--]--> <!--[0--><meta property="article:modified_time" content="2026-05-19T00:00:00Z"/><!--]--><!----><title>Phrazle Answer Today (May 19, 2026) - Morning and Afternoon Answers</title>
+		<link href="./_app/immutable/assets/3.D5mAYqDR.css" rel="stylesheet">
+</head>
+
+<body data-sveltekit-preload-data="hover">
+        <div style="display: contents"><!--[--><!--[0--><!--[--><!--[0--><!--[--><!----> <div class="site-shell min-h-screen flex flex-col bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100"><!--[--><!--[-1--><nav class="sticky top-0 z-50 transition-all duration-300 bg-white dark:bg-slate-900 border-b border-transparent"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex justify-between h-[60px]"><div class="flex items-center gap-2.5"><a href="/" class="flex items-center gap-2.5 group"><div class="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-500 to-teal-700 flex items-center justify-center shadow-[0_2px_8px_rgb(20_184_166/0.3)] group-hover:shadow-[0_2px_12px_rgb(20_184_166/0.45)] transition-shadow duration-200"><span class="text-white font-extrabold text-sm leading-none">W</span></div> <span class="text-[1.15rem] font-extrabold tracking-tight"><span class="text-slate-900 dark:text-slate-50">Word</span><span class="text-teal-600 dark:text-teal-400">Solver</span><span class="text-amber-500 dark:text-amber-400">X</span></span></a></div> <div class="hidden lg:flex lg:items-center lg:gap-0.5"><!--[--><a href="/" class="relative px-3 py-1.5 rounded-md text-[0.8125rem] font-semibold transition-colors duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">Home <!--[-1--><!--]--></a><a href="/today" class="relative px-3 py-1.5 rounded-md text-[0.8125rem] font-semibold transition-colors duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">Today's Answers <!--[-1--><!--]--></a><a href="/solver" class="relative px-3 py-1.5 rounded-md text-[0.8125rem] font-semibold transition-colors duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">Solvers <!--[-1--><!--]--></a><a href="/archive" class="relative px-3 py-1.5 rounded-md text-[0.8125rem] font-semibold transition-colors duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">Archives <!--[-1--><!--]--></a><a href="/guides" class="relative px-3 py-1.5 rounded-md text-[0.8125rem] font-semibold transition-colors duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">Guides <!--[-1--><!--]--></a><a href="/about" class="relative px-3 py-1.5 rounded-md text-[0.8125rem] font-semibold transition-colors duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">About <!--[-1--><!--]--></a><!--]--></div> <div class="flex items-center lg:hidden"><button type="button" class="p-2 -mr-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800 transition-colors" aria-controls="mobile-menu" aria-expanded="false"><span class="sr-only">Toggle menu</span> <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><!--[-1--><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path><!--]--></svg></button></div></div></div> <!--[-1--><!--]--></nav><!----> <main class="site-main flex-grow"><div><!--[--><!----> <noscript><p>The Phrazle answers for today are: <strong>Morning: CUTTING CORNERS</strong> and <strong>Afternoon: BELOW THE BELT</strong>.</p></noscript> <div class="min-h-screen bg-slate-50"><main class="max-w-5xl mx-auto px-4 py-8"><div class="text-center mb-8"><div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-100 text-teal-700 text-sm font-medium mb-4"><span>1,310 Phrase Library</span></div> <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3">Phrazle Answer Today (May 19, 2026)</h1> <p class="text-slate-600 max-w-xl mx-auto">Two phrases every day — morning and afternoon. Need an older one? Check the archive.</p></div> <div class="grid md:grid-cols-2 gap-6 mb-8"><div class="bg-white border border-slate-200 rounded-2xl shadow-lg overflow-hidden"><div class="h-2 bg-gradient-to-r from-amber-400 to-orange-400"></div> <div class="p-6 text-center"><div class="text-xs uppercase tracking-wide text-amber-600 mb-2">Morning Puzzle</div> <div class="text-sm text-slate-500 mb-3">2026-05-19</div> <!--[0--><div class="font-mono text-3xl font-bold text-amber-600 uppercase mb-2">cutting corners</div><!--]--> <div class="text-xs text-slate-500 mb-4">Phrase #365</div> <div class="flex justify-center gap-3 flex-wrap"><button type="button" class="px-3 py-2 rounded-lg bg-amber-500 text-white text-sm hover:bg-amber-600">Hide Answer</button> <!--[0--><button type="button" class="px-3 py-2 rounded-lg border border-amber-200 text-sm">Copy</button><!--]--></div></div></div> <div class="bg-white border border-slate-200 rounded-2xl shadow-lg overflow-hidden"><div class="h-2 bg-gradient-to-r from-indigo-500 to-purple-500"></div> <div class="p-6 text-center"><div class="text-xs uppercase tracking-wide text-indigo-600 mb-2">Afternoon Puzzle</div> <div class="text-sm text-slate-500 mb-3">2026-05-19</div> <!--[0--><div class="font-mono text-3xl font-bold text-indigo-600 uppercase mb-2">below the belt</div><!--]--> <div class="text-xs text-slate-500 mb-4">Phrase #366</div> <div class="flex justify-center gap-3 flex-wrap"><button type="button" class="px-3 py-2 rounded-lg bg-indigo-500 text-white text-sm hover:bg-indigo-600">Hide Answer</button> <!--[0--><button type="button" class="px-3 py-2 rounded-lg border border-indigo-200 text-sm">Copy</button><!--]--></div></div></div></div> <div class="bg-white border border-slate-200 rounded-2xl p-6 mb-8"><h2 class="text-xl font-bold text-slate-900">Need an older Phrazle answer?</h2> <p class="mt-3 text-slate-600">Past morning and afternoon phrase pairs now live on the dedicated archive page instead of this today page.</p> <div class="mt-5 flex flex-wrap gap-3"><a href="/phrazle-archive" class="inline-flex items-center rounded-xl bg-teal-600 px-4 py-3 text-sm font-semibold text-white hover:bg-teal-700">Open Phrazle Archive</a></div></div> <!--[0--><section class="mt-12 rounded-3xl border border-slate-100 bg-white p-8 shadow-lg"><p class="text-sm font-semibold uppercase tracking-[0.24em] text-teal-600">Today's notes</p> <p class="text-xs text-slate-400 mt-1"><span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse mr-1.5 align-middle"></span> Updated 2026-05-18</p> <h2 class="mt-2 text-3xl font-bold text-slate-900">Phrazle Answer Today: May 18, 2026 Hints &amp; Solutions</h2> <!--[0--><p class="mt-4 text-lg leading-8 text-slate-600">Get today's Phrazle answer for May 18, 2026, with morning and afternoon solutions, clue-by-clue breakdown, and strategy tips for guessing phrases instead of single words.</p><!--]--> <div class="prose prose-lg mt-6 max-w-none prose-headings:scroll-mt-28 prose-h2:text-slate-900 prose-h3:text-slate-900 prose-p:text-slate-600 prose-li:text-slate-600 prose-a:text-teal-600"><!----><h1>Phrazle Answer Today: May 18, 2026</h1>
+
+<p>Phrases hit different when you can't tell where one word ends and the next begins. That's the whole game, and it's what makes Phrazle the most humbling daily puzzle in my rotation. I've been at this since 2021 across every word game that launched, and I still get tripped up by idioms I use in real life.</p>
+
+<h2>Today's Phrazle at a glance</h2>
+
+<p><strong>May 18, 2026 Phrazle Answer:</strong></p>
+<ul>
+<li><strong>Morning puzzle:</strong> BITE THE BULLET</li>
+<li><strong>Afternoon puzzle:</strong> BREAK THE ICE</li>
+</ul>
+
+<p>Both are four-word phrases, which means you had eight total guesses to lock in all the letters. "Bite the bullet" is the kind of phrase that looks obvious after the fact but plays cruel in the grid. That double T in "bitten" isn't there, and if you chased it early, you burned guesses. "Break the ice" is friendlier—common letters, no duplicates, and "ice" gives itself away fast if you hit the C and E.</p>
+
+<p><strong>Word lengths:</strong> Morning is 4/4/3/6 letters. Afternoon is 5/3/3/3. If you're not using our Phrazle solver tool to check letter counts before you commit, you're making the game harder than it needs to be.</p>
+
+<h2>What the clues are telling you</h2>
+
+<p>Phrazle uses the same color logic as Wordle—green, yellow, gray—but applies it across four words at once. The cruelty is that a yellow letter could belong to any of the four slots, and you don't know which word it's in.</p>
+
+<p>With "BITE THE BULLET," here's how my grid looked. First guess: STEAL THE SHOW. Got gray on everything except a yellow T and yellow E. That told me E was in the phrase, but not in "the" (second word). So E had to be in 1, 3, or 4. Second guess: TAKE A BREATH. Yellow B, yellow T. Now I knew B opened a word and T appeared twice or in different positions.</p>
+
+<p>The afternoon phrase, "BREAK THE ICE," resolves faster if you start with a phrase that hits common consonants. I used THROW A BALL and got green T-H-E on the first three letters of word two. From there it's just a matter of whether you're looking at "break," "make," or "shake."</p>
+
+<p><strong>Pro move:</strong> When you get multiple yellows, map them to word lengths before your next guess. If you know the phrase is 4/4/3/6 and you've got yellow B, I, T, E, test which word each could belong to. Our <a href="/phrazle-archive">Phrazle archive</a> shows how often four-word phrases dominate the rotation—it's worth studying the patterns.</p>
+
+<h2>When to guess vs when to think</h2>
+
+<p>There's a moment in every Phrazle game where you have three greens in a row and two yellows floating. Do you lock in what you know, or do you test the yellows elsewhere? I used to always guess. Now I pause.</p>
+
+<p>Here's the math that changed my mind. You have eight guesses for a four-word phrase. That's two guesses per word if you played perfectly, which nobody does. If you burn a guess testing a yellow placement, you need to be 50% confident it's right. Otherwise you're better off using a throwaway phrase that tests multiple yellow positions at once.</p>
+
+<p>Example from today: I had _ITE and _ULLET as my pattern after guess four on the morning puzzle. Yellow B from earlier. Instead of guessing "BITE THE BULLET" immediately, I played BITE THE DUST to confirm B went at the start of word one. It did, and I had my answer. If B had been elsewhere, I'd have learned that too. Two birds, one guess.</p>
+
+<p>The afternoon puzzle doesn't reward this caution as much. "BREAK THE ICE" has no repeated letters and no weird spellings. Once you've got B-R-E-A-K, you're done. Speed matters more than efficiency on the easy ones.</p>
+
+<p>Check your stats after you play. If your average guess count is above six, you're probably guessing too early. Our puzzle stats page breaks down optimal guess distribution for Phrazle specifically.</p>
+
+<h2>Questions players keep asking</h2>
+
+<h3>Why does Phrazle sometimes accept phrases that aren't in the answer list?</h3>
+
+<p>Because the dictionary is broader than the solution set. You can guess "BITE THE DUST" and it's valid, but it's not ever going to be the answer. This trips up people who think any common phrase is fair game. The actual answers skew toward phrases that appear in crossword puzzles and elementary school reading lists—familiar, not obscure.</p>
+
+<h3>How do I handle phrases with repeated words like "TIME AFTER TIME"?</h3>
+
+<p>Poorly, same as everyone. When a word repeats, Phrazle only colors the letters in that specific position. So if "TIME" is word one and word three, a green T in slot one doesn't tell you about slot three. You have to solve each instance separately. I've seen people rage-quit over this. The trick is to treat repeated words as independent puzzles once you know one of them.</p>
+
+<h3>Is the afternoon puzzle harder than the morning puzzle?</h3>
+
+<p>Not consistently, but there's a pattern. Morning puzzles tend to be longer phrases—today's "BITE THE BULLET" is four words, and that's typical. Afternoon puzzles sometimes drop to three words or use more common sayings. The difficulty comes from your own brain, not the schedule. I'm sharper in the morning, so afternoon Phrazles feel harder even when the data says they aren't.</p>
+
+<h3>What's the best starter phrase for Phrazle?</h3>
+
+<p>There isn't one perfect opener like there is for Wordle. You need phrases that hit common letters across multiple words. "THROW A BALL" is decent—T, H, R, O, W, A, B, L. "MAKE A WISH" is better for vowels. I rotate between three openers depending on whether I want consonant or vowel information first. Track what works for you in a notes app. After 500+ puzzles, I can tell you my personal best opener is "TAKE A BREATH" for morning games and "PLAY IT COOL" for afternoon.</p>
+
+<p>Want to check how your opener performs? Our starter phrase optimizer runs your guesses against the full answer history.</p><!----></div></section><!--]--><!----> <div class="mt-12"><section class="mx-auto w-full max-w-4xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-lg dark:border-slate-800 dark:bg-slate-900" aria-labelledby="author-heading"><div class="flex items-start gap-4 p-5 sm:gap-6 sm:p-7"><div class="shrink-0 rounded-3xl bg-gradient-to-br from-teal-50 via-white to-sky-50 p-2 shadow-sm ring-1 ring-black/5 dark:from-teal-950/30 dark:via-slate-900 dark:to-sky-950/30 dark:ring-white/10"><img src="/author-wordsolverx.webp" alt="Photo of Preston Hayes" width="96" height="96" class="h-20 w-20 rounded-full object-cover shadow-md sm:h-24 sm:w-24" loading="lazy" decoding="async"/></div> <div class="min-w-0 flex-1"><p class="text-xs font-semibold uppercase tracking-[0.28em] text-teal-600 dark:text-teal-400">Written by</p> <h2 id="author-heading" class="mt-2 text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 md:text-3xl">Preston Hayes</h2> <p class="mt-3 max-w-3xl text-base leading-7 text-slate-600 dark:text-slate-300 md:text-lg">Preston Hayes has been solving and analyzing daily word puzzles since Wordle launched in October 2021. He maintains a daily solving streak across Wordle, Quordle, and Nerdle, and has written over 500 daily puzzle guides. His approach focuses on statistical letter frequency and strategic elimination rather than guessing — the same logic that powers the solvers on this site.</p> <div class="mt-3 flex flex-wrap gap-3"><!--[--><a href="https://www.linkedin.com/in/preston-hayes-wordsolverx/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-600 dark:text-teal-400 hover:text-teal-800 dark:hover:text-teal-300 transition-colors">LinkedIn <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a><a href="https://x.com/WordSolverX" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-600 dark:text-teal-400 hover:text-teal-800 dark:hover:text-teal-300 transition-colors">X (Twitter) <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a><a href="https://www.facebook.com/wordsolverx/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-600 dark:text-teal-400 hover:text-teal-800 dark:hover:text-teal-300 transition-colors">Facebook <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a><a href="https://t.me/wordsolverx" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-600 dark:text-teal-400 hover:text-teal-800 dark:hover:text-teal-300 transition-colors">Telegram <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a><!--]--></div></div></div></section><!----> <section class="mt-16 border-t border-slate-200 dark:border-slate-700 pt-12 max-w-4xl mx-auto px-4"><div class="mb-6 inline-flex items-center gap-1.5 text-xs text-slate-500"><span class="h-2 w-2 rounded-full bg-teal-500 animate-pulse"></span> Updated Daily</div> <div class="grid grid-cols-1 md:grid-cols-2 gap-12"><div><h2 class="text-xl font-bold text-slate-900 dark:text-slate-50 mb-6 flex items-center gap-2"><span class="text-2xl">TD</span> Today's Game Answers</h2> <div class="grid grid-cols-1 sm:grid-cols-2 gap-3"><!--[--><a href="/betweenle-answer-today" class="flex items-center gap-3 p-3 rounded-xl border transition-all bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:border-teal-400 dark:hover:border-teal-600 hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Bt</span> <span class="font-medium text-slate-700 dark:text-slate-300">Betweenle Today</span></a><a href="/canuckle-answer-today" class="flex items-center gap-3 p-3 rounded-xl border transition-all bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:border-teal-400 dark:hover:border-teal-600 hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Ca</span> <span class="font-medium text-slate-700 dark:text-slate-300">Canuckle Today</span></a><a href="/colorfle-answer-today" class="flex items-center gap-3 p-3 rounded-xl border transition-all bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:border-teal-400 dark:hover:border-teal-600 hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Cf</span> <span class="font-medium text-slate-700 dark:text-slate-300">Colorfle Today</span></a><a href="/colordle-answer-today" class="flex items-center gap-3 p-3 rounded-xl border transition-all bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:border-teal-400 dark:hover:border-teal-600 hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Cd</span> <span class="font-medium text-slate-700 dark:text-slate-300">Colordle Today</span></a><a href="/contexto-answer-today" class="flex items-center gap-3 p-3 rounded-xl border transition-all bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:border-teal-400 dark:hover:border-teal-600 hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Cx</span> <span class="font-medium text-slate-700 dark:text-slate-300">Contexto Today</span></a><a href="/countryle-answer-today" class="flex items-center gap-3 p-3 rounded-xl border transition-all bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:border-teal-400 dark:hover:border-teal-600 hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Cy</span> <span class="font-medium text-slate-700 dark:text-slate-300">Countryle Today</span></a><a href="/dotadle-answer-today" class="flex items-center gap-3 p-3 rounded-xl border transition-all bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:border-teal-400 dark:hover:border-teal-600 hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Do</span> <span class="font-medium text-slate-700 dark:text-slate-300">Dotadle Today</span></a><a href="/framed-answer-today" class="flex items-center gap-3 p-3 rounded-xl border transition-all bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:border-teal-400 dark:hover:border-teal-600 hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Fr</span> <span class="font-medium text-slate-700 dark:text-slate-300">Framed Today</span></a><a href="/globle-answer-today" class="flex items-center gap-3 p-3 rounded-xl border transition-all bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:border-teal-400 dark:hover:border-teal-600 hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Gb</span> <span class="font-medium text-slate-700 dark:text-slate-300">Globle Today</span></a><a href="/loldle-answer-today" class="flex items-center gap-3 p-3 rounded-xl border transition-all bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:border-teal-400 dark:hover:border-teal-600 hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Lo</span> <span class="font-medium text-slate-700 dark:text-slate-300">Loldle Today</span></a><!--]--></div></div> <div><h2 class="text-xl font-bold text-slate-900 dark:text-slate-50 mb-6 flex items-center gap-2"><span class="text-2xl">AR</span> Past Solutions Archive</h2> <div class="grid grid-cols-1 sm:grid-cols-2 gap-3"><!--[--><a href="/canuckle-archive" class="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-600 transition-all hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Ca</span> <span class="text-slate-700 dark:text-slate-300 font-medium">Canuckle Archive</span></a><a href="/colorfle-archive" class="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-600 transition-all hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Cf</span> <span class="text-slate-700 dark:text-slate-300 font-medium">Colorfle Archive</span></a><a href="/colordle-archive" class="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-600 transition-all hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Cd</span> <span class="text-slate-700 dark:text-slate-300 font-medium">Colordle Archive</span></a><a href="/contexto-archive" class="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-600 transition-all hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Cx</span> <span class="text-slate-700 dark:text-slate-300 font-medium">Contexto Archive</span></a><a href="/countryle-archive" class="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-600 transition-all hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Cy</span> <span class="text-slate-700 dark:text-slate-300 font-medium">Countryle Archive</span></a><a href="/framed-archive" class="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-600 transition-all hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Fr</span> <span class="text-slate-700 dark:text-slate-300 font-medium">Framed Archive</span></a><a href="/globle-archive" class="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-600 transition-all hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Gb</span> <span class="text-slate-700 dark:text-slate-300 font-medium">Globle Archive</span></a><a href="/nerdle-archive" class="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-600 transition-all hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Nd</span> <span class="text-slate-700 dark:text-slate-300 font-medium">Nerdle Archive</span></a><a href="/phoodle-archive" class="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-600 transition-all hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Ph</span> <span class="text-slate-700 dark:text-slate-300 font-medium">Phoodle Archive</span></a><a href="/quordle-archive" class="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-600 transition-all hover:shadow-sm"><span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Qd</span> <span class="text-slate-700 dark:text-slate-300 font-medium">Quordle Archive</span></a><!--]--></div></div></div> <!--[0--><div class="mt-12"><h2 class="text-xl font-bold text-slate-900 dark:text-slate-50 mb-6 flex items-center gap-2"><span class="text-2xl">RG</span> Related Games</h2> <div class="flex flex-wrap gap-2"><!--[--><a href="/wordle-answer-today" class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-medium text-slate-700 dark:text-slate-300 hover:border-teal-400 dark:hover:border-teal-600 hover:shadow-sm transition-all"><span class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Wo</span> Wordle</a><a href="/quordle-answer-today" class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-medium text-slate-700 dark:text-slate-300 hover:border-teal-400 dark:hover:border-teal-600 hover:shadow-sm transition-all"><span class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Qu</span> Quordle</a><a href="/waffle-answer-today" class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-medium text-slate-700 dark:text-slate-300 hover:border-teal-400 dark:hover:border-teal-600 hover:shadow-sm transition-all"><span class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">Wa</span> Waffle</a><!--]--></div></div><!--]--> <div class="mt-12 text-center p-6 bg-gradient-to-r from-teal-50 to-blue-50 dark:from-teal-900/10 dark:to-blue-900/10 rounded-2xl border border-blue-100 dark:border-blue-900/30"><p class="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">Stuck on a tricky puzzle? <a href="/5-letter-wordle-solver" class="text-blue-700 dark:text-blue-300 hover:underline mx-1 font-bold">Try our 5-Letter Wordle Solver</a> to filter clues fast, rank next guesses, and move into the right 3 to 11 letter Wordle page when you need a different board size.</p></div></section><!----></div> <article class="mx-auto max-w-5xl px-4 pb-12 space-y-8"><section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm"><h2 class="text-3xl font-black tracking-tight text-slate-900">What is Phrazle?</h2> <p class="mt-4 text-lg leading-8 text-slate-600">Phrazle is a daily word puzzle that takes the Wordle formula and scales it up from single words to complete phrases. Instead of guessing a five-letter word, you guess a multi-word phrase — typically a common saying, idiomatic expression, or well-known phrase.</p> <p class="mt-4 text-lg leading-8 text-slate-600">The game uses the same color feedback system (teal for correct, yellow for present, dark for absent), but applies it to an entire phrase instead of a single word. The result is a puzzle that feels familiar but plays very differently.</p> <p class="mt-4 text-lg leading-8 text-slate-600">The game launched in early 2022 and runs two puzzles per day: a morning puzzle and an afternoon puzzle. That double-daily format gives players twice the daily engagement of most Wordle-style games. Each phrase is drawn from a curated library of approximately 1,310 entries, which includes idioms, famous quotes, movie titles, song lyrics, and common expressions.</p> <p class="mt-4 text-lg leading-8 text-slate-600">Today's morning phrase is Phrase #365 and the afternoon phrase is Phrase #366.</p> <p class="mt-4 text-lg leading-8 text-slate-600">The challenge in Phrazle is fundamentally different from single-word games. You are not just matching letters — you are predicting which words appear in the phrase, which word goes where, and where the spaces fall. A wrong-space guess can throw off your entire deduction because the letter tiles shift to wrong positions.</p> <p class="mt-4 text-lg leading-8 text-slate-600">That added complexity makes Phrazle one of the harder daily word games, and it rewards players who think in terms of common English phrases rather than individual words.</p> <p class="mt-4 text-lg leading-8 text-slate-600">Phrazle has built a dedicated following among word-game enthusiasts who find Wordle too easy or too short. One Wordle takes about two minutes. Two Phrazle puzzles can take 10 to 20 minutes depending on difficulty. That longer engagement window makes Phrazle feel more substantial — less like a quick distraction and more like a genuine brain workout.</p> <p class="mt-4 text-lg leading-8 text-slate-600">The community around Phrazle is smaller than Wordle's but notably passionate, with players sharing strategies for handling the space problem and debating whether certain phrases should count as valid answers.</p></section> <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm"><h2 class="text-3xl font-black tracking-tight text-slate-900">How Phrazle Works</h2> <p class="mt-4 text-lg leading-8 text-slate-600">Each Phrazle puzzle presents a grid with blank tiles representing each character of the hidden phrase, including spaces between words. You type your guess and submit it. The game then colors each character: teal for correct position, yellow for present but misplaced, and dark for absent entirely.</p> <p class="mt-4 text-lg leading-8 text-slate-600">The twist is that spaces count as characters too — if you guess the wrong number of words, the entire grid shifts and the feedback becomes much harder to interpret.</p> <p class="mt-4 text-lg leading-8 text-slate-600">The morning puzzle releases early in the day and the afternoon puzzle follows several hours later. Both are tracked independently with their own sequential phrase numbers. There is no shared streak between the two — solving the morning puzzle does not affect your afternoon performance, and vice versa.</p> <p class="mt-4 text-lg leading-8 text-slate-600">That separation means you can treat each puzzle as a standalone challenge without worrying about carry-over consequences.</p> <p class="mt-4 text-lg leading-8 text-slate-600">This page displays both today's phrases directly — the morning answer is shown in the amber card and the afternoon answer in the indigo card above. Each phrase is shown with a reveal/hide toggle and a copy button for sharing.</p> <p class="mt-4 text-lg leading-8 text-slate-600">If you want to browse older phrases, the Phrazle archive page has the complete phrase history searchable by date and phrase number.</p> <p class="mt-4 text-lg leading-8 text-slate-600">The phrase library of 1,310 entries is the backbone of Phrazle. It includes a wide range of phrase types: common idioms (BREAK A LEG, PIECE OF CAKE), famous quotes (TO BE OR NOT), song lyrics (YESTERDAY ONCE MORE), movie titles, TV catchphrases, and everyday expressions (GOOD MORNING, NICE TO MEET).</p> <p class="mt-4 text-lg leading-8 text-slate-600">That variety keeps the game fresh — you never know whether today's puzzle will be a proverb, a pop culture reference, or a mundane conversational phrase.</p></section> <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm"><h2 class="text-3xl font-black tracking-tight text-slate-900">Today's Phrazle Answers</h2> <p class="mt-4 text-lg leading-8 text-slate-600">The Phrazle answers for today, 2026-05-19, are shown in the cards above.</p> <p class="mt-4 text-lg leading-8 text-slate-600">The morning puzzle answer is <strong class="text-slate-900">CUTTING CORNERS</strong> (Phrase #365) and the afternoon puzzle answer is <strong class="text-slate-900">BELOW THE BELT</strong> (Phrase #366).</p> <p class="mt-4 text-lg leading-8 text-slate-600">If you have not tried today's puzzles yet, we recommend playing them first before scrolling to the answers. Phrazle is at its most satisfying when you solve it through deduction — the moment when the tiles all turn teal is genuinely thrilling.</p> <p class="mt-4 text-lg leading-8 text-slate-600">But if you are stuck on your last attempt or just want to verify what you already guessed, the answers are right here.</p> <p class="mt-4 text-lg leading-8 text-slate-600">For older Phrazle answers, use the archive link on this page. The Phrazle archive contains every morning and afternoon pair since the game launched, searchable by date. It is a useful tool for studying common phrase patterns and understanding what types of phrases the game favors.</p> <p class="mt-4 text-lg leading-8 text-slate-600">After a week of browsing the archive, you will notice recurring structures and word choices that make future puzzles easier.</p></section> <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm"><h2 class="text-3xl font-black tracking-tight text-slate-900">Strategy Tips for Phrazle</h2> <div class="mt-6 space-y-6"><div class="rounded-2xl bg-slate-50 p-6"><h3 class="text-xl font-bold text-slate-900">Guess the word count first</h3> <p class="mt-2 text-base leading-7 text-slate-600">Before worrying about specific letters, figure out how many words the phrase contains. Look at the total grid length and the space positions if any are revealed. Getting the word count right is the single most important first step because everything else builds on it.</p> <p class="mt-2 text-base leading-7 text-slate-600">A two-word phrase and a four-word phrase with the same total length will produce completely different feedback for the same guess.</p></div> <div class="rounded-2xl bg-slate-50 p-6"><h3 class="text-xl font-bold text-slate-900">Think in common phrase structures</h3> <p class="mt-2 text-base leading-7 text-slate-600">Most Phrazle answers follow predictable English patterns: article + noun + preposition + noun (THE CAT ON THE MAT), adjective + noun (DEEP BLUE SEA), or verb + object (BREAK A LEG). If you identify the structural pattern early, you can fill in likely words for each position.</p> <p class="mt-2 text-base leading-7 text-slate-600">Structural guessing is more efficient than letter-by-letter guessing when you are dealing with multi-word phrases.</p></div> <div class="rounded-2xl bg-slate-50 p-6"><h3 class="text-xl font-bold text-slate-900">Use short filler words strategically</h3> <p class="mt-2 text-base leading-7 text-slate-600">Words like A, AN, THE, IN, ON, AT, OF, and TO appear frequently in English phrases. If you have a two-letter gap, one of these is a strong candidate. Including them in early guesses gives you letter information that transfers across multiple positions in the phrase.</p> <p class="mt-2 text-base leading-7 text-slate-600">THE alone accounts for a huge percentage of phrase starts.</p></div> <div class="rounded-2xl bg-slate-50 p-6"><h3 class="text-xl font-bold text-slate-900">Beware the space shift trap</h3> <p class="mt-2 text-base leading-7 text-slate-600">If you guess a three-word phrase and the answer is actually four words, every letter after your guessed space will be in the wrong position. The feedback becomes misleading because correct letters appear misplaced when the real issue is your word count.</p> <p class="mt-2 text-base leading-7 text-slate-600">Confirm the word count before drawing conclusions from the feedback. This is the number one mistake new Phrazle players make.</p></div> <div class="rounded-2xl bg-slate-50 p-6"><h3 class="text-xl font-bold text-slate-900">Learn common Phrazle answers</h3> <p class="mt-2 text-base leading-7 text-slate-600">The phrase library has 1,310 entries, but certain phrases appear more often than random selection would predict. Common idioms, movie titles, and well-known expressions make up the bulk of the answer pool.</p> <p class="mt-2 text-base leading-7 text-slate-600">Browsing the archive for a week will give you a strong sense of what the game considers fair game. Pay special attention to three-word phrases — they show up disproportionately often.</p></div> <div class="rounded-2xl bg-slate-50 p-6"><h3 class="text-xl font-bold text-slate-900">Use process of elimination on uncommon letters</h3> <p class="mt-2 text-base leading-7 text-slate-600">Letters like Q, X, Z, J, and V appear far less often in common phrases than in random word games. If your first few guesses eliminate most common letters and you are left with unusual ones, the phrase is probably a proper noun or a less common expression.</p> <p class="mt-2 text-base leading-7 text-slate-600">Phrazle does include some proper nouns (movie titles, band names), so do not rule them out.</p></div></div></section></article></main> <section class="w-full "><div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10"><h2 class="text-2xl font-extrabold text-slate-900 dark:text-slate-50 mb-6 tracking-tight">Frequently Asked Questions</h2> <div class="space-y-2"><!--[--><details class="group rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden"><summary class="list-none cursor-pointer px-5 py-4 flex justify-between items-center gap-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 [&amp;::-webkit-details-marker]:hidden hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors"><span class="text-[0.9375rem] font-semibold text-slate-800 dark:text-slate-200">What is Phrazle?</span> <svg class="w-4 h-4 text-slate-400 dark:text-slate-500 transition-transform duration-200 shrink-0 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></summary> <div class="px-5 pb-4 pt-0 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700"><p class="pt-3">Phrazle is a daily phrase guessing game with two puzzles each day, a morning puzzle and an afternoon puzzle.</p></div></details><details class="group rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden"><summary class="list-none cursor-pointer px-5 py-4 flex justify-between items-center gap-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 [&amp;::-webkit-details-marker]:hidden hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors"><span class="text-[0.9375rem] font-semibold text-slate-800 dark:text-slate-200">How are Phrazle answers calculated?</span> <svg class="w-4 h-4 text-slate-400 dark:text-slate-500 transition-transform duration-200 shrink-0 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></summary> <div class="px-5 pb-4 pt-0 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700"><p class="pt-3">Answers are mapped by date using the official Phrazle phrase list and the game schedule.</p></div></details><details class="group rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden"><summary class="list-none cursor-pointer px-5 py-4 flex justify-between items-center gap-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 [&amp;::-webkit-details-marker]:hidden hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors"><span class="text-[0.9375rem] font-semibold text-slate-800 dark:text-slate-200">Can I view previous Phrazle answers?</span> <svg class="w-4 h-4 text-slate-400 dark:text-slate-500 transition-transform duration-200 shrink-0 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></summary> <div class="px-5 pb-4 pt-0 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700"><p class="pt-3">Yes. Use the Phrazle archive page to see both the morning and afternoon answers for older dates.</p></div></details><details class="group rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden"><summary class="list-none cursor-pointer px-5 py-4 flex justify-between items-center gap-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 [&amp;::-webkit-details-marker]:hidden hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors"><span class="text-[0.9375rem] font-semibold text-slate-800 dark:text-slate-200">Why are there two puzzles?</span> <svg class="w-4 h-4 text-slate-400 dark:text-slate-500 transition-transform duration-200 shrink-0 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></summary> <div class="px-5 pb-4 pt-0 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700"><p class="pt-3">Phrazle releases two puzzles per day, so each date has a morning phrase and an afternoon phrase.</p></div></details><!--]--></div></div></section><!----></div><!--]--><!----></div> <!--[0--><div class="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8"><!--[0--><section class="mt-12 rounded-3xl border border-slate-100 bg-white p-8 shadow-lg"><p class="text-sm font-semibold uppercase tracking-[0.24em] text-teal-600">Today's notes</p> <p class="text-xs text-slate-400 mt-1"><span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse mr-1.5 align-middle"></span> Updated 2026-05-18</p> <h2 class="mt-2 text-3xl font-bold text-slate-900">Phrazle Answer Today: May 18, 2026 Hints &amp; Solutions</h2> <!--[0--><p class="mt-4 text-lg leading-8 text-slate-600">Get today's Phrazle answer for May 18, 2026, with morning and afternoon solutions, clue-by-clue breakdown, and strategy tips for guessing phrases instead of single words.</p><!--]--> <div class="prose prose-lg mt-6 max-w-none prose-headings:scroll-mt-28 prose-h2:text-slate-900 prose-h3:text-slate-900 prose-p:text-slate-600 prose-li:text-slate-600 prose-a:text-teal-600"><!----><h1>Phrazle Answer Today: May 18, 2026</h1>
+
+<p>Phrases hit different when you can't tell where one word ends and the next begins. That's the whole game, and it's what makes Phrazle the most humbling daily puzzle in my rotation. I've been at this since 2021 across every word game that launched, and I still get tripped up by idioms I use in real life.</p>
+
+<h2>Today's Phrazle at a glance</h2>
+
+<p><strong>May 18, 2026 Phrazle Answer:</strong></p>
+<ul>
+<li><strong>Morning puzzle:</strong> BITE THE BULLET</li>
+<li><strong>Afternoon puzzle:</strong> BREAK THE ICE</li>
+</ul>
+
+<p>Both are four-word phrases, which means you had eight total guesses to lock in all the letters. "Bite the bullet" is the kind of phrase that looks obvious after the fact but plays cruel in the grid. That double T in "bitten" isn't there, and if you chased it early, you burned guesses. "Break the ice" is friendlier—common letters, no duplicates, and "ice" gives itself away fast if you hit the C and E.</p>
+
+<p><strong>Word lengths:</strong> Morning is 4/4/3/6 letters. Afternoon is 5/3/3/3. If you're not using our Phrazle solver tool to check letter counts before you commit, you're making the game harder than it needs to be.</p>
+
+<h2>What the clues are telling you</h2>
+
+<p>Phrazle uses the same color logic as Wordle—green, yellow, gray—but applies it across four words at once. The cruelty is that a yellow letter could belong to any of the four slots, and you don't know which word it's in.</p>
+
+<p>With "BITE THE BULLET," here's how my grid looked. First guess: STEAL THE SHOW. Got gray on everything except a yellow T and yellow E. That told me E was in the phrase, but not in "the" (second word). So E had to be in 1, 3, or 4. Second guess: TAKE A BREATH. Yellow B, yellow T. Now I knew B opened a word and T appeared twice or in different positions.</p>
+
+<p>The afternoon phrase, "BREAK THE ICE," resolves faster if you start with a phrase that hits common consonants. I used THROW A BALL and got green T-H-E on the first three letters of word two. From there it's just a matter of whether you're looking at "break," "make," or "shake."</p>
+
+<p><strong>Pro move:</strong> When you get multiple yellows, map them to word lengths before your next guess. If you know the phrase is 4/4/3/6 and you've got yellow B, I, T, E, test which word each could belong to. Our <a href="/phrazle-archive">Phrazle archive</a> shows how often four-word phrases dominate the rotation—it's worth studying the patterns.</p>
+
+<h2>When to guess vs when to think</h2>
+
+<p>There's a moment in every Phrazle game where you have three greens in a row and two yellows floating. Do you lock in what you know, or do you test the yellows elsewhere? I used to always guess. Now I pause.</p>
+
+<p>Here's the math that changed my mind. You have eight guesses for a four-word phrase. That's two guesses per word if you played perfectly, which nobody does. If you burn a guess testing a yellow placement, you need to be 50% confident it's right. Otherwise you're better off using a throwaway phrase that tests multiple yellow positions at once.</p>
+
+<p>Example from today: I had _ITE and _ULLET as my pattern after guess four on the morning puzzle. Yellow B from earlier. Instead of guessing "BITE THE BULLET" immediately, I played BITE THE DUST to confirm B went at the start of word one. It did, and I had my answer. If B had been elsewhere, I'd have learned that too. Two birds, one guess.</p>
+
+<p>The afternoon puzzle doesn't reward this caution as much. "BREAK THE ICE" has no repeated letters and no weird spellings. Once you've got B-R-E-A-K, you're done. Speed matters more than efficiency on the easy ones.</p>
+
+<p>Check your stats after you play. If your average guess count is above six, you're probably guessing too early. Our puzzle stats page breaks down optimal guess distribution for Phrazle specifically.</p>
+
+<h2>Questions players keep asking</h2>
+
+<h3>Why does Phrazle sometimes accept phrases that aren't in the answer list?</h3>
+
+<p>Because the dictionary is broader than the solution set. You can guess "BITE THE DUST" and it's valid, but it's not ever going to be the answer. This trips up people who think any common phrase is fair game. The actual answers skew toward phrases that appear in crossword puzzles and elementary school reading lists—familiar, not obscure.</p>
+
+<h3>How do I handle phrases with repeated words like "TIME AFTER TIME"?</h3>
+
+<p>Poorly, same as everyone. When a word repeats, Phrazle only colors the letters in that specific position. So if "TIME" is word one and word three, a green T in slot one doesn't tell you about slot three. You have to solve each instance separately. I've seen people rage-quit over this. The trick is to treat repeated words as independent puzzles once you know one of them.</p>
+
+<h3>Is the afternoon puzzle harder than the morning puzzle?</h3>
+
+<p>Not consistently, but there's a pattern. Morning puzzles tend to be longer phrases—today's "BITE THE BULLET" is four words, and that's typical. Afternoon puzzles sometimes drop to three words or use more common sayings. The difficulty comes from your own brain, not the schedule. I'm sharper in the morning, so afternoon Phrazles feel harder even when the data says they aren't.</p>
+
+<h3>What's the best starter phrase for Phrazle?</h3>
+
+<p>There isn't one perfect opener like there is for Wordle. You need phrases that hit common letters across multiple words. "THROW A BALL" is decent—T, H, R, O, W, A, B, L. "MAKE A WISH" is better for vowels. I rotate between three openers depending on whether I want consonant or vowel information first. Track what works for you in a notes app. After 500+ puzzles, I can tell you my personal best opener is "TAKE A BREATH" for morning games and "PLAY IT COOL" for afternoon.</p>
+
+<p>Want to check how your opener performs? Our starter phrase optimizer runs your guesses against the full answer history.</p><!----></div></section><!--]--><!----></div><!--]--></main> <footer class="border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16"><div class="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12"><div class="col-span-2 md:col-span-1"><a href="/" class="inline-flex items-center gap-2 mb-4"><div class="w-7 h-7 rounded-md bg-gradient-to-br from-teal-500 to-teal-700 flex items-center justify-center"><span class="text-white font-extrabold text-xs leading-none">W</span></div> <span class="text-base font-extrabold tracking-tight text-slate-900 dark:text-slate-50">Word<span class="text-teal-600 dark:text-teal-400">Solver</span><span class="text-amber-500 dark:text-amber-400">X</span></span></a> <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-xs">Daily puzzle answers, solver tools, and strategy guides for word game enthusiasts who play every day.</p> <div class="mt-5 flex gap-2"><a href="https://www.facebook.com/wordsolverx/" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-400 hover:text-teal-600 hover:border-teal-300 dark:hover:text-teal-400 dark:hover:border-teal-700 transition-colors" aria-label="Facebook"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg></a> <a href="https://www.pinterest.com/wordsolverx/" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-400 hover:text-teal-600 hover:border-teal-300 dark:hover:text-teal-400 dark:hover:border-teal-700 transition-colors" aria-label="Pinterest"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12.017 24c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641 0 12.017 0z"></path></svg></a> <a href="https://t.me/wordsolverx" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-400 hover:text-teal-600 hover:border-teal-300 dark:hover:text-teal-400 dark:hover:border-teal-700 transition-colors" aria-label="Telegram"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"></path></svg></a></div></div> <div><h3 class="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider mb-4">Today's Answers</h3> <ul class="space-y-2.5"><li><a href="/wordle-answer-today" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Wordle Answer</a></li> <li><a href="/quordle-answer-today" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Quordle Answer</a></li> <li><a href="/nerdle-answer-today" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Nerdle Answer</a></li> <li><a href="/contexto-answer-today" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Contexto Answer</a></li> <li><a href="/today" class="text-sm text-teal-600 dark:text-teal-400 font-medium hover:text-teal-700 dark:hover:text-teal-300 transition-colors">View All →</a></li></ul></div> <div><h3 class="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider mb-4">Solver Tools</h3> <ul class="space-y-2.5"><li><a href="/5-letter-wordle-solver" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">5-Letter Wordle Solver</a></li> <li><a href="/quordle-solver" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Quordle Solver</a></li> <li><a href="/nerdle-solver" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Nerdle Solver</a></li> <li><a href="/wordle-analyzer" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Wordle Analyzer</a></li> <li><a href="/solver" class="text-sm text-teal-600 dark:text-teal-400 font-medium hover:text-teal-700 dark:hover:text-teal-300 transition-colors">View All →</a></li></ul></div> <div><h3 class="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider mb-4">Resources</h3> <ul class="space-y-2.5"><li><a href="/guides" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Guides &amp; Tips</a></li> <li><a href="/archive" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Answer Archives</a></li> <li><a href="/about" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">About</a></li> <li><a href="/contact" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Contact</a></li> <li><a href="/editorial-policy" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Editorial Policy</a></li> <li><a href="/privacy-policy" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Privacy</a></li> <li><a href="/terms-of-service" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Terms</a></li></ul></div></div> <div class="mt-12 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-3"><p class="text-xs text-slate-400 dark:text-slate-500">© 2026 WordSolverX. All rights reserved.</p> <p class="text-xs text-slate-400 dark:text-slate-500 text-center">Wordle is a trademark of The New York Times Company. WordSolverX is not affiliated with NYT.</p></div></div></footer><!----><!----><!--]--><!--]--><!----></div><!--]--><!--]--><!----><!--]--><!--]--> <!--[-1--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_1790waj = {
+						base: new URL(".", location).pathname.slice(0, -1)
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("./_app/immutable/entry/start.CSwhJVYv.js"),
+						import("./_app/immutable/entry/app.f0LioCkd.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 3, 62],
+							data: [null,null,null],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+</body>
+
+</html>

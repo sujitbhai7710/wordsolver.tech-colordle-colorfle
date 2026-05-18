@@ -1,0 +1,2 @@
+// PhoodleAnswerCard.DQXAHDYz.css
+export default ".phoodle-answer-panel.svelte-1acm2c5{filter:blur(10px);-webkit-user-select:none;-moz-user-select:none;user-select:none;transition:filter .3s ease}.phoodle-answer-panel.revealed.svelte-1acm2c5{filter:none;-webkit-user-select:auto;-moz-user-select:auto;user-select:auto}\n";

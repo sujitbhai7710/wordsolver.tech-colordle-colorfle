@@ -1,0 +1,1 @@
+import{c as n,a,f as p}from"./DR1OH7a1.js";import{f as c}from"./B--w_SLd.js";import{i as e}from"./CqI6-il_.js";var v=p("<noscript></noscript>");function g(t,i){var o=n(),s=c(o);{var f=r=>{var m=v();a(r,m)};e(s,r=>{i.answer&&r(f)})}a(t,o)}export{g as A};

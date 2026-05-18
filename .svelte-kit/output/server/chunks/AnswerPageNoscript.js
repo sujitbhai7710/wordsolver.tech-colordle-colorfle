@@ -1,0 +1,1 @@
+import{e as o}from"./index2.js";import"clsx";function m(s,t){let{gameName:a,answer:p}=t;p?(s.push("<!--[0-->"),s.push(`<noscript><p>The ${o(a)} answer for today is: <strong>${o(p)}</strong></p></noscript>`)):s.push("<!--[-1-->"),s.push("<!--]-->")}export{m as A};

@@ -1,0 +1,1 @@
+import{S as e,g as t}from"../../../../chunks/daily.js";import{g as a}from"../../../../chunks/puzzle-window.js";const l=()=>({totalPuzzles:e.length,todayPuzzle:t(a("searchle")),meta:{description:`Today's Searchle autocomplete answer revealed. See the prompt, copy the answer, and browse ${e.length.toLocaleString("en-US")} past puzzles in the archive.`}});export{l as load};

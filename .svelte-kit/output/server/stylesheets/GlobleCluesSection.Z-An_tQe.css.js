@@ -1,0 +1,2 @@
+// GlobleCluesSection.Z-An_tQe.css
+export default ".globle-answer-reveal.svelte-g71w04{filter:blur(10px);-webkit-user-select:none;-moz-user-select:none;user-select:none;transition:filter .3s ease}.globle-answer-reveal.revealed.svelte-g71w04{filter:none;-webkit-user-select:auto;-moz-user-select:auto;user-select:auto}\n";

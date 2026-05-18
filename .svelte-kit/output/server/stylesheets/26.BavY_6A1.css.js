@@ -1,0 +1,2 @@
+// 26.BavY_6A1.css
+export default ".betweenle-answer-content.svelte-j1fvx9{filter:blur(10px);transition:filter .3s ease;-webkit-user-select:none;-moz-user-select:none;user-select:none}.betweenle-answer-content.revealed.svelte-j1fvx9{filter:none;-webkit-user-select:auto;-moz-user-select:auto;user-select:auto}\n";

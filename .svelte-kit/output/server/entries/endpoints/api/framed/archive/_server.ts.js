@@ -1,0 +1,1 @@
+import{json as a}from"@sveltejs/kit";import{g as r,a as s}from"../../../../../chunks/framed.js";function l({url:t}){const e=t.searchParams.get("date")??"";return r().includes(e)?a({entries:s(e)}):a({entries:[]},{status:404})}export{l as GET};

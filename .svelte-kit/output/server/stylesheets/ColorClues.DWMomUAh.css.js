@@ -1,0 +1,2 @@
+// ColorClues.DWMomUAh.css
+export default ".answer-text-content.svelte-vez311{filter:blur(10px);-webkit-user-select:none;-moz-user-select:none;user-select:none;transition:filter .3s ease}.answer-reveal-area.revealed.svelte-vez311 .answer-text-content:where(.svelte-vez311){filter:none;-webkit-user-select:auto;-moz-user-select:auto;user-select:auto}\n";

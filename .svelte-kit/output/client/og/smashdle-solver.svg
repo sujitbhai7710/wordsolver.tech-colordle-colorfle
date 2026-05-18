@@ -1,0 +1,14 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630' viewBox='0 0 1200 630'>
+  <defs>
+    <linearGradient id='bg' x1='0' y1='0' x2='1' y2='1'>
+      <stop offset='0%' stop-color='#0f172a'/>
+      <stop offset='100%' stop-color='#0f766e'/>
+    </linearGradient>
+  </defs>
+  <rect width='1200' height='630' fill='url(#bg)'/>
+  <circle cx='1030' cy='120' r='180' fill='rgba(255,255,255,0.08)'/>
+  <circle cx='170' cy='540' r='220' fill='rgba(20,184,166,0.25)'/>
+  <text x='80' y='260' fill='#f8fafc' font-family='Arial, sans-serif' font-size='74' font-weight='700'>Smashdle Solver</text>
+  <text x='80' y='340' fill='#ccfbf1' font-family='Arial, sans-serif' font-size='38'>WordSolverX Puzzle Tool</text>
+  <text x='80' y='560' fill='#99f6e4' font-family='Arial, sans-serif' font-size='32'>wordsolverx.com</text>
+</svg>

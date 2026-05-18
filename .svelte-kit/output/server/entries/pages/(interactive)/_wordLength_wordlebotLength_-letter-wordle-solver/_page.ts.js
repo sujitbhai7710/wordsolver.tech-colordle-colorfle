@@ -1,0 +1,1 @@
+import{c as n}from"../../../../chunks/route-config.js";import{c as o}from"../../../../chunks/routes.js";function g(){return o.map(r=>({wordLength:String(r)}))}function i({params:r}){return{config:n(Number(r.wordLength))}}export{g as entries,i as load};
