@@ -348,17 +348,18 @@
       <div class="answer-card" style="--theme-primary: {theme.primary}; --theme-light: {theme.primaryLight}; --theme-mid: {theme.primaryMid}; --theme-border: {theme.primaryBorder};">
         <div class="answer-label">{gameName} Answer — {selectedDate}</div>
 
-        <!-- CSS-only reveal -->
-        <input type="checkbox" id="archiveAnswerReveal" class="reveal-checkbox" checked={answerRevealed} />
-        <label for="archiveAnswerReveal" class="reveal-label" style="display:{answerRevealed ? 'none' : 'inline-block'};">
-          <div class="reveal-circle">
-            ?
+        {#if !answerRevealed}
+          <button class="reveal-btn" onclick={() => answerRevealed = true}>
+            <div class="reveal-circle">
+              ?
+            </div>
+            <div class="reveal-text">Click to reveal the answer</div>
+          </button>
+        {:else}
+          <div class="reveal-content">
+            {@html selectedAnswer.html}
           </div>
-          <div class="reveal-text">Click to reveal the answer</div>
-        </label>
-        <div class="reveal-content" style="display:{answerRevealed ? 'block' : 'none'};">
-          {@html selectedAnswer.html}
-        </div>
+        {/if}
       </div>
     </div>
   {/if}
@@ -725,11 +726,24 @@
     margin-bottom: 1.25rem;
   }
 
-  .reveal-checkbox {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
+  .reveal-btn {
+    display: block;
+    width: 100%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s;
+    padding: 1rem 0;
+    font-family: var(--font-body);
+  }
+
+  .reveal-btn:hover {
+    transform: scale(1.02);
+  }
+
+  .reveal-btn:hover .reveal-circle {
+    background: var(--theme-mid, rgba(13,124,102,0.12));
+    border-color: var(--theme-primary, rgba(13,124,102,0.4));
   }
 
   .reveal-circle {
@@ -753,14 +767,5 @@
     color: var(--text-muted);
     font-size: 0.8rem;
     font-weight: 500;
-  }
-
-  .reveal-label {
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-
-  .reveal-label:hover {
-    transform: scale(1.02);
   }
 </style>
