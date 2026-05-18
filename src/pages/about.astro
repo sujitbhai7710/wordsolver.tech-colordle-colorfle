@@ -1,8 +1,32 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const schema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AboutPage",
+      "name": "About WordSolver",
+      "description": "Learn about WordSolver, the free toolkit for Colordle and Colorfle puzzle solvers, daily answers, and unlimited practice modes.",
+      "url": "https://wordsolver.tech/about"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wordsolver.tech" },
+        { "@type": "ListItem", "position": 2, "name": "About", "item": "https://wordsolver.tech/about" }
+      ]
+    }
+  ]
+});
 ---
 
-<Layout title="About WordSolver - Free Color Puzzle Tools" description="Learn about WordSolver, the free toolkit for Colordle and Colorfle puzzle solvers, daily answers, and unlimited practice modes.">
+<Layout
+  title="About WordSolver - Free Color Puzzle Tools"
+  description="Learn about WordSolver, the free toolkit for Colordle and Colorfle puzzle solvers, daily answers, and unlimited practice modes."
+  keywords="about wordsolver, color puzzle tools, colordle tools, colorfle tools"
+  schema={schema}
+>
   <section class="hero"><div class="container">
     <span class="hero-badge">About Us</span>
     <h1>About WordSolver</h1>
@@ -12,20 +36,48 @@ import Layout from '../layouts/Layout.astro';
   <section class="container" style="padding-bottom:3rem;">
     <div class="content-section">
       <h2>Why This Site Exists</h2>
-      <p>WordSolver started from a simple frustration: playing Colordle and Colorfle daily, getting tantalizingly close to the answer, and having no way to narrow things down without just guessing randomly. The games themselves are brilliant — color perception is a genuine skill, and the daily format creates a shared experience. But the tools for working through a puzzle when you are stuck were nonexistent. You could brute-force your way to the answer by guessing every color you could think of, or you could check social media for the solution. Neither option felt satisfying.</p>
-      <p>We wanted something in between. A solver that respects the puzzle but gives you better tools for working through it. A daily answer page for when you just want to know and move on. An unlimited practice mode for when you want to get better without waiting for the next daily reset. WordSolver is all three of those things in one place.</p>
-      <p>The site is free, requires no account, and runs entirely in your browser. No data gets sent to any server. Your guesses, percentages, and game state stay on your device. The daily answer data is generated at build time using the same algorithms the official games use, so the answers are accurate from the moment the puzzle resets.</p>
+      <p>WordSolver started from a simple frustration: playing Colordle and Colorfle daily, getting tantalizingly close to the answer, and having no way to narrow things down without just guessing randomly. The games themselves are brilliant — color perception is a genuine skill, and the daily format creates a shared experience that connects players around the world. But the tools for working through a puzzle when you are stuck were nonexistent. You could brute-force your way to the answer by guessing every color you could think of, or you could check social media for the solution someone else had already found. Neither option felt satisfying or respectful of the puzzle-solving process.</p>
+      <p>We wanted something in between. A solver that respects the puzzle but gives you better tools for working through it systematically. A daily answer page for when you just want to know and move on with your day. An unlimited practice mode for when you want to get better without waiting twenty-four hours for the next daily reset. WordSolver is all three of those things in one place, designed to serve different needs at different times. Some days you want the challenge of solving it yourself with computational help. Other days you just want the answer. Both approaches are valid, and WordSolver supports both.</p>
+      <p>The site is free, requires no account, and runs entirely in your browser. No data gets sent to any server during gameplay or solver use. Your guesses, percentages, game state, and answers stay on your device and are lost when you close the tab. The daily answer data is generated at build time using the same algorithms the official games use, so the answers are accurate from the moment the puzzle resets. We believe that puzzle tools should be accessible to everyone without registration walls, paywalls, or data collection. WordSolver embodies that belief.</p>
     </div>
+
     <div class="content-section">
-      <h2>Our Approach</h2>
-      <p>Every tool on this site uses the exact same algorithms the games themselves use. Colordle scoring uses Delta E CIE2000 in LAB color space — the same formula Colordle uses to calculate similarity percentages. Colorfle mixing uses weighted RGB averaging across both YCC and RGB color spaces, exactly matching the official game's output. When the solver says a color would score 85.32%, that is the same number you would see in the game.</p>
-      <p>We do not approximate, we do not guess, and we do not use machine learning. The results are mathematically exact within floating-point precision. If you ever see a discrepancy between the solver's output and the game's output, it is likely due to display rounding (the game shows two decimal places, the solver uses full precision) or browser color profile differences.</p>
-      <p>WordSolver is an independent project. We are not affiliated with Colordle, Colorfle, or any other game. We are players who build tools for other players.</p>
+      <h2>Our Approach to Puzzle Tools</h2>
+      <p>Every tool on this site uses the exact same algorithms the games themselves use. This is not an approximation or a best-effort replication — it is a precise mathematical match. Colordle scoring uses Delta E CIE2000 in LAB color space, which is the same formula Colordle uses to calculate similarity percentages. Colorfle mixing uses weighted RGB averaging across both YCC and RGB color spaces, exactly matching the official game's output. When the solver says a color would score 85.32%, that is the same number you would see in the game if you could measure it at full precision.</p>
+      <p>We do not approximate, we do not guess, and we do not use machine learning. The results are mathematically exact within floating-point precision limits. Every calculation is deterministic: given the same inputs, the solver always produces the same outputs. This determinism is important because it means the solver's results are reproducible and verifiable. If you ever see a discrepancy between the solver's output and the game's output, it is likely due to display rounding (the game shows two decimal places, the solver uses full precision) or browser color profile differences affecting how colors appear on screen. The underlying calculations are identical.</p>
+      <p>WordSolver is an independent project. We are not affiliated with Colordle, Colorfle, or any other game. We are players who build tools for other players. Our use of game names is for descriptive purposes only — to clearly identify which games our tools are designed to help with. We have deep respect for the games and their creators, and we design our tools to complement the puzzle-solving experience rather than replace it.</p>
+      <p>The philosophy behind our tools is simple: amplify human intuition with computational precision. The solver does not solve the puzzle for you — it filters and narrows based on the information you provide. You still need to make guesses, observe feedback, and decide which candidates to pursue. The solver handles the tedious combinatorial elimination that human minds are not well-suited for, freeing you to focus on the creative and intuitive aspects of color puzzle solving. It is a partnership between human perception and computational power, not a replacement for either.</p>
     </div>
+
+    <div class="content-section">
+      <h2>What We Offer</h2>
+      <p><strong>Daily Answer Pages</strong> for both Colordle and Colorfle. These pages show the solution to each day's puzzle, updated automatically when the daily puzzle resets. The answers are hidden behind CSS-only reveal mechanisms so you can read the surrounding strategy content without accidentally seeing the solution. Each answer page includes the color name and hex code, a color swatch, historical archives of previous answers, and strategy tips for approaching similar puzzles in the future.</p>
+      <p><strong>Interactive Solvers</strong> for both games. The Colordle solver lets you enter your guesses and the percentages the game returns, then filters the entire color database to show only candidates that match. The Colorfle solver takes a target hex code and finds the closest three-color combinations, with a feedback refinement mode that eliminates impossible combinations based on green, yellow, and gray feedback. Both solvers run entirely in your browser with no data leaving your device.</p>
+      <p><strong>Unlimited Practice Modes</strong> for both Colordle and Colorfle. These modes generate random target colors from the same pools the daily games use, allowing you to practice as much as you want without the once-a-day constraint. Unlimited mode is ideal for building color vocabulary, developing mixing intuition, and testing strategies in a low-pressure environment. There is no guess limit, no penalty for failure, and you can start a new round immediately after solving or giving up on the current one.</p>
+      <p>All three tool categories are available for free, with no account required, and they work on both desktop and mobile devices. The site is designed to be fast, accessible, and respectful of your privacy. We do not track individual users, serve targeted advertisements, or share any data with third parties.</p>
+    </div>
+
     <div class="content-section">
       <h2>The Team</h2>
-      <p>WordSolver is maintained by Alex Rivera, a color puzzle enthusiast who plays Colordle and Colorfle daily. Alex has a background in front-end development and color science, which is how this project started — as a weekend experiment to see if the Delta E calculation could be inverted to filter color candidates. It turned out it could, and the solver has been helping people solve their daily puzzles ever since.</p>
-      <p>If you have questions, suggestions, or find a bug, reach out through our contact page. We read every message and fix issues as quickly as we can. The site is a side project, so response times vary, but we aim to reply within 48 hours.</p>
+      <p>WordSolver is maintained by Alex Rivera, a color puzzle enthusiast who plays Colordle and Colorfle daily. Alex has a background in front-end development and color science, which is how this project started — as a weekend experiment to see if the Delta E CIE2000 calculation could be inverted to filter color candidates efficiently. It turned out it could, and the solver has been helping people solve their daily puzzles ever since. The project has grown from a single solver page to a comprehensive toolkit that includes answer pages, two solver tools, and two unlimited practice modes.</p>
+      <p>The site is a side project maintained in spare time, which means updates are driven by personal interest and user feedback rather than a commercial roadmap. Bug fixes and accuracy improvements are prioritized. Feature requests are considered based on how many people would benefit and how well they align with the project's philosophy of providing precise, privacy-respecting puzzle tools. If you have a suggestion that fits that description, we would love to hear about it.</p>
+      <p>If you have questions, suggestions, or find a bug, reach out through our contact page. We read every message and fix issues as quickly as we can. Response times vary because this is a side project, but we aim to reply within 48 hours. Critical issues — such as incorrect daily answers or solver malfunctions — are addressed as a top priority, usually within the same day they are reported.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Our Commitment to Privacy</h2>
+      <p>Privacy is not a feature we bolted on after the fact — it is a core design principle. Every decision about the site's architecture was made with privacy in mind. The solvers run entirely in your browser using client-side JavaScript. No guess data, percentage values, or game state is ever transmitted to our servers. The daily answer pages are precomputed at build time, meaning the server just serves static HTML with no user-specific processing. We use only minimal, privacy-respecting analytics to understand overall traffic patterns, and we do not use advertising trackers, social media pixels, or any third-party tracking scripts beyond basic anonymous page view counting.</p>
+      <p>We do not require accounts, we do not ask for email addresses, and we do not track individual users across sessions. The unlimited practice modes do not save progress between sessions by design — your game state exists only in your browser's memory and is lost when you close the tab. If you want to save your progress, take a screenshot. This approach sacrifices convenience for privacy, and we believe that is the right trade-off for a puzzle tool website. Your puzzle-solving habits are your business, not ours.</p>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="author-card">
+      <div class="author-avatar">AR</div>
+      <div>
+        <div class="author-name">Alex Rivera</div>
+        <div class="author-desc">Color puzzle enthusiast. Plays Colordle and Colorfle daily. Built WordSolver after getting stuck at 98% one too many times.</div>
+      </div>
     </div>
   </section>
 </Layout>

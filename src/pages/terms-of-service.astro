@@ -1,8 +1,32 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const schema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "name": "Terms of Service - WordSolver",
+      "description": "Terms of service for WordSolver. Understand the rules and conditions for using our free color puzzle solver and daily answer tools.",
+      "url": "https://wordsolver.tech/terms-of-service"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wordsolver.tech" },
+        { "@type": "ListItem", "position": 2, "name": "Terms of Service", "item": "https://wordsolver.tech/terms-of-service" }
+      ]
+    }
+  ]
+});
 ---
 
-<Layout title="Terms of Service - WordSolver" description="Terms of service for WordSolver. Understand the rules and conditions for using our free color puzzle solver and daily answer tools.">
+<Layout
+  title="Terms of Service - WordSolver"
+  description="Terms of service for WordSolver. Understand the rules and conditions for using our free color puzzle solver and daily answer tools."
+  keywords="terms of service, wordsolver terms, usage terms, color puzzle terms"
+  schema={schema}
+>
   <section class="hero"><div class="container">
     <span class="hero-badge">Legal</span>
     <h1>Terms of Service</h1>
@@ -12,27 +36,85 @@ import Layout from '../layouts/Layout.astro';
   <section class="container" style="padding-bottom:3rem;">
     <div class="content-section">
       <h2>Acceptance of Terms</h2>
-      <p>By using WordSolver (wordsolver.tech), you agree to these terms of service. If you do not agree with any part of these terms, do not use the site. These terms apply to all visitors and users of the site, including the daily answer pages, solver tools, and unlimited play modes.</p>
+      <p>By using WordSolver (wordsolver.tech), you agree to these terms of service. If you do not agree with any part of these terms, you should not use the site. These terms apply to all visitors and users of the site, including the daily answer pages, solver tools, and unlimited play modes. Your continued use of the site after any changes to these terms constitutes acceptance of the updated terms. We recommend reviewing this page periodically to stay informed of any changes.</p>
+      <p>These terms constitute a legally binding agreement between you and WordSolver. They govern your access to and use of the website, including all content, features, and functionality offered through the site. By accessing the site, you acknowledge that you have read, understood, and agree to be bound by these terms. If you are using the site on behalf of an organization, you represent and warrant that you have the authority to bind that organization to these terms.</p>
+      <p>We reserve the right to modify these terms at any time. When we make changes, we will update the "Last updated" date at the top of this page and, for material changes, provide notice through a prominent banner on the site. Your continued use of the site after the effective date of any changes constitutes your acceptance of the revised terms. If you do not agree to the revised terms, you must discontinue use of the site.</p>
     </div>
+
     <div class="content-section">
       <h2>Description of Service</h2>
-      <p>WordSolver provides free tools for color puzzle games, including daily answer pages, interactive solvers, and unlimited practice modes. The site is provided "as is" without warranty of any kind. We make no guarantees about the accuracy, completeness, or timeliness of the daily answers, solver results, or game mechanics. The tools use the same algorithms the official games use, but we cannot guarantee 100% accuracy if the games change their logic without notice.</p>
+      <p>WordSolver provides free tools for color puzzle games, including daily answer pages, interactive solvers, and unlimited practice modes. The daily answer pages display the solutions to the Colordle and Colorfle daily puzzles, updated automatically when the puzzles reset. The interactive solvers allow you to enter information from your gameplay — guesses, percentages, feedback — and receive filtered candidate lists that help you identify the correct answer. The unlimited practice modes let you play randomized versions of the daily puzzles without the once-a-day constraint.</p>
+      <p>The site is provided "as is" without warranty of any kind, express or implied. We make no guarantees about the accuracy, completeness, or timeliness of the daily answers, solver results, or game mechanics. The tools use the same algorithms the official games use, and we make every effort to ensure accuracy, but we cannot guarantee 100% accuracy if the games change their logic, color databases, or seeding algorithms without notice. The solvers are provided as assistance tools, not as authoritative sources of game information. The final authority on any puzzle answer is always the official game itself.</p>
+      <p>All tools on the site are provided free of charge. There are no premium tiers, no subscription plans, and no hidden costs. The site does not require account creation, and no personal information is collected as a condition of use. You may use the site as much as you want, as often as you want, without any usage limits or quotas. This free and open approach is central to the project's mission, and we have no plans to introduce paid features or account requirements.</p>
     </div>
+
     <div class="content-section">
-      <h2>No Affiliation</h2>
-      <p>WordSolver is not affiliated with, endorsed by, or connected to Colordle, Colorfle, or any other puzzle game. We are an independent project built by players for players. All game names, trademarks, and logos belong to their respective owners. Our use of game names is for descriptive purposes only — to identify which game our tools are designed to help with.</p>
+      <h2>No Affiliation Disclaimer</h2>
+      <p>WordSolver is not affiliated with, endorsed by, or connected to Colordle, Colorfle, or any other puzzle game. We are an independent project built by players for players. All game names, trademarks, and logos belong to their respective owners. Our use of game names is for descriptive purposes only — to clearly identify which games our tools are designed to help with. We do not claim any ownership of or association with the games themselves, their developers, or their publishers.</p>
+      <p>The algorithms we use in our solvers replicate the published or reverse-engineered mechanics of the games they support. This is done solely for the purpose of providing accurate solver tools. We do not distribute game content, we do not host copies of the games, and we do not facilitate cheating in any multiplayer or competitive context. The daily puzzles we provide answers for are single-player experiences with no competitive ranking system, and our tools are designed to enhance the puzzle-solving experience rather than undermine it.</p>
+      <p>If you are a game developer and believe that our tools infringe on your intellectual property, please contact us at hello@wordsolver.tech. We are committed to respecting the rights of game creators and will work with you to address any concerns. Our goal is to complement the games we support, not to compete with them or diminish their value.</p>
     </div>
+
     <div class="content-section">
       <h2>Acceptable Use</h2>
-      <p>You may use WordSolver for personal, non-commercial purposes. Do not use automated scripts to scrape the site, overload our servers, or redistribute our content without permission. Do not attempt to reverse-engineer the site's code for competitive purposes. The solvers and tools are free — there is no reason to abuse them.</p>
+      <p>You may use WordSolver for personal, non-commercial purposes. This includes solving daily puzzles, practicing with the unlimited modes, and using the solver tools to assist with your gameplay. You may share links to the site with others. You may reference the site in articles, blog posts, or social media discussions about color puzzle games. These are all intended uses and we encourage them.</p>
+      <p>The following uses are prohibited. Do not use automated scripts, bots, or scrapers to access the site in bulk or extract its content programmatically. Do not overload our servers with excessive requests or attempt to disrupt the site's availability. Do not redistribute our content — including daily answers, solver algorithms, or game data — without explicit written permission. Do not attempt to reverse-engineer the site's code for competitive purposes or to create derivative tools. Do not use the site for any illegal purpose or in any way that could damage, disable, or impair the site's functionality for other users.</p>
+      <p>We reserve the right to block access to the site from any IP address or user agent that engages in prohibited use. This is a measure of last resort — we have no desire to restrict access to legitimate users. However, if automated scraping or abuse degrades the site's performance for other visitors, we will take steps to protect the service. If you believe you have been blocked in error, contact us at hello@wordsolver.tech and we will investigate promptly.</p>
+      <p>The solvers and tools are free. There is no financial incentive to abuse them. We ask that you use the site respectfully so that it remains available and performant for everyone. Common sense applies: use the site as a human user would, not as a data harvester would, and we will have no issues.</p>
     </div>
+
+    <div class="content-section">
+      <h2>Intellectual Property</h2>
+      <p>The content, design, and code of WordSolver are the intellectual property of the site's operators. This includes the site's layout, visual design, written content, solver algorithms, and the specific implementation of the puzzle tools. You may not copy, modify, distribute, or create derivative works from any part of the site without our explicit written permission. Linking to the site is always permitted and encouraged.</p>
+      <p>The color databases used by the solvers are compiled from publicly available sources and standard color reference systems. We do not claim ownership of individual color names or hex values, which are part of the public domain. However, the specific compilation, organization, and presentation of these colors within our solver tools represents creative work that is protected by intellectual property laws.</p>
+      <p>The daily answer data is generated algorithmically from the current date using methods that replicate the games' own target generation logic. This data is factual in nature — it represents the output of a deterministic process applied to a specific date. We do not claim ownership of the game's target colors or puzzle designs. Our contribution is the computation and presentation of this data in a useful format, and that presentation is what our intellectual property protections cover.</p>
+    </div>
+
     <div class="content-section">
       <h2>Limitation of Liability</h2>
-      <p>WordSolver and its operators are not liable for any damages arising from the use of this site, including but not limited to incorrect answers, solver errors, or loss of game progress. The site is a hobby project maintained in good faith. If a daily answer is wrong or a solver produces unexpected results, your recourse is to stop using the tool and solve the puzzle yourself.</p>
+      <p>WordSolver and its operators are not liable for any damages arising from the use of this site, including but not limited to incorrect answers, solver errors, loss of game progress, or any other direct, indirect, incidental, consequential, or punitive damages. The site is a hobby project maintained in good faith by volunteers. It is not a commercial product, and it does not come with the guarantees or support commitments that a commercial product would provide.</p>
+      <p>If a daily answer is incorrect, your recourse is to stop using the tool and solve the puzzle through the official game. If a solver produces unexpected results, your recourse is to verify the answer independently and report the discrepancy to us so we can investigate. We are committed to accuracy and will fix errors as quickly as possible, but we cannot be held liable for errors that occur despite our best efforts, particularly when those errors are caused by changes to the games' algorithms that are beyond our control.</p>
+      <p>In no event shall our total liability to you exceed the amount you have paid to use the site, which is zero since the site is free. This limitation applies to all claims, whether based on warranty, contract, tort, or any other legal theory. Some jurisdictions do not allow the exclusion or limitation of liability for certain types of damages, so the above limitations may not apply to you in full. In such cases, our liability is limited to the maximum extent permitted by applicable law.</p>
     </div>
+
+    <div class="content-section">
+      <h2>Disclaimer of Warranties</h2>
+      <p>The site is provided on an "as is" and "as available" basis. We disclaim all warranties, express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, and non-infringement. We do not warrant that the site will be uninterrupted, error-free, or free of harmful components. We do not warrant that the solver results will always match the game's output, or that the daily answers will always be correct. We make reasonable efforts to ensure accuracy and reliability, but we cannot guarantee perfection.</p>
+      <p>The site relies on third-party infrastructure (Cloudflare for hosting and content delivery, Google for font serving). We do not warrant the availability or performance of these third-party services. Interruptions or degradations in these services may affect the site's availability or performance, and we are not responsible for such disruptions. We will, however, make reasonable efforts to restore service as quickly as possible when disruptions occur.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Indemnification</h2>
+      <p>You agree to indemnify and hold harmless WordSolver and its operators from any claims, damages, losses, or expenses (including reasonable attorney fees) arising from your use of the site in violation of these terms or any applicable law. This indemnification obligation survives the termination of your use of the site. If your use of the site results in legal action against us — for example, because you used the site's tools in a way that infringes on a third party's rights — you are responsible for any costs or damages that result.</p>
+      <p>We do not anticipate that normal, personal use of the site would give rise to any claims. This indemnification clause is a standard legal protection intended for situations involving misuse of the site or violations of these terms. If you use the site as intended — solving puzzles, practicing, and using the solver tools for your own gameplay — this clause will never be relevant to you.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Governing Law and Dispute Resolution</h2>
+      <p>These terms are governed by and construed in accordance with applicable laws, without regard to conflict of law principles. Any disputes arising from or relating to these terms or your use of the site shall be resolved through good-faith negotiation first. If negotiation fails, disputes shall be resolved through binding arbitration in a jurisdiction to be determined by the site's operators. You waive any right to participate in class action lawsuits or class-wide arbitration against WordSolver or its operators.</p>
+      <p>Before initiating any formal dispute resolution, we ask that you contact us at hello@wordsolver.tech to discuss the issue. Most disputes can be resolved through direct communication, and we prefer this approach because it is faster, less adversarial, and less costly for everyone involved. We take concerns seriously and will make genuine efforts to reach a fair resolution before any formal proceedings are necessary.</p>
+    </div>
+
     <div class="content-section">
       <h2>Changes to Terms</h2>
-      <p>We may update these terms from time to time. Continued use of the site after changes constitutes acceptance of the updated terms. The "last updated" date at the top of this page indicates when the terms were last modified. If you have questions, email hello@wordsolver.tech.</p>
+      <p>We may update these terms from time to time. Changes may be prompted by new features, legal requirements, changes in our practices, or other circumstances. When we make changes, we will update the "Last updated" date at the top of this page. For material changes — those that significantly affect your rights or obligations — we will provide notice through a prominent banner on the site for at least 30 days before the changes take effect. Continued use of the site after changes constitute acceptance of the updated terms.</p>
+      <p>If you have questions about these terms, email hello@wordsolver.tech. We are happy to clarify any section that is unclear. These terms are written in plain language to be accessible to all users, but if any provision seems ambiguous, we would rather explain it than leave you uncertain about your rights and obligations.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Severability and Entire Agreement</h2>
+      <p>If any provision of these terms is found to be unenforceable or invalid by a court of competent jurisdiction, that provision shall be limited or eliminated to the minimum extent necessary so that the remaining provisions remain in full force and effect. The invalidity of one provision does not affect the validity of the others. These terms constitute the entire agreement between you and WordSolver regarding the use of the site, superseding any prior agreements or understandings.</p>
+      <p>Our failure to enforce any right or provision of these terms does not constitute a waiver of that right or provision. Any waiver of any provision of these terms will be effective only if in writing and signed by us. The section headings in these terms are for convenience only and do not affect the interpretation of any provision.</p>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="author-card">
+      <div class="author-avatar">AR</div>
+      <div>
+        <div class="author-name">Alex Rivera</div>
+        <div class="author-desc">Color puzzle enthusiast. Plays Colordle and Colorfle daily. Built WordSolver after getting stuck at 98% one too many times.</div>
+      </div>
     </div>
   </section>
 </Layout>

@@ -45,14 +45,16 @@ const schema = JSON.stringify({
       <!-- Colordle Card -->
       <a href="/colordle-answer-today" class="card" style="text-decoration:none;">
         <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
-          <div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#8b5cf6,#ec4899);display:flex;align-items:center;justify-content:center;font-size:2rem;">🎨</div>
+          <div style="width:56px;height:56px;border-radius:16px;background:var(--gradient-hero);display:flex;align-items:center;justify-content:center;">
+            <div style="width:24px;height:24px;border-radius:6px;background:rgba(255,255,255,0.9);"></div>
+          </div>
           <div>
             <div class="card-title" style="color:var(--text-primary);font-size:1.75rem;">Colordle</div>
             <div style="font-size:0.85rem;color:var(--text-muted);">Daily color guessing puzzle</div>
           </div>
         </div>
-        <div style="background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.2);border-radius:12px;padding:1.25rem;margin-bottom:1.25rem;">
-          <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--accent-purple);margin-bottom:0.5rem;">Today's Answer</div>
+        <div style="background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.12);border-radius:12px;padding:1.25rem;margin-bottom:1.25rem;">
+          <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--accent-indigo);margin-bottom:0.5rem;">Today's Answer</div>
           <div style="font-size:1.5rem;font-weight:800;color:var(--text-primary);">{colordle.colorName}</div>
           <div style="font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;">Puzzle #{colordle.dayNum}</div>
         </div>
@@ -63,20 +65,22 @@ const schema = JSON.stringify({
       <!-- Colorfle Card -->
       <a href="/colorfle-answer-today" class="card" style="text-decoration:none;">
         <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
-          <div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#ec4899,#f97316);display:flex;align-items:center;justify-content:center;font-size:2rem;">🔮</div>
+          <div style="width:56px;height:56px;border-radius:16px;background:var(--gradient-warm);display:flex;align-items:center;justify-content:center;">
+            <div style="width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.9);"></div>
+          </div>
           <div>
             <div class="card-title" style="color:var(--text-primary);font-size:1.75rem;">Colorfle</div>
             <div style="font-size:0.85rem;color:var(--text-muted);">Daily color mixing puzzle</div>
           </div>
         </div>
-        <div style="background:rgba(236,72,153,0.1);border:1px solid rgba(236,72,153,0.2);border-radius:12px;padding:1.25rem;margin-bottom:1.25rem;">
+        <div style="background:rgba(236,72,153,0.06);border:1px solid rgba(236,72,153,0.12);border-radius:12px;padding:1.25rem;margin-bottom:1.25rem;">
           <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--accent-pink);margin-bottom:0.5rem;">Today's Answer</div>
           <div style="display:flex;gap:0.75rem;align-items:center;margin-bottom:0.5rem;">
             {colorfle.colors.map((c) => (
-              <div style="width:36px;height:36px;border-radius:8px;background:c.hex;border:2px solid rgba(255,255,255,0.1);" title={c.name}></div>
+              <div style="width:36px;height:36px;border-radius:8px;background:c.hex;border:2px solid var(--border-subtle);" title={c.name}></div>
             ))}
-            <span style="color:var(--text-muted);font-size:1.25rem;">→</span>
-            <div style="width:36px;height:36px;border-radius:8px;background:colorfle.targetColor.hex;border:2px solid rgba(255,255,255,0.1);" title={colorfle.targetColor.hex}></div>
+            <span style="color:var(--text-muted);font-size:1.25rem;">&rarr;</span>
+            <div style="width:36px;height:36px;border-radius:8px;background:colorfle.targetColor.hex;border:2px solid var(--border-subtle);" title={colorfle.targetColor.hex}></div>
           </div>
           <div style="font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;">Puzzle #{colorfle.puzzleNumber}</div>
         </div>
@@ -90,23 +94,33 @@ const schema = JSON.stringify({
   <section class="container" style="padding-bottom:3rem;">
     <div class="content-section">
       <h2>How Daily Color Puzzles Work</h2>
-      <p>Both Colordle and Colorfle reset on a daily cycle. Colordle resets at midnight UTC, while Colorfle resets at midnight Japan Standard Time (15:00 UTC). Each day produces a single unique answer that every player sees — there is no variation between accounts or devices. The answers are determined algorithmically from the date, so they are predictable if you know the seed logic. That predictability is what makes daily answer pages possible.</p>
-      <p>Colordle assigns each day a target color from a curated list of named colors. The list cycles through hundreds of entries, so you rarely see the same color twice within a few months. Colorfle generates its daily puzzle using a seeded random number generator — the seed is derived from the date, which means the same three source colors appear for everyone on the same day. The mixing weights are fixed: the first color contributes 50%, the second 34%, and the third 16% of the final result.</p>
-      <p>This page updates automatically at build time. When the daily puzzle resets, the next build pulls the new answer. If you are seeing yesterday's answer, wait a few minutes for the build to refresh, or check the date shown on the answer card.</p>
+      <p>Both Colordle and Colorfle reset on a daily cycle, which means every player around the world sees the exact same puzzle on any given day. Colordle resets at midnight UTC, while Colorfle resets at midnight Japan Standard Time, which is 15:00 UTC. This staggered reset schedule means that if you play both games, there is a brief window each day where one game has updated and the other has not. Understanding the reset times helps you plan when to check for new answers or when to squeeze in one last attempt before the puzzle rotates.</p>
+      <p>Each day produces a single unique answer that every player sees, regardless of account, device, or location. There is no variation between sessions and no randomized element in the daily mode. The answers are determined algorithmically from the date itself. Colordle uses a date-based index into a curated list of named colors, and Colorfle uses a seeded random number generator where the seed is derived from the current date. This deterministic approach is what makes daily answer pages possible: because the same date always produces the same puzzle, we can precompute and publish the solution.</p>
+      <p>Colordle assigns each day a target color from a curated list of hundreds of named colors. The list cycles through its entries sequentially, so you rarely see the same color twice within a few months. The named colors range from common entries like "Red" and "Blue" to more obscure selections like "Celadon," "Gamboge," and "Amaranth." Colorfle generates its daily puzzle by selecting three source colors from a fixed palette of twenty, each with predetermined mixing weights of 50%, 34%, and 16%. The combination of these three weighted colors produces the target you see on screen.</p>
+      <p>This page updates automatically at build time. When the daily puzzle resets, the next build pulls the new answer and publishes it. If you are seeing yesterday's answer, wait a few minutes for the build to refresh, or check the date shown on the answer card. The build typically completes within two to three minutes of the reset time, so any delay is brief.</p>
     </div>
 
     <div class="content-section">
       <h2>When to Check Today's Answer vs. Using the Solver</h2>
-      <p>There are two schools of thought. Some people want the answer immediately — they check the daily page first thing, see the color, and move on with their day. That is a perfectly valid way to use this site. The reveal buttons give you the option to look or not look, so you control how much you see.</p>
-      <p>The other approach is to play the game first, then use the solver when you get stuck. If you have made two or three guesses and the percentage is hovering around 85-95%, the solver can usually narrow the answer down to one or two candidates within a single filter step. That approach keeps the puzzle-solving experience intact while saving you from the frustration of guessing randomly at near-miss percentages.</p>
-      <p>For Colorfle, the solver is more useful than the answer page if you have already started guessing. The feedback-based elimination mode is genuinely powerful — after two guesses with correct feedback markings, the solver typically filters down to a single combination. If you have not started guessing yet and just want to see the answer, the daily page is faster.</p>
+      <p>There are two distinct approaches to using this site, and both are equally valid depending on what you want out of the experience. The first approach is to check the daily answer directly. Some people want the answer immediately when they wake up, before they have even attempted the puzzle. They visit the daily page, click the reveal button, and move on with their day. This is especially common among people who enjoy the social aspect of comparing answers with friends but do not have time to work through the puzzle themselves. The reveal mechanism on our answer pages gives you full control: the answer is hidden behind a click, so you can read the strategy content and surrounding context without accidentally seeing the solution.</p>
+      <p>The second approach is to play the game first and then use the solver when you get stuck. This is the approach most regular players take. If you have made two or three guesses and your similarity percentage is hovering around 85-95%, the solver can usually narrow the answer down to one or two candidates within a single filter step. That approach keeps the puzzle-solving experience intact while saving you from the frustration of guessing randomly at near-miss percentages. There is nothing more demoralizing in Colordle than sitting at 97% with no idea which of the fifty possible colors is the right one. The solver eliminates that frustration.</p>
+      <p>For Colorfle, the solver is generally more useful than the answer page if you have already started guessing. The feedback-based elimination mode is genuinely powerful: after two guesses with correct feedback markings, the solver typically filters down to a single combination. If you have not started guessing yet and just want to see the answer, the daily page is faster and more straightforward. However, if you care about solving it yourself and want the satisfaction of working through the logic, the solver provides a much more rewarding experience than simply revealing the answer.</p>
+      <p>A third hybrid approach is increasingly popular among experienced players: start the puzzle on your own, make one or two strategic guesses to gather information, then use the solver to refine. This gives you the best of both worlds. You get the mental engagement of trying the puzzle yourself, but you avoid the frustration of spending fifteen minutes stuck at 93% with no clear path forward. Think of the solver as a magnifying glass for your color intuition, not a shortcut that bypasses the puzzle entirely.</p>
     </div>
 
     <div class="content-section">
       <h2>Understanding the Answer Displays</h2>
-      <p>The Colordle answer page shows the target color name, its hex code, and a large color swatch. The Colorfle answer page shows the three source colors with their names and hex codes, the weight each color carries in the mix, and the resulting target color as both a swatch and a hex value. Both pages include a reveal animation — the answer is hidden behind a "click to reveal" button so you can read the strategy content without accidentally seeing the solution.</p>
-      <p>The Colordle page also includes a guess trail — a simulated solve path showing how the game's own scoring logic would narrow down to the answer from a series of strategic guesses. This is not from the game itself; it is generated by our solver using the same Delta E calculation. The guess trail is useful for learning how color distance works in practice, not just in theory.</p>
-      <p>Both pages include recent answer history so you can browse previous days. The Colordle page has a searchable archive of the last 100 days. The Colorfle page shows the last seven days with mini target color circles and component color squares. If you missed a day, you can look it up without hunting through the game's interface.</p>
+      <p>The Colordle answer page shows the target color name, its hex code, and a large color swatch rendered directly in the browser. The swatch uses the exact hex value from the game's color database, so what you see on our page matches what the game shows. The Colorfle answer page shows the three source colors with their names and hex codes, the weight each color carries in the mix, and the resulting target color as both a swatch and a hex value. Both pages include a reveal animation powered by a CSS-only checkbox mechanism, meaning the answer is hidden behind a clickable label and no JavaScript is required to reveal it. You can read the strategy content and surrounding paragraphs without accidentally seeing the solution.</p>
+      <p>The Colordle page also includes a guess trail, which is a simulated solve path showing how the game's own scoring logic would narrow down to the answer from a series of strategic guesses. This is not sourced from the game itself; it is generated by our solver using the same Delta E CIE2000 calculation that Colordle uses. The guess trail is useful for learning how color distance works in practice, not just in theory. By seeing which guesses narrow the field most efficiently, you can develop better intuition for your own daily solving strategy.</p>
+      <p>Both pages include recent answer history so you can browse previous days without leaving the page. The Colordle page has a searchable archive of the last 100 days, complete with hex codes and color swatches. The Colorfle page shows the last seven days with mini target color circles and component color squares. If you missed a day and want to see what the answer was, you can look it up here without hunting through the game's interface or searching social media. The archive also serves as a study resource: reviewing past answers helps you learn which color names map to which visual appearances, which directly improves your Colordle performance over time.</p>
+      <p>The answer cards on this page show a preview of today's solution: the color name and puzzle number for Colordle, and the component colors with the target for Colorfle. Clicking through to the full answer page gives you the complete experience with hex codes, reveal animations, guess trails, and historical archives. The preview cards are designed to give you just enough information to decide whether you want to see the full answer or try solving it yourself first.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Tips for Getting the Most Out of Daily Play</h2>
+      <p>Consistency beats intensity. Playing both puzzles every day for five minutes is more effective than binge-playing for an hour once a week. Daily repetition builds the color-name associations that make you faster over time. If you can, play both Colordle and Colorfle each day. The skills overlap but are not identical: Colordle trains color naming and perceptual distance estimation, while Colorfle trains color mixing intuition and combinatorial reasoning. Together, they give you a well-rounded color education that improves performance in both games.</p>
+      <p>Keep a mental note of colors that surprise you. If you guessed "teal" and the answer was "cerulean," take a moment to compare them visually. Understanding why the game considers them different — usually because of saturation or lightness differences that are obvious when you see the hex values side by side — is how you train your eye to distinguish similar colors in future puzzles. Over time, you will develop an internal color vocabulary that goes far beyond the basic red, blue, and green categories most people rely on.</p>
+      <p>Use the unlimited modes for focused practice. If you consistently struggle with a particular color family — greens and blues are the most common trouble spots — spend ten minutes in Colordle Unlimited guessing only colors from that family. The targeted repetition will help you learn to distinguish "seafoam" from "mint" from "sage" far more efficiently than random daily play alone. The unlimited modes are specifically designed for this kind of focused skill development, and they are free to use as much as you want.</p>
     </div>
   </section>
 
