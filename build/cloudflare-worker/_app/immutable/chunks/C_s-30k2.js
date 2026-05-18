@@ -1,1 +1,0 @@
-const a=new Map;async function r(e){const t=String(e);if(a.has(t))return a.get(t);const n=await fetch(`/generated/per-length/word-data-len${t}.json`);if(!n.ok)throw new Error(`Failed to load word data for length ${e}`);const o=await n.json();return a.set(t,o),o}export{r as getWordDataForLength};

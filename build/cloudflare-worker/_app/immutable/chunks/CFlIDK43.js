@@ -1,1 +1,0 @@
-async function n(e,t){const a=t?`?date=${encodeURIComponent(t)}`:"",r=await fetch(`/api/archive/${e}${a}`),o=await r.json().catch(()=>({}));if(!r.ok){const c=o&&typeof o=="object"&&typeof o.error=="string"?o.error:`Failed to load ${e} archive data.`;throw new Error(c)}return o}export{n as f};

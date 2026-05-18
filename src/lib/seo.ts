@@ -1,4 +1,4 @@
-// SEO helper functions for WordSolver
+// SEO helper functions for WordSolver (wordsolver.tech)
 
 const SITE_URL = 'https://wordsolver.tech';
 const SITE_NAME = 'WordSolver';
@@ -9,9 +9,11 @@ export function generateOrganizationSchema() {
     '@type': 'Organization',
     name: SITE_NAME,
     url: SITE_URL,
-    logo: `${SITE_URL}/logo.png`,
+    logo: `${SITE_URL}/favicon.svg`,
     description: 'Your daily companion for color puzzle games. Get answers, use solvers, and play unlimited rounds of Colordle and Colorfle.',
-    sameAs: []
+    sameAs: [
+      'https://x.com/WordSolverTech'
+    ]
   });
 }
 
@@ -20,12 +22,7 @@ export function generateWebSiteSchema() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: SITE_NAME,
-    url: SITE_URL,
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: `${SITE_URL}/solver?q={search_term_string}`,
-      'query-input': 'required name=search_term_string'
-    }
+    url: SITE_URL
   });
 }
 
@@ -66,13 +63,17 @@ export function generateArticleSchema(data: {
     publisher: {
       '@type': 'Organization',
       name: SITE_NAME,
-      url: SITE_URL
+      url: SITE_URL,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/favicon.svg`
+      }
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': data.url
     },
-    image: data.image || `${SITE_URL}/og-image.png`
+    image: data.image || `${SITE_URL}/favicon.svg`
   });
 }
 

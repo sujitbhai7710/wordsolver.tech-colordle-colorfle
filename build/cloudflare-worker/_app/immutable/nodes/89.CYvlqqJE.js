@@ -1,1 +1,0 @@
-import"../chunks/DR1OH7a1.js";import{p as a,a as r}from"../chunks/B--w_SLd.js";import{W as e}from"../chunks/hpVfkYUj.js";function m(t,o){a(o,!0),e(t,{get config(){return o.data.config}}),r()}export{m as component};
