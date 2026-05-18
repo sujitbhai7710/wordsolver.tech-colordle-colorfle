@@ -44,7 +44,7 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
   {schema && <script type="application/ld+json" set:html={schema} />}
 
   <style is:global>
@@ -52,13 +52,13 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
 
     :root {
       --bg-primary: #ffffff;
-      --bg-secondary: #f5f6fa;
-      --bg-tertiary: #eef0f6;
+      --bg-secondary: #f8fafc;
+      --bg-tertiary: #f1f5f9;
       --bg-card: #ffffff;
-      --bg-card-hover: #f8f9fd;
-      --text-primary: #111827;
-      --text-secondary: #4b5563;
-      --text-muted: #9ca3af;
+      --bg-card-hover: #fafbfe;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
       --accent-indigo: #6366f1;
       --accent-violet: #8b5cf6;
       --accent-sky: #0ea5e9;
@@ -66,23 +66,27 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
       --accent-coral: #f97316;
       --accent-pink: #ec4899;
       --accent-emerald: #10b981;
+      --accent-red: #ef4444;
+      --accent-yellow: #eab308;
       --gradient-hero: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%);
       --gradient-warm: linear-gradient(135deg, #f97316 0%, #ec4899 100%);
       --gradient-cool: linear-gradient(135deg, #14b8a6 0%, #0ea5e9 100%);
-      --border-subtle: #e5e7eb;
-      --border-medium: #d1d5db;
-      --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
-      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
-      --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.04);
-      --shadow-card: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-      --shadow-card-hover: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+      --gradient-sun: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+      --border-subtle: #e2e8f0;
+      --border-medium: #cbd5e1;
+      --shadow-xs: 0 1px 2px rgba(0,0,0,0.03);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -2px rgba(0,0,0,0.04);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.07), 0 4px 6px -4px rgba(0,0,0,0.03);
+      --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.07), 0 8px 10px -6px rgba(0,0,0,0.03);
+      --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03);
+      --shadow-card-hover: 0 10px 15px -3px rgba(0,0,0,0.07), 0 4px 6px -4px rgba(0,0,0,0.03);
       --radius-sm: 0.5rem;
       --radius-md: 0.75rem;
       --radius-lg: 1rem;
       --radius-xl: 1.25rem;
       --radius-2xl: 1.5rem;
+      --radius-full: 9999px;
     }
 
     body {
@@ -99,7 +103,7 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
     a:hover { color: var(--accent-violet); }
 
     .container {
-      max-width: 1200px;
+      max-width: 1140px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
@@ -109,9 +113,9 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
       border-bottom: 1px solid var(--border-subtle);
     }
 
@@ -119,40 +123,113 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.75rem 1.5rem;
-      max-width: 1200px;
+      padding: 0.625rem 1.5rem;
+      max-width: 1140px;
       margin: 0 auto;
     }
 
     .nav-logo {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 1.5rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
       font-weight: 800;
       background: var(--gradient-hero);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.04em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-logo-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--gradient-hero);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
 
     .nav-links {
       display: flex;
-      gap: 0.25rem;
+      gap: 0.125rem;
       list-style: none;
+      align-items: center;
     }
 
     .nav-links a {
       color: var(--text-secondary);
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
       font-weight: 500;
       transition: all 0.2s;
-      padding: 0.5rem 0.875rem;
+      padding: 0.4rem 0.75rem;
       border-radius: var(--radius-md);
+      white-space: nowrap;
     }
 
     .nav-links a:hover {
       color: var(--accent-indigo);
       background: rgba(99, 102, 241, 0.06);
+    }
+
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .nav-dropdown-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: var(--text-secondary);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      padding: 0.4rem 0.75rem;
+      border-radius: var(--radius-md);
+      border: none;
+      background: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .nav-dropdown-btn:hover {
+      color: var(--accent-indigo);
+      background: rgba(99, 102, 241, 0.06);
+    }
+
+    .nav-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 0.5rem;
+      min-width: 200px;
+      box-shadow: var(--shadow-xl);
+      z-index: 200;
+    }
+
+    .nav-dropdown:hover .nav-dropdown-menu {
+      display: block;
+    }
+
+    .nav-dropdown-menu a {
+      display: block;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .nav-dropdown-menu a:hover {
+      background: var(--bg-secondary);
+      color: var(--accent-indigo);
     }
 
     .nav-mobile-btn {
@@ -162,9 +239,10 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
       color: var(--text-primary);
       font-size: 1.5rem;
       cursor: pointer;
+      padding: 0.25rem;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       .nav-links { display: none; }
       .nav-links.active {
         display: flex;
@@ -176,17 +254,39 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
         background: rgba(255, 255, 255, 0.98);
         backdrop-filter: blur(20px);
         padding: 0.75rem 1rem;
-        gap: 0.25rem;
+        gap: 0.125rem;
         border-bottom: 1px solid var(--border-subtle);
         box-shadow: var(--shadow-lg);
+      }
+      .nav-links.active .nav-dropdown-menu {
+        display: block;
+        position: static;
+        transform: none;
+        box-shadow: none;
+        border: none;
+        padding: 0 0 0 1rem;
+        min-width: auto;
       }
       .nav-mobile-btn { display: block; }
     }
 
     /* ===== HERO ===== */
     .hero {
-      padding: 3.5rem 0 2.5rem;
+      padding: 4rem 0 2.5rem;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -25%;
+      width: 150%;
+      height: 200%;
+      background: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.06) 0%, transparent 70%);
+      pointer-events: none;
     }
 
     .hero-badge {
@@ -194,10 +294,10 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
       align-items: center;
       gap: 0.375rem;
       padding: 0.375rem 1rem;
-      border-radius: 9999px;
-      background: rgba(99, 102, 241, 0.08);
-      border: 1px solid rgba(99, 102, 241, 0.15);
-      font-size: 0.75rem;
+      border-radius: var(--radius-full);
+      background: rgba(99, 102, 241, 0.07);
+      border: 1px solid rgba(99, 102, 241, 0.12);
+      font-size: 0.6875rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.12em;
@@ -206,19 +306,19 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
     }
 
     .hero h1 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Outfit', sans-serif;
       font-size: clamp(2.25rem, 5vw, 3.5rem);
-      font-weight: 800;
-      line-height: 1.15;
+      font-weight: 900;
+      line-height: 1.1;
       margin-bottom: 1.25rem;
       color: var(--text-primary);
-      letter-spacing: -0.03em;
+      letter-spacing: -0.04em;
     }
 
     .hero p {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: var(--text-secondary);
-      max-width: 640px;
+      max-width: 600px;
       margin: 0 auto 2rem;
       line-height: 1.75;
     }
@@ -236,21 +336,22 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
 
     .card:hover {
       box-shadow: var(--shadow-card-hover);
-      border-color: rgba(99, 102, 241, 0.2);
+      border-color: rgba(99, 102, 241, 0.18);
       transform: translateY(-2px);
     }
 
     .card-title {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 1.35rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
       font-weight: 700;
       margin-bottom: 0.5rem;
       color: var(--text-primary);
+      letter-spacing: -0.02em;
     }
 
     .card-desc {
       color: var(--text-secondary);
-      font-size: 0.925rem;
+      font-size: 0.9rem;
       line-height: 1.7;
       margin-bottom: 1.25rem;
     }
@@ -260,10 +361,10 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.7rem 1.5rem;
+      padding: 0.65rem 1.4rem;
       border-radius: var(--radius-md);
       font-weight: 600;
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
       cursor: pointer;
       transition: all 0.2s;
       border: none;
@@ -298,8 +399,14 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
     /* ===== GRID ===== */
     .grid-2 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1.25rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
     }
 
     /* ===== CONTENT SECTION ===== */
@@ -313,8 +420,8 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
     }
 
     .content-section h2 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 1.6rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
       font-weight: 700;
       margin-bottom: 1rem;
       color: var(--text-primary);
@@ -322,8 +429,8 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
     }
 
     .content-section h3 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 1.2rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
       font-weight: 600;
       margin: 1.5rem 0 0.625rem;
       color: var(--text-primary);
@@ -333,7 +440,7 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
       color: var(--text-secondary);
       line-height: 1.8;
       margin-bottom: 0.875rem;
-      font-size: 0.95rem;
+      font-size: 0.925rem;
     }
 
     .content-section ul, .content-section ol {
@@ -374,7 +481,7 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
 
     .author-name {
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 0.925rem;
       color: var(--text-primary);
     }
 
@@ -429,24 +536,24 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
     }
 
     .footer-inner {
-      max-width: 1200px;
+      max-width: 1140px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
 
     .footer-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 2rem;
       margin-bottom: 2rem;
     }
 
     .footer-col h4 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Outfit', sans-serif;
       font-weight: 700;
       margin-bottom: 0.875rem;
       color: var(--text-primary);
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
@@ -460,7 +567,7 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
 
     .footer-col a {
       color: var(--text-muted);
-      font-size: 0.85rem;
+      font-size: 0.8125rem;
       transition: color 0.2s;
     }
 
@@ -471,7 +578,30 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
       padding-top: 1.5rem;
       text-align: center;
       color: var(--text-muted);
-      font-size: 0.8rem;
+      font-size: 0.75rem;
+    }
+
+    /* ===== PAGE HEADER ===== */
+    .page-header {
+      padding: 2.5rem 0 1.5rem;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+      color: var(--text-primary);
+      letter-spacing: -0.03em;
+    }
+
+    .page-header p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.7;
     }
 
     /* ===== MISC ===== */
@@ -488,59 +618,119 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
     .pill {
       display: inline-flex;
       align-items: center;
-      padding: 0.25rem 0.75rem;
-      border-radius: 9999px;
-      font-size: 0.7rem;
+      padding: 0.2rem 0.625rem;
+      border-radius: var(--radius-full);
+      font-size: 0.65rem;
       font-weight: 700;
     }
 
     .pill-indigo {
-      background: rgba(99, 102, 241, 0.08);
-      border: 1px solid rgba(99, 102, 241, 0.15);
+      background: rgba(99, 102, 241, 0.07);
+      border: 1px solid rgba(99, 102, 241, 0.12);
       color: var(--accent-indigo);
     }
 
     .pill-teal {
-      background: rgba(20, 184, 166, 0.08);
-      border: 1px solid rgba(20, 184, 166, 0.15);
+      background: rgba(20, 184, 166, 0.07);
+      border: 1px solid rgba(20, 184, 166, 0.12);
       color: var(--accent-teal);
     }
 
     .pill-coral {
-      background: rgba(249, 115, 22, 0.08);
-      border: 1px solid rgba(249, 115, 22, 0.15);
+      background: rgba(249, 115, 22, 0.07);
+      border: 1px solid rgba(249, 115, 22, 0.12);
       color: var(--accent-coral);
     }
 
     .pill-pink {
-      background: rgba(236, 72, 153, 0.08);
-      border: 1px solid rgba(236, 72, 153, 0.15);
+      background: rgba(236, 72, 153, 0.07);
+      border: 1px solid rgba(236, 72, 153, 0.12);
       color: var(--accent-pink);
     }
 
     .pill-violet {
-      background: rgba(139, 92, 246, 0.08);
-      border: 1px solid rgba(139, 92, 246, 0.15);
+      background: rgba(139, 92, 246, 0.07);
+      border: 1px solid rgba(139, 92, 246, 0.12);
       color: var(--accent-violet);
     }
 
-    .pill-sky {
-      background: rgba(14, 165, 233, 0.08);
-      border: 1px solid rgba(14, 165, 233, 0.15);
-      color: var(--accent-sky);
+    .pill-emerald {
+      background: rgba(16, 185, 129, 0.07);
+      border: 1px solid rgba(16, 185, 129, 0.12);
+      color: var(--accent-emerald);
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .breadcrumb a { color: var(--text-muted); font-weight: 500; }
+    .breadcrumb a:hover { color: var(--accent-indigo); }
+    .breadcrumb span { color: var(--text-muted); opacity: 0.5; }
+    .breadcrumb .current { color: var(--text-primary); font-weight: 600; }
+
+    /* Game container */
+    .game-container {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* Section divider */
+    .section-divider {
+      height: 1px;
+      background: var(--border-subtle);
+      margin: 2rem 0;
     }
   </style>
 </head>
 <body>
   <nav class="nav">
     <div class="nav-inner">
-      <a href="/" class="nav-logo">WordSolver</a>
+      <a href="/" class="nav-logo">
+        <div class="nav-logo-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
+        </div>
+        WordSolver
+      </a>
       <button class="nav-mobile-btn" id="navToggle" aria-label="Toggle navigation">&#9776;</button>
       <ul class="nav-links" id="navLinks">
         <li><a href="/today">Today</a></li>
-        <li><a href="/solver">Solver</a></li>
-        <li><a href="/colordle-unlimited">Colordle Unlimited</a></li>
-        <li><a href="/colorfle-unlimited">Colorfle Unlimited</a></li>
+        <li class="nav-dropdown">
+          <button class="nav-dropdown-btn">Answers ▾</button>
+          <div class="nav-dropdown-menu">
+            <a href="/colordle-answer-today">Colordle Today</a>
+            <a href="/colorfle-answer-today">Colorfle Today</a>
+          </div>
+        </li>
+        <li class="nav-dropdown">
+          <button class="nav-dropdown-btn">Solvers ▾</button>
+          <div class="nav-dropdown-menu">
+            <a href="/colordle-solver">Colordle Solver</a>
+            <a href="/colorfle-solver">Colorfle Solver</a>
+          </div>
+        </li>
+        <li class="nav-dropdown">
+          <button class="nav-dropdown-btn">Play ▾</button>
+          <div class="nav-dropdown-menu">
+            <a href="/colordle-unlimited">Colordle Unlimited</a>
+            <a href="/colorfle-unlimited">Colorfle Unlimited</a>
+          </div>
+        </li>
+        <li class="nav-dropdown">
+          <button class="nav-dropdown-btn">Archive ▾</button>
+          <div class="nav-dropdown-menu">
+            <a href="/colordle-archive">Colordle Archive</a>
+            <a href="/colorfle-archive">Colorfle Archive</a>
+          </div>
+        </li>
+        <li><a href="/about">About</a></li>
       </ul>
     </div>
   </nav>
@@ -565,7 +755,13 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
           <ul>
             <li><a href="/colordle-solver">Colordle Solver</a></li>
             <li><a href="/colorfle-solver">Colorfle Solver</a></li>
-            <li><a href="/solver">All Solvers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Archive</h4>
+          <ul>
+            <li><a href="/colordle-archive">Colordle Archive</a></li>
+            <li><a href="/colorfle-archive">Colorfle Archive</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -581,7 +777,6 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
             <li><a href="/about">About</a></li>
             <li><a href="/contact">Contact</a></li>
             <li><a href="/privacy-policy">Privacy Policy</a></li>
-            <li><a href="/terms-of-service">Terms of Service</a></li>
           </ul>
         </div>
       </div>

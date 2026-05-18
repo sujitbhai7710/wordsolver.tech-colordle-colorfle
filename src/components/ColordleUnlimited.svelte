@@ -7,12 +7,15 @@
   let filteredSuggestions = $state([]);
   let selectedGuess = $state(null);
   let gameOver = $state(false);
-  let gameStarted = $state(false);
-  let loading = $state(false);
+  let loading = $state(true);
+  let showHelp = $state(false);
 
-  async function startGame() {
-    gameStarted = true;
-    loading = true;
+  // Auto-load on mount
+  $effect(() => {
+    initGame();
+  });
+
+  async function initGame() {
     try {
       const mod = await import('../lib/colordle.js');
       colordleRuntime = {
@@ -48,120 +51,486 @@
     for (const c of allColors) {
       if (c.name.toLowerCase().includes(lowerInput)) {
         matches.push(c);
-        if (matches.length >= 10) break;
+        if (matches.length >= 8) break;
       }
     }
     return matches;
   });
 
   function submitGuess() {
-    if (!selectedGuess || !targetColor || !colordleRuntime) return;
+    if (!selectedGuess || !targetColor || !colordleRuntime || gameOver) return;
     const guessRgb = colordleRuntime.hexToRgb(selectedGuess.hex);
     const targetRgb = colordleRuntime.hexToRgb(targetColor.hex);
     if (!guessRgb || !targetRgb) return;
     const percent = Math.round(colordleRuntime.colorDiff(guessRgb, targetRgb) * 100) / 100;
-    const newGuess = { guess: selectedGuess, percent };
-    guesses = [...guesses, newGuess];
+    guesses = [...guesses, { guess: selectedGuess, percent }];
     guessInput = '';
     selectedGuess = null;
     if (percent === 100) {
       gameOver = true;
     }
   }
+
+  function handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      if (selectedGuess) {
+        submitGuess();
+      } else if (liveSuggestions.length > 0) {
+        selectedGuess = liveSuggestions[0];
+        guessInput = liveSuggestions[0].name;
+      }
+    }
+  }
+
+  function getScoreColor(pct) {
+    if (pct === 100) return '#10b981';
+    if (pct >= 90) return '#14b8a6';
+    if (pct >= 75) return '#eab308';
+    if (pct >= 50) return '#f97316';
+    return '#ef4444';
+  }
+
+  function getScoreBg(pct) {
+    if (pct === 100) return 'rgba(16,185,129,0.08)';
+    if (pct >= 90) return 'rgba(20,184,166,0.08)';
+    if (pct >= 75) return 'rgba(234,179,8,0.08)';
+    if (pct >= 50) return 'rgba(249,115,22,0.06)';
+    return 'rgba(239,68,68,0.06)';
+  }
 </script>
 
-<div>
-  {#if !gameStarted}
-    <div style="text-align:center;padding:2.5rem 1rem;">
-      <div style="width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,var(--accent-indigo),var(--accent-violet));margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="4.5"/><circle cx="17.5" cy="15.5" r="4.5"/><circle cx="8.5" cy="15.5" r="4.5"/></svg>
+<div class="game-container">
+  <!-- Header -->
+  <div class="game-header">
+    <button class="help-btn" onclick={() => showHelp = !showHelp}>?</button>
+    <h1 class="game-title">Colordle</h1>
+    <div style="width:36px;"></div>
+  </div>
+
+  <!-- Help Modal -->
+  {#if showHelp}
+    <div class="help-overlay" onclick={() => showHelp = false}>
+      <div class="help-modal" onclick={(e) => e.stopPropagation()}>
+        <h2>How to Play</h2>
+        <p>Guess the <strong>named color</strong> that matches the target swatch.</p>
+        <p>Type a color name and submit your guess. You will receive a <strong>similarity percentage</strong> based on how close your guess is to the target in perceptual color distance (Delta E CIE2000).</p>
+        <ul>
+          <li><strong>100%</strong> = Exact match (you win!)</li>
+          <li><strong>90%+</strong> = Very close</li>
+          <li><strong>75%+</strong> = Getting warmer</li>
+          <li><strong>Below 50%</strong> = Far off</li>
+        </ul>
+        <p>Keep guessing until you find the exact color name!</p>
+        <button class="close-help-btn" onclick={() => showHelp = false}>Got it!</button>
       </div>
-      <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:0.5rem;color:var(--text-primary);">Colordle Unlimited</h2>
-      <p style="color:var(--text-secondary);margin-bottom:1.25rem;max-width:420px;margin-left:auto;margin-right:auto;font-size:0.925rem;">Play Colordle as many times as you want. A random target color is picked each round. Type color names and try to hit 100%.</p>
-      <button onclick={startGame} class="btn btn-primary">Start Playing</button>
     </div>
-  {:else if loading}
-    <div style="text-align:center;padding:2.5rem;">
-      <div style="width:40px;height:40px;border:3px solid var(--border-subtle);border-top-color:var(--accent-indigo);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto;"></div>
+  {/if}
+
+  {#if loading}
+    <div class="loading-section">
+      <div class="spinner"></div>
+      <p>Loading color database...</p>
     </div>
   {:else}
-    <div style="display:grid;grid-template-columns:1fr;gap:1.25rem;" class="game-grid">
-      <!-- Target Color -->
-      <div class="card" style="text-align:center;padding:1.75rem;">
-        <div style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--accent-indigo);margin-bottom:0.625rem;">Target Color</div>
-        <div style="width:88px;height:88px;border-radius:50%;margin:0 auto 0.75rem;background:{targetColor.hex};border:3px solid var(--border-subtle);box-shadow:var(--shadow-md);"></div>
-        <div style="font-family:monospace;font-size:0.85rem;color:var(--text-muted);">{targetColor.hex}</div>
-        {#if gameOver}
-          <div style="margin-top:0.5rem;font-size:1.1rem;font-weight:800;color:var(--accent-emerald);">{targetColor.name}</div>
-        {/if}
+    <!-- Target Color -->
+    <div class="target-section">
+      <div class="target-swatch" style="background: {targetColor.hex};">
       </div>
+      <div class="target-info">
+        {#if gameOver}
+          <span class="target-name">{targetColor.name}</span>
+        {:else}
+          <span class="target-label">Guess this color!</span>
+        {/if}
+        <span class="target-hex">{targetColor.hex}</span>
+      </div>
+    </div>
 
-      <!-- Guess Input + History -->
-      <div>
-        <div class="card" style="padding:1.25rem;margin-bottom:0.75rem;">
-          {#if !gameOver}
-            <div style="position:relative;margin-bottom:0.625rem;">
-              <input
-                type="text"
-                value={guessInput}
-                oninput={(e) => { guessInput = e.target.value; if (selectedGuess && e.target.value !== selectedGuess.name) selectedGuess = null; }}
-                placeholder="Type a color name..."
-                style="width:100%;background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:10px;padding:0.625rem 0.875rem;color:var(--text-primary);font-size:0.875rem;outline:none;transition:border-color 0.2s;"
-                onfocus={(e) => e.target.style.borderColor='var(--accent-indigo)'}
-                onblur={(e) => e.target.style.borderColor='var(--border-subtle)'}
-              />
-              {#if liveSuggestions.length > 0}
-                <div style="position:absolute;z-index:30;width:100%;margin-top:4px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:10px;max-height:180px;overflow-y:auto;box-shadow:var(--shadow-lg);">
-                  {#each liveSuggestions as s}
-                    <button
-                      onclick={() => { selectedGuess = s; guessInput = s.name; }}
-                      style="width:100%;text-align:left;padding:0.4rem 0.875rem;display:flex;align-items:center;gap:0.5rem;border:none;background:transparent;cursor:pointer;color:var(--text-primary);border-bottom:1px solid var(--border-subtle);"
-                    >
-                      <div style="width:18px;height:18px;border-radius:4px;background:{s.hex};border:1px solid var(--border-subtle);"></div>
-                      <span style="font-size:0.8rem;">{s.name}</span>
-                    </button>
-                  {/each}
-                </div>
-              {/if}
+    <!-- Guess Input -->
+    {#if !gameOver}
+      <div class="input-section">
+        <div class="input-wrapper">
+          <input
+            type="text"
+            value={guessInput}
+            oninput={(e) => { guessInput = e.target.value; if (selectedGuess && e.target.value !== selectedGuess.name) selectedGuess = null; }}
+            onkeydown={handleKeyDown}
+            placeholder="Type a color name..."
+            class="guess-input"
+            autocomplete="off"
+          />
+          {#if selectedGuess}
+            <div class="selected-preview" style="background: {selectedGuess.hex};">
             </div>
-            <button onclick={submitGuess} disabled={!selectedGuess} style="width:100%;padding:0.625rem;border-radius:10px;border:none;font-weight:700;font-size:0.875rem;cursor:pointer;background:{selectedGuess ? 'linear-gradient(135deg,var(--accent-indigo),var(--accent-teal))' : 'var(--bg-secondary)'};color:{selectedGuess ? 'white' : 'var(--text-muted)'};transition:all 0.2s;">
-              Submit Guess
-            </button>
-          {:else}
-            <div style="text-align:center;">
-              <div style="font-weight:800;font-size:1rem;margin-bottom:0.25rem;color:var(--text-primary);">You got it in {guesses.length} {guesses.length === 1 ? 'guess' : 'guesses'}!</div>
-              <button onclick={newGame} class="btn btn-primary" style="margin-top:0.75rem;">Play Again</button>
+          {/if}
+          {#if liveSuggestions.length > 0 && !selectedGuess}
+            <div class="suggestions-list">
+              {#each liveSuggestions as s}
+                <button
+                  class="suggestion-item"
+                  onclick={() => { selectedGuess = s; guessInput = s.name; }}
+                >
+                  <div class="suggestion-swatch" style="background: {s.hex};"></div>
+                  <span class="suggestion-name">{s.name}</span>
+                </button>
+              {/each}
             </div>
           {/if}
         </div>
+        <button
+          class="submit-btn"
+          onclick={submitGuess}
+          disabled={!selectedGuess}
+        >
+          Guess
+        </button>
+      </div>
+    {:else}
+      <div class="won-section">
+        <div class="won-msg">Solved in {guesses.length} {guesses.length === 1 ? 'guess' : 'guesses'}!</div>
+        <button class="play-again-btn" onclick={newGame}>Play Again</button>
+      </div>
+    {/if}
 
-        <!-- Guess History -->
-        {#if guesses.length > 0}
-          <div class="card" style="padding:1.25rem;">
-            <div style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-bottom:0.625rem;">Your Guesses</div>
-            <div style="display:flex;flex-direction:column;gap:0.3rem;">
-              {#each guesses as item, idx}
-                <div style="display:flex;align-items:center;justify-content:space-between;background:var(--bg-secondary);border-radius:8px;padding:0.5rem 0.875rem;border:1px solid var(--border-subtle);">
-                  <div style="display:flex;align-items:center;gap:0.625rem;">
-                    <div style="width:28px;height:28px;border-radius:6px;background:{item.guess.hex};border:1px solid var(--border-subtle);"></div>
-                    <span style="font-weight:600;font-size:0.8rem;color:var(--text-primary);">{item.guess.name}</span>
-                  </div>
-                  <span style="font-family:monospace;font-size:0.8rem;font-weight:700;color:{item.percent === 100 ? 'var(--accent-emerald)' : item.percent >= 85 ? 'var(--accent-teal)' : item.percent >= 60 ? '#eab308' : 'var(--text-muted)'};">
-                    {item.percent}%
-                  </span>
-                </div>
-              {/each}
+    <!-- Guess History -->
+    {#if guesses.length > 0}
+      <div class="history-section">
+        {#each guesses as item, idx}
+          <div class="history-row" style="background: {getScoreBg(item.percent)};">
+            <div class="history-color" style="background: {item.guess.hex};"></div>
+            <div class="history-info">
+              <span class="history-name">{item.guess.name}</span>
+              <span class="history-hex">{item.guess.hex}</span>
+            </div>
+            <div class="history-score" style="color: {getScoreColor(item.percent)};">
+              {item.percent}%
             </div>
           </div>
-        {/if}
+        {/each}
       </div>
-    </div>
+    {/if}
   {/if}
 </div>
 
 <style>
-  @keyframes spin { to { transform: rotate(360deg); } }
-  @media (min-width: 768px) {
-    .game-grid { grid-template-columns: auto 1fr !important; }
+  .game-container {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 0.5rem 0.75rem 1.5rem;
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .game-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0.5rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .game-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.03em;
+  }
+
+  .help-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid #e2e8f0;
+    background: #fff;
+    color: #64748b;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .help-btn:hover { border-color: #6366f1; color: #6366f1; }
+
+  .help-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .help-modal {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 380px;
+    width: 100%;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  }
+
+  .help-modal h2 { font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; color: #0f172a; }
+  .help-modal p { font-size: 0.875rem; color: #475569; line-height: 1.6; margin-bottom: 0.75rem; }
+  .help-modal ul { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+  .help-modal li { font-size: 0.85rem; color: #475569; margin-bottom: 0.25rem; }
+
+  .close-help-btn {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 10px;
+    border: none;
+    background: #6366f1;
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    margin-top: 0.75rem;
+  }
+
+  .loading-section {
+    text-align: center;
+    padding: 3rem 1rem;
+  }
+
+  .spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid #e2e8f0;
+    border-top-color: #6366f1;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 1rem;
+  }
+
+  .loading-section p { font-size: 0.85rem; color: #94a3b8; }
+
+  /* Target */
+  .target-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.25rem 0;
+  }
+
+  .target-swatch {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  .target-info {
+    text-align: center;
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .target-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #10b981;
+  }
+
+  .target-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6366f1;
+  }
+
+  .target-hex {
+    font-family: monospace;
+    font-size: 0.75rem;
+    color: #94a3b8;
+  }
+
+  /* Input */
+  .input-section {
+    padding: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .input-wrapper {
+    flex: 1;
+    position: relative;
+  }
+
+  .guess-input {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    padding-right: 2.5rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    color: #0f172a;
+    background: #f8fafc;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .guess-input:focus { border-color: #6366f1; }
+
+  .selected-preview {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    border: 2px solid #e2e8f0;
+  }
+
+  .suggestions-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 30;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    margin-top: 2px;
+  }
+
+  .suggestion-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+    color: #0f172a;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.1s;
+  }
+
+  .suggestion-item:hover { background: #f8fafc; }
+  .suggestion-item:last-child { border-bottom: none; }
+
+  .suggestion-swatch {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+    flex-shrink: 0;
+  }
+
+  .suggestion-name {
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .submit-btn {
+    padding: 0.6rem 1.25rem;
+    border-radius: 10px;
+    border: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #6366f1;
+    color: white;
+  }
+
+  .submit-btn:disabled { background: #e2e8f0; color: #94a3b8; cursor: not-allowed; }
+  .submit-btn:not(:disabled):hover { background: #4f46e5; }
+
+  /* Won */
+  .won-section {
+    text-align: center;
+    padding: 1rem 0.5rem;
+  }
+
+  .won-msg {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #10b981;
+    margin-bottom: 0.75rem;
+  }
+
+  .play-again-btn {
+    padding: 0.6rem 2rem;
+    border-radius: 10px;
+    border: none;
+    background: #6366f1;
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .play-again-btn:hover { background: #4f46e5; }
+
+  /* History */
+  .history-section {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .history-row {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+  }
+
+  .history-color {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: 2px solid rgba(0,0,0,0.08);
+    flex-shrink: 0;
+  }
+
+  .history-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .history-name {
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #0f172a;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .history-hex {
+    font-family: monospace;
+    font-size: 0.65rem;
+    color: #94a3b8;
+  }
+
+  .history-score {
+    font-family: monospace;
+    font-size: 0.85rem;
+    font-weight: 800;
   }
 </style>

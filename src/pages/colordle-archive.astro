@@ -1,0 +1,150 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ArchiveCalendar from '../components/ArchiveCalendar.svelte';
+import { getColordleToday, getColordleDayNum, getTargetColors } from '../lib/colordle.js';
+
+const targets = getTargetColors();
+
+// Build a getAnswer function that computes the Colordle answer for any past date
+// Day number modulo target colors array length gives the index
+function getColordleAnswer(dateKey) {
+  const date = new Date(dateKey + 'T12:00:00Z');
+  const startDate = new Date('2024-01-01T12:00:00Z');
+  const dayNum = Math.floor((date.getTime() - startDate.getTime()) / 86400000);
+  const color = targets[Math.abs(dayNum) % targets.length];
+  const formattedDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+  return {
+    html: `
+      <div style="text-align:center;">
+        <div style="width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;border:3px solid var(--border-subtle);box-shadow:var(--shadow-lg);display:flex;align-items:center;justify-content:center;background:${color.hex};font-size:0.85rem;font-weight:800;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.3);">${color.name}</div>
+        <div style="font-size:1.5rem;font-weight:800;margin-bottom:0.375rem;color:var(--text-primary);">${color.name}</div>
+        <div style="font-family:monospace;font-size:0.9rem;color:var(--text-muted);margin-bottom:0.25rem;">${color.hex}</div>
+        <div style="font-size:0.8rem;color:var(--text-muted);">Puzzle #${dayNum} &middot; ${formattedDate}</div>
+      </div>
+    `,
+  };
+}
+
+const schema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "name": "Colordle Archive - All Past Answers",
+      "description": "Browse the complete Colordle archive. Look up answers for any past date with our interactive calendar. Every Colordle puzzle answer from launch to today.",
+      "url": "https://wordsolver.tech/colordle-archive",
+      "author": {
+        "@type": "Person",
+        "name": "Alex Rivera",
+        "description": "Color puzzle enthusiast and WordSolver editor."
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "WordSolver",
+        "logo": { "@type": "ImageObject", "url": "https://wordsolver.tech/favicon.svg" }
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wordsolver.tech" },
+        { "@type": "ListItem", "position": 2, "name": "Archive", "item": "https://wordsolver.tech/colordle-archive" },
+        { "@type": "ListItem", "position": 3, "name": "Colordle Archive", "item": "https://wordsolver.tech/colordle-archive" }
+      ]
+    }
+  ]
+});
+---
+
+<Layout
+  title="Colordle Archive - All Past Colordle Answers | WordSolver"
+  description="Browse the complete Colordle archive. Look up answers for any past date with our interactive calendar. Every Colordle puzzle answer from launch to today."
+  keywords="colordle archive, colordle past answers, colordle history, colordle previous puzzles, colordle all answers"
+  schema={schema}
+>
+  <section class="hero"><div class="container">
+    <span class="hero-badge">Archive</span>
+    <h1>Colordle Archive</h1>
+    <p>Browse every past Colordle puzzle answer. Pick a date from the calendar to reveal the solution.</p>
+  </div></section>
+
+  <!-- Breadcrumb -->
+  <section class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> <span>›</span> <a href="/colordle-answer-today">Colordle Today</a> <span>›</span> <span class="current">Archive</span>
+    </div>
+  </section>
+
+  <!-- Calendar Component -->
+  <section class="container" style="padding-bottom:2rem;">
+    <ArchiveCalendar
+      client:load
+      gameName="Colordle"
+      gameColor="teal"
+      startDate={new Date('2024-01-01')}
+      getAnswer={getColordleAnswer}
+    />
+  </section>
+
+  <!-- Quick Links -->
+  <section class="container" style="padding-bottom:1.5rem;">
+    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;">
+      <a href="/colordle-answer-today" class="btn btn-primary">Colordle Answer Today</a>
+      <a href="/colordle-solver" class="btn btn-secondary">Colordle Solver</a>
+      <a href="/colordle-unlimited" class="btn btn-secondary">Play Unlimited</a>
+      <a href="/colorfle-archive" class="btn btn-secondary">Colorfle Archive</a>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="container" style="padding-bottom:2.5rem;">
+    <div class="content-section">
+      <h2>Why Use the Colordle Archive?</h2>
+      <p>The Colordle archive is a comprehensive record of every daily puzzle answer since the game launched. There are several reasons why players find the archive valuable, and they go beyond simply looking up answers you missed. The archive serves as a study tool, a reference library, and a way to settle debates about what a particular day's answer was. Whether you started playing Colordle last week or last year, the archive gives you access to the full history of puzzles and their solutions in a convenient, searchable format.</p>
+      <p>One of the most common reasons people visit the archive is to check an answer from a day they missed. Life gets busy, and skipping a daily puzzle happens to everyone. The once-a-day format that makes Colordle compelling also creates a sense of loss when you miss a day — that puzzle is gone forever in the official game, with no way to go back and play it. The archive at least lets you see what the answer was, so you can satisfy your curiosity and keep your mental model of the color pool up to date. Knowing that Tuesday's answer was "sage" and Wednesday's was "cobalt" helps you build a broader understanding of the color names that appear in the game, which makes you a better solver going forward.</p>
+      <p>The archive is also a powerful study tool for improving your Colordle skills. By browsing through past answers, you can see the full range of color names that the game uses and develop a mental map of the color space. Colordle draws from a list of roughly 150 to 200 named colors, and many of those names are obscure shades that most people would not think to guess unprompted. Reviewing the archive exposes you to those names in context — you see the color swatch alongside the name, which creates a visual association that is much more memorable than reading a list of names. If you have ever been stuck at 95% and could not figure out the last 5%, the answer was almost certainly a color name you did not know existed. The archive helps you learn those names so they are in your vocabulary the next time a similar shade comes up.</p>
+      <p>For competitive players who share results on social media or compare scores with friends, the archive provides a definitive reference for settling disputes. If someone claims they solved a puzzle in two guesses and you suspect the answer was an obscure name that nobody would guess without help, you can check the archive to confirm. If you and a friend disagree about what Wednesday's answer was, the archive resolves the question instantly. This social verification function might seem minor, but it matters to the community of daily players who take their streaks and scores seriously.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>How the Colordle Archive Works</h2>
+      <p>The Colordle archive on this page uses an interactive calendar that lets you select any past date and instantly see the answer for that day's puzzle. The calendar shows all dates from the game's launch on January 1, 2024, through today. Dates with available answers are highlighted and clickable — simply click a date to load the answer, then use the CSS-only reveal mechanism to view the solution. The reveal is intentional and deliberate, so you will not accidentally see an answer you did not want to see while browsing the calendar. This design respects players who want to use the archive for reference without spoiling answers they might want to work through themselves.</p>
+      <p>The answers are computed using the exact same algorithm that Colordle uses. Each day is assigned a sequential puzzle number starting from the launch date, and the target color is selected from a pre-defined list indexed by that day number. The list cycles through after it exhausts all entries, returning to the beginning. Our implementation resolves each color name against a comprehensive database of named colors to produce the exact hex code, which is displayed alongside the color swatch in the archive. There is no approximation involved — the color you see in the archive is the same color that appeared in the game on that date.</p>
+      <p>The calendar also supports a list view and a search function. If you remember the approximate date of a puzzle you want to look up but do not want to navigate through the calendar month by month, switch to list view and scroll through the chronological list of all past puzzles. The search bar lets you filter by date or puzzle number, making it easy to find a specific entry even among hundreds of past puzzles. The list view shows the most recent puzzles first, since that is the most common lookup direction — people usually want to check yesterday's answer, not last year's.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>What the Archive Teaches You About Colordle</h2>
+      <p>Spending time with the archive reveals patterns that are not obvious from playing one puzzle per day. The color names repeat over time because the list cycles through, but the exact shade you see on any given day depends on where in the cycle the game is. Some colors appear multiple times with slightly different hex values — "red" might show up as a different red on different cycles. Understanding this cycling behavior helps you realize that Colordle is not truly random; it is a deterministic sequence that you can learn and anticipate if you pay attention. The archive makes this sequence visible in a way that daily play alone does not, because you can see the full progression of answers laid out in order.</p>
+      <p>The archive also highlights the diversity of the color pool. Browsing through dozens of answers in quick succession, you start to notice how many different ways the game can describe what looks like the same color. "Sky blue," "baby blue," "light blue," "powder blue," and "azure" are all distinct entries in the color list, and they produce different hex values that are visually very similar. Colordle rewards players who can distinguish between these near-synonyms, and the archive is the fastest way to see them side by side. When you compare "sky blue" and "baby blue" on adjacent dates, the visual difference becomes immediately apparent in a way that reading hex codes never conveys.</p>
+      <p>Perhaps the most valuable lesson the archive teaches is the importance of color vocabulary. The difference between a player who consistently solves in three guesses and one who needs eight is not perceptual acuity — it is vocabulary. The three-guess player knows more color names. They know that "celadon" is a pale green, "amaranth" is a pinkish red, and "vermilion" is a bright orange-red. These names are not common knowledge, but they are all in the Colordle answer pool. The archive exposes you to these names in a visual context, which is the most effective way to learn them. Each answer in the archive pairs the color name with its visual appearance, creating the kind of associative memory that pays off in future games.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Using the Archive Alongside the Colordle Solver</h2>
+      <p>The archive and the solver are complementary tools that work best together. The solver helps you narrow down candidates during a current puzzle by filtering the color database based on your guesses and the percentages you receive. The archive helps you build the background knowledge that makes your solver inputs more effective. If you have seen "chartreuse" in the archive and remember that it is a yellow-green, you will recognize it as a plausible candidate when a puzzle returns a high percentage for "lime" but does not match "lime" exactly. Without that background knowledge, you might never think to try "chartreuse" even though it is the correct answer.</p>
+      <p>Another powerful combination is using the archive to practice and the solver to verify. Browse the archive for a past puzzle, look at the answer, then try to reconstruct the guessing path that would lead to that answer most efficiently. What first guess would you make? What percentage would it return? What second guess would narrow things down? Working through this exercise for multiple past puzzles builds the strategic thinking that transfers directly to daily play. The solver can verify your reasoning — enter your hypothetical guesses and see if the percentages would have been what you predicted. If they are not, you have discovered a gap in your color intuition that you can work on.</p>
+      <p>Finally, the archive is useful for testing the solver itself. If you want to verify that the solver is working correctly, pick a past puzzle from the archive, enter a few guesses with the actual percentages the game would have returned, and confirm that the solver correctly identifies the answer among its top candidates. This kind of retrospective testing builds confidence in the solver's accuracy and helps you understand how many guesses you typically need before the solver narrows things down to a manageable candidate list. Most users find that three or four guesses are sufficient, but your mileage may vary depending on which colors you guess and how different they are from the target.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Frequently Asked Questions About the Archive</h2>
+      <p><strong>How far back does the archive go?</strong> The archive starts from January 1, 2024, which is when Colordle launched its daily puzzle system. Every puzzle from that date forward is included, and new puzzles are added automatically each day when the daily puzzle resets. The archive currently contains over 800 past puzzles and grows by one entry every day.</p>
+      <p><strong>Are the archive answers accurate?</strong> Yes. The answers are computed using the exact same algorithm that Colordle uses to generate its daily targets. We use the same color list, the same day-number calculation, and the same indexing formula. If you ever see a discrepancy between our archive and the game itself, please report it through our contact page and we will investigate immediately. Accuracy is the most important quality of any puzzle reference tool, and we take it seriously.</p>
+      <p><strong>Can I play past puzzles through the archive?</strong> The archive shows the answers but does not let you play past puzzles interactively. Colordle's daily format does not support replaying old puzzles — each date has exactly one puzzle, and once the day passes, that puzzle is gone. If you want to practice with random puzzles outside the daily constraint, use our unlimited mode, which generates fresh random targets from the same color pool.</p>
+      <p><strong>Why do some colors appear more than once in the archive?</strong> The color list cycles through after exhausting all entries, so colors repeat on a cycle that depends on the list length. Additionally, some colors have multiple valid names — "sky blue" and "skyblue" might both appear as separate entries. These duplicates are part of the official color list and are not errors in our archive.</p>
+      <p><strong>Does the archive work on mobile?</strong> Yes. The calendar and list views are fully responsive and work on phones and tablets. The calendar grid adjusts to smaller screens, and the list view is particularly convenient on mobile because it does not require horizontal scrolling. The answer reveal mechanism works with touch input as well as mouse clicks.</p>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="author-card">
+      <div class="author-avatar">AR</div>
+      <div>
+        <div class="author-name">Alex Rivera</div>
+        <div class="author-desc">Color puzzle enthusiast. Plays Colordle and Colorfle daily. Built WordSolver after getting stuck at 98% one too many times.</div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -42,32 +42,25 @@
     });
     guesses = updated;
     const latest = updated[guessIndex];
-    if (latest.feedback.every((v) => v === 'green')) {
+    if (latest.feedback.every(v => v === 'green')) {
       solved = true;
     }
   }
 
   function refineSuggestions() {
-    if (solved || guesses.length === 0 || guesses.some((g) => g.feedback.some((v) => v === null))) return;
-    const possibilities = getAllCombinations(0).filter((candidate) =>
-      guesses.every((guess) => checkGuess(guess.colors, candidate, guess.feedback))
+    if (solved || guesses.length === 0 || guesses.some(g => g.feedback.some(v => v === null))) return;
+    const possibilities = getAllCombinations(0).filter(candidate =>
+      guesses.every(guess => checkGuess(guess.colors, candidate, guess.feedback))
     );
     if (possibilities.length === 0) {
-      errorMessage = 'No combinations matched the selected feedback. Double-check your colors and feedback.';
+      errorMessage = 'No combinations matched the selected feedback.';
       suggestions = [];
       return;
     }
     errorMessage = '';
-    suggestions = possibilities.slice(0, 5).map((colors) => {
+    suggestions = possibilities.slice(0, 5).map(colors => {
       const target = getCombinationTargetColor(colors, 0);
-      return {
-        colors,
-        colorNames: colors.map((i) => COLOR_NAMES[i]),
-        colorHexes: colors.map((i) => COLORS[i]),
-        targetColor: target.rgb,
-        targetHex: target.hex,
-        similarity: 0
-      };
+      return { colors, colorNames: colors.map(i => COLOR_NAMES[i]), colorHexes: colors.map(i => COLORS[i]), targetColor: target.rgb, targetHex: target.hex, similarity: 0 };
     });
   }
 
@@ -81,57 +74,60 @@
   }
 
   function feedbackLabel(value) {
-    if (value === 'green') return 'Green';
-    if (value === 'yellow') return 'Yellow';
-    if (value === 'gray') return 'Gray';
-    return 'Unset';
+    if (value === 'green') return 'Correct';
+    if (value === 'yellow') return 'Wrong pos';
+    if (value === 'gray') return 'Absent';
+    return 'Click to set';
   }
 
-  function feedbackBg(value) {
-    if (value === 'green') return 'rgba(16,185,129,0.1)';
-    if (value === 'yellow') return 'rgba(234,179,8,0.1)';
-    if (value === 'gray') return 'rgba(156,163,175,0.1)';
-    return 'var(--bg-card)';
+  function feedbackColors(value) {
+    if (value === 'green') return { bg: 'rgba(16,185,129,0.08)', border: 'rgba(16,185,129,0.25)', text: '#10b981' };
+    if (value === 'yellow') return { bg: 'rgba(234,179,8,0.08)', border: 'rgba(234,179,8,0.25)', text: '#eab308' };
+    if (value === 'gray') return { bg: 'rgba(148,163,184,0.08)', border: 'rgba(148,163,184,0.25)', text: '#94a3b8' };
+    return { bg: '#f8fafc', border: '#e2e8f0', text: '#94a3b8' };
   }
 
-  function feedbackBorder(value) {
-    if (value === 'green') return 'rgba(16,185,129,0.3)';
-    if (value === 'yellow') return 'rgba(234,179,8,0.3)';
-    if (value === 'gray') return 'rgba(156,163,175,0.3)';
-    return 'var(--border-subtle)';
+  function handleHexKey(e) {
+    if (e.key === 'Enter') handleSolveHex();
   }
 </script>
 
 <div class="solver-wrapper">
-  <div style="display:grid;grid-template-columns:1fr;gap:1.25rem;" class="solver-grid">
+  <div class="solver-grid">
     <!-- Left: Input -->
-    <div class="card" style="padding:1.25rem;">
-      <div style="margin-bottom:1rem;">
-        <label style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);display:block;margin-bottom:0.375rem;">Target Hex</label>
-        <div style="display:flex;gap:0.5rem;">
-          <input value={hexInput} oninput={(e) => hexInput = e.target.value} placeholder="#8ce874" style="flex:1;background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:10px;padding:0.625rem 0.875rem;color:var(--text-primary);font-family:monospace;font-size:0.875rem;outline:none;transition:border-color 0.2s;" onfocus={(e) => e.target.style.borderColor='var(--accent-pink)'} onblur={(e) => e.target.style.borderColor='var(--border-subtle)'} />
-          <button onclick={handleSolveHex} style="padding:0.625rem 1rem;border-radius:10px;border:none;background:linear-gradient(135deg,var(--accent-coral),var(--accent-pink));color:white;font-weight:700;font-size:0.8rem;cursor:pointer;transition:transform 0.2s;" onmouseover={(e) => e.target.style.transform='translateY(-1px)'} onmouseout={(e) => e.target.style.transform='none'}>Solve</button>
+    <div class="solver-panel">
+      <div class="panel-section">
+        <label class="field-label">Target Hex Color</label>
+        <div class="hex-input-row">
+          <input
+            value={hexInput}
+            oninput={(e) => hexInput = e.target.value}
+            onkeydown={handleHexKey}
+            placeholder="#8ce874"
+            class="hex-input"
+          />
+          <button onclick={handleSolveHex} class="solve-btn">Solve</button>
         </div>
         {#if errorMessage}
-          <div style="margin-top:0.375rem;font-size:0.75rem;color:#ef4444;font-weight:500;">{errorMessage}</div>
+          <div class="error-msg">{errorMessage}</div>
         {/if}
       </div>
 
-      <!-- Color Picker Toggle -->
-      <div style="border-top:1px solid var(--border-subtle);padding-top:0.875rem;">
-        <button onclick={() => showColorPicker = !showColorPicker} style="background:none;border:none;color:var(--accent-pink);font-size:0.8rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:0.375rem;">
+      <!-- Color Picker -->
+      <div class="picker-section">
+        <button onclick={() => showColorPicker = !showColorPicker} class="picker-toggle">
           {showColorPicker ? 'Hide Color Picker' : 'Pick a Color Instead'}
         </button>
         {#if showColorPicker}
-          <div style="margin-top:0.625rem;background:var(--bg-secondary);border-radius:10px;padding:0.875rem;border:1px solid var(--border-subtle);">
-            <div style="display:flex;align-items:center;gap:0.875rem;flex-wrap:wrap;">
-              <input type="color" bind:value={pickerColor} style="width:72px;height:72px;border-radius:10px;border:2px solid var(--border-subtle);cursor:pointer;padding:0;" />
-              <div>
-                <div style="display:flex;align-items:center;gap:0.375rem;margin-bottom:0.375rem;">
-                  <div style="width:28px;height:28px;border-radius:6px;background:{pickerColor};border:1px solid var(--border-subtle);"></div>
-                  <span style="font-family:monospace;font-weight:700;font-size:0.9rem;color:var(--text-primary);">{pickerColor}</span>
+          <div class="picker-box">
+            <div class="picker-content">
+              <input type="color" bind:value={pickerColor} class="color-picker" />
+              <div class="picker-info">
+                <div class="picker-preview-row">
+                  <div class="picker-swatch" style="background: {pickerColor};"></div>
+                  <span class="picker-hex">{pickerColor}</span>
                 </div>
-                <button onclick={applyPickerColor} style="padding:0.4rem 0.875rem;border-radius:8px;border:none;background:linear-gradient(135deg,var(--accent-coral),var(--accent-pink));color:white;font-weight:600;font-size:0.75rem;cursor:pointer;">Use This Color</button>
+                <button onclick={applyPickerColor} class="use-color-btn">Use This Color</button>
               </div>
             </div>
           </div>
@@ -140,21 +136,26 @@
 
       <!-- Guesses -->
       {#if guesses.length > 0}
-        <div style="margin-top:1rem;border-top:1px solid var(--border-subtle);padding-top:1rem;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
-            <div style="font-weight:700;font-size:1rem;color:var(--text-primary);">Guesses</div>
-            {#if !solved && guesses.every((g) => g.feedback.every((v) => v !== null))}
-              <button onclick={refineSuggestions} style="padding:0.4rem 0.875rem;border-radius:8px;border:none;background:linear-gradient(135deg,var(--accent-teal),var(--accent-sky));color:white;font-weight:600;font-size:0.75rem;cursor:pointer;">Refine</button>
+        <div class="guesses-section">
+          <div class="guesses-header">
+            <span class="guesses-title">Guesses</span>
+            {#if !solved && guesses.every(g => g.feedback.every(v => v !== null))}
+              <button onclick={refineSuggestions} class="refine-btn">Refine</button>
             {/if}
           </div>
           {#each guesses as guess, gi}
-            <div style="background:var(--bg-secondary);border-radius:10px;padding:0.625rem;margin-bottom:0.375rem;border:1px solid var(--border-subtle);">
-              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.625rem;">
+            <div class="guess-row">
+              <div class="guess-colors">
                 {#each guess.colors as colorIdx, ci}
-                  <button onclick={() => cycleFeedback(gi, ci)} style="border-radius:10px;padding:0.625rem;text-align:center;background:{feedbackBg(guess.feedback[ci])};border:1px solid {feedbackBorder(guess.feedback[ci])};cursor:pointer;transition:all 0.15s;">
-                    <div style="width:40px;height:40px;border-radius:8px;background:{COLORS[colorIdx]};margin:0 auto 0.375rem;border:1px solid var(--border-subtle);"></div>
-                    <div style="font-weight:600;font-size:0.75rem;color:var(--text-primary);">{COLOR_NAMES[colorIdx]}</div>
-                    <div style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:{guess.feedback[ci] === 'green' ? 'var(--accent-emerald)' : guess.feedback[ci] === 'yellow' ? '#eab308' : guess.feedback[ci] === 'gray' ? 'var(--text-muted)' : 'var(--text-muted)'};margin-top:0.1rem;">{feedbackLabel(guess.feedback[ci])}</div>
+                  {@const fb = feedbackColors(guess.feedback[ci])}
+                  <button
+                    onclick={() => cycleFeedback(gi, ci)}
+                    class="guess-color-btn"
+                    style="background: {fb.bg}; border-color: {fb.border};"
+                  >
+                    <div class="guess-swatch" style="background: {COLORS[colorIdx]};"></div>
+                    <div class="guess-color-name">{COLOR_NAMES[colorIdx]}</div>
+                    <div class="guess-feedback-label" style="color: {fb.text};">{feedbackLabel(guess.feedback[ci])}</div>
                   </button>
                 {/each}
               </div>
@@ -164,50 +165,43 @@
       {/if}
 
       {#if solved}
-        <div style="margin-top:0.875rem;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:10px;padding:0.875rem;">
-          <div style="font-weight:800;color:var(--accent-emerald);font-size:1rem;">Solved!</div>
-          <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:0.2rem;">The latest feedback indicates the current suggestion is the exact answer.</div>
+        <div class="solved-box">
+          <div class="solved-title">Solved!</div>
+          <div class="solved-desc">The latest feedback indicates the current suggestion is the exact answer.</div>
         </div>
       {/if}
     </div>
 
     <!-- Right: Suggestions -->
-    <div class="card" style="padding:1.25rem;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
-        <div style="font-weight:700;font-size:1rem;color:var(--text-primary);">Suggestions</div>
-        <span style="font-size:0.75rem;color:var(--text-muted);">{suggestions.length} shown</span>
+    <div class="solver-panel">
+      <div class="suggestions-header">
+        <span class="suggestions-title">Suggestions</span>
+        <span class="suggestions-count">{suggestions.length} shown</span>
       </div>
 
       {#if suggestions.length === 0}
-        <div style="text-align:center;padding:1.75rem 1rem;color:var(--text-secondary);">
+        <div class="empty-suggestions">
           Enter a target hex above or use the color picker to get matching three-color combinations.
         </div>
       {:else}
-        <div style="display:flex;flex-direction:column;gap:0.625rem;">
+        <div class="suggestions-list">
           {#each suggestions as suggestion}
-            <div style="background:var(--bg-secondary);border-radius:10px;padding:0.875rem;border:1px solid var(--border-subtle);">
-              <div style="display:flex;align-items:center;gap:0.875rem;flex-wrap:wrap;">
-                <div style="width:56px;height:56px;border-radius:10px;background:{suggestion.targetHex};display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-family:monospace;font-weight:700;color:{getContrastColor(suggestion.targetHex)};border:1px solid var(--border-subtle);flex-shrink:0;box-shadow:var(--shadow-sm);">
-                  {suggestion.targetHex}
-                </div>
-                <div style="flex:1;min-width:0;">
-                  <div style="display:flex;flex-wrap:wrap;gap:0.375rem;">
-                    {#each suggestion.colors as colorIdx, i}
-                      <div style="display:flex;align-items:center;gap:0.3rem;background:var(--bg-card);padding:0.2rem 0.5rem;border-radius:6px;border:1px solid var(--border-subtle);">
-                        <div style="width:20px;height:20px;border-radius:4px;background:{COLORS[colorIdx]};border:1px solid var(--border-subtle);"></div>
-                        <div>
-                          <div style="font-size:0.7rem;font-weight:600;color:var(--text-primary);">{COLOR_NAMES[colorIdx]}</div>
-                          <div style="font-size:0.55rem;color:var(--text-muted);font-family:monospace;">{suggestion.colorHexes[i]}</div>
-                        </div>
-                      </div>
-                    {/each}
-                  </div>
-                  {#if suggestion.similarity > 0}
-                    <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.3rem;">Similarity {suggestion.similarity.toFixed(1)}%</div>
-                  {/if}
-                </div>
-                <button onclick={() => useSuggestion(suggestion)} style="padding:0.4rem 0.875rem;border-radius:8px;border:none;background:linear-gradient(135deg,var(--accent-coral),var(--accent-pink));color:white;font-weight:600;font-size:0.7rem;cursor:pointer;flex-shrink:0;">Use This</button>
+            <div class="suggestion-card">
+              <div class="suggestion-preview" style="background: {suggestion.targetHex};">
+                <span style="color: {getContrastColor(suggestion.targetHex)}; font-size: 0.6rem; font-weight: 700; font-family: monospace;">{suggestion.targetHex}</span>
               </div>
+              <div class="suggestion-colors">
+                {#each suggestion.colors as colorIdx, i}
+                  <div class="suggestion-color-chip">
+                    <div class="chip-swatch" style="background: {COLORS[colorIdx]};"></div>
+                    <div>
+                      <div class="chip-name">{COLOR_NAMES[colorIdx]}</div>
+                      <div class="chip-hex">{suggestion.colorHexes[i]}</div>
+                    </div>
+                  </div>
+                {/each}
+              </div>
+              <button onclick={() => useSuggestion(suggestion)} class="use-btn">Use This</button>
             </div>
           {/each}
         </div>
@@ -217,7 +211,116 @@
 </div>
 
 <style>
+  .solver-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
   @media (min-width: 768px) {
-    .solver-grid { grid-template-columns: 2fr 3fr !important; }
+    .solver-grid { grid-template-columns: 2fr 3fr; }
+  }
+
+  .solver-panel {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.25rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .panel-section { margin-bottom: 1rem; }
+  .field-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; display: block; margin-bottom: 0.375rem; }
+
+  .hex-input-row { display: flex; gap: 0.5rem; }
+  .hex-input {
+    flex: 1; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 10px;
+    padding: 0.6rem 0.875rem; color: #0f172a; font-family: monospace; font-size: 0.875rem; outline: none; transition: border-color 0.2s;
+  }
+  .hex-input:focus { border-color: #ec4899; }
+
+  .solve-btn {
+    padding: 0.6rem 1rem; border-radius: 10px; border: none;
+    background: linear-gradient(135deg, #f97316, #ec4899); color: white; font-weight: 700; font-size: 0.8rem;
+    cursor: pointer; transition: transform 0.2s; white-space: nowrap;
+  }
+  .solve-btn:hover { transform: translateY(-1px); }
+
+  .error-msg { margin-top: 0.375rem; font-size: 0.75rem; color: #ef4444; font-weight: 500; }
+
+  .picker-section { border-top: 1px solid #f1f5f9; padding-top: 0.875rem; }
+  .picker-toggle { background: none; border: none; color: #ec4899; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+
+  .picker-box { margin-top: 0.5rem; background: #f8fafc; border-radius: 10px; padding: 0.875rem; border: 1px solid #e2e8f0; }
+  .picker-content { display: flex; align-items: center; gap: 0.875rem; flex-wrap: wrap; }
+  .color-picker { width: 72px; height: 72px; border-radius: 10px; border: 2px solid #e2e8f0; cursor: pointer; padding: 0; }
+
+  .picker-preview-row { display: flex; align-items: center; gap: 0.375rem; margin-bottom: 0.375rem; }
+  .picker-swatch { width: 28px; height: 28px; border-radius: 6px; border: 1px solid #e2e8f0; }
+  .picker-hex { font-family: monospace; font-weight: 700; font-size: 0.9rem; color: #0f172a; }
+
+  .use-color-btn {
+    padding: 0.4rem 0.875rem; border-radius: 8px; border: none;
+    background: linear-gradient(135deg, #f97316, #ec4899); color: white; font-weight: 600; font-size: 0.75rem; cursor: pointer;
+  }
+
+  .guesses-section { margin-top: 1rem; border-top: 1px solid #f1f5f9; padding-top: 1rem; }
+  .guesses-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+  .guesses-title { font-weight: 700; font-size: 1rem; color: #0f172a; }
+
+  .refine-btn {
+    padding: 0.4rem 0.875rem; border-radius: 8px; border: none;
+    background: linear-gradient(135deg, #14b8a6, #0ea5e9); color: white; font-weight: 600; font-size: 0.75rem; cursor: pointer;
+  }
+
+  .guess-row { background: #f8fafc; border-radius: 10px; padding: 0.5rem; margin-bottom: 0.375rem; border: 1px solid #e2e8f0; }
+  .guess-colors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+
+  .guess-color-btn {
+    border-radius: 10px; padding: 0.5rem; text-align: center; border: 2px solid; cursor: pointer; transition: all 0.15s; background: #f8fafc;
+  }
+
+  .guess-swatch { width: 36px; height: 36px; border-radius: 8px; margin: 0 auto 0.25rem; border: 1px solid #e2e8f0; }
+  .guess-color-name { font-weight: 600; font-size: 0.75rem; color: #0f172a; }
+  .guess-feedback-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.1rem; font-weight: 600; }
+
+  .solved-box { margin-top: 0.875rem; background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.2); border-radius: 10px; padding: 0.875rem; }
+  .solved-title { font-weight: 800; color: #10b981; font-size: 1rem; }
+  .solved-desc { font-size: 0.8rem; color: #475569; margin-top: 0.2rem; }
+
+  .suggestions-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+  .suggestions-title { font-weight: 700; font-size: 1rem; color: #0f172a; }
+  .suggestions-count { font-size: 0.75rem; color: #94a3b8; }
+
+  .empty-suggestions { text-align: center; padding: 1.75rem 1rem; color: #94a3b8; font-size: 0.875rem; }
+
+  .suggestions-list { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .suggestion-card {
+    background: #f8fafc; border-radius: 10px; padding: 0.875rem; border: 1px solid #e2e8f0;
+    display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+  }
+
+  .suggestion-preview {
+    width: 56px; height: 56px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid #e2e8f0; flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .suggestion-colors { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 0.3rem; }
+
+  .suggestion-color-chip {
+    display: flex; align-items: center; gap: 0.25rem; background: #fff;
+    padding: 0.2rem 0.5rem; border-radius: 6px; border: 1px solid #e2e8f0;
+  }
+
+  .chip-swatch { width: 20px; height: 20px; border-radius: 4px; border: 1px solid #e2e8f0; }
+  .chip-name { font-size: 0.7rem; font-weight: 600; color: #0f172a; }
+  .chip-hex { font-size: 0.55rem; color: #94a3b8; font-family: monospace; }
+
+  .use-btn {
+    padding: 0.4rem 0.875rem; border-radius: 8px; border: none;
+    background: linear-gradient(135deg, #f97316, #ec4899); color: white; font-weight: 600; font-size: 0.7rem;
+    cursor: pointer; flex-shrink: 0;
   }
 </style>

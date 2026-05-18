@@ -24,7 +24,7 @@ const schema = JSON.stringify({
     {
       "@type": "WebPage",
       "name": "WordSolver - Free Color Puzzle Solvers & Daily Answers",
-      "description": "Get today's Colordle and Colorfle answers instantly. Free solvers, unlimited play, and daily puzzle solutions.",
+      "description": "Get today's Colordle and Colorfle answers instantly. Free solvers, unlimited play, archive lookups, and daily puzzle solutions.",
       "url": "https://wordsolver.tech"
     }
   ]
@@ -33,8 +33,8 @@ const schema = JSON.stringify({
 
 <Layout
   title="WordSolver - Free Color Puzzle Solvers & Daily Answers"
-  description="Get today's Colordle and Colorfle answers instantly. Free solvers, unlimited play, and daily puzzle solutions for color games."
-  keywords="colordle answer today, colorfle answer today, colordle solver, colorfle solver, color puzzle solver, daily puzzle answer"
+  description="Get today's Colordle and Colorfle answers instantly. Free solvers, unlimited play, archive lookups, and daily puzzle solutions for color games."
+  keywords="colordle answer today, colorfle answer today, colordle solver, colorfle solver, color puzzle solver, daily puzzle answer, colordle archive, colorfle archive"
   schema={schema}
 >
   <!-- Hero -->
@@ -43,11 +43,12 @@ const schema = JSON.stringify({
       <span class="hero-badge">Free Puzzle Tools</span>
       <h1>Solve Color Puzzles<br/>Faster Than Ever</h1>
       <p>
-        WordSolver gives you today's Colordle and Colorfle answers, powerful solvers that narrow down candidates in seconds, and unlimited practice mode so you can sharpen your color perception every day.
+        WordSolver gives you today's Colordle and Colorfle answers, powerful solvers that narrow down candidates in seconds, archive lookups for any past date, and unlimited practice mode so you can sharpen your color perception every day.
       </p>
       <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
         <a href="/today" class="btn btn-primary">Today's Answers</a>
         <a href="/solver" class="btn btn-secondary">Open Solver</a>
+        <a href="/colordle-archive" class="btn btn-secondary">Browse Archive</a>
       </div>
     </div>
   </section>
@@ -57,7 +58,9 @@ const schema = JSON.stringify({
     <div class="grid-2">
       <a href="/colordle-answer-today" class="card" style="text-decoration:none;">
         <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:1rem;">
-          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:1.25rem;">🎨</div>
+          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+          </div>
           <div>
             <div class="card-title">Colordle Answer Today</div>
             <div style="font-size:0.8rem;color:var(--text-muted);">Daily color puzzle</div>
@@ -69,7 +72,9 @@ const schema = JSON.stringify({
 
       <a href="/colorfle-answer-today" class="card" style="text-decoration:none;">
         <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:1rem;">
-          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#ec4899,#f97316);display:flex;align-items:center;justify-content:center;font-size:1.25rem;">🔮</div>
+          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#ec4899,#f97316);display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20"/></svg>
+          </div>
           <div>
             <div class="card-title">Colorfle Answer Today</div>
             <div style="font-size:0.8rem;color:var(--text-muted);">Daily color mixing puzzle</div>
@@ -81,7 +86,9 @@ const schema = JSON.stringify({
 
       <a href="/colordle-solver" class="card" style="text-decoration:none;">
         <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:1rem;">
-          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#14b8a6,#0ea5e9);display:flex;align-items:center;justify-content:center;font-size:1.25rem;">🔍</div>
+          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#14b8a6,#0ea5e9);display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
           <div>
             <div class="card-title">Colordle Solver</div>
             <div style="font-size:0.8rem;color:var(--text-muted);">Filter by percentage</div>
@@ -93,7 +100,9 @@ const schema = JSON.stringify({
 
       <a href="/colorfle-solver" class="card" style="text-decoration:none;">
         <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:1rem;">
-          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#f97316,#eab308);display:flex;align-items:center;justify-content:center;font-size:1.25rem;">⚙️</div>
+          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#f97316,#eab308);display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
           <div>
             <div class="card-title">Colorfle Solver</div>
             <div style="font-size:0.8rem;color:var(--text-muted);">Hex matching + feedback</div>
@@ -105,7 +114,9 @@ const schema = JSON.stringify({
 
       <a href="/colordle-unlimited" class="card" style="text-decoration:none;">
         <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:1rem;">
-          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#6366f1,#14b8a6);display:flex;align-items:center;justify-content:center;font-size:1.25rem;">♾️</div>
+          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#6366f1,#14b8a6);display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+          </div>
           <div>
             <div class="card-title">Colordle Unlimited</div>
             <div style="font-size:0.8rem;color:var(--text-muted);">Practice anytime</div>
@@ -117,14 +128,44 @@ const schema = JSON.stringify({
 
       <a href="/colorfle-unlimited" class="card" style="text-decoration:none;">
         <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:1rem;">
-          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#ec4899,#6366f1);display:flex;align-items:center;justify-content:center;font-size:1.25rem;">🌈</div>
+          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#ec4899,#6366f1);display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="15.5" r="2.5"/><circle cx="8.5" cy="15.5" r="2.5"/></svg>
+          </div>
           <div>
             <div class="card-title">Colorfle Unlimited</div>
             <div style="font-size:0.8rem;color:var(--text-muted);">Practice color mixing</div>
           </div>
         </div>
-        <p class="card-desc">Practice Colorfle without waiting for the daily reset. Get a random target color, guess the three source colors, and learn how mixing works through repetition.</p>
+        <p class="card-desc">Practice Colorfle without waiting for the daily reset. Guess the three source colors using the color palette, just like the real game.</p>
         <span class="btn btn-primary" style="font-size:0.8rem;padding:0.5rem 1rem;">Play Now</span>
+      </a>
+
+      <a href="/colordle-archive" class="card" style="text-decoration:none;">
+        <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:1rem;">
+          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#14b8a6,#6366f1);display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div>
+            <div class="card-title">Colordle Archive</div>
+            <div style="font-size:0.8rem;color:var(--text-muted);">All past answers</div>
+          </div>
+        </div>
+        <p class="card-desc">Browse every past Colordle puzzle answer with our interactive calendar. Pick any date to see the solution, study patterns, and build your color vocabulary.</p>
+        <span class="btn btn-primary" style="font-size:0.8rem;padding:0.5rem 1rem;">Browse Archive</span>
+      </a>
+
+      <a href="/colorfle-archive" class="card" style="text-decoration:none;">
+        <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:1rem;">
+          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#f97316,#ec4899);display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div>
+            <div class="card-title">Colorfle Archive</div>
+            <div style="font-size:0.8rem;color:var(--text-muted);">All past answers</div>
+          </div>
+        </div>
+        <p class="card-desc">Look up any past Colorfle answer by date. See the three component colors, their weights, and the resulting target hex for every puzzle since launch.</p>
+        <span class="btn btn-primary" style="font-size:0.8rem;padding:0.5rem 1rem;">Browse Archive</span>
       </a>
     </div>
   </section>
@@ -148,10 +189,10 @@ const schema = JSON.stringify({
 
     <div class="content-section">
       <h2>How to Use This Site Effectively</h2>
-      <p>Start with the daily answer pages if you just want to know the solution. The Colordle and Colorfle answer pages show today's solution with a CSS-powered reveal — the answer is hidden behind a transparent overlay, and clicking the "Show Answer" button reveals it with a smooth transition. You can read the strategy hints and contextual content before deciding whether to peek at the solution. If you prefer to solve it yourself but want help narrowing down, open the solver instead. The solver loads on demand — it does not start until you click the Start button, which keeps the initial page load fast and lightweight.</p>
+      <p>Start with the daily answer pages if you just want to know the solution. The Colordle and Colorfle answer pages show today's solution with a CSS-powered reveal — the answer is hidden behind a transparent overlay, and clicking the reveal button reveals it with a smooth transition. You can read the strategy hints and contextual content before deciding whether to peek at the solution. If you prefer to solve it yourself but want help narrowing down, open the solver instead. The solver loads automatically when you visit the page — no need to click a start button. Just type your guess and percentage, and the results appear instantly.</p>
       <p>The Colordle solver works best when you make two or three guesses in the actual game first, then enter those guesses and their percentages into the solver. Each guess you add narrows the candidate list significantly. By the third guess, you are usually looking at fewer than ten possible colors, and often just one or two. The Colorfle solver works in two modes: hex-solving gives you initial candidates from a target color, and feedback-solving lets you mark green, yellow, or gray on each guess to eliminate impossible combinations. After two rounds of feedback refinement, the solver typically narrows down to a single combination.</p>
-      <p>For practice, use the unlimited modes. Colordle Unlimited generates a random target color each round. Colorfle Unlimited gives you a random target and lets you guess the three source colors with feedback. Both modes use the same game logic as the daily versions, so the skills you develop transfer directly. Play five or ten rounds during a break and you will notice a real improvement within a week. The unlimited modes load on demand to keep page performance snappy — just click the Start button and the game engine initializes in your browser with zero server round trips.</p>
-      <p>Every tool on WordSolver is free, works on mobile and desktop, and requires no sign-up or account. The solvers run entirely in your browser — no data gets sent to any server. Your guesses, percentages, and game state stay on your device. The daily answer data is generated at build time using the same algorithms the official games use, so the answers are accurate and available the moment the puzzle resets. We respect your privacy, we respect the puzzle, and we built these tools because we believe color puzzle players deserve better than guessing in the dark.</p>
+      <p>For practice, use the unlimited modes. Colordle Unlimited generates a random target color each round and shows the target swatch for you to guess. Colorfle Unlimited gives you a random target and a full color palette keyboard to select your guesses, just like the real game. Both modes use the same game logic as the daily versions, so the skills you develop transfer directly. Play five or ten rounds during a break and you will notice a real improvement within a week.</p>
+      <p>The archive pages let you look up any past answer by date. Use the interactive calendar to browse past Colordle or Colorfle puzzles and see the solution for any day since the games launched. The archive is a powerful study tool — browsing dozens of past answers in quick succession reveals patterns in the color pool and exposes you to obscure color names you might never encounter otherwise. Every tool on WordSolver is free, works on mobile and desktop, and requires no sign-up or account. The solvers run entirely in your browser — no data gets sent to any server. Your guesses, percentages, and game state stay on your device.</p>
     </div>
   </section>
 

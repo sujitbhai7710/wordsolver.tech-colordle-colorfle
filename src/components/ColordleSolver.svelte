@@ -4,18 +4,19 @@
   let history = $state([]);
   let candidates = $state([]);
   let allColors = $state([]);
-  let suggestions = $state([]);
   let selectedGuess = $state(null);
   let displayLimit = $state(12);
-  let solverStarted = $state(false);
-  let loading = $state(false);
+  let loading = $state(true);
   let processing = $state(false);
 
   let colordleRuntime = $state(null);
 
-  async function startSolver() {
-    solverStarted = true;
-    loading = true;
+  // Auto-load on mount
+  $effect(() => {
+    initSolver();
+  });
+
+  async function initSolver() {
     try {
       const mod = await import('../lib/colordle.js');
       colordleRuntime = {
@@ -86,67 +87,56 @@
       candidates = colordleRuntime.findBestCandidates(allTargets, history);
     }
   }
+
+  function handlePercentKey(e) {
+    if (e.key === 'Enter') handleAddStep();
+  }
 </script>
 
 <div class="solver-wrapper">
-  {#if !solverStarted}
-    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:360px;text-align:center;gap:1.25rem;">
-      <div style="max-width:460px;">
-        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--accent-indigo);margin-bottom:0.5rem;">Color Data On Demand</div>
-        <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:0.625rem;color:var(--text-primary);">Start the Colordle Solver</h2>
-        <p style="color:var(--text-secondary);line-height:1.7;font-size:0.925rem;">The full color database loads after you open the tool, keeping the initial page view fast and lightweight.</p>
-      </div>
-      <button onclick={startSolver} class="btn btn-primary">Start Solver</button>
-    </div>
-  {:else if loading}
-    <div style="display:flex;justify-content:center;align-items:center;min-height:360px;">
-      <div style="width:40px;height:40px;border:3px solid var(--border-subtle);border-top-color:var(--accent-indigo);border-radius:50%;animation:spin 0.8s linear infinite;"></div>
+  {#if loading}
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading solver...</p>
     </div>
   {:else}
-    <div style="display:grid;grid-template-columns:1fr;gap:1.25rem;" class="solver-grid">
+    <div class="solver-grid">
       <!-- Input Panel -->
-      <div class="card" style="padding:1.25rem;">
-        <div style="display:flex;align-items:center;gap:0.625rem;margin-bottom:1rem;">
-          <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent-teal),var(--accent-sky));display:flex;align-items:center;justify-content:center;">
+      <div class="solver-input">
+        <div class="input-header">
+          <div class="input-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </div>
           <div>
-            <div style="font-weight:700;font-size:0.95rem;color:var(--text-primary);">Enter Guess Data</div>
-            <div style="font-size:0.7rem;color:var(--text-muted);">Search a color, then enter the % score</div>
+            <div class="input-title">Enter Guess Data</div>
+            <div class="input-subtitle">Search a color, then enter the % score</div>
           </div>
         </div>
 
-        <div style="display:flex;flex-direction:column;gap:0.875rem;">
-          <div style="position:relative;">
-            <label style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);display:block;margin-bottom:0.3rem;">Color Name</label>
+        <div class="input-fields">
+          <div class="field-wrapper">
+            <label class="field-label">Color Name</label>
             <input
               type="text"
               value={guessInput}
               oninput={(e) => { guessInput = e.target.value; if (selectedGuess && e.target.value !== selectedGuess.name) selectedGuess = null; }}
               placeholder="e.g. Flax, Sky Blue, Coral"
-              style="width:100%;background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:10px;padding:0.625rem 0.875rem;color:var(--text-primary);font-size:0.875rem;outline:none;transition:border-color 0.2s;"
-              onfocus={(e) => e.target.style.borderColor='var(--accent-indigo)'}
-              onblur={(e) => e.target.style.borderColor='var(--border-subtle)'}
+              class="field-input"
             />
             {#if selectedGuess}
-              <div style="position:absolute;right:10px;top:50%;display:flex;align-items:center;gap:4px;">
-                <div style="width:20px;height:20px;border-radius:5px;background:{selectedGuess.hex};border:1px solid var(--border-subtle);"></div>
-                <span style="color:var(--accent-teal);font-size:0.8rem;">&#10003;</span>
+              <div class="selected-indicator">
+                <div class="selected-swatch" style="background: {selectedGuess.hex};"></div>
+                <span class="selected-check">&#10003;</span>
               </div>
             {/if}
             {#if filteredSuggestions.length > 0}
-              <div style="position:absolute;z-index:30;width:100%;margin-top:4px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:10px;max-height:220px;overflow-y:auto;box-shadow:var(--shadow-lg);">
+              <div class="dropdown-list">
                 {#each filteredSuggestions as s}
-                  <button
-                    onclick={() => selectSuggestion(s)}
-                    style="width:100%;text-align:left;padding:0.5rem 0.875rem;display:flex;align-items:center;gap:0.625rem;border:none;background:transparent;cursor:pointer;color:var(--text-primary);border-bottom:1px solid var(--border-subtle);transition:background 0.15s;"
-                    onmouseover={(e) => e.currentTarget.style.background='var(--bg-secondary)'}
-                    onmouseout={(e) => e.currentTarget.style.background='transparent'}
-                  >
-                    <div style="width:24px;height:24px;border-radius:5px;background:{s.hex};border:1px solid var(--border-subtle);flex-shrink:0;"></div>
-                    <div style="flex:1;min-width:0;">
-                      <div style="font-size:0.8rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{s.name}</div>
-                      <div style="font-size:0.65rem;color:var(--text-muted);font-family:monospace;">{s.hex}</div>
+                  <button onclick={() => selectSuggestion(s)} class="dropdown-item">
+                    <div class="dropdown-swatch" style="background: {s.hex};"></div>
+                    <div class="dropdown-info">
+                      <div class="dropdown-name">{s.name}</div>
+                      <div class="dropdown-hex">{s.hex}</div>
                     </div>
                   </button>
                 {/each}
@@ -155,24 +145,22 @@
           </div>
 
           <div>
-            <label style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);display:block;margin-bottom:0.3rem;">Similarity %</label>
+            <label class="field-label">Similarity %</label>
             <input
               type="number"
               step="0.01"
               value={percentageInput}
               oninput={(e) => percentageInput = e.target.value}
+              onkeydown={handlePercentKey}
               placeholder="e.g. 50.18"
-              style="width:100%;background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:10px;padding:0.625rem 0.875rem;color:var(--text-primary);font-size:0.875rem;font-family:monospace;outline:none;transition:border-color 0.2s;"
-              onfocus={(e) => e.target.style.borderColor='var(--accent-indigo)'}
-              onblur={(e) => e.target.style.borderColor='var(--border-subtle)'}
-              onkeydown={(e) => { if (e.key === 'Enter') handleAddStep(); }}
+              class="field-input mono"
             />
           </div>
 
           <button
             onclick={handleAddStep}
             disabled={!selectedGuess || !percentageInput || processing}
-            style="width:100%;padding:0.75rem;border-radius:10px;border:none;font-weight:700;font-size:0.875rem;cursor:pointer;transition:all 0.2s;background:{selectedGuess && percentageInput ? 'linear-gradient(135deg,var(--accent-teal),var(--accent-sky))' : 'var(--bg-secondary)'};color:{selectedGuess && percentageInput ? 'white' : 'var(--text-muted)'};"
+            class="filter-btn"
           >
             {processing ? 'Calculating...' : 'Filter Results'}
           </button>
@@ -181,27 +169,27 @@
 
       <!-- History -->
       {#if history.length > 0}
-        <div class="card" style="padding:1.25rem;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
-            <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);">Guess History</div>
-            <button onclick={handleReset} style="font-size:0.7rem;font-weight:600;color:#ef4444;background:none;border:none;cursor:pointer;">Reset All</button>
+        <div class="history-panel">
+          <div class="panel-header">
+            <span class="panel-title">Guess History</span>
+            <button onclick={handleReset} class="reset-btn">Reset All</button>
           </div>
-          <div style="display:flex;flex-direction:column;gap:0.375rem;">
+          <div class="history-list">
             {#each history as item, idx}
-              <div style="display:flex;align-items:center;justify-content:space-between;background:var(--bg-secondary);border-radius:8px;padding:0.625rem 0.875rem;border:1px solid var(--border-subtle);">
-                <div style="display:flex;align-items:center;gap:0.625rem;">
-                  <div style="position:relative;">
-                    <div style="width:32px;height:32px;border-radius:7px;background:{item.guess.hex};border:1px solid var(--border-subtle);"></div>
-                    <span style="position:absolute;top:-4px;left:-4px;width:15px;height:15px;border-radius:50%;background:var(--accent-indigo);color:white;font-size:8px;font-weight:700;display:flex;align-items:center;justify-content:center;">{idx + 1}</span>
+              <div class="history-item">
+                <div class="history-item-left">
+                  <div class="history-color-wrap">
+                    <div class="history-swatch" style="background: {item.guess.hex};"></div>
+                    <span class="history-idx">{idx + 1}</span>
                   </div>
                   <div>
-                    <div style="font-weight:600;font-size:0.8rem;color:var(--text-primary);">{item.guess.name}</div>
-                    <div style="font-size:0.65rem;color:var(--text-muted);font-family:monospace;">{item.guess.hex}</div>
+                    <div class="history-name">{item.guess.name}</div>
+                    <div class="history-hex">{item.guess.hex}</div>
                   </div>
                 </div>
-                <div style="display:flex;align-items:center;gap:0.375rem;">
-                  <span style="font-family:monospace;font-size:0.8rem;font-weight:700;color:var(--accent-teal);background:rgba(20,184,166,0.08);padding:0.15rem 0.5rem;border-radius:5px;border:1px solid rgba(20,184,166,0.12);">{item.percent}%</span>
-                  <button onclick={() => removeHistoryItem(idx)} style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:0.75rem;opacity:0.5;padding:4px;" onmouseover={(e) => e.target.style.opacity='1'} onmouseout={(e) => e.target.style.opacity='0.5'}>&times;</button>
+                <div class="history-item-right">
+                  <span class="history-percent">{item.percent}%</span>
+                  <button onclick={() => removeHistoryItem(idx)} class="remove-btn">&times;</button>
                 </div>
               </div>
             {/each}
@@ -210,44 +198,39 @@
       {/if}
 
       <!-- Candidates -->
-      <div class="card" style="padding:1.25rem;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
-          <div style="display:flex;align-items:center;gap:0.625rem;">
-            <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent-teal),var(--accent-sky));display:flex;align-items:center;justify-content:center;">
+      <div class="candidates-panel">
+        <div class="panel-header">
+          <div class="candidates-header-left">
+            <div class="candidates-icon">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
             <div>
-              <div style="font-weight:700;font-size:0.95rem;color:var(--text-primary);">Possible Solutions</div>
-              <div style="font-size:0.7rem;color:var(--text-muted);">Click a color to use it as next guess</div>
+              <div class="panel-title">Possible Solutions</div>
+              <div class="panel-subtitle">Click a color to use as next guess</div>
             </div>
           </div>
-          <span style="padding:0.2rem 0.625rem;border-radius:9999px;font-size:0.75rem;font-weight:700;font-family:monospace;background:{candidates.length <= 10 ? 'rgba(20,184,166,0.08)' : 'var(--bg-secondary)'};color:{candidates.length <= 10 ? 'var(--accent-teal)' : 'var(--text-muted)'};border:1px solid {candidates.length <= 10 ? 'rgba(20,184,166,0.12)' : 'var(--border-subtle)'};">{candidates.length}</span>
+          <span class="count-badge">{candidates.length}</span>
         </div>
 
         {#if candidates.length === 0}
-          <div style="text-align:center;padding:2.5rem 1rem;">
-            <div style="font-size:1.5rem;margin-bottom:0.5rem;">No matches found</div>
-            <div style="font-size:0.85rem;color:var(--text-secondary);">Double-check your percentages or reset</div>
-            <button onclick={handleReset} style="margin-top:0.75rem;font-size:0.8rem;font-weight:600;color:var(--accent-indigo);background:none;border:none;cursor:pointer;">Reset Solver</button>
+          <div class="no-results">
+            <p>No matches found</p>
+            <span>Double-check your percentages or reset</span>
+            <button onclick={handleReset} class="reset-link">Reset Solver</button>
           </div>
         {:else}
-          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:0.625rem;">
+          <div class="candidates-grid">
             {#each candidates.slice(0, displayLimit) as c}
-              <button
-                onclick={() => selectSuggestion(c)}
-                style="background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:10px;padding:0.625rem;cursor:pointer;text-align:center;transition:all 0.2s;box-shadow:var(--shadow-xs);"
-                onmouseover={(e) => { e.currentTarget.style.borderColor='var(--accent-indigo)'; e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='var(--shadow-md)'; }}
-                onmouseout={(e) => { e.currentTarget.style.borderColor='var(--border-subtle)'; e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='var(--shadow-xs)'; }}
-              >
-                <div style="width:100%;aspect-ratio:1;border-radius:8px;background:{c.hex};margin-bottom:0.375rem;border:1px solid var(--border-subtle);"></div>
-                <div style="font-size:0.7rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-primary);">{c.name}</div>
-                <div style="font-size:0.6rem;color:var(--text-muted);font-family:monospace;">{c.hex}</div>
+              <button onclick={() => selectSuggestion(c)} class="candidate-card">
+                <div class="candidate-swatch" style="background: {c.hex};"></div>
+                <div class="candidate-name">{c.name}</div>
+                <div class="candidate-hex">{c.hex}</div>
               </button>
             {/each}
           </div>
           {#if displayLimit < candidates.length}
-            <div style="text-align:center;margin-top:0.875rem;">
-              <button onclick={() => displayLimit += 20} style="padding:0.4rem 1rem;border-radius:8px;background:var(--bg-card);border:1px solid var(--border-subtle);color:var(--text-secondary);font-size:0.75rem;font-weight:600;cursor:pointer;box-shadow:var(--shadow-xs);">
+            <div class="show-more">
+              <button onclick={() => displayLimit += 20} class="show-more-btn">
                 Show More ({candidates.length - displayLimit} remaining)
               </button>
             </div>
@@ -259,8 +242,205 @@
 </div>
 
 <style>
-  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    gap: 1rem;
+  }
+
+  .spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid #e2e8f0;
+    border-top-color: #14b8a6;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  .loading-state p { font-size: 0.85rem; color: #94a3b8; }
+
+  .solver-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
   @media (min-width: 768px) {
-    .solver-grid { grid-template-columns: 2fr 3fr !important; }
+    .solver-grid { grid-template-columns: 2fr 3fr; }
+  }
+
+  .solver-input, .history-panel, .candidates-panel {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.25rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .input-header {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin-bottom: 1rem;
+  }
+
+  .input-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #14b8a6, #0ea5e9);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .input-title { font-weight: 700; font-size: 0.95rem; color: #0f172a; }
+  .input-subtitle { font-size: 0.7rem; color: #94a3b8; }
+
+  .input-fields { display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .field-wrapper { position: relative; }
+  .field-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; display: block; margin-bottom: 0.3rem; }
+
+  .field-input {
+    width: 100%;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.6rem 0.875rem;
+    color: #0f172a;
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .field-input:focus { border-color: #6366f1; }
+  .field-input.mono { font-family: monospace; }
+
+  .selected-indicator {
+    position: absolute; right: 10px; top: 50%;
+    transform: translateY(-50%);
+    display: flex; align-items: center; gap: 4px;
+  }
+
+  .selected-swatch { width: 20px; height: 20px; border-radius: 5px; border: 1px solid #e2e8f0; }
+  .selected-check { color: #14b8a6; font-size: 0.8rem; }
+
+  .dropdown-list {
+    position: absolute; z-index: 30; width: 100%; margin-top: 4px;
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 10px;
+    max-height: 220px; overflow-y: auto;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+
+  .dropdown-item {
+    width: 100%; text-align: left; padding: 0.5rem 0.875rem;
+    display: flex; align-items: center; gap: 0.625rem;
+    border: none; background: transparent; cursor: pointer; color: #0f172a;
+    border-bottom: 1px solid #f1f5f9; transition: background 0.1s;
+  }
+
+  .dropdown-item:hover { background: #f8fafc; }
+  .dropdown-swatch { width: 24px; height: 24px; border-radius: 5px; border: 1px solid #e2e8f0; flex-shrink: 0; }
+  .dropdown-name { font-size: 0.8rem; font-weight: 600; }
+  .dropdown-hex { font-size: 0.65rem; color: #94a3b8; font-family: monospace; }
+
+  .filter-btn {
+    width: 100%; padding: 0.7rem; border-radius: 10px; border: none;
+    font-weight: 700; font-size: 0.875rem; cursor: pointer; transition: all 0.2s;
+  }
+
+  .filter-btn:not(:disabled) {
+    background: linear-gradient(135deg, #14b8a6, #0ea5e9); color: white;
+  }
+
+  .filter-btn:disabled { background: #f1f5f9; color: #94a3b8; cursor: not-allowed; }
+
+  .panel-header {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;
+  }
+
+  .panel-title { font-weight: 700; font-size: 0.8rem; color: #0f172a; text-transform: uppercase; letter-spacing: 0.08em; }
+  .panel-subtitle { font-size: 0.7rem; color: #94a3b8; }
+  .reset-btn { font-size: 0.7rem; font-weight: 600; color: #ef4444; background: none; border: none; cursor: pointer; }
+
+  .history-list { display: flex; flex-direction: column; gap: 4px; }
+
+  .history-item {
+    display: flex; align-items: center; justify-content: space-between;
+    background: #f8fafc; border-radius: 8px; padding: 0.5rem 0.875rem; border: 1px solid #e2e8f0;
+  }
+
+  .history-item-left { display: flex; align-items: center; gap: 0.625rem; }
+  .history-color-wrap { position: relative; }
+  .history-swatch { width: 32px; height: 32px; border-radius: 7px; border: 1px solid #e2e8f0; }
+  .history-idx {
+    position: absolute; top: -4px; left: -4px;
+    width: 15px; height: 15px; border-radius: 50%;
+    background: #6366f1; color: white; font-size: 8px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .history-name { font-weight: 600; font-size: 0.8rem; color: #0f172a; }
+  .history-hex { font-size: 0.65rem; color: #94a3b8; font-family: monospace; }
+
+  .history-item-right { display: flex; align-items: center; gap: 0.375rem; }
+  .history-percent {
+    font-family: monospace; font-size: 0.8rem; font-weight: 700; color: #14b8a6;
+    background: rgba(20,184,166,0.08); padding: 0.15rem 0.5rem;
+    border-radius: 5px; border: 1px solid rgba(20,184,166,0.12);
+  }
+
+  .remove-btn {
+    background: none; border: none; color: #94a3b8; cursor: pointer;
+    font-size: 0.75rem; padding: 4px; opacity: 0.5; transition: opacity 0.15s;
+  }
+
+  .remove-btn:hover { opacity: 1; }
+
+  .candidates-header-left { display: flex; align-items: center; gap: 0.625rem; }
+
+  .candidates-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, #14b8a6, #0ea5e9);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .count-badge {
+    padding: 0.2rem 0.625rem; border-radius: 9999px;
+    font-size: 0.75rem; font-weight: 700; font-family: monospace;
+  }
+
+  .no-results { text-align: center; padding: 2rem 1rem; }
+  .no-results p { font-size: 1.1rem; margin-bottom: 0.25rem; color: #0f172a; }
+  .no-results span { font-size: 0.85rem; color: #94a3b8; }
+  .reset-link { display: inline-block; margin-top: 0.5rem; font-size: 0.8rem; font-weight: 600; color: #6366f1; background: none; border: none; cursor: pointer; }
+
+  .candidates-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 0.5rem;
+  }
+
+  .candidate-card {
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 10px;
+    padding: 0.5rem; cursor: pointer; text-align: center;
+    transition: all 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  }
+
+  .candidate-card:hover {
+    border-color: #6366f1; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  }
+
+  .candidate-swatch {
+    width: 100%; aspect-ratio: 1; border-radius: 8px; margin-bottom: 0.25rem; border: 1px solid #e2e8f0;
+  }
+
+  .candidate-name { font-size: 0.7rem; font-weight: 600; color: #0f172a; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .candidate-hex { font-size: 0.6rem; color: #94a3b8; font-family: monospace; }
+
+  .show-more { text-align: center; margin-top: 0.75rem; }
+  .show-more-btn {
+    padding: 0.4rem 1rem; border-radius: 8px; background: #fff;
+    border: 1px solid #e2e8f0; color: #475569; font-size: 0.75rem;
+    font-weight: 600; cursor: pointer;
   }
 </style>

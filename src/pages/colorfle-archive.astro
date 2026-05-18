@@ -1,0 +1,167 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ArchiveCalendar from '../components/ArchiveCalendar.svelte';
+import { getPuzzleAnswer, COLOR_NAMES, COLORS, WEIGHTS } from '../lib/colorfle.js';
+
+// Build a getAnswer function for Colorfle using getPuzzleAnswer
+function getColorfleAnswer(dateKey) {
+  const date = new Date(dateKey + 'T12:00:00Z');
+  const answer = getPuzzleAnswer(date, 0);
+  const formattedDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+  const colorBlocks = answer.colors.map((idx, i) => {
+    const name = answer.colorNames[i];
+    const hex = answer.colorHexes[i];
+    const weight = WEIGHTS[0][i];
+    return `<div style="text-align:center;">
+      <div style="width:56px;height:56px;border-radius:12px;background:${hex};border:2px solid var(--border-subtle);margin:0 auto 0.375rem;box-shadow:var(--shadow-sm);"></div>
+      <div style="font-weight:700;font-size:0.85rem;color:var(--text-primary);">${name}</div>
+      <div style="font-size:0.7rem;color:var(--text-muted);font-family:monospace;">${hex}</div>
+      <div style="margin-top:0.25rem;padding:0.15rem 0.5rem;border-radius:6px;background:rgba(236,72,153,0.08);border:1px solid rgba(236,72,153,0.12);font-size:0.65rem;font-weight:700;color:var(--accent-pink);display:inline-block;">
+        ${Math.round(weight * 100)}%
+      </div>
+    </div>`;
+  }).join('');
+
+  return {
+    html: `
+      <div style="text-align:center;">
+        <div style="width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;border:3px solid var(--border-subtle);box-shadow:var(--shadow-lg);background:${answer.targetHex};"></div>
+        <div style="display:flex;justify-content:center;gap:1.25rem;margin-bottom:1rem;flex-wrap:wrap;">
+          ${colorBlocks}
+        </div>
+        <div style="margin-top:0.75rem;">
+          <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:0.375rem;">Mixed to produce:</div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+            <div style="width:32px;height:32px;border-radius:50%;background:${answer.targetHex};border:2px solid var(--border-subtle);"></div>
+            <span style="font-family:monospace;font-size:1rem;font-weight:800;color:var(--text-primary);">${answer.targetHex}</span>
+          </div>
+        </div>
+        <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.75rem;">Puzzle #${answer.puzzleNumber} &middot; ${formattedDate}</div>
+      </div>
+    `,
+  };
+}
+
+const schema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "name": "Colorfle Archive - All Past Answers",
+      "description": "Browse the complete Colorfle archive. Look up answers for any past date with our interactive calendar. Every Colorfle puzzle answer from launch to today.",
+      "url": "https://wordsolver.tech/colorfle-archive",
+      "author": {
+        "@type": "Person",
+        "name": "Alex Rivera",
+        "description": "Color puzzle enthusiast and WordSolver editor."
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "WordSolver",
+        "logo": { "@type": "ImageObject", "url": "https://wordsolver.tech/favicon.svg" }
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wordsolver.tech" },
+        { "@type": "ListItem", "position": 2, "name": "Archive", "item": "https://wordsolver.tech/colorfle-archive" },
+        { "@type": "ListItem", "position": 3, "name": "Colorfle Archive", "item": "https://wordsolver.tech/colorfle-archive" }
+      ]
+    }
+  ]
+});
+---
+
+<Layout
+  title="Colorfle Archive - All Past Colorfle Answers | WordSolver"
+  description="Browse the complete Colorfle archive. Look up answers for any past date with our interactive calendar. Every Colorfle puzzle answer from launch to today."
+  keywords="colorfle archive, colorfle past answers, colorfle history, colorfle previous puzzles, colorfle all answers"
+  schema={schema}
+>
+  <section class="hero"><div class="container">
+    <span class="hero-badge">Archive</span>
+    <h1>Colorfle Archive</h1>
+    <p>Browse every past Colorfle puzzle answer. Pick a date from the calendar to see the three source colors and target.</p>
+  </div></section>
+
+  <!-- Breadcrumb -->
+  <section class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> <span>›</span> <a href="/colorfle-answer-today">Colorfle Today</a> <span>›</span> <span class="current">Archive</span>
+    </div>
+  </section>
+
+  <!-- Calendar Component -->
+  <section class="container" style="padding-bottom:2rem;">
+    <ArchiveCalendar
+      client:load
+      gameName="Colorfle"
+      gameColor="pink"
+      startDate={new Date('2022-04-25')}
+      getAnswer={getColorfleAnswer}
+    />
+  </section>
+
+  <!-- Quick Links -->
+  <section class="container" style="padding-bottom:1.5rem;">
+    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;">
+      <a href="/colorfle-answer-today" class="btn btn-primary">Colorfle Answer Today</a>
+      <a href="/colorfle-solver" class="btn btn-secondary">Colorfle Solver</a>
+      <a href="/colorfle-unlimited" class="btn btn-secondary">Play Unlimited</a>
+      <a href="/colordle-archive" class="btn btn-secondary">Colordle Archive</a>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="container" style="padding-bottom:2.5rem;">
+    <div class="content-section">
+      <h2>Why Use the Colorfle Archive?</h2>
+      <p>The Colorfle archive is your complete reference for every daily color-mixing puzzle since Colorfle launched in April 2022. Unlike Wordle-style games where the answer is a single word, Colorfle answers are more complex — each puzzle has three source colors with specific weights that combine to produce a target color. The archive preserves all of that information for every past date, giving you a rich dataset to study, reference, and learn from. Whether you missed a day, want to verify a past answer, or are looking to improve your color mixing intuition, the archive is the tool for the job.</p>
+      <p>One of the most practical uses of the archive is catching up on puzzles you missed. Colorfle's daily format means that if you skip a day, that puzzle is gone — there is no way to go back and play it in the official game. The archive at least lets you see what the answer was: the three component colors, their weights, and the resulting target color. This keeps your mental model of how Colorfle mixing works current, even on days when you do not have time to play. Seeing that Monday's puzzle combined Red at 50%, Yellow at 34%, and White at 16% to produce a salmon-pink target reinforces your understanding of how warm colors mix and how White lightens the result.</p>
+      <p>The archive is also an invaluable study resource for developing color mixing intuition. Colorfle rewards players who can look at a target color and intuitively sense which three of the twenty palette colors might combine to produce it. That intuition comes from experience — from seeing hundreds of combinations and their results. The archive compresses that experience into a format you can browse at your own pace, without waiting for the daily puzzle. Spend ten minutes scrolling through the archive and you will see more color combinations than you would encounter in three months of daily play. This accelerated exposure builds the pattern recognition that separates good Colorfle players from great ones.</p>
+      <p>For players who share their results on social media or compare scores in group chats, the archive serves as a definitive reference. If someone claims they solved a puzzle in one guess and you want to verify whether that is even possible, check the archive. If you and a friend disagree about last Thursday's answer, the archive settles the question. This social verification function matters to the community of daily players who track their streaks and compete for the fewest guesses. The archive ensures that everyone has access to the same ground truth, which keeps the competition fair and the conversations honest.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>How the Colorfle Archive Works</h2>
+      <p>This archive uses an interactive calendar that covers every date from Colorfle's launch on April 25, 2022, through today. Click any past date on the calendar to load the answer for that puzzle. The answer is initially hidden behind a CSS-only reveal mechanism — you have to click the reveal button to see the solution. This intentional design prevents accidental spoilers while you browse the calendar, which is especially important if you are looking up a recent puzzle that you might still want to solve on your own. The reveal mechanism uses pure CSS with no JavaScript, so it works even if scripts are blocked in your browser.</p>
+      <p>Each archive entry shows the three source colors with their names, hex codes, and weight percentages, plus the resulting target color with its hex code and a visual swatch. The weight distribution is fixed across all puzzles: the first color contributes 50%, the second 34%, and the third 16%. This means the dominant color — always listed first — has the greatest influence on the final target, while the third color adds a subtle undertone. Understanding this hierarchy is essential for solving Colorfle puzzles efficiently, and the archive lets you see how it plays out across hundreds of real examples.</p>
+      <p>In addition to the calendar view, the archive offers a list view that displays all past puzzles in reverse chronological order. The list view is useful when you want to quickly scan recent puzzles without navigating through the calendar month by month. A search function lets you filter the list by date or puzzle number, so you can jump directly to a specific entry. Whether you prefer the visual overview of the calendar or the speed of the list, the archive supports both browsing styles.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>What the Archive Reveals About Colorfle Patterns</h2>
+      <p>Browsing the archive reveals several patterns that are not obvious from playing one puzzle per day. First, certain colors appear as components far more frequently than others. White and Black are common tertiary colors at 16% weight because they have a predictable lightening or darkening effect that produces distinct targets. Red, Blue, and Green appear frequently as dominant colors at 50% weight because they produce clear, identifiable target hues. Colors like Olive and Maroon appear less often because they produce narrower ranges of target colors that are harder to distinguish from combinations using more common components.</p>
+      <p>Second, the archive shows that many targets can be produced by multiple different combinations. Two different sets of three source colors can mix to produce nearly identical target colors, especially when the targets are desaturated or fall in the boundary regions between hue families. This is why Colorfle can be so frustrating — even if you correctly identify the hue family and general composition, the exact three-color combination might surprise you. The archive makes this multiplicity visible, and understanding it helps you appreciate why the Colorfle solver is so valuable: it tests all possible combinations mechanically rather than relying on intuition that can be led astray by equivalent solutions.</p>
+      <p>Third, the weight hierarchy creates consistent patterns that you can learn to recognize. When the 50% color is a warm color like Red or Orange and the 34% color is also warm, the target will always be warm. When the 50% color is warm and the 34% color is cool, the target lands somewhere in between — often a brown, mauve, or muted tone that is harder to identify. The 16% color shifts the target subtly: White lightens, Black darkens, and other colors add slight hue shifts. By studying these patterns in the archive, you develop a mental framework for predicting what a given combination will produce, which dramatically speeds up your solving process on new puzzles.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Using the Archive With the Colorfle Solver</h2>
+      <p>The archive and the solver are most powerful when used together. The solver is designed for active puzzles — you enter your guesses and feedback to narrow down candidates. The archive is designed for past puzzles — you look up answers you missed or want to study. But combining the two creates a practice loop that accelerates your improvement faster than either tool alone. Here is how: pick a past puzzle from the archive, look at the target color, and try to guess the three component colors without revealing the answer. Then open the Colorfle solver, enter the target hex code, and see which combinations the solver suggests. Compare your guesses with the solver's output. If your intuition was wrong, the solver shows you why — and that why becomes a learning moment that sticks with you.</p>
+      <p>Another effective technique is retrospective solver validation. Pick a past puzzle, enter the actual answer as if it were a guess, and verify that the solver confirms it as a correct solution. This builds confidence in the solver's accuracy and helps you understand how the solver ranks different combinations. You might discover that the solver ranks a different combination as a closer match than the actual answer — this happens because the dual-space mixing model can produce near-identical targets from different inputs. Understanding these edge cases through the archive makes you a more sophisticated solver user, because you learn when to trust the solver's top suggestion and when to dig deeper into the candidate list.</p>
+      <p>The archive is also useful for building custom practice sets. If you notice that you struggle with puzzles where the target is a desaturated brown or gray, search the archive for past puzzles with those types of targets. Look at which combinations produced them, and you will notice that desaturated targets almost always involve complementary color pairs or the inclusion of White or Black as a neutralizing component. This pattern is learnable, and the archive gives you enough examples to learn it thoroughly. The unlimited mode can then test whether you have internalized the pattern — if you start solving desaturated puzzles faster after studying the archive, you know the practice is working.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Frequently Asked Questions About the Colorfle Archive</h2>
+      <p><strong>How far back does the archive go?</strong> The archive starts from April 25, 2022, when Colorfle launched. Every daily puzzle from that date forward is included, and new entries are added automatically when each day's puzzle resets. The archive currently contains over 1,400 past puzzles.</p>
+      <p><strong>Are the archive answers generated the same way the game does?</strong> Yes. We use the same seeded random number generator, the same twenty-color palette, the same weight distribution, and the same dual-space mixing formula that Colorfle uses. Our answers are deterministic and match the game's output exactly. The seed is derived from the date, so each day's puzzle always produces the same answer regardless of when or where you compute it.</p>
+      <p><strong>Can I replay past puzzles?</strong> The archive shows the answers but does not provide an interactive replay of past puzzles. Colorfle does not support replaying old daily puzzles. If you want unlimited practice with random puzzles, use our Colorfle unlimited mode, which generates fresh targets from the same palette and mixing formula.</p>
+      <p><strong>Why do some targets look different from what I remember?</strong> Browser color profiles and monitor settings can affect how colors appear on screen. The hex codes in our archive are exact, but the visual rendering depends on your display calibration. If your monitor has a warm color temperature, all targets will appear slightly warmer than they would on a calibrated display. This is a display issue, not an accuracy issue — the underlying data is correct.</p>
+      <p><strong>Does the archive include the four-color mode?</strong> The archive currently covers the standard three-color mode (mode 0), which is the default and most commonly played version of Colorfle. The four-color mode uses a different weight distribution and produces different targets for the same date. If there is sufficient demand, we may add four-color archive entries in a future update.</p>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="author-card">
+      <div class="author-avatar">AR</div>
+      <div>
+        <div class="author-name">Alex Rivera</div>
+        <div class="author-desc">Color puzzle enthusiast. Plays Colordle and Colorfle daily. Built WordSolver after getting stuck at 98% one too many times.</div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -6,9 +6,21 @@ const schema = JSON.stringify({
   "@graph": [
     {
       "@type": "ContactPage",
-      "name": "Contact WordSolver",
-      "description": "Get in touch with the WordSolver team. Report bugs, suggest features, or ask questions about our Colordle and Colorfle tools.",
-      "url": "https://wordsolver.tech/contact"
+      "name": "Contact WordSolver - Get In Touch",
+      "description": "Contact the WordSolver team for corrections, solver issues, new game requests, business inquiries, feedback, or privacy and legal questions. We read every message.",
+      "url": "https://wordsolver.tech/contact",
+      "author": {
+        "@type": "Person",
+        "name": "Alex Rivera",
+        "description": "Color puzzle enthusiast and WordSolver editor."
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "WordSolver",
+        "url": "https://wordsolver.tech",
+        "email": "hello@wordsolver.tech",
+        "logo": { "@type": "ImageObject", "url": "https://wordsolver.tech/favicon.svg" }
+      }
     },
     {
       "@type": "BreadcrumbList",
@@ -22,54 +34,85 @@ const schema = JSON.stringify({
 ---
 
 <Layout
-  title="Contact WordSolver"
-  description="Get in touch with the WordSolver team. Report bugs, suggest features, or ask questions about our Colordle and Colorfle tools."
-  keywords="contact wordsolver, wordsolver support, colordle help, colorfle help"
+  title="Contact WordSolver - Get In Touch"
+  description="Contact the WordSolver team for corrections, solver issues, new game requests, business inquiries, feedback, or privacy and legal questions. We read every message."
+  keywords="contact wordsolver, wordsolver support, wordsolver email, colordle help, colorfle help, report bug"
   schema={schema}
 >
   <section class="hero"><div class="container">
     <span class="hero-badge">Get In Touch</span>
     <h1>Contact Us</h1>
-    <p>Questions, bugs, suggestions — we read everything.</p>
+    <p>Questions, bugs, suggestions — we read everything and reply personally.</p>
   </div></section>
 
+  <!-- Breadcrumb -->
+  <section class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> <span>›</span> <span class="current">Contact</span>
+    </div>
+  </section>
+
   <section class="container" style="padding-bottom:3rem;">
-    <div class="content-section">
-      <h2>How to Reach Us</h2>
-      <p>The best way to contact the WordSolver team is by email. Send your message to <strong>hello@wordsolver.tech</strong> and we will get back to you within 48 hours. We read every message personally — there is no automated filter or customer service queue. When you write to us, a real person who works on the site reads your email and responds thoughtfully. We value the time you take to write to us, and we want every interaction to be helpful.</p>
-      <p>Include as much detail as you can in your message. If you are reporting a bug, tell us which browser and device you are using, what you expected to happen, and what actually happened. Screenshots help enormously — they let us see exactly what you are seeing, which often reveals the issue immediately. If the bug involves a specific color or puzzle number, include that information too. The more specific you are, the faster we can diagnose and fix the problem.</p>
-      <p>If you have a feature request, describe the problem you are trying to solve rather than just the feature you want. A message like "I keep getting stuck at 95% on Colordle and wish there was a way to see the top 5 candidates sorted by likelihood" tells us much more than "add a top 5 feature." The more context you give us about how you use the site and where you feel limited, the better we can design a solution that actually addresses your needs. Sometimes the best solution to a problem is not the feature you initially imagined, and understanding the underlying frustration helps us find the right approach.</p>
-      <p>For general questions about how the solvers work, what algorithms we use, or how to interpret the results, you can also check the content sections on each solver page. We have written detailed explanations of the math behind both solvers, the feedback systems, and the strategies for using them effectively. Many common questions are answered there, and the explanations include concrete examples that are easier to follow than an email exchange.</p>
+    <!-- Email Card -->
+    <div class="card" style="text-align:center;padding:2.5rem 2rem;margin-bottom:1.5rem;">
+      <div style="width:56px;height:56px;border-radius:16px;background:var(--gradient-hero);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <div style="font-size:1.25rem;font-weight:800;color:var(--text-primary);margin-bottom:0.375rem;">hello@wordsolver.tech</div>
+      <div style="font-size:0.875rem;color:var(--text-secondary);">We respond within 48 hours. Critical issues within 24 hours.</div>
     </div>
 
     <div class="content-section">
-      <h2>Common Questions and Answers</h2>
-      <p><strong>The daily answer is wrong or does not match the game.</strong> Double-check the date shown on the answer page first. If the date matches today and the answer still seems wrong, the game may have updated its algorithm, color list, or seeding method. This happens occasionally — game developers sometimes make changes that affect how daily targets are generated. Email us and we will investigate immediately. Our answers are generated using the same logic the games use, but sometimes games change their target lists or seeding algorithms without notice. When we learn about a change, we update our code and the next build produces correct answers.</p>
-      <p><strong>The solver gives different percentages than the game.</strong> This usually happens because of rounding differences in how the percentage is displayed. The game typically shows two decimal places, while the solver calculates with full floating-point precision. If the game shows 85.32% and the solver shows 85.31%, that is simply a rounding artifact and not a real discrepancy. If the difference is larger than 0.1%, there may be a browser color profile issue affecting the rendering. Try using a different browser or disabling custom color profiles in your display settings. Some monitors with wide gamuts can shift color values in ways that affect the Delta E calculation.</p>
-      <p><strong>Something is broken on mobile.</strong> Let us know which device and browser you are using, along with a description of what went wrong. We test on iOS Safari, Chrome Android, and Firefox Mobile, but there are enough device and OS version combinations that edge cases slip through. A screenshot of the issue makes it dramatically easier to diagnose and fix. Common mobile issues include the color picker not appearing, dropdown menus being clipped by screen edges, or the game area being too small to interact with comfortably on phones with smaller screens.</p>
-      <p><strong>The unlimited mode reset my game.</strong> The unlimited modes do not save progress between sessions. If you close the browser tab, navigate away, or refresh the page, your current game is lost. This is by design — the unlimited modes are intended for casual, pick-up-and-play sessions. Each page load generates a fresh puzzle. If you want a record of your progress, take a screenshot before leaving the page. We are considering adding session persistence in a future update, but for now, treat each page load as a new game.</p>
-      <p><strong>I have a feature idea.</strong> We love hearing feature ideas. Describe the problem you are trying to solve and how you envision the solution working. We prioritize features that align with our core principles: precision, privacy, and simplicity. Features that would require user accounts, store personal data, or add complexity without clear benefit are less likely to be implemented. Features that make the existing tools more accurate, more accessible, or more useful are always welcome suggestions.</p>
+      <h2>How to Reach Us</h2>
+      <p>The best way to contact the WordSolver team is by email. Send your message to <strong>hello@wordsolver.tech</strong> and we will get back to you within 48 hours. We read every message personally — there is no automated filter, no customer service queue, and no chatbot. When you write to us, a real person who works on the site reads your email and responds thoughtfully. We value the time you take to write to us, and we want every interaction to be helpful and respectful.</p>
+      <p>Include as much detail as you can in your message. If you are reporting a bug, tell us which browser and device you are using, what you expected to happen, and what actually happened. Screenshots help enormously — they let us see exactly what you are seeing, which often reveals the issue immediately. If the bug involves a specific color or puzzle number, include that information too. The more specific you are, the faster we can diagnose and fix the problem. A message that says "the solver is broken on my phone" gives us almost nothing to work with. A message that says "the Colordle Solver dropdown does not appear on iOS Safari 17.4 when I tap the color name field" gives us exactly what we need to investigate.</p>
+      <p>If you have a feature request, describe the problem you are trying to solve rather than just the feature you want. A message like "I keep getting stuck at 95% on Colordle and wish there was a way to see the top five candidates sorted by likelihood" tells us much more than "add a top-five feature." The more context you give us about how you use the site and where you feel limited, the better we can design a solution that actually addresses your needs. Sometimes the best solution to a problem is not the feature you initially imagined, and understanding the underlying frustration helps us find the right approach.</p>
+      <p>For general questions about how the solvers work, what algorithms we use, or how to interpret the results, you can also check the content sections on each tool page. We have written detailed explanations of the math behind both solvers, the feedback systems, and the strategies for using them effectively. Many common questions are answered there, and the explanations include concrete examples that are easier to follow than an email exchange. If the on-page explanations do not cover your question, we are happy to discuss it over email.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Contact Categories</h2>
+      <p>We organize incoming messages into several categories to help us prioritize and route them appropriately. You do not need to specify a category when you email us, but if you include a relevant subject line, it helps us process your message faster. Here are the main categories we handle.</p>
+
+      <h3>Corrections and Accuracy Issues</h3>
+      <p>If you notice that a daily answer does not match the game's actual answer, or that a solver produces results that differ from what the game shows, please email us immediately with the details. Include the specific date, the answer our site shows, and the answer the game shows. Accuracy is our top priority, and we investigate all reported discrepancies within 24 hours. Common causes of apparent discrepancies include: the game displaying rounded percentages while the solver shows full precision, browser color profile differences that affect how hex colors are rendered on screen, and selecting the wrong color name in the solver's dropdown. Before reporting, double-check that you selected the correct color name and entered the exact percentage shown in the game. If the discrepancy persists after verification, we want to know about it.</p>
+
+      <h3>Solver Issues and Bugs</h3>
+      <p>If a solver is not working correctly — the dropdown does not appear, the results do not update, the page crashes, or the filtering produces obviously wrong candidates — let us know. Include your browser version, device type, operating system, and a description of what went wrong. A screenshot of the issue is the single most helpful thing you can include. It shows us exactly what you are seeing, which eliminates most of the guesswork from debugging. We test on the latest versions of Chrome, Firefox, Safari, and Edge on desktop, plus iOS Safari and Chrome on Android, but device and OS combinations are infinite and edge cases do slip through. Mobile bug reports are especially welcome because mobile browsers have the most variability in how they render web components.</p>
+
+      <h3>New Game Requests</h3>
+      <p>We are always interested in hearing about new color puzzle games that we could build tools for. If you play a daily color game that is not covered by WordSolver and you think our approach — precise algorithms, privacy-first design, free access — would benefit its player community, tell us about it. Include the game's name, URL, and a brief description of how it works. The more detail you provide about the game's mechanics (how answers are generated, what feedback the game gives, what the color space looks like), the easier it is for us to evaluate whether we can build accurate tools for it. We prioritize games that have deterministic answer generation, because deterministic games allow us to compute exact answers rather than approximating. Games that use random or server-generated targets that change per user are harder to support accurately.</p>
+
+      <h3>Business Inquiries</h3>
+      <p>For partnership proposals, sponsorship inquiries, or other business-related communications, email hello@wordsolver.tech with "Business Inquiry" in the subject line. We are open to collaborations that align with our principles of accuracy, privacy, and free access. We are not interested in partnerships that would require adding advertising, collecting user data, or compromising the site's independence. If your proposal respects those constraints, we are happy to discuss it. We typically respond to business inquiries within 48 hours.</p>
+
+      <h3>General Feedback</h3>
+      <p>We genuinely appreciate feedback of all kinds. If you find the site useful, a quick note letting us know what works well is motivating. If something could be better, constructive criticism helps us improve. We do not publish testimonials or use feedback for marketing purposes — we just appreciate knowing that the work is useful. Building and maintaining a free tool takes time and effort, and hearing that it helps people makes that effort worthwhile. Even a one-line email saying "the Colordle Solver saved my streak" brightens our day.</p>
+
+      <h3>Privacy and Legal</h3>
+      <p>For questions about our privacy practices, data handling, or legal matters, email hello@wordsolver.tech with "Privacy" or "Legal" in the subject line. We review privacy-related inquiries with priority and aim to respond within 24 hours. For data deletion requests under GDPR, CCPA, or other data protection regulations, include "Data Deletion Request" in the subject line and specify the information you want removed. We comply with all valid data deletion requests within 48 hours. For DMCA takedown notices or other legal complaints, please include all relevant details and we will respond promptly.</p>
     </div>
 
     <div class="content-section">
       <h2>What Happens After You Contact Us</h2>
-      <p>When you send an email to hello@wordsolver.tech, here is what happens. First, your message goes into a personal inbox that is checked daily. There is no automated ticketing system, no chatbot, and no outsourced support team. Alex reads every message personally. If your question can be answered quickly, you will get a reply within 24 hours. If it requires investigation — a bug report that needs reproduction, a feature request that needs design thinking — it may take up to 48 hours for a substantive response.</p>
-      <p>Bug reports are prioritized above everything else. If you report a solver giving incorrect results or a daily answer being wrong, we treat that as urgent. These issues undermine the core value of the site, so they get fixed as quickly as possible, often within the same day. Feature requests are logged and considered during periodic review cycles. We cannot promise to implement every suggestion, but we do promise to read and consider every one. Many of the site's current features — including the feedback refinement mode in the Colorfle solver and the searchable archive on the Colordle answer page — started as user suggestions.</p>
-      <p>We also appreciate positive feedback. If you find the site useful, a quick note letting us know what works well for you is genuinely motivating. Building and maintaining a free tool takes time and effort, and hearing that it helps people makes that effort worthwhile. We do not publish testimonials or use feedback for marketing — we just appreciate knowing that the work is useful.</p>
+      <p>When you send an email to hello@wordsolver.tech, your message goes into a personal inbox that is checked daily. There is no automated ticketing system, no chatbot, and no outsourced support team. Alex reads every message personally. If your question can be answered quickly, you will get a reply within 24 hours. If it requires investigation — a bug report that needs reproduction, a feature request that needs design thinking — it may take up to 48 hours for a substantive response. We never ignore messages, and we never send form-letter replies. Every response is written specifically for your message.</p>
+      <p>Bug reports are prioritized above everything else. If you report a solver giving incorrect results or a daily answer being wrong, we treat that as urgent. These issues undermine the core value of the site, so they get fixed as quickly as possible, often within the same day. Feature requests are logged and considered during periodic review cycles. We cannot promise to implement every suggestion, but we do promise to read and consider every one. Many of the site's current features — including the feedback refinement mode in the Colorfle Solver, the searchable archive on the Colordle answer page, and the list view on the archive pages — started as user suggestions that aligned with our design principles.</p>
+      <p>Response times may be longer on weekends and holidays, since this is a side project maintained in spare time. If you have not received a response within 72 hours, your email may have been caught by a spam filter — try resending with a different subject line. We have never intentionally ignored a legitimate message, so if you have not heard back, something went wrong with delivery rather than with our willingness to respond.</p>
     </div>
 
     <div class="content-section">
-      <h2>Reporting Accuracy Issues</h2>
-      <p>Accuracy is the most important quality of a puzzle tool. If a solver produces results that do not match the game, the tool loses its value. If you notice a discrepancy between the solver's output and the game's behavior, please report it with the following information: which solver you were using, what inputs you entered, what result the solver produced, and what result the game produced. Include the specific color names, hex codes, and percentages involved.</p>
-      <p>Common causes of apparent discrepancies include: the game displaying rounded percentages while the solver shows full precision, browser color profile differences that affect how hex colors are rendered on screen, and selecting the wrong color name in the solver's dropdown (many colors have similar names with different hex values). Before reporting a discrepancy, double-check that you selected the correct color name and entered the exact percentage shown in the game. If the discrepancy persists after verification, we want to know about it so we can investigate and fix any underlying issue.</p>
-      <p>When you report an accuracy issue, we typically investigate within 24 hours. The investigation involves running the same inputs through our algorithm and comparing the results against the game's output. If there is a genuine algorithm mismatch, we update our code and deploy the fix. If the discrepancy is caused by a display rounding or browser rendering difference, we explain the cause and suggest workarounds. In either case, you will receive a personal reply explaining what we found and what we did about it.</p>
+      <h2>Social Links and Other Channels</h2>
+      <p>Email is currently the only official contact channel for WordSolver. We do not maintain social media accounts, Discord servers, or community forums. This is intentional — maintaining multiple communication channels would dilute the quality of support we can provide through email. By keeping one channel, we ensure that every message gets the attention it deserves. We have considered adding a Discord server or subreddit for community discussion, but the moderation overhead and potential for misinformation (especially regarding solver accuracy) have kept us from doing so. If community features are important to you, let us know — enough demand might change our calculus.</p>
+      <p>If you are a developer interested in the algorithms behind the solvers, the content sections on the Colordle Solver and Colorfle Solver pages include detailed explanations of the Delta E CIE2000 calculation, the dual-space color mixing model, and the feedback-based elimination logic. These explanations cover the same material we would discuss in a technical conversation, so they are a good starting point before reaching out with algorithm-specific questions. If you are building your own color puzzle tools and want to compare notes, we are happy to discuss approaches and trade-offs over email.</p>
+      <p>If you are a journalist or content creator writing about color puzzle games and want to include WordSolver in your coverage, reach out via the same email address and include your publication or platform in the message. We are happy to answer questions about the site's history, usage patterns, and technical approach. We typically respond to media inquiries within 24 hours. We can provide high-resolution screenshots, usage statistics (in aggregate), and background information about the color science concepts that underpin the tools.</p>
     </div>
 
     <div class="content-section">
-      <h2>Other Ways to Connect</h2>
-      <p>Email is currently the only official contact channel for WordSolver. We do not have social media accounts, Discord servers, or community forums. This is intentional — maintaining multiple communication channels would dilute the quality of support we can provide through email. By keeping one channel, we ensure that every message gets the attention it deserves.</p>
-      <p>If you are a developer interested in the algorithms behind the solvers, the content sections on the Colordle Solver and Colorfle Solver pages include detailed explanations of the Delta E CIE2000 calculation, the dual-space color mixing model, and the feedback-based elimination logic. These explanations cover the same material we would discuss in a technical conversation, so they are a good starting point before reaching out with algorithm-specific questions.</p>
-      <p>If you are a journalist or content creator writing about color puzzle games and want to include WordSolver in your coverage, we are happy to answer questions about the site's history, usage statistics, and technical approach. Reach out via the same email address and include your publication or platform in the message. We typically respond to media inquiries within 24 hours.</p>
+      <h2>Common Questions Answered Here</h2>
+      <p><strong>The daily answer is wrong or does not match the game.</strong> Double-check the date shown on the answer page first. If the date matches today and the answer still seems wrong, the game may have updated its algorithm, color list, or seeding method. Email us and we will investigate immediately. Our answers are generated using the same logic the games use, but sometimes games change their target lists or seeding algorithms without notice. When we learn about a change, we update our code and the next build produces correct answers.</p>
+      <p><strong>The solver gives different percentages than the game.</strong> This usually happens because of rounding differences. The game typically shows two decimal places, while the solver calculates with full floating-point precision. If the game shows 85.32% and the solver shows 85.31%, that is simply a rounding artifact. If the difference is larger than 0.1%, there may be a browser color profile issue affecting the rendering. Try using a different browser or disabling custom color profiles in your display settings.</p>
+      <p><strong>Something is broken on mobile.</strong> Let us know which device and browser you are using, along with a description of what went wrong. A screenshot makes it dramatically easier to diagnose. Common mobile issues include the color picker not appearing, dropdown menus being clipped by screen edges, or the game area being too small to interact with on phones with smaller screens.</p>
+      <p><strong>I have a feature idea.</strong> We love hearing feature ideas. Describe the problem you are trying to solve and how you envision the solution working. We prioritize features that align with our core principles: precision, privacy, and simplicity. Features that would require user accounts, store personal data, or add complexity without clear benefit are less likely to be implemented.</p>
     </div>
   </section>
 
@@ -78,7 +121,7 @@ const schema = JSON.stringify({
       <div class="author-avatar">AR</div>
       <div>
         <div class="author-name">Alex Rivera</div>
-        <div class="author-desc">Color puzzle enthusiast. Plays Colordle and Colorfle daily. Built WordSolver after getting stuck at 98% one too many times.</div>
+        <div class="author-desc">Color Puzzle Enthusiast. Plays Colordle and Colorfle daily. Built WordSolver after getting stuck at 98% one too many times.</div>
       </div>
     </div>
   </section>
