@@ -1,0 +1,113 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const schema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "name": "Archive - All Past Colordle and Colorfle Answers | WordSolver",
+      "description": "Browse the complete archive of Colordle and Colorfle puzzle answers. Look up any past date with our interactive calendar.",
+      "url": "https://wordsolver.tech/archive",
+      "publisher": {
+        "@type": "Organization",
+        "name": "WordSolver",
+        "logo": { "@type": "ImageObject", "url": "https://wordsolver.tech/favicon.svg" }
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wordsolver.tech" },
+        { "@type": "ListItem", "position": 2, "name": "Archive", "item": "https://wordsolver.tech/archive" }
+      ]
+    }
+  ]
+});
+---
+
+<Layout
+  title="Archive - All Past Colordle & Colorfle Answers | WordSolver"
+  description="Browse the complete archive of Colordle and Colorfle puzzle answers. Look up any past date with our interactive calendar."
+  keywords="colordle archive, colorfle archive, past answers, puzzle history, colordle past puzzles, colorfle past puzzles"
+  schema={schema}
+>
+  <section class="hero"><div class="container">
+    <span class="hero-badge">Archive</span>
+    <h1>Puzzle Archive</h1>
+    <p>Browse every past Colordle and Colorfle answer. Pick a game, select a date, and reveal the solution.</p>
+  </div></section>
+
+  <section class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> <span>›</span> <span class="current">Archive</span>
+    </div>
+  </section>
+
+  <!-- Archive Cards -->
+  <section class="container" style="padding-bottom:2rem;">
+    <div class="grid-2">
+      <a href="/colordle-archive" class="card" style="text-decoration:none;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+          <div style="width:64px;height:64px;border-radius:16px;background:var(--accent-teal);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+          </div>
+          <div>
+            <div class="card-title" style="font-size:1.4rem;">Colordle Archive</div>
+            <span class="pill pill-teal">Since Jan 2024</span>
+          </div>
+        </div>
+        <p class="card-desc">Browse every past Colordle puzzle answer with our interactive calendar. Pick any date to see the target color, its name, hex code, and puzzle number. Study patterns, learn obscure color names, and build your mental color library.</p>
+        <span class="btn btn-teal" style="font-size:0.8rem;padding:0.5rem 1rem;">Browse Colordle Archive</span>
+      </a>
+
+      <a href="/colorfle-archive" class="card" style="text-decoration:none;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
+          <div style="width:64px;height:64px;border-radius:16px;background:var(--accent-pink);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20"/></svg>
+          </div>
+          <div>
+            <div class="card-title" style="font-size:1.4rem;">Colorfle Archive</div>
+            <span class="pill pill-pink">Since Apr 2022</span>
+          </div>
+        </div>
+        <p class="card-desc">Look up any past Colorfle answer by date. See the three component colors, their weights (50%, 34%, 16%), and the resulting target hex for every puzzle since the game launched.</p>
+        <span class="btn btn-pink" style="font-size:0.8rem;padding:0.5rem 1rem;">Browse Colorfle Archive</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="container" style="padding-bottom:2.5rem;">
+    <div class="content-section">
+      <h2>Why Use the Puzzle Archive?</h2>
+      <p>The puzzle archive is a comprehensive record of every daily puzzle answer since each game launched. There are several reasons why players find the archive valuable, and they go beyond simply looking up answers you missed. The archive serves as a study tool, a reference library, and a way to settle debates about what a particular day's answer was. Whether you started playing Colordle last week or last year, the archive gives you access to the full history of puzzles and their solutions in a convenient, searchable format that works on any device.</p>
+      <p>One of the most common reasons people visit the archive is to check an answer from a day they missed. Life gets busy, and skipping a daily puzzle happens to everyone. The once-a-day format that makes these games compelling also creates a sense of loss when you miss a day — that puzzle is gone forever in the official game, with no way to go back and play it. The archive at least lets you see what the answer was, so you can satisfy your curiosity and keep your mental model of the color pool up to date. Knowing that Tuesday's answer was "sage" and Wednesday's was "cobalt" helps you build a broader understanding of the color names that appear in the game, which makes you a better solver going forward.</p>
+      <p>The archive is also a powerful study tool for improving your color puzzle skills. By browsing through past answers, you can see the full range of color names that the game uses and develop a mental map of the color space. Many of those names are obscure shades that most people would not think to guess unprompted. Reviewing the archive exposes you to those names in context — you see the color swatch alongside the name, which creates a visual association that is much more memorable than reading a list of names. If you have ever been stuck at 95% and could not figure out the last 5%, the answer was almost certainly a color name you did not know existed. The archive helps you learn those names so they are in your vocabulary the next time a similar shade comes up.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>How the Archive Works</h2>
+      <p>Both archive pages use an interactive calendar that lets you select any past date and instantly see the answer for that day's puzzle. The calendar shows all dates from the game's launch through today. Dates with available answers are highlighted and clickable — simply click a date to load the answer, then use the CSS-only reveal mechanism to view the solution. This design respects players who want to use the archive for reference without spoiling answers they might want to work through themselves.</p>
+      <p>The answers are computed using the exact same algorithms that the original games use. Each day is assigned a sequential puzzle number starting from the launch date, and the target is selected deterministically from a pre-defined list or seeded random number generator. Our implementation resolves each answer against the same databases the games use, producing the exact same results. There is no approximation involved — the answer you see in the archive is the same answer that appeared in the game on that date. The calendar also supports a list view and a search function, so you can quickly find specific dates or puzzle numbers without navigating month by month.</p>
+      <p>The Colordle archive starts from January 1, 2024, when the daily puzzle system launched. The Colorfle archive starts from April 25, 2022, which is the game's original launch date. Both archives grow by one entry every day and currently contain hundreds of past puzzles. New puzzles are added automatically when the daily puzzle resets — no manual updates required.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Using the Archive Alongside the Solvers</h2>
+      <p>The archive and the solvers are complementary tools that work best together. The solver helps you narrow down candidates during a current puzzle by filtering the color database based on your guesses and the percentages you receive. The archive helps you build the background knowledge that makes your solver inputs more effective. If you have seen "chartreuse" in the archive and remember that it is a yellow-green, you will recognize it as a plausible candidate when a puzzle returns a high percentage for "lime" but does not match "lime" exactly. Without that background knowledge, you might never think to try "chartreuse" even though it is the correct answer.</p>
+      <p>Another powerful combination is using the archive to practice and the solver to verify. Browse the archive for a past puzzle, look at the answer, then try to reconstruct the guessing path that would lead to that answer most efficiently. What first guess would you make? What percentage would it return? What second guess would narrow things down? Working through this exercise for multiple past puzzles builds the strategic thinking that transfers directly to daily play. The solver can verify your reasoning — enter your hypothetical guesses and see if the percentages would have been what you predicted. If they are not, you have discovered a gap in your color intuition that you can work on.</p>
+      <p>Finally, the archive is useful for testing the solver itself. If you want to verify that the solver is working correctly, pick a past puzzle from the archive, enter a few guesses with the actual percentages the game would have returned, and confirm that the solver correctly identifies the answer among its top candidates. This kind of retrospective testing builds confidence in the solver's accuracy and helps you understand how many guesses you typically need before the solver narrows things down to a manageable candidate list.</p>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="author-card">
+      <div class="author-avatar">AR</div>
+      <div>
+        <div class="author-name">Alex Rivera</div>
+        <div class="author-desc">Color puzzle enthusiast. Plays Colordle and Colorfle daily. Built WordSolver after getting stuck at 98% one too many times.</div>
+      </div>
+    </div>
+  </section>
+</Layout>

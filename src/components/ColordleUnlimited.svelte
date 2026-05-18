@@ -83,11 +83,11 @@
   }
 
   function getScoreColor(pct) {
-    if (pct === 100) return '#10b981';
-    if (pct >= 90) return '#14b8a6';
-    if (pct >= 75) return '#eab308';
-    if (pct >= 50) return '#f97316';
-    return '#ef4444';
+    if (pct === 100) return 'var(--accent-green)';
+    if (pct >= 90) return 'var(--accent-teal)';
+    if (pct >= 75) return 'var(--accent-amber)';
+    if (pct >= 50) return 'var(--accent-amber)';
+    return 'var(--accent-primary)';
   }
 
   function getScoreBg(pct) {
@@ -219,7 +219,7 @@
     padding: 0.5rem 0.75rem 1.5rem;
     background: #fff;
     border-radius: 16px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border-subtle);
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
 
@@ -228,14 +228,14 @@
     align-items: center;
     justify-content: space-between;
     padding: 0.75rem 0.5rem;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid var(--bg-muted);
   }
 
   .game-title {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.5rem;
     font-weight: 800;
-    color: #0f172a;
+    color: var(--text-primary);
     letter-spacing: -0.03em;
   }
 
@@ -243,9 +243,9 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--border-subtle);
     background: #fff;
-    color: #64748b;
+    color: var(--text-muted);
     font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
@@ -255,7 +255,7 @@
     transition: all 0.2s;
   }
 
-  .help-btn:hover { border-color: #6366f1; color: #6366f1; }
+  .help-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
 
   .help-overlay {
     position: fixed;
@@ -277,17 +277,17 @@
     box-shadow: 0 20px 40px rgba(0,0,0,0.15);
   }
 
-  .help-modal h2 { font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; color: #0f172a; }
-  .help-modal p { font-size: 0.875rem; color: #475569; line-height: 1.6; margin-bottom: 0.75rem; }
+  .help-modal h2 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary); }
+  .help-modal p { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.75rem; }
   .help-modal ul { padding-left: 1.25rem; margin-bottom: 0.75rem; }
-  .help-modal li { font-size: 0.85rem; color: #475569; margin-bottom: 0.25rem; }
+  .help-modal li { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.25rem; }
 
   .close-help-btn {
     width: 100%;
     padding: 0.6rem;
     border-radius: 10px;
     border: none;
-    background: #6366f1;
+    background: var(--accent-primary);
     color: white;
     font-weight: 600;
     font-size: 0.875rem;
@@ -303,14 +303,14 @@
   .spinner {
     width: 36px;
     height: 36px;
-    border: 3px solid #e2e8f0;
-    border-top-color: #6366f1;
+    border: 3px solid var(--border-subtle);
+    border-top-color: var(--accent-primary);
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
     margin: 0 auto 1rem;
   }
 
-  .loading-section p { font-size: 0.85rem; color: #94a3b8; }
+  .loading-section p { font-size: 0.85rem; color: var(--text-muted); }
 
   /* Target */
   .target-section {
@@ -324,7 +324,7 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    border: 4px solid #e2e8f0;
+    border: 4px solid var(--border-subtle);
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   }
 
@@ -337,22 +337,22 @@
   }
 
   .target-name {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.1rem;
     font-weight: 700;
-    color: #10b981;
+    color: var(--accent-green);
   }
 
   .target-label {
     font-size: 0.85rem;
     font-weight: 600;
-    color: #6366f1;
+    color: var(--accent-primary);
   }
 
   .target-hex {
-    font-family: monospace;
+    font-family: var(--font-body);
     font-size: 0.75rem;
-    color: #94a3b8;
+    color: var(--text-muted);
   }
 
   /* Input */
@@ -371,16 +371,16 @@
     width: 100%;
     padding: 0.6rem 0.75rem;
     padding-right: 2.5rem;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--border-subtle);
     border-radius: 10px;
     font-size: 0.85rem;
-    color: #0f172a;
-    background: #f8fafc;
+    color: var(--text-primary);
+    background: var(--bg-muted);
     outline: none;
     transition: border-color 0.2s;
   }
 
-  .guess-input:focus { border-color: #6366f1; }
+  .guess-input:focus { border-color: var(--accent-primary); }
 
   .selected-preview {
     position: absolute;
@@ -390,7 +390,7 @@
     width: 24px;
     height: 24px;
     border-radius: 6px;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--border-subtle);
   }
 
   .suggestions-list {
@@ -399,7 +399,7 @@
     left: 0;
     right: 0;
     background: #fff;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border-subtle);
     border-radius: 10px;
     max-height: 200px;
     overflow-y: auto;
@@ -418,19 +418,19 @@
     background: transparent;
     cursor: pointer;
     text-align: left;
-    color: #0f172a;
-    border-bottom: 1px solid #f1f5f9;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--bg-muted);
     transition: background 0.1s;
   }
 
-  .suggestion-item:hover { background: #f8fafc; }
+  .suggestion-item:hover { background: var(--bg-muted); }
   .suggestion-item:last-child { border-bottom: none; }
 
   .suggestion-swatch {
     width: 20px;
     height: 20px;
     border-radius: 4px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border-subtle);
     flex-shrink: 0;
   }
 
@@ -447,12 +447,12 @@
     font-size: 0.85rem;
     cursor: pointer;
     transition: all 0.2s;
-    background: #6366f1;
+    background: var(--accent-primary);
     color: white;
   }
 
-  .submit-btn:disabled { background: #e2e8f0; color: #94a3b8; cursor: not-allowed; }
-  .submit-btn:not(:disabled):hover { background: #4f46e5; }
+  .submit-btn:disabled { background: var(--border-subtle); color: var(--text-muted); cursor: not-allowed; }
+  .submit-btn:not(:disabled):hover { background: var(--accent-primary); }
 
   /* Won */
   .won-section {
@@ -461,10 +461,10 @@
   }
 
   .won-msg {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.2rem;
     font-weight: 800;
-    color: #10b981;
+    color: var(--accent-green);
     margin-bottom: 0.75rem;
   }
 
@@ -472,7 +472,7 @@
     padding: 0.6rem 2rem;
     border-radius: 10px;
     border: none;
-    background: #6366f1;
+    background: var(--accent-primary);
     color: white;
     font-weight: 700;
     font-size: 0.875rem;
@@ -480,7 +480,7 @@
     transition: all 0.2s;
   }
 
-  .play-again-btn:hover { background: #4f46e5; }
+  .play-again-btn:hover { background: var(--accent-primary); }
 
   /* History */
   .history-section {
@@ -516,20 +516,20 @@
   .history-name {
     font-weight: 600;
     font-size: 0.8rem;
-    color: #0f172a;
+    color: var(--text-primary);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
   .history-hex {
-    font-family: monospace;
+    font-family: var(--font-body);
     font-size: 0.65rem;
-    color: #94a3b8;
+    color: var(--text-muted);
   }
 
   .history-score {
-    font-family: monospace;
+    font-family: var(--font-body);
     font-size: 0.85rem;
     font-weight: 800;
   }

@@ -81,10 +81,10 @@
   }
 
   function feedbackColors(value) {
-    if (value === 'green') return { bg: 'rgba(16,185,129,0.08)', border: 'rgba(16,185,129,0.25)', text: '#10b981' };
-    if (value === 'yellow') return { bg: 'rgba(234,179,8,0.08)', border: 'rgba(234,179,8,0.25)', text: '#eab308' };
-    if (value === 'gray') return { bg: 'rgba(148,163,184,0.08)', border: 'rgba(148,163,184,0.25)', text: '#94a3b8' };
-    return { bg: '#f8fafc', border: '#e2e8f0', text: '#94a3b8' };
+    if (value === 'green') return { bg: 'rgba(16,185,129,0.08)', border: 'rgba(16,185,129,0.25)', text: 'var(--accent-green)' };
+    if (value === 'yellow') return { bg: 'rgba(234,179,8,0.08)', border: 'rgba(234,179,8,0.25)', text: 'var(--accent-amber)' };
+    if (value === 'gray') return { bg: 'rgba(148,163,184,0.08)', border: 'rgba(148,163,184,0.25)', text: 'var(--text-muted)' };
+    return { bg: 'var(--bg-muted)', border: 'var(--border-subtle)', text: 'var(--text-muted)' };
   }
 
   function handleHexKey(e) {
@@ -188,7 +188,7 @@
           {#each suggestions as suggestion}
             <div class="suggestion-card">
               <div class="suggestion-preview" style="background: {suggestion.targetHex};">
-                <span style="color: {getContrastColor(suggestion.targetHex)}; font-size: 0.6rem; font-weight: 700; font-family: monospace;">{suggestion.targetHex}</span>
+                <span style="color: {getContrastColor(suggestion.targetHex)}; font-size: 0.6rem; font-weight: 700; font-family: var(--font-body);">{suggestion.targetHex}</span>
               </div>
               <div class="suggestion-colors">
                 {#each suggestion.colors as colorIdx, i}
@@ -223,104 +223,104 @@
 
   .solver-panel {
     background: #fff;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border-subtle);
     border-radius: 16px;
     padding: 1.25rem;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
 
   .panel-section { margin-bottom: 1rem; }
-  .field-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; display: block; margin-bottom: 0.375rem; }
+  .field-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); display: block; margin-bottom: 0.375rem; }
 
   .hex-input-row { display: flex; gap: 0.5rem; }
   .hex-input {
-    flex: 1; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 10px;
-    padding: 0.6rem 0.875rem; color: #0f172a; font-family: monospace; font-size: 0.875rem; outline: none; transition: border-color 0.2s;
+    flex: 1; background: var(--bg-muted); border: 2px solid var(--border-subtle); border-radius: 10px;
+    padding: 0.6rem 0.875rem; color: var(--text-primary); font-family: var(--font-body); font-size: 0.875rem; outline: none; transition: border-color 0.2s;
   }
-  .hex-input:focus { border-color: #ec4899; }
+  .hex-input:focus { border-color: var(--accent-pink); }
 
   .solve-btn {
     padding: 0.6rem 1rem; border-radius: 10px; border: none;
-    background: linear-gradient(135deg, #f97316, #ec4899); color: white; font-weight: 700; font-size: 0.8rem;
+    background: var(--accent-pink); color: white; font-weight: 700; font-size: 0.8rem;
     cursor: pointer; transition: transform 0.2s; white-space: nowrap;
   }
   .solve-btn:hover { transform: translateY(-1px); }
 
-  .error-msg { margin-top: 0.375rem; font-size: 0.75rem; color: #ef4444; font-weight: 500; }
+  .error-msg { margin-top: 0.375rem; font-size: 0.75rem; color: var(--accent-primary); font-weight: 500; }
 
-  .picker-section { border-top: 1px solid #f1f5f9; padding-top: 0.875rem; }
-  .picker-toggle { background: none; border: none; color: #ec4899; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+  .picker-section { border-top: 1px solid var(--bg-muted); padding-top: 0.875rem; }
+  .picker-toggle { background: none; border: none; color: var(--accent-pink); font-size: 0.8rem; font-weight: 600; cursor: pointer; }
 
-  .picker-box { margin-top: 0.5rem; background: #f8fafc; border-radius: 10px; padding: 0.875rem; border: 1px solid #e2e8f0; }
+  .picker-box { margin-top: 0.5rem; background: var(--bg-muted); border-radius: 10px; padding: 0.875rem; border: 1px solid var(--border-subtle); }
   .picker-content { display: flex; align-items: center; gap: 0.875rem; flex-wrap: wrap; }
-  .color-picker { width: 72px; height: 72px; border-radius: 10px; border: 2px solid #e2e8f0; cursor: pointer; padding: 0; }
+  .color-picker { width: 72px; height: 72px; border-radius: 10px; border: 2px solid var(--border-subtle); cursor: pointer; padding: 0; }
 
   .picker-preview-row { display: flex; align-items: center; gap: 0.375rem; margin-bottom: 0.375rem; }
-  .picker-swatch { width: 28px; height: 28px; border-radius: 6px; border: 1px solid #e2e8f0; }
-  .picker-hex { font-family: monospace; font-weight: 700; font-size: 0.9rem; color: #0f172a; }
+  .picker-swatch { width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border-subtle); }
+  .picker-hex { font-family: var(--font-body); font-weight: 700; font-size: 0.9rem; color: var(--text-primary); }
 
   .use-color-btn {
     padding: 0.4rem 0.875rem; border-radius: 8px; border: none;
-    background: linear-gradient(135deg, #f97316, #ec4899); color: white; font-weight: 600; font-size: 0.75rem; cursor: pointer;
+    background: var(--accent-pink); color: white; font-weight: 600; font-size: 0.75rem; cursor: pointer;
   }
 
-  .guesses-section { margin-top: 1rem; border-top: 1px solid #f1f5f9; padding-top: 1rem; }
+  .guesses-section { margin-top: 1rem; border-top: 1px solid var(--bg-muted); padding-top: 1rem; }
   .guesses-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
-  .guesses-title { font-weight: 700; font-size: 1rem; color: #0f172a; }
+  .guesses-title { font-weight: 700; font-size: 1rem; color: var(--text-primary); }
 
   .refine-btn {
     padding: 0.4rem 0.875rem; border-radius: 8px; border: none;
-    background: linear-gradient(135deg, #14b8a6, #0ea5e9); color: white; font-weight: 600; font-size: 0.75rem; cursor: pointer;
+    background: var(--accent-teal); color: white; font-weight: 600; font-size: 0.75rem; cursor: pointer;
   }
 
-  .guess-row { background: #f8fafc; border-radius: 10px; padding: 0.5rem; margin-bottom: 0.375rem; border: 1px solid #e2e8f0; }
+  .guess-row { background: var(--bg-muted); border-radius: 10px; padding: 0.5rem; margin-bottom: 0.375rem; border: 1px solid var(--border-subtle); }
   .guess-colors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
 
   .guess-color-btn {
-    border-radius: 10px; padding: 0.5rem; text-align: center; border: 2px solid; cursor: pointer; transition: all 0.15s; background: #f8fafc;
+    border-radius: 10px; padding: 0.5rem; text-align: center; border: 2px solid; cursor: pointer; transition: all 0.15s; background: var(--bg-muted);
   }
 
-  .guess-swatch { width: 36px; height: 36px; border-radius: 8px; margin: 0 auto 0.25rem; border: 1px solid #e2e8f0; }
-  .guess-color-name { font-weight: 600; font-size: 0.75rem; color: #0f172a; }
+  .guess-swatch { width: 36px; height: 36px; border-radius: 8px; margin: 0 auto 0.25rem; border: 1px solid var(--border-subtle); }
+  .guess-color-name { font-weight: 600; font-size: 0.75rem; color: var(--text-primary); }
   .guess-feedback-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.1rem; font-weight: 600; }
 
   .solved-box { margin-top: 0.875rem; background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.2); border-radius: 10px; padding: 0.875rem; }
-  .solved-title { font-weight: 800; color: #10b981; font-size: 1rem; }
-  .solved-desc { font-size: 0.8rem; color: #475569; margin-top: 0.2rem; }
+  .solved-title { font-weight: 800; color: var(--accent-green); font-size: 1rem; }
+  .solved-desc { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.2rem; }
 
   .suggestions-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
-  .suggestions-title { font-weight: 700; font-size: 1rem; color: #0f172a; }
-  .suggestions-count { font-size: 0.75rem; color: #94a3b8; }
+  .suggestions-title { font-weight: 700; font-size: 1rem; color: var(--text-primary); }
+  .suggestions-count { font-size: 0.75rem; color: var(--text-muted); }
 
-  .empty-suggestions { text-align: center; padding: 1.75rem 1rem; color: #94a3b8; font-size: 0.875rem; }
+  .empty-suggestions { text-align: center; padding: 1.75rem 1rem; color: var(--text-muted); font-size: 0.875rem; }
 
   .suggestions-list { display: flex; flex-direction: column; gap: 0.5rem; }
 
   .suggestion-card {
-    background: #f8fafc; border-radius: 10px; padding: 0.875rem; border: 1px solid #e2e8f0;
+    background: var(--bg-muted); border-radius: 10px; padding: 0.875rem; border: 1px solid var(--border-subtle);
     display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
   }
 
   .suggestion-preview {
     width: 56px; height: 56px; border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    border: 1px solid #e2e8f0; flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    border: 1px solid var(--border-subtle); flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
 
   .suggestion-colors { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 0.3rem; }
 
   .suggestion-color-chip {
     display: flex; align-items: center; gap: 0.25rem; background: #fff;
-    padding: 0.2rem 0.5rem; border-radius: 6px; border: 1px solid #e2e8f0;
+    padding: 0.2rem 0.5rem; border-radius: 6px; border: 1px solid var(--border-subtle);
   }
 
-  .chip-swatch { width: 20px; height: 20px; border-radius: 4px; border: 1px solid #e2e8f0; }
-  .chip-name { font-size: 0.7rem; font-weight: 600; color: #0f172a; }
-  .chip-hex { font-size: 0.55rem; color: #94a3b8; font-family: monospace; }
+  .chip-swatch { width: 20px; height: 20px; border-radius: 4px; border: 1px solid var(--border-subtle); }
+  .chip-name { font-size: 0.7rem; font-weight: 600; color: var(--text-primary); }
+  .chip-hex { font-size: 0.55rem; color: var(--text-muted); font-family: var(--font-body); }
 
   .use-btn {
     padding: 0.4rem 0.875rem; border-radius: 8px; border: none;
-    background: linear-gradient(135deg, #f97316, #ec4899); color: white; font-weight: 600; font-size: 0.7rem;
+    background: var(--accent-pink); color: white; font-weight: 600; font-size: 0.7rem;
     cursor: pointer; flex-shrink: 0;
   }
 </style>

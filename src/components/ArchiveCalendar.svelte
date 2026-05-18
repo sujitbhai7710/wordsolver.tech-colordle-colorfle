@@ -18,14 +18,13 @@
   const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   const colorThemes = {
-    teal: { primary: '#14b8a6', primaryLight: 'rgba(20,184,166,0.08)', primaryMid: 'rgba(20,184,166,0.15)', primaryBorder: 'rgba(20,184,166,0.25)', gradient: 'linear-gradient(135deg, #14b8a6 0%, #0ea5e9 100%)' },
-    pink: { primary: '#ec4899', primaryLight: 'rgba(236,72,153,0.08)', primaryMid: 'rgba(236,72,153,0.15)', primaryBorder: 'rgba(236,72,153,0.25)', gradient: 'linear-gradient(135deg, #ec4899 0%, #f97316 100%)' },
-    indigo: { primary: '#6366f1', primaryLight: 'rgba(99,102,241,0.08)', primaryMid: 'rgba(99,102,241,0.15)', primaryBorder: 'rgba(99,102,241,0.25)', gradient: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)' },
+    teal: { primary: '#0D7C66', primaryLight: 'rgba(13,124,102,0.06)', primaryMid: 'rgba(13,124,102,0.12)', primaryBorder: 'rgba(13,124,102,0.2)' },
+    pink: { primary: '#BE3A6B', primaryLight: 'rgba(190,58,107,0.06)', primaryMid: 'rgba(190,58,107,0.12)', primaryBorder: 'rgba(190,58,107,0.2)' },
+    blue: { primary: '#1B4965', primaryLight: 'rgba(27,73,101,0.06)', primaryMid: 'rgba(27,73,101,0.12)', primaryBorder: 'rgba(27,73,101,0.2)' },
   };
 
   let theme = $derived(colorThemes[gameColor] || colorThemes.teal);
 
-  // Calendar grid computation
   let calendarDays = $derived.by(() => {
     const year = currentMonth.getFullYear();
     const month = currentMonth.getMonth();
@@ -33,19 +32,16 @@
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const days = [];
 
-    // Previous month padding
     const prevMonthDays = new Date(year, month, 0).getDate();
     for (let i = firstDay - 1; i >= 0; i--) {
       days.push({ day: prevMonthDays - i, currentMonth: false, date: null });
     }
 
-    // Current month days
     for (let d = 1; d <= daysInMonth; d++) {
       const date = new Date(year, month, d);
       const dateKey = formatDateKey(date);
       const isFuture = date > today;
       const isToday = dateKey === formatDateKey(today);
-      const isPast = date < today || dateKey === formatDateKey(today);
       const isAfterStart = date >= startDate;
       days.push({
         day: d,
@@ -57,7 +53,6 @@
       });
     }
 
-    // Next month padding
     const remaining = 42 - days.length;
     for (let i = 1; i <= remaining; i++) {
       days.push({ day: i, currentMonth: false, date: null });
@@ -66,7 +61,6 @@
     return days;
   });
 
-  // List of all past puzzle dates for list view
   let allPuzzles = $derived.by(() => {
     const puzzles = [];
     const d = new Date(startDate);
@@ -124,7 +118,7 @@
     currentMonth = new Date(date.getFullYear(), date.getMonth(), 1);
   }
 
-  async function handleDateClick(dateKey) {
+  function handleDateClick(dateKey) {
     if (!getAnswer) return;
     selectedDate = dateKey;
     answerRevealed = false;
@@ -148,20 +142,20 @@
 <div class="archive-calendar">
   <!-- Controls -->
   <div class="controls-bar">
-    <div class="view-toggle">
+    <div class="view-toggle" style="--theme-primary: {theme.primary};">
       <button
         onclick={() => viewMode = 'calendar'}
         class="toggle-btn"
         class:active={viewMode === 'calendar'}
       >
-        📅 Calendar
+        Calendar
       </button>
       <button
         onclick={() => viewMode = 'list'}
         class="toggle-btn"
         class:active={viewMode === 'list'}
       >
-        📋 List
+        List
       </button>
     </div>
     <div class="search-wrap">
@@ -177,7 +171,7 @@
 
   <!-- Calendar View -->
   {#if viewMode === 'calendar' && !searchQuery.trim()}
-    <div class="calendar-card">
+    <div class="calendar-card" style="--theme-primary: {theme.primary}; --theme-light: {theme.primaryLight}; --theme-mid: {theme.primaryMid}; --theme-border: {theme.primaryBorder};">
       <!-- Month Navigation -->
       <div class="month-nav">
         <button onclick={prevMonth} disabled={isPrevDisabled} class="nav-btn">
@@ -234,7 +228,7 @@
 
   <!-- List View -->
   {:else}
-    <div class="list-card">
+    <div class="list-card" style="--theme-primary: {theme.primary}; --theme-light: {theme.primaryLight};">
       <div class="list-header">
         <h2>{searchQuery.trim() ? 'Search Results' : 'Recent Puzzles'} ({filteredPuzzles.length}{filteredPuzzles.length === 60 ? '+' : ''})</h2>
       </div>
@@ -266,7 +260,7 @@
   <!-- Selected Date Answer -->
   {#if selectedDate && selectedAnswer}
     <div id="archive-answer" class="answer-section">
-      <div class="answer-card">
+      <div class="answer-card" style="--theme-primary: {theme.primary}; --theme-light: {theme.primaryLight}; --theme-mid: {theme.primaryMid}; --theme-border: {theme.primaryBorder};">
         <div class="answer-label">{gameName} Answer — {selectedDate}</div>
 
         <!-- CSS-only reveal -->
@@ -317,7 +311,7 @@
   }
 
   .toggle-btn {
-    padding: 0.45rem 0.875rem;
+    padding: 0.5rem 0.875rem;
     font-size: 0.8rem;
     font-weight: 600;
     border: none;
@@ -325,10 +319,11 @@
     color: var(--text-muted);
     cursor: pointer;
     transition: all 0.2s;
+    font-family: var(--font-body);
   }
 
   .toggle-btn.active {
-    background: var(--gradient-hero);
+    background: var(--theme-primary, var(--accent-primary));
     color: white;
   }
 
@@ -359,10 +354,11 @@
     background: var(--bg-card);
     outline: none;
     transition: border-color 0.2s;
+    font-family: var(--font-body);
   }
 
   .search-input:focus {
-    border-color: var(--accent-indigo);
+    border-color: var(--accent-primary);
   }
 
   .calendar-card {
@@ -382,7 +378,7 @@
   }
 
   .month-title {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.15rem;
     font-weight: 700;
     color: var(--text-primary);
@@ -396,14 +392,14 @@
     height: 36px;
     border: none;
     border-radius: var(--radius-sm);
-    background: var(--bg-secondary);
+    background: var(--bg-muted);
     color: var(--text-secondary);
     cursor: pointer;
     transition: all 0.2s;
   }
 
   .nav-btn:hover:not(:disabled) {
-    background: var(--bg-tertiary);
+    background: var(--bg-hover);
     color: var(--text-primary);
   }
 
@@ -431,15 +427,16 @@
     cursor: pointer;
     transition: all 0.2s;
     white-space: nowrap;
+    font-family: var(--font-body);
   }
 
   .jump-btn:hover {
-    background: var(--bg-secondary);
+    background: var(--bg-muted);
     color: var(--text-secondary);
   }
 
   .jump-btn.jump-active {
-    background: var(--gradient-hero);
+    background: var(--theme-primary, var(--accent-primary));
     color: white;
   }
 
@@ -486,13 +483,13 @@
   }
 
   .day-clickable:hover {
-    background: var(--bg-secondary);
-    border-color: var(--accent-teal);
+    background: var(--bg-muted);
+    border-color: var(--theme-primary, var(--accent-teal));
     transform: translateY(-1px);
   }
 
   .day-today {
-    background: var(--bg-secondary) !important;
+    background: var(--bg-muted) !important;
   }
 
   .today-dot {
@@ -502,12 +499,12 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--accent-teal);
+    background: var(--theme-primary, var(--accent-teal));
   }
 
   .day-selected {
-    border-color: var(--accent-teal) !important;
-    box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.2);
+    border-color: var(--theme-primary, var(--accent-teal)) !important;
+    box-shadow: 0 0 0 2px var(--theme-mid, rgba(13,124,102,0.2));
   }
 
   .day-num {
@@ -540,7 +537,7 @@
   }
 
   .list-header h2 {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-display);
     font-size: 0.95rem;
     font-weight: 700;
     color: var(--text-primary);
@@ -564,14 +561,15 @@
     text-align: left;
     border-bottom: 1px solid var(--border-subtle);
     color: var(--text-primary);
+    font-family: var(--font-body);
   }
 
   .list-item:hover {
-    background: var(--bg-secondary);
+    background: var(--bg-muted);
   }
 
   .list-item-selected {
-    background: var(--bg-secondary);
+    background: var(--bg-muted);
   }
 
   .list-num {
@@ -581,10 +579,10 @@
     min-width: 40px;
     height: 40px;
     border-radius: var(--radius-md);
-    background: var(--bg-secondary);
+    background: var(--bg-muted);
     font-size: 0.8rem;
     font-weight: 700;
-    color: var(--accent-teal);
+    color: var(--theme-primary, var(--accent-teal));
     flex-shrink: 0;
   }
 
@@ -638,7 +636,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: var(--accent-teal);
+    color: var(--theme-primary, var(--accent-teal));
     margin-bottom: 1.25rem;
   }
 
@@ -646,15 +644,16 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background: rgba(20,184,166,0.08);
-    border: 3px solid rgba(20,184,166,0.2);
+    background: var(--theme-light, rgba(13,124,102,0.06));
+    border: 3px solid var(--theme-border, rgba(13,124,102,0.2));
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 0.875rem;
     font-size: 2.5rem;
     font-weight: 900;
-    color: var(--accent-teal);
+    font-family: var(--font-display);
+    color: var(--theme-primary, var(--accent-teal));
     transition: all 0.3s;
   }
 

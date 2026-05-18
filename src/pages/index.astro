@@ -47,8 +47,8 @@ const schema = JSON.stringify({
       </p>
       <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
         <a href="/today" class="btn btn-primary">Today's Answers</a>
-        <a href="/solver" class="btn btn-secondary">Open Solver</a>
-        <a href="/colordle-archive" class="btn btn-secondary">Browse Archive</a>
+        <a href="/colordle-solver" class="btn btn-secondary">Open Solver</a>
+        <a href="/archive" class="btn btn-secondary">Browse Archive</a>
       </div>
     </div>
   </section>
@@ -58,7 +58,7 @@ const schema = JSON.stringify({
     <div class="grid-2">
       <a href="/colordle-answer-today" class="card" style="text-decoration:none;">
         <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:1rem;">
-          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;">
+          <div style="width:48px;height:48px;border-radius:12px;background:var(--accent-teal);display:flex;align-items:center;justify-content:center;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
           </div>
           <div>
@@ -67,12 +67,12 @@ const schema = JSON.stringify({
           </div>
         </div>
         <p class="card-desc">See today's Colordle color, hex code, and similarity hints. Reveal the answer when you are ready, or browse our strategy tips to get better at naming colors.</p>
-        <span class="btn btn-primary" style="font-size:0.8rem;padding:0.5rem 1rem;">View Answer</span>
+        <span class="btn btn-teal" style="font-size:0.8rem;padding:0.5rem 1rem;">View Answer</span>
       </a>
 
       <a href="/colorfle-answer-today" class="card" style="text-decoration:none;">
         <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:1rem;">
-          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#ec4899,#f97316);display:flex;align-items:center;justify-content:center;">
+          <div style="width:48px;height:48px;border-radius:12px;background:var(--accent-pink);display:flex;align-items:center;justify-content:center;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20"/></svg>
           </div>
           <div>
@@ -81,12 +81,12 @@ const schema = JSON.stringify({
           </div>
         </div>
         <p class="card-desc">Find today's Colorfle answer — the three source colors that mix to create the daily target. See component colors, weights, and the resulting hex.</p>
-        <span class="btn btn-primary" style="font-size:0.8rem;padding:0.5rem 1rem;">View Answer</span>
+        <span class="btn btn-pink" style="font-size:0.8rem;padding:0.5rem 1rem;">View Answer</span>
       </a>
 
       <a href="/colordle-solver" class="card" style="text-decoration:none;">
         <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:1rem;">
-          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#14b8a6,#0ea5e9);display:flex;align-items:center;justify-content:center;">
+          <div style="width:48px;height:48px;border-radius:12px;background:var(--accent-blue);display:flex;align-items:center;justify-content:center;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </div>
           <div>
@@ -95,12 +95,12 @@ const schema = JSON.stringify({
           </div>
         </div>
         <p class="card-desc">Enter your guess and similarity percentage. The solver filters thousands of named colors to find candidates that match your score, narrowing the answer down fast.</p>
-        <span class="btn btn-primary" style="font-size:0.8rem;padding:0.5rem 1rem;">Open Solver</span>
+        <span class="btn btn-blue" style="font-size:0.8rem;padding:0.5rem 1rem;">Open Solver</span>
       </a>
 
       <a href="/colorfle-solver" class="card" style="text-decoration:none;">
         <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:1rem;">
-          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#f97316,#eab308);display:flex;align-items:center;justify-content:center;">
+          <div style="width:48px;height:48px;border-radius:12px;background:var(--accent-amber);display:flex;align-items:center;justify-content:center;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
           </div>
           <div>
@@ -114,7 +114,7 @@ const schema = JSON.stringify({
 
       <a href="/colordle-unlimited" class="card" style="text-decoration:none;">
         <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:1rem;">
-          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#6366f1,#14b8a6);display:flex;align-items:center;justify-content:center;">
+          <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--accent-teal),var(--accent-blue));display:flex;align-items:center;justify-content:center;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
           </div>
           <div>
@@ -123,12 +123,12 @@ const schema = JSON.stringify({
           </div>
         </div>
         <p class="card-desc">Play Colordle as many times as you want. Each round picks a random target color. Type color names, get similarity scores, and try to hit 100%.</p>
-        <span class="btn btn-primary" style="font-size:0.8rem;padding:0.5rem 1rem;">Play Now</span>
+        <span class="btn btn-teal" style="font-size:0.8rem;padding:0.5rem 1rem;">Play Now</span>
       </a>
 
       <a href="/colorfle-unlimited" class="card" style="text-decoration:none;">
         <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:1rem;">
-          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#ec4899,#6366f1);display:flex;align-items:center;justify-content:center;">
+          <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--accent-pink),var(--accent-primary));display:flex;align-items:center;justify-content:center;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="15.5" r="2.5"/><circle cx="8.5" cy="15.5" r="2.5"/></svg>
           </div>
           <div>
@@ -137,12 +137,12 @@ const schema = JSON.stringify({
           </div>
         </div>
         <p class="card-desc">Practice Colorfle without waiting for the daily reset. Guess the three source colors using the color palette, just like the real game.</p>
-        <span class="btn btn-primary" style="font-size:0.8rem;padding:0.5rem 1rem;">Play Now</span>
+        <span class="btn btn-pink" style="font-size:0.8rem;padding:0.5rem 1rem;">Play Now</span>
       </a>
 
       <a href="/colordle-archive" class="card" style="text-decoration:none;">
         <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:1rem;">
-          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#14b8a6,#6366f1);display:flex;align-items:center;justify-content:center;">
+          <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--accent-blue),var(--accent-teal));display:flex;align-items:center;justify-content:center;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           </div>
           <div>
@@ -151,12 +151,12 @@ const schema = JSON.stringify({
           </div>
         </div>
         <p class="card-desc">Browse every past Colordle puzzle answer with our interactive calendar. Pick any date to see the solution, study patterns, and build your color vocabulary.</p>
-        <span class="btn btn-primary" style="font-size:0.8rem;padding:0.5rem 1rem;">Browse Archive</span>
+        <span class="btn btn-blue" style="font-size:0.8rem;padding:0.5rem 1rem;">Browse Archive</span>
       </a>
 
       <a href="/colorfle-archive" class="card" style="text-decoration:none;">
         <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:1rem;">
-          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#f97316,#ec4899);display:flex;align-items:center;justify-content:center;">
+          <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--accent-amber),var(--accent-pink));display:flex;align-items:center;justify-content:center;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           </div>
           <div>
@@ -165,7 +165,7 @@ const schema = JSON.stringify({
           </div>
         </div>
         <p class="card-desc">Look up any past Colorfle answer by date. See the three component colors, their weights, and the resulting target hex for every puzzle since launch.</p>
-        <span class="btn btn-primary" style="font-size:0.8rem;padding:0.5rem 1rem;">Browse Archive</span>
+        <span class="btn btn-pink" style="font-size:0.8rem;padding:0.5rem 1rem;">Browse Archive</span>
       </a>
     </div>
   </section>
