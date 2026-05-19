@@ -181,22 +181,30 @@
 
   function renderColordleAnswer(answer) {
     if (!answer) return '';
+    const hex = answer.colorHex || answer.hex || '#888888';
+    const name = answer.colorName || answer.name || 'Unknown';
+    const dayNum = answer.dayNumber || answer.dayNum || '';
+    const dateLabel = answer.formattedDate || answer.date || '';
     return `
       <div style="text-align:center;">
-        <div style="width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;border:3px solid var(--border-subtle);box-shadow:var(--shadow-lg);display:flex;align-items:center;justify-content:center;background:${answer.hex};font-size:0.85rem;font-weight:800;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.3);">${answer.colorName}</div>
-        <div style="font-size:1.5rem;font-weight:800;margin-bottom:0.375rem;color:var(--text-primary);">${answer.colorName}</div>
-        <div style="font-family:monospace;font-size:0.9rem;color:var(--text-muted);margin-bottom:0.25rem;">${answer.hex}</div>
-        <div style="font-size:0.8rem;color:var(--text-muted);">Puzzle #${answer.dayNumber || ''} &middot; ${answer.formattedDate || answer.date}</div>
+        <div style="width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;border:3px solid var(--border-subtle);box-shadow:var(--shadow-lg);display:flex;align-items:center;justify-content:center;background:${hex};font-size:0.85rem;font-weight:800;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.3);">${name}</div>
+        <div style="font-size:1.5rem;font-weight:800;margin-bottom:0.375rem;color:var(--text-primary);">${name}</div>
+        <div style="font-family:monospace;font-size:0.9rem;color:var(--text-muted);margin-bottom:0.25rem;">${hex}</div>
+        <div style="font-size:0.8rem;color:var(--text-muted);">Puzzle #${dayNum} &middot; ${dateLabel}</div>
       </div>
     `;
   }
 
   function renderColorfleAnswer(answer) {
     if (!answer) return '';
-    const colorBlocks = (answer.colors || []).map((idx, i) => {
-      const name = answer.colorNames?.[i] || '';
-      const hex = answer.colorHexes?.[i] || '';
-      const weight = answer.weights?.[i] || 0;
+    const colors = answer.colors || [];
+    const targetHex = answer.targetHex || (answer.targetColor && answer.targetColor.hex) || '#888888';
+    const puzzleNum = answer.puzzleNumber || '';
+    const dateLabel = answer.formattedDate || answer.date || '';
+    const colorBlocks = colors.map((c, i) => {
+      const name = c.name || answer.colorNames?.[i] || '';
+      const hex = c.hex || answer.colorHexes?.[i] || '';
+      const weight = c.weight || answer.weights?.[i] || 0;
       return `<div style="text-align:center;">
         <div style="width:56px;height:56px;border-radius:12px;background:${hex};border:2px solid var(--border-subtle);margin:0 auto 0.375rem;box-shadow:var(--shadow-sm);"></div>
         <div style="font-weight:700;font-size:0.85rem;color:var(--text-primary);">${name}</div>
@@ -209,18 +217,18 @@
 
     return `
       <div style="text-align:center;">
-        <div style="width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;border:3px solid var(--border-subtle);box-shadow:var(--shadow-lg);background:${answer.targetHex};"></div>
+        <div style="width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;border:3px solid var(--border-subtle);box-shadow:var(--shadow-lg);background:${targetHex};"></div>
         <div style="display:flex;justify-content:center;gap:1.25rem;margin-bottom:1rem;flex-wrap:wrap;">
           ${colorBlocks}
         </div>
         <div style="margin-top:0.75rem;">
           <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:0.375rem;">Mixed to produce:</div>
           <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
-            <div style="width:32px;height:32px;border-radius:50%;background:${answer.targetHex};border:2px solid var(--border-subtle);"></div>
-            <span style="font-family:monospace;font-size:1rem;font-weight:800;color:var(--text-primary);">${answer.targetHex}</span>
+            <div style="width:32px;height:32px;border-radius:50%;background:${targetHex};border:2px solid var(--border-subtle);"></div>
+            <span style="font-family:monospace;font-size:1rem;font-weight:800;color:var(--text-primary);">${targetHex}</span>
           </div>
         </div>
-        <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.75rem;">Puzzle #${answer.puzzleNumber || ''} &middot; ${answer.formattedDate || answer.date}</div>
+        <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.75rem;">Puzzle #${puzzleNum} &middot; ${dateLabel}</div>
       </div>
     `;
   }

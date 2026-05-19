@@ -1,0 +1,22 @@
+name = "colordleanswer-api"
+main = "src/index.ts"
+compatibility_date = "2024-12-30"
+compatibility_flags = ["nodejs_compat"]
+
+# D1 Database binding
+[[d1_databases]]
+binding = "DB"
+database_name = "colordleanswer-db"
+database_id = "82c632eb-0b4e-4693-8b6c-32fb24b9ae40"
+
+# Cron trigger: 12:00 AM IST = 18:30 UTC (previous day)
+# IST is UTC+5:30, so midnight IST = 18:30 UTC previous day
+# But we want it to fire at the start of the new day IST
+# 12:00 AM IST = 18:30 UTC (previous day)
+# So for May 20 IST, the cron fires at May 19 18:30 UTC
+[triggers]
+crons = ["30 18 * * *"]
+
+# Environment variables (set via wrangler secret or dashboard)
+# GITHUB_TOKEN - for triggering rebuilds
+# GITHUB_REPO - sujitbhai7710/wordsolver.tech-colordle-colorfle
