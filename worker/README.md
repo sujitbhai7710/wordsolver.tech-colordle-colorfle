@@ -1,83 +1,121 @@
-# ColordleAnswer API - Cloudflare Worker with D1 SQL
+# Colordle Answer API Worker
 
 ## Overview
 
-This is the backend API for [colordleanswer.me](https://colordleanswer.me), serving daily puzzle answers for **Colordle** and **Colorfle** games. Built as a Cloudflare Worker with D1 SQL database for high-performance, globally-distributed answer delivery.
+This is a **Cloudflare Worker + D1 SQL database** that serves as the backend API for [colordleanswer.me](https://colordleanswer.me). It provides daily puzzle answers for **Colordle** and **Colorfle** games, plus archive data, color search, and admin tools.
+
+All answers are **deterministic** — computed algorithmically from the game rules — and cached in a D1 SQLite database for fast edge delivery. If an answer hasn't been stored yet, the Worker computes it on-the-fly, persists it, and returns it.
+
+---
 
 ## Architecture
 
-```
-┌─────────────────────────────────────────────────────┐
-│                   Cloudflare Edge                    │
-│                                                      │
-│  ┌──────────────────┐    ┌───────────────────────┐  │
-│  │   Astro Static   │    │   Cloudflare Worker   │  │
-│  │   Site (Pages)   │◄──►│   (This Project)      │  │
-│  │                  │    │                        │  │
-│  │  - Today pages   │    │  - /api/today          │  │
-│  │  - SEO pages     │    │  - /api/colordle/*     │  │
-│  │  - Solvers       │    │  - /api/colorfle/*     │  │
-│  │  - Archive pages │    │  - /api/stats          │  │
-│  │    (fetch from   │    │  - /api/admin/*        │  │
-│  │     Worker API)  │    │                        │  │
-│  └──────────────────┘    └───────────┬───────────┘  │
-│                                      │               │
-│                          ┌───────────▼───────────┐   │
-│                          │    D1 SQL Database    │   │
-│                          │                       │   │
-│                          │  - colordle_answers   │   │
-│                          │  - colorfle_answers   │   │
-│                          │  - metadata           │   │
-│                          └───────────────────────┘   │
-└─────────────────────────────────────────────────────┘
+| Component | Details |
+|-----------|---------|
+| **Runtime** | Cloudflare Worker with D1 SQL database |
+| **Worker URL** | `colordleanswer-api.wordleanswerofficial.workers.dev` |
+| **D1 Database** | `colordleanswer-db` (ID: `82c632eb-0b4e-4693-8b6c-32fb24b9ae40`) |
+| **Cron** | `30 18 * * *` (12:00 AM IST daily) — ensures today's answers are in DB and triggers GitHub rebuild |
+| **Compatibility** | `nodejs_compat` flag enabled |
 
-┌─────────────────────────────────────────────────────┐
-│               Daily Cron (12 AM IST)                 │
-│                                                      │
-│  1. Compute today's Colordle answer                  │
-│  2. Compute today's Colorfle answer                  │
-│  3. Store in D1 database                             │
-│  4. Trigger GitHub Actions rebuild                   │
-│     (for static today page refresh)                  │
-└─────────────────────────────────────────────────────┘
 ```
+┌──────────────────────────────────────────────────────────┐
+│                    Cloudflare Edge                        │
+│                                                           │
+│  ┌──────────────────┐     ┌──────────────────────────┐   │
+│  │   Astro Static   │     │   Cloudflare Worker       │   │
+│  │   Site (Pages)   │◄───►│   (This Project)          │   │
+│  │                  │     │                            │   │
+│  │  - Today pages   │     │  - /api/today              │   │
+│  │  - SEO pages     │     │  - /api/colordle/*         │   │
+│  │  - Solvers       │     │  - /api/colorfle/*         │   │
+│  │  - Archive pages │     │  - /api/stats              │   │
+│  │    (fetch from   │     │  - /api/admin/*            │   │
+│  │     Worker API)  │     │                            │   │
+│  └──────────────────┘     └────────────┬───────────────┘   │
+│                                        │                   │
+│                            ┌───────────▼───────────────┐   │
+│                            │     D1 SQL Database       │   │
+│                            │                           │   │
+│                            │  - colordle_answers       │   │
+│                            │  - colorfle_answers       │   │
+│                            │  - metadata               │   │
+│                            └───────────────────────────┘   │
+└──────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────┐
+│                Daily Cron (12 AM IST)                     │
+│                                                           │
+│  1. Compute today's Colordle answer → store in D1        │
+│  2. Compute today's Colorfle answer → store in D1        │
+│  3. Update metadata table                                 │
+│  4. Trigger GitHub repository_dispatch → rebuild Astro    │
+└──────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Game Details
+
+| Game | Start Date | Day Offset | Answer Source |
+|------|-----------|------------|---------------|
+| **Colordle** | 2023-08-07 | 500 (first entry is Day #500) | Deterministic (976-color list indexed by day number) |
+| **Colorfle** | 2022-04-25 | 0 (first entry is Day #0) | Deterministic (seeded PRNG + YCC/RGB color mixing) |
+
+> **Important**: Colordle did NOT start on 2022-04-25. That is the Colorfle launch date. Colordle launched on **2023-08-07** (day #500, meaning there were 499 earlier puzzles from a different numbering system).
+
+### Colordle Logic
+
+- **Algorithm**: Sequential index into a 976-color canonical list from `colordle.ryantanen.com/colors.json`
+- **Rollover**: 16:30 UTC (after 16:30 UTC, the next day's puzzle is shown)
+- **Answer type**: Named color with hex code (e.g., "Night Sky" → `#292b31`)
+- **Day numbering**: `dayNumber = 500 + daysSinceStart`
+- **Color resolution**: Names are resolved to hex using a built-in `COLOR_HEX_MAP` with ~600+ entries, including 12 manual overrides from the reference repo (e.g., `bloodred` → `#980002`, `oceanblue` → `#009DC4`)
+
+### Colorfle Logic
+
+- **Algorithm**: `seedrandom("{mode} {day} {month} {year}")` → pick N colors from a 20-color palette without replacement
+- **Rollover**: 15:00 UTC (midnight JST)
+- **Answer type**: 3 source colors with weights that mix to a target color
+- **Color mixing**: Dual-space average — computes the mix in both YCC and RGB color spaces, then averages the results for perceptually accurate blending
+- **Modes**: Mode 0 = 3 blocks (weights: `[0.5, 0.34, 0.16]`), Mode 1 = 4 blocks (weights: `[0.4, 0.3, 0.2, 0.1]`)
+- **Palette**: 20 fixed colors (White, Light Yellow, Pink, Light Green, Lavender, Cyan, Yellow, Lime, Orange, Green, Magenta, Olive, Teal, Brown, Red, Blue, Purple, Maroon, Navy, Black)
+
+---
 
 ## API Endpoints
 
+### Health Check
+
+#### `GET /` or `GET /health`
+
+Health check and endpoint listing.
+
+```bash
+curl https://colordleanswer-api.wordleanswerofficial.workers.dev/health
+```
+
+```json
+{
+  "status": "ok",
+  "service": "colordleanswer-api",
+  "version": "1.0.0",
+  "endpoints": ["GET /api/today", "GET /api/colordle/today", "..."],
+  "today": "2025-05-20"
+}
+```
+
+---
+
 ### Today's Answers
 
-| Endpoint | Description |
-|----------|-------------|
-| `GET /api/today` | Get today's answers for both games |
-| `GET /api/colordle/today` | Get today's Colordle answer only |
-| `GET /api/colorfle/today` | Get today's Colorfle answer only |
+#### `GET /api/today`
 
-### Archive
+Get today's answers for **both** games in a single request.
 
-| Endpoint | Description |
-|----------|-------------|
-| `GET /api/colordle/archive?month=YYYY-MM` | Get all Colordle answers for a month |
-| `GET /api/colordle/archive/YYYY-MM-DD` | Get Colordle answer for a specific date |
-| `GET /api/colorfle/archive?month=YYYY-MM` | Get all Colorfle answers for a month |
-| `GET /api/colorfle/archive/YYYY-MM-DD` | Get Colorfle answer for a specific date |
-
-### Search & Stats
-
-| Endpoint | Description |
-|----------|-------------|
-| `GET /api/colordle/search?color=name` | Search for dates when a color appeared |
-| `GET /api/stats` | Get database statistics |
-
-### Admin
-
-| Endpoint | Description |
-|----------|-------------|
-| `GET /api/admin/backfill?start=YYYY-MM-DD&end=YYYY-MM-DD&game=both` | Backfill answers for a date range |
-| `GET /health` | Health check and endpoint listing |
-
-### Response Format
-
-All endpoints return JSON with this structure:
+```bash
+curl https://colordleanswer-api.wordleanswerofficial.workers.dev/api/today
+```
 
 ```json
 {
@@ -108,83 +146,286 @@ All endpoints return JSON with this structure:
 }
 ```
 
-## Game Logic
+#### `GET /api/colordle/today`
 
-### Colordle
+Get today's **Colordle** answer only.
 
-- **Source**: Static color list from upstream API at `colordle.ryantanen.com/colors.json`
-- **Start date**: **August 7, 2023** (day number 500, with `dayOffset=500`)
-- **IMPORTANT**: Colordle did NOT start on April 25, 2022. That is the Colorfle launch date. Colordle launched on 2023-08-07.
-- **Algorithm**: Sequential index into color list based on days since start date (each day maps to the next color in the list)
-- **Rollover**: 16:30 UTC (visible date offset +1 day)
-- **Answer type**: Named color with hex code (e.g., "Night Sky" → `#292b31`)
-- **Color count**: 976 colors in the canonical list
-- **Day offset**: 500 (the first puzzle on 2023-08-07 is numbered day #500, meaning there were 499 earlier puzzles from a different system)
-- **Color resolution**: Color names are resolved to hex codes using the `color-name-list` database. Names missing from that database use manual overrides (see `colordle-logic.ts` `COLOR_HEX_MAP` for the 12 overrides from the reference repo).
+```bash
+curl https://colordleanswer-api.wordleanswerofficial.workers.dev/api/colordle/today
+```
 
-### Colorfle
+```json
+{
+  "success": true,
+  "date": "2025-05-20",
+  "dayNumber": 1151,
+  "colorName": "Night Sky",
+  "colorHex": "#292b31",
+  "formattedDate": "May 20, 2025"
+}
+```
 
-- **Source**: Fully deterministic - computed algorithmically using seeded PRNG
-- **Start date**: April 25, 2022 at 17:00 UTC
-- **Algorithm**: `seedrandom("{mode} {day} {month} {year}")` → pick N colors from 20-color palette
-- **Rollover**: 15:00 UTC (midnight JST)
-- **Answer type**: 3 source colors with weights that mix to a target color
-- **Color mixing**: Dual-space average (YCC + RGB) for perceptually accurate blending
-- **Palette**: 20 fixed colors
+#### `GET /api/colorfle/today`
+
+Get today's **Colorfle** answer only.
+
+```bash
+curl https://colordleanswer-api.wordleanswerofficial.workers.dev/api/colorfle/today
+```
+
+```json
+{
+  "success": true,
+  "date": "2025-05-20",
+  "puzzleNumber": 1122,
+  "mode": 0,
+  "colors": [
+    { "index": 3, "name": "Light Green", "hex": "#AAFFC3", "weight": 0.5 },
+    { "index": 7, "name": "Lime", "hex": "#BCF60C", "weight": 0.34 },
+    { "index": 15, "name": "Blue", "hex": "#4363D8", "weight": 0.16 }
+  ],
+  "targetColor": {
+    "rgb": { "r": 120, "g": 210, "b": 180 },
+    "hex": "#78d2b4"
+  },
+  "formattedDate": "May 20, 2025"
+}
+```
+
+---
+
+### Archive
+
+#### `GET /api/colordle/archive?month=YYYY-MM`
+
+Get all Colordle answers for a given month. Dates before `2023-08-07` or after today are automatically excluded.
+
+```bash
+curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/colordle/archive?month=2025-05"
+```
+
+```json
+{
+  "success": true,
+  "month": "2025-05",
+  "answers": [
+    { "date": "2025-05-01", "dayNumber": 1132, "colorName": "Ruby", "colorHex": "#ca0147", "formattedDate": "May 1, 2025" },
+    { "date": "2025-05-02", "dayNumber": 1133, "colorName": "Honey", "colorHex": "#ae8934", "formattedDate": "May 2, 2025" }
+  ]
+}
+```
+
+#### `GET /api/colordle/archive/YYYY-MM-DD`
+
+Get Colordle answer for a specific date. Must be between `2023-08-07` and today.
+
+```bash
+curl https://colordleanswer-api.wordleanswerofficial.workers.dev/api/colordle/archive/2024-12-25
+```
+
+```json
+{
+  "success": true,
+  "date": "2024-12-25",
+  "dayNumber": 1066,
+  "colorName": "Emerald",
+  "colorHex": "#028f1e",
+  "formattedDate": "December 25, 2024"
+}
+```
+
+#### `GET /api/colorfle/archive?month=YYYY-MM`
+
+Get all Colorfle answers for a given month. Dates before `2022-04-25` or after today are automatically excluded.
+
+```bash
+curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/colorfle/archive?month=2025-05"
+```
+
+#### `GET /api/colorfle/archive/YYYY-MM-DD`
+
+Get Colorfle answer for a specific date. Must be between `2022-04-25` and today.
+
+```bash
+curl https://colordleanswer-api.wordleanswerofficial.workers.dev/api/colorfle/archive/2024-12-25
+```
+
+---
+
+### Search
+
+#### `GET /api/colordle/search?color=<name>`
+
+Search for dates when a specific color appeared in Colordle. Supports partial matching (case-insensitive, spaces ignored).
+
+```bash
+curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/colordle/search?color=red"
+curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/colordle/search?q=night%20sky"
+```
+
+```json
+{
+  "success": true,
+  "query": "red",
+  "results": [
+    { "date": "2025-03-15", "dayNumber": 1085, "colorName": "Red", "colorHex": "#ff0000" },
+    { "date": "2025-01-01", "dayNumber": 1041, "colorName": "Bright Red", "colorHex": "#ff000d" }
+  ]
+}
+```
+
+> **Note**: Search only returns results already stored in the D1 database. Run backfill first for comprehensive results.
+
+---
+
+### Statistics
+
+#### `GET /api/stats`
+
+Get database statistics including total answer counts and last update timestamps.
+
+```bash
+curl https://colordleanswer-api.wordleanswerofficial.workers.dev/api/stats
+```
+
+```json
+{
+  "success": true,
+  "colordle": {
+    "totalAnswers": 650,
+    "lastUpdate": "2025-05-19T18:30:00Z"
+  },
+  "colorfle": {
+    "totalAnswers": 1132,
+    "lastUpdate": "2025-05-19T18:30:00Z"
+  },
+  "today": "2025-05-20"
+}
+```
+
+---
+
+### Admin
+
+#### `GET /api/admin/backfill?start=YYYY-MM-DD&end=YYYY-MM-DD&game=both`
+
+Backfill answers for a date range. Computes and stores any missing answers in D1.
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `start` | Yes | Start date (YYYY-MM-DD) |
+| `end` | Yes | End date (YYYY-MM-DD) |
+| `game` | No | `colordle`, `colorfle`, or `both` (default: `both`) |
+
+```bash
+# Backfill both games
+curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/admin/backfill?start=2023-08-07&end=2024-12-31&game=both"
+
+# Backfill Colorfle only
+curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/admin/backfill?start=2022-04-25&end=2023-04-25&game=colorfle"
+```
+
+```json
+{
+  "success": true,
+  "message": "Backfilled 513 colordle and 513 colorfle answers",
+  "colordle": 513,
+  "colorfle": 513,
+  "errors": []
+}
+```
+
+> **Warning**: Cloudflare Workers have a ~50 subrequest limit per invocation. For large date ranges, break into 3-month batches or use the direct D1 seed method instead.
+
+---
+
+## File Structure
+
+```
+worker/
+├── src/
+│   ├── index.ts            # Main request handler + cron trigger
+│   ├── colordle-logic.ts   # Colordle answer computation (976 colors, day offset 500)
+│   └── colorfle-logic.ts   # Colorfle answer computation (20 colors, seeded PRNG, YCC+RGB mixing)
+├── scripts/
+│   ├── generate-seed.mjs   # Standalone seed data generator (no imports, runs with node)
+│   └── generate-seed.ts    # TypeScript seed generator (imports from src/)
+├── schema.sql              # D1 database schema (3 tables + indexes)
+├── seed.sql                # Pre-computed seed data (auto-generated, do not edit manually)
+├── wrangler.toml           # Cloudflare Worker configuration
+├── package.json            # Dependencies and npm scripts
+├── tsconfig.json           # TypeScript configuration
+└── README.md               # This file
+```
+
+---
 
 ## Database Schema
 
-### colordle_answers
+### `colordle_answers`
 
 | Column | Type | Description |
 |--------|------|-------------|
-| date | TEXT (PK) | YYYY-MM-DD format |
-| day_number | INTEGER | Puzzle day number (starts at 500) |
-| color_name | TEXT | Display name (e.g., "Night Sky") |
-| color_hex | TEXT | Hex code (e.g., "#292b31") |
-| created_at | TEXT | Record creation timestamp |
-| updated_at | TEXT | Record update timestamp |
+| `date` | TEXT (PK) | Date in `YYYY-MM-DD` format |
+| `day_number` | INTEGER | Puzzle day number (starts at 500) |
+| `color_name` | TEXT | Display name (e.g., "Night Sky") |
+| `color_hex` | TEXT | Hex code (e.g., "#292b31") |
+| `created_at` | TEXT | Record creation timestamp |
+| `updated_at` | TEXT | Record update timestamp |
 
-### colorfle_answers
+**Index**: `idx_colordle_day` on `day_number`
 
-| Column | Type | Description |
-|--------|------|-------------|
-| date | TEXT (PK) | YYYY-MM-DD format |
-| puzzle_number | INTEGER | Puzzle number since launch |
-| mode | INTEGER | 0 = 3 blocks, 1 = 4 blocks |
-| color_indices | TEXT (JSON) | Array of color indices |
-| color_names | TEXT (JSON) | Array of color names |
-| color_hexes | TEXT (JSON) | Array of hex codes |
-| color_weights | TEXT (JSON) | Array of weights |
-| target_hex | TEXT | Mixed target hex code |
-| target_rgb | TEXT (JSON) | RGB object {r,g,b} |
-| created_at | TEXT | Record creation timestamp |
-| updated_at | TEXT | Record update timestamp |
-
-### metadata
+### `colorfle_answers`
 
 | Column | Type | Description |
 |--------|------|-------------|
-| key | TEXT (PK) | Metadata key |
-| value | TEXT | Metadata value |
-| updated_at | TEXT | Update timestamp |
+| `date` | TEXT (PK) | Date in `YYYY-MM-DD` format |
+| `puzzle_number` | INTEGER | Puzzle number since launch |
+| `mode` | INTEGER | 0 = 3 blocks, 1 = 4 blocks |
+| `color_indices` | TEXT (JSON) | Array of color indices (e.g., `[3, 7, 15]`) |
+| `color_names` | TEXT (JSON) | Array of color names |
+| `color_hexes` | TEXT (JSON) | Array of hex codes |
+| `color_weights` | TEXT (JSON) | Array of weights |
+| `target_hex` | TEXT | Mixed target hex code |
+| `target_rgb` | TEXT (JSON) | RGB object `{"r":120,"g":210,"b":180}` |
+| `created_at` | TEXT | Record creation timestamp |
+| `updated_at` | TEXT | Record update timestamp |
 
-## Setup & Deployment
+**Index**: `idx_colorfle_puzzle` on `puzzle_number`
+
+### `metadata`
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `key` | TEXT (PK) | Metadata key (e.g., `last_cron_run`, `last_seed`) |
+| `value` | TEXT | Metadata value |
+| `updated_at` | TEXT | Update timestamp |
+
+---
+
+## Deployment Instructions
 
 ### Prerequisites
 
 - Node.js 18+
-- Wrangler CLI (`npm install -g wrangler`)
+- Wrangler CLI
 - Cloudflare account with D1 access
 
-### Step 1: Install Dependencies
+### Step-by-Step
+
+#### 1. Install Wrangler
 
 ```bash
-cd worker
-npm install
+npm install -g wrangler
 ```
 
-### Step 2: Create D1 Database
+#### 2. Login to Cloudflare
+
+```bash
+wrangler login
+```
+
+#### 3. Create D1 Database
 
 ```bash
 wrangler d1 create colordleanswer-db
@@ -199,15 +440,26 @@ database_name = "colordleanswer-db"
 database_id = "YOUR_ACTUAL_DATABASE_ID"
 ```
 
-### Step 3: Apply Schema
+#### 4. Apply Schema
 
 ```bash
-wrangler d1 execute colordleanswer-db --file=./schema.sql
+wrangler d1 execute colordleanswer-db --file=schema.sql
 ```
 
-### Step 4: Backfill Historical Data
+#### 5. Seed Data
 
-Option A - Using the API endpoint (runs on the edge, use 3-month batches to avoid Cloudflare subrequest limits):
+**Option A — Direct D1 execution (recommended for initial seed):**
+
+```bash
+# Generate seed SQL (includes all answers from game start to today)
+node scripts/generate-seed.mjs > seed.sql
+
+# Execute against D1
+wrangler d1 execute colordleanswer-db --file=seed.sql
+```
+
+**Option B — API backfill (use 3-month batches):**
+
 ```bash
 # Colorfle (started 2022-04-25)
 curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/admin/backfill?start=2022-04-25&end=2023-04-25&game=colorfle"
@@ -216,81 +468,105 @@ curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/admin/back
 curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/admin/backfill?start=2023-08-07&end=2023-12-31&game=both"
 ```
 
-**Important**: The backfill endpoint automatically respects game start dates. For Colordle, only dates from 2023-08-07 onward will be computed. For Colorfle, dates from 2022-04-25 onward. Use `game=colordle`, `game=colorfle`, or `game=both`.
-
-Option B - Using direct D1 execution (faster, recommended for initial seed):
-```bash
-# Generate seed SQL
-npx tsx scripts/generate-seed.ts > seed.sql
-
-# Execute against D1
-wrangler d1 execute colordleanswer-db --file=./seed.sql
-```
-
-### Step 5: Set Secrets
-
-Set these secrets in the Cloudflare dashboard or via wrangler:
+#### 6. Set Secrets
 
 ```bash
-# GitHub token for triggering rebuilds (needs repo dispatch permission)
+# GitHub PAT for triggering repository_dispatch
 wrangler secret put GITHUB_TOKEN
 
-# GitHub repo in owner/repo format
+# GitHub repo name in owner/repo format
 wrangler secret put GITHUB_REPO
 # Enter: sujitbhai7710/wordsolver.tech-colordle-colorfle
 ```
 
-### Step 6: Deploy
+#### 7. Deploy
 
 ```bash
 wrangler deploy
 ```
 
-### Step 7: Configure Custom Domain (Optional)
+### NPM Scripts
 
-In Cloudflare Dashboard → Workers → your worker → Settings → Domains & Routes:
-- Add `api.colordleanswer.me` or use the default `*.workers.dev` domain
+| Script | Command | Description |
+|--------|---------|-------------|
+| `dev` | `wrangler dev` | Start local dev server on port 8787 |
+| `deploy` | `wrangler deploy` | Deploy to Cloudflare |
+| `db:create` | `wrangler d1 create colordleanswer-db` | Create D1 database |
+| `db:migrate` | `wrangler d1 execute colordleanswer-db --file=./schema.sql` | Apply schema to remote D1 |
+| `db:migrate:local` | `wrangler d1 execute colordleanswer-db --local --file=./schema.sql` | Apply schema to local D1 |
+| `db:backfill` | `wrangler d1 execute colordleanswer-db --file=./seed.sql` | Seed remote D1 |
+| `db:backfill:local` | `wrangler d1 execute colordleanswer-db --local --file=./seed.sql` | Seed local D1 |
+| `tail` | `wrangler tail` | View real-time Worker logs |
 
-## Cron Job
+---
 
-The Worker runs a cron job daily at **12:00 AM IST (18:30 UTC)** that:
+## Environment Variables
 
-1. Computes today's Colordle answer and stores in D1
-2. Computes today's Colorfle answer and stores in D1
-3. Triggers a GitHub Actions rebuild of the static Astro site
+Set via `wrangler secret put` or the Cloudflare Dashboard.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `GITHUB_TOKEN` | No* | GitHub Personal Access Token with `repo` scope for triggering `repository_dispatch` events |
+| `GITHUB_REPO` | No* | GitHub repository in `owner/repo` format (e.g., `sujitbhai7710/wordsolver.tech-colordle-colorfle`) |
+
+\*Required only for automatic GitHub rebuild triggers via cron. If not set, the cron will still compute and store answers, but won't trigger the Astro frontend rebuild.
+
+---
+
+## How the Cron Works
 
 The cron is configured in `wrangler.toml`:
+
 ```toml
 [triggers]
 crons = ["30 18 * * *"]
 ```
 
+This fires at **18:30 UTC**, which is **12:00 AM IST** (midnight India Standard Time, UTC+5:30).
+
+At each cron invocation, the `scheduled` handler:
+
+1. **Computes today's Colordle answer** using the deterministic algorithm and stores it in D1 (via `INSERT OR REPLACE`)
+2. **Computes today's Colorfle answer** using the seeded PRNG and stores it in D1
+3. **Updates the metadata table** with `last_cron_run` timestamp
+4. **Triggers a GitHub `repository_dispatch` event** (`event_type: "daily_update"`) to rebuild the Astro frontend so the static today page reflects the new answer
+
+If any step fails, the error is logged but does not prevent other steps from executing.
+
+---
+
 ## On-Demand Answer Computation
 
-When an archive request comes in for a date that hasn't been stored in D1 yet, the Worker automatically:
+When an API request comes in for a date that hasn't been stored in D1 yet (e.g., an old archive date that wasn't backfilled), the Worker automatically:
 
 1. Computes the answer using the deterministic algorithm
-2. Stores it in D1 for future requests
+2. Stores it in D1 with `INSERT OR REPLACE` for future requests
 3. Returns the answer to the client
 
-This means the archive works even for dates that haven't been backfilled.
+This means the full archive works even without prior backfill — answers are lazily computed and cached on first request.
 
-## Performance Optimization
+---
 
-- **Edge caching**: API responses include `Cache-Control` headers for CDN caching
-- **D1 indexing**: Date and day_number columns are indexed
-- **On-demand computation**: Only stores answers when requested, reducing DB size
-- **CORS headers**: Pre-configured for cross-origin requests from the Astro site
-- **Minimal dependencies**: Pure TypeScript logic, no external npm packages needed at runtime
+## Frontend Integration
 
-## Environment Variables
+The Astro frontend's `ArchiveCalendar.svelte` component and `daily-data.js` module fetch from this API using:
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `GITHUB_TOKEN` | No* | GitHub PAT with repo dispatch permission |
-| `GITHUB_REPO` | No* | GitHub repo in `owner/repo` format |
+```javascript
+const API_BASE = 'https://colordleanswer-api.wordleanswerofficial.workers.dev';
+```
 
-*Required only for automatic GitHub rebuild triggers via cron
+### Endpoints used by the frontend
+
+| Frontend Component | API Endpoint | Purpose |
+|---|---|---|
+| `ArchiveCalendar.svelte` | `GET /api/{game}/archive?month=YYYY-MM` | Fetch monthly batch for calendar display |
+| `ArchiveCalendar.svelte` | `GET /api/{game}/archive/YYYY-MM-DD` | Fetch single date answer |
+| Today page | `GET /api/today` | Fetch both game answers |
+| Daily data module | `GET /api/colordle/today` / `GET /api/colorfle/today` | Fetch individual game answers |
+
+To change the API URL, update the `API_BASE` constant in those frontend files.
+
+---
 
 ## Local Development
 
@@ -298,64 +574,46 @@ This means the archive works even for dates that haven't been backfilled.
 # Install dependencies
 npm install
 
-# Create local D1 database
+# Create local D1 database and apply schema
 wrangler d1 execute colordleanswer-db --local --file=./schema.sql
 
 # Backfill local database
-npx tsx scripts/generate-seed.ts > seed.sql
+node scripts/generate-seed.mjs > seed.sql
 wrangler d1 execute colordleanswer-db --local --file=./seed.sql
 
-# Run dev server
+# Start dev server (available at http://localhost:8787)
 wrangler dev
 ```
 
-The local dev server will be available at `http://localhost:8787`.
+---
 
 ## Monitoring
 
 ```bash
-# View real-time logs
+# View real-time Worker logs
 wrangler tail
 
 # Check database stats
 curl https://colordleanswer-api.wordleanswerofficial.workers.dev/api/stats
+
+# Quick health check
+curl https://colordleanswer-api.wordleanswerofficial.workers.dev/health
 ```
 
-## File Structure
+---
 
-```
-worker/
-├── src/
-│   ├── index.ts           # Main Worker entry point with all API routes
-│   ├── colordle-logic.ts  # Colordle answer computation logic
-│   └── colorfle-logic.ts  # Colorfle answer computation logic
-├── scripts/
-│   └── generate-seed.ts   # Script to generate seed SQL for backfilling
-├── schema.sql             # D1 database schema
-├── package.json           # Dependencies and scripts
-├── tsconfig.json          # TypeScript configuration
-├── wrangler.toml          # Cloudflare Worker configuration
-└── README.md              # This file
-```
+## Notes
 
-## Game Start Dates Reference
+- **Colordle answers** are deterministic based on a 976-color list indexed by day number. The list is sourced from `colordle.ryantanen.com/colors.json` and stored statically in `colordle-logic.ts`.
+- **Colorfle answers** use a seeded PRNG (a minimal implementation of the Alea/xorshift algorithm matching `seedrandom` behavior) with YCC+RGB dual-space color mixing for perceptually accurate color blending.
+- **The Worker computes answers on-the-fly** if not in D1, then caches them. This means the API always returns a valid answer even for dates that haven't been backfilled.
+- **Colordle rolls over at 16:30 UTC** — after 16:30 UTC, the next day's puzzle becomes the "current" one.
+- **Colorfle rolls over at 15:00 UTC** — after 15:00 UTC, the next day's puzzle becomes the "current" one.
+- **CORS** is fully configured with `Access-Control-Allow-Origin: *` and preflight support, allowing cross-origin requests from any frontend.
+- **Cache headers** on successful responses: `Cache-Control: public, max-age=300, s-maxage=600` (5 min browser cache, 10 min CDN cache).
+- **Error responses** return `Cache-Control: no-cache` to avoid caching failures.
 
-| Game | Start Date | First Day # | End Date (Current) | Total Answers |
-|------|-----------|-------------|-------------------|--------------|
-| Colordle | 2023-08-07 | 500 | 2026-05-19 | ~1,017 |
-| Colorfle | 2022-04-25 | 0 | 2026-05-19 | ~1,486 |
-
-**Key Insight**: Colordle and Colorfle have different start dates. Do NOT use 2022-04-25 for Colordle — it started over a year later on 2023-08-07. This was verified from the reference repo `toviralideasyt7/wordsolverx-z-ai` which uses `startDate: '2023-08-07'` and `dayOffset: 500` for Colordle.
-
-## Frontend Integration
-
-The Astro frontend (`/home/z/my-project/wordsolver/`) connects to this Worker API through the `ArchiveCalendar.svelte` component and the `daily-data.js` module. The API base URL is configured in those files:
-
-```javascript
-const API_BASE = 'https://colordleanswer-api.wordleanswerofficial.workers.dev';
-```
-
-To change the API URL, update this constant in the Svelte component and the daily-data module.
+---
 
 ## Troubleshooting
 
@@ -363,31 +621,40 @@ To change the API URL, update this constant in the Svelte component and the dail
 
 1. Verify the Worker is deployed: `wrangler deployments list`
 2. Check the D1 binding is correct in `wrangler.toml`
-3. Ensure the database ID matches your actual D1 database
+3. Ensure the `database_id` matches your actual D1 database
 
 ### Backfill fails or times out
 
-Cloudflare Workers have a subrequest limit (~50 per invocation). For large date ranges, break the backfill into smaller batches (3-month chunks recommended):
+Cloudflare Workers have a ~50 subrequest limit per invocation. Break large date ranges into smaller batches:
 
 ```bash
-# Example: batch backfill
-curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/admin/backfill?start=2023-08-07&end=2023-12-31&game=both"
-curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/admin/backfill?start=2024-01-01&end=2024-03-31&game=both"
+# Batch backfill in 3-month chunks
+curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/admin/backfill?start=2022-04-25&end=2022-07-25&game=colorfle"
+curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/admin/backfill?start=2022-07-26&end=2022-10-26&game=colorfle"
 # Continue with more batches...
 ```
 
-Alternatively, use direct D1 execution:
+Or use direct D1 execution (no subrequest limits):
+
 ```bash
-npx tsx scripts/generate-seed.ts > seed.sql
-wrangler d1 execute colordleanswer-db --file=./seed.sql
+node scripts/generate-seed.mjs > seed.sql
+wrangler d1 execute colordleanswer-db --file=seed.sql
 ```
 
 ### Cron not running
 
-1. Check the cron schedule in `wrangler.toml`
-2. Verify the Worker is deployed with the cron trigger
-3. Check logs: `wrangler tail` during the scheduled time
+1. Verify the cron schedule in `wrangler.toml`: `crons = ["30 18 * * *"]`
+2. Ensure the Worker is deployed with the cron trigger: `wrangler deploy`
+3. Check logs during the scheduled time: `wrangler tail`
+
+### GitHub rebuild not triggering
+
+1. Verify `GITHUB_TOKEN` and `GITHUB_REPO` secrets are set: check in Cloudflare Dashboard → Worker → Settings → Variables
+2. Ensure the token has `repo` scope for `repository_dispatch` permission
+3. Check the `last_cron_run` value in the metadata table via `/api/stats`
+
+---
 
 ## License
 
-Private - for colordleanswer.me use only
+Private — for colordleanswer.me use only.

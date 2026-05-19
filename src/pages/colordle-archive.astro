@@ -59,7 +59,7 @@ const schema = JSON.stringify({
       gameName="Colordle"
       gameColor="teal"
       gameType="colordle"
-      startDate={new Date('2022-04-25')}
+      startDate={new Date('2023-08-07')}
     />
   </section>
 
@@ -85,7 +85,7 @@ const schema = JSON.stringify({
 
     <div class="content-section">
       <h2>How the Colordle Archive Works</h2>
-      <p>The Colordle archive on this page uses an interactive calendar that lets you select any past date and instantly see the answer for that day's puzzle. The calendar shows all dates from the game's launch on January 1, 2024, through today. Dates with available answers are highlighted and clickable — simply click a date to load the answer, then use the CSS-only reveal mechanism to view the solution. The reveal is intentional and deliberate, so you will not accidentally see an answer you did not want to see while browsing the calendar. This design respects players who want to use the archive for reference without spoiling answers they might want to work through themselves.</p>
+      <p>The Colordle archive on this page uses an interactive calendar that lets you select any past date and instantly see the answer for that day's puzzle. The calendar shows all dates from the game's launch on August 7, 2023, through today. Dates with available answers are highlighted and clickable — simply click a date to load the answer, then use the CSS-only reveal mechanism to view the solution. The reveal is intentional and deliberate, so you will not accidentally see an answer you did not want to see while browsing the calendar. This design respects players who want to use the archive for reference without spoiling answers they might want to work through themselves.</p>
       <p>The answers are computed using the exact same algorithm that Colordle uses. Each day is assigned a sequential puzzle number starting from the launch date, and the target color is selected from a pre-defined list indexed by that day number. The list cycles through after it exhausts all entries, returning to the beginning. Our implementation resolves each color name against a comprehensive database of named colors to produce the exact hex code, which is displayed alongside the color swatch in the archive. There is no approximation involved — the color you see in the archive is the same color that appeared in the game on that date.</p>
       <p>The calendar also supports a list view and a search function. If you remember the approximate date of a puzzle you want to look up but do not want to navigate through the calendar month by month, switch to list view and scroll through the chronological list of all past puzzles. The search bar lets you filter by date or puzzle number, making it easy to find a specific entry even among hundreds of past puzzles. The list view shows the most recent puzzles first, since that is the most common lookup direction — people usually want to check yesterday's answer, not last year's.</p>
     </div>
@@ -106,7 +106,7 @@ const schema = JSON.stringify({
 
     <div class="content-section">
       <h2>Frequently Asked Questions About the Archive</h2>
-      <p><strong>How far back does the archive go?</strong> The archive starts from January 1, 2024, which is when Colordle launched its daily puzzle system. Every puzzle from that date forward is included, and new puzzles are added automatically each day when the daily puzzle resets. The archive currently contains over 800 past puzzles and grows by one entry every day.</p>
+      <p><strong>How far back does the archive go?</strong> The archive starts from August 7, 2023, which is when Colordle launched its daily puzzle system. Every puzzle from that date forward is included, and new puzzles are added automatically each day when the daily puzzle resets. The archive currently contains over 1,000 past puzzles and grows by one entry every day.</p>
       <p><strong>Are the archive answers accurate?</strong> Yes. The answers are computed using the exact same algorithm that Colordle uses to generate its daily targets. We use the same color list, the same day-number calculation, and the same indexing formula. If you ever see a discrepancy between our archive and the game itself, please report it through our contact page and we will investigate immediately. Accuracy is the most important quality of any puzzle reference tool, and we take it seriously.</p>
       <p><strong>Can I play past puzzles through the archive?</strong> The archive shows the answers but does not let you play past puzzles interactively. Colordle's daily format does not support replaying old puzzles — each date has exactly one puzzle, and once the day passes, that puzzle is gone. If you want to practice with random puzzles outside the daily constraint, use our unlimited mode, which generates fresh random targets from the same color pool.</p>
       <p><strong>Why do some colors appear more than once in the archive?</strong> The color list cycles through after exhausting all entries, so colors repeat on a cycle that depends on the list length. Additionally, some colors have multiple valid names — "sky blue" and "skyblue" might both appear as separate entries. These duplicates are part of the official color list and are not errors in our archive.</p>

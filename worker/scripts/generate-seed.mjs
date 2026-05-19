@@ -5,7 +5,7 @@
 // ========== Inline game logic (matching src/colordle-logic.ts and src/colorfle-logic.ts) ==========
 
 // --- Colordle Logic ---
-const COLORDLE_START_DATE = new Date('2022-04-25T00:00:00Z');
+const COLORDLE_START_DATE = new Date('2023-08-07T00:00:00Z');
 const COLORDLE_DAY_OFFSET = 500;
 
 const COLORDLE_COLORS = [
@@ -408,7 +408,8 @@ function getColorfleAnswer(dateStr, mode = 0) {
 
 // ========== Main ==========
 function main() {
-  const startDate = '2022-04-25';
+  const colordleStart = '2023-08-07';
+  const colorfleStart = '2022-04-25';
   const now = new Date();
   const istOffset = 5.5 * 60 * 60 * 1000;
   const istTime = new Date(now.getTime() + istOffset + now.getTimezoneOffset() * 60000);
@@ -416,12 +417,13 @@ function main() {
 
   console.log('-- Seed data for colordleanswer-db');
   console.log(`-- Generated on: ${new Date().toISOString()}`);
-  console.log(`-- Date range: ${startDate} to ${endDate}`);
+  console.log(`-- Colordle date range: ${colordleStart} to ${endDate}`);
+  console.log(`-- Colorfle date range: ${colorfleStart} to ${endDate}`);
   console.log('');
 
-  console.log('-- Colordle answers');
+  console.log('-- Colordle answers (starts 2023-08-07)');
   let colordleCount = 0;
-  const currentDate = new Date(startDate + 'T12:00:00Z');
+  const currentDate = new Date(colordleStart + 'T12:00:00Z');
   const end = new Date(endDate + 'T12:00:00Z');
   while (currentDate <= end) {
     const dateStr = currentDate.toISOString().slice(0, 10);
@@ -435,9 +437,9 @@ function main() {
   console.log(`-- ${colordleCount} colordle answers`);
   console.log('');
 
-  console.log('-- Colorfle answers');
+  console.log('-- Colorfle answers (starts 2022-04-25)');
   let colorfleCount = 0;
-  const currentDate2 = new Date(startDate + 'T12:00:00Z');
+  const currentDate2 = new Date(colorfleStart + 'T12:00:00Z');
   while (currentDate2 <= end) {
     const dateStr = currentDate2.toISOString().slice(0, 10);
     const answer = getColorfleAnswer(dateStr, 0);
