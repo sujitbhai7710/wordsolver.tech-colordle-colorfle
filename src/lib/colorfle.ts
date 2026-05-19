@@ -1,4 +1,4 @@
-// Colorfle game logic for WordSolver
+// Colorfle game logic for Colordle Answer
 import seedrandom from 'seedrandom';
 import { hexToRgb, rgbToHex, type RGB } from './color-utils.js';
 

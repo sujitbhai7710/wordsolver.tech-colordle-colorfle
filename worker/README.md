@@ -337,6 +337,34 @@ curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/admin/back
 
 > **Warning**: Cloudflare Workers have a ~50 subrequest limit per invocation. For large date ranges, break into 3-month batches or use the direct D1 seed method instead.
 
+#### `GET /api/admin/clear?confirm=yes&game=both`
+
+Clear all answers from the D1 database. Requires `confirm=yes` parameter to prevent accidental clears.
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `confirm` | Yes | Must be `yes` to confirm the clear operation |
+| `game` | No | `colordle`, `colorfle`, or `both` (default: `both`) |
+
+```bash
+# Clear both games (with confirmation)
+curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/admin/clear?confirm=yes&game=both"
+
+# Clear only colordle answers
+curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/admin/clear?confirm=yes&game=colordle"
+```
+
+```json
+{
+  "success": true,
+  "message": "Cleared 1018 colordle and 1487 colorfle answers",
+  "colordle": 1018,
+  "colorfle": 1487
+}
+```
+
+> **Warning**: This operation is irreversible. All cached answers will be deleted and will need to be recomputed (either via backfill or on-demand when requested).
+
 ---
 
 ## File Structure

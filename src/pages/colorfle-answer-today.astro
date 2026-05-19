@@ -18,11 +18,11 @@ const schema = JSON.stringify({
       "author": {
         "@type": "Person",
         "name": "Alex Rivera",
-        "description": "Color puzzle enthusiast and WordSolver editor."
+        "description": "Color puzzle enthusiast and Colordle Answer editor."
       },
       "publisher": {
         "@type": "Organization",
-        "name": "WordSolver",
+        "name": "Colordle Answer",
         "logo": { "@type": "ImageObject", "url": "https://colordleanswer.me/favicon.svg" }
       }
     },
@@ -39,7 +39,7 @@ const schema = JSON.stringify({
 ---
 
 <Layout
-  title={`Colorfle Answer Today (${data.formattedDate}) | WordSolver`}
+  title={`Colorfle Answer Today (${data.formattedDate}) | Colordle Answer`}
   description={`Today's Colorfle answer for ${data.formattedDate}. See the three source colors, weights, and target hex for puzzle #${data.puzzleNumber}.`}
   keywords="colorfle answer today, colorfle solution, colorfle hint, daily color mixing puzzle"
   schema={schema}
@@ -161,7 +161,7 @@ const schema = JSON.stringify({
       <div class="author-avatar">AR</div>
       <div>
         <div class="author-name">Alex Rivera</div>
-        <div class="author-desc">Color puzzle enthusiast. Plays Colordle and Colorfle daily. Built WordSolver after getting stuck at 98% one too many times.</div>
+        <div class="author-desc">Color puzzle enthusiast. Plays Colordle and Colorfle daily. Built Colordle Answer after getting stuck at 98% one too many times.</div>
       </div>
     </div>
   </section>

@@ -1,7 +1,7 @@
-// SEO helper functions for WordSolver (colordleanswer.me)
+// SEO helper functions for Colordle Answer (colordleanswer.me)
 
 const SITE_URL = 'https://colordleanswer.me';
-const SITE_NAME = 'WordSolver';
+const SITE_NAME = 'Colordle Answer';
 
 export function generateOrganizationSchema() {
   return JSON.stringify({
@@ -12,7 +12,7 @@ export function generateOrganizationSchema() {
     logo: `${SITE_URL}/favicon.svg`,
     description: 'Your daily companion for color puzzle games. Get answers, use solvers, and play unlimited rounds of Colordle and Colorfle.',
     sameAs: [
-      'https://x.com/WordSolverTech'
+      'https://x.com/Colordle AnswerTech'
     ]
   });
 }

@@ -399,7 +399,7 @@
             <div class="reveal-text">Click to reveal the answer</div>
           </button>
         {:else}
-          <div class="reveal-content">
+          <div class="archive-reveal-content">
             {@html gameType === 'colordle' ? renderColordleAnswer(selectedAnswer) : renderColorfleAnswer(selectedAnswer)}
           </div>
         {/if}
@@ -841,5 +841,16 @@
 
   .retry-btn:hover {
     opacity: 0.9;
+  }
+
+  /* Archive reveal content - explicitly NOT display:none (overrides global CSS) */
+  .archive-reveal-content {
+    display: block !important;
+    animation: revealFadeIn 0.4s ease;
+  }
+
+  @keyframes revealFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 </style>

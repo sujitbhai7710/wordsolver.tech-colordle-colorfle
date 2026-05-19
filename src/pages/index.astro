@@ -6,19 +6,19 @@ const schema = JSON.stringify({
   "@graph": [
     {
       "@type": "Organization",
-      "name": "WordSolver",
+      "name": "Colordle Answer",
       "url": "https://colordleanswer.me",
       "logo": "https://colordleanswer.me/favicon.svg",
       "description": "Free daily puzzle solvers and answer helpers for Colordle, Colorfle, and other color games."
     },
     {
       "@type": "WebSite",
-      "name": "WordSolver",
+      "name": "Colordle Answer",
       "url": "https://colordleanswer.me"
     },
     {
       "@type": "WebPage",
-      "name": "WordSolver - Free Color Puzzle Solvers & Daily Answers",
+      "name": "Colordle Answer - Free Color Puzzle Solvers & Daily Answers",
       "description": "Get today's Colordle and Colorfle answers instantly. Free solvers, unlimited play, archive lookups, and daily puzzle solutions.",
       "url": "https://colordleanswer.me"
     }
@@ -27,7 +27,7 @@ const schema = JSON.stringify({
 ---
 
 <Layout
-  title="WordSolver - Free Color Puzzle Solvers & Daily Answers"
+  title="Colordle Answer - Free Color Puzzle Solvers & Daily Answers"
   description="Get today's Colordle and Colorfle answers instantly. Free solvers, unlimited play, archive lookups, and daily puzzle solutions for color games."
   keywords="colordle answer today, colorfle answer today, colordle solver, colorfle solver, color puzzle solver, daily puzzle answer, colordle archive, colorfle archive"
   schema={schema}
@@ -38,7 +38,7 @@ const schema = JSON.stringify({
       <span class="hero-badge">Free Puzzle Tools</span>
       <h1>Solve Color Puzzles<br/>Faster Than Ever</h1>
       <p>
-        WordSolver gives you today's Colordle and Colorfle answers, powerful solvers that narrow down candidates in seconds, archive lookups for any past date, and unlimited practice mode so you can sharpen your color perception every day.
+        Colordle Answer gives you today's Colordle and Colorfle answers, powerful solvers that narrow down candidates in seconds, archive lookups for any past date, and unlimited practice mode so you can sharpen your color perception every day.
       </p>
       <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
         <a href="/today" class="btn btn-primary">Today's Answers</a>
@@ -168,11 +168,11 @@ const schema = JSON.stringify({
   <!-- Content -->
   <section class="container" style="padding-bottom:2.5rem;">
     <div class="content-section">
-      <h2>What WordSolver Does (And Why It Exists)</h2>
-      <p>WordSolver is a free toolkit for two of the most popular daily color puzzle games on the internet: Colordle and Colorfle. Colordle picks a named color each day and challenges you to guess it by typing color names and reading similarity percentages. The closer your guess is to the target color in perceptual distance, the higher the percentage climbs. Colorfle gives you a target color and asks you to figure out which three source colors mix together to create it using weighted RGB averaging. Both games are clever, both are addictive, and both can be genuinely frustrating when you are stuck at 94% with no idea what name the game wants you to type next.</p>
+      <h2>What Colordle Answer Does (And Why It Exists)</h2>
+      <p>Colordle Answer is a free toolkit for two of the most popular daily color puzzle games on the internet: Colordle and Colorfle. Colordle picks a named color each day and challenges you to guess it by typing color names and reading similarity percentages. The closer your guess is to the target color in perceptual distance, the higher the percentage climbs. Colorfle gives you a target color and asks you to figure out which three source colors mix together to create it using weighted RGB averaging. Both games are clever, both are addictive, and both can be genuinely frustrating when you are stuck at 94% with no idea what name the game wants you to type next.</p>
       <p>That frustration is exactly why this site exists. We are not here to skip the puzzle for you — the reveal buttons give you that choice — we are here to give you better tools for when you want to solve it yourself but need a nudge in the right direction. The Colordle solver lets you enter your guess and the percentage you received, then filters the entire color list to show only candidates that would produce that same score under the same Delta E CIE2000 calculation. The Colorfle solver takes a target hex and finds the closest three-color combinations, then lets you refine with the same green, yellow, and gray feedback the game uses to narrow down to the exact answer.</p>
       <p>Both solvers use the exact same algorithms the games themselves use. Colordle scoring uses Delta E CIE2000 in LAB color space — the industry standard for perceptual color difference that professional printers, textile manufacturers, and paint companies rely on every day. Colorfle mixing uses weighted RGB averaging across both YCC and RGB color spaces, exactly matching the official game's output. When the solver says a color would score 85.32%, that is the same number you would see in the game itself, down to the decimal point.</p>
-      <p>We built WordSolver because we play these games ourselves. We got tired of guessing blindly at 97% with no systematic way to narrow things down. The solvers are not cheats — they are reference tools, the same way a crossword dictionary helps you find the right word when you have most of the letters filled in. If you want to learn how Delta E scoring works under the hood, how weighted RGB mixing produces a target color from three sources, or how to develop better color perception through daily practice, the content on each page explains those concepts in plain, straightforward language that anyone can follow.</p>
+      <p>We built Colordle Answer because we play these games ourselves. We got tired of guessing blindly at 97% with no systematic way to narrow things down. The solvers are not cheats — they are reference tools, the same way a crossword dictionary helps you find the right word when you have most of the letters filled in. If you want to learn how Delta E scoring works under the hood, how weighted RGB mixing produces a target color from three sources, or how to develop better color perception through daily practice, the content on each page explains those concepts in plain, straightforward language that anyone can follow.</p>
     </div>
 
     <div class="content-section">
@@ -187,7 +187,7 @@ const schema = JSON.stringify({
       <p>Start with the daily answer pages if you just want to know the solution. The Colordle and Colorfle answer pages show today's solution with a CSS-powered reveal — the answer is hidden behind a transparent overlay, and clicking the reveal button reveals it with a smooth transition. You can read the strategy hints and contextual content before deciding whether to peek at the solution. If you prefer to solve it yourself but want help narrowing down, open the solver instead. The solver loads automatically when you visit the page — no need to click a start button. Just type your guess and percentage, and the results appear instantly.</p>
       <p>The Colordle solver works best when you make two or three guesses in the actual game first, then enter those guesses and their percentages into the solver. Each guess you add narrows the candidate list significantly. By the third guess, you are usually looking at fewer than ten possible colors, and often just one or two. The Colorfle solver works in two modes: hex-solving gives you initial candidates from a target color, and feedback-solving lets you mark green, yellow, or gray on each guess to eliminate impossible combinations. After two rounds of feedback refinement, the solver typically narrows down to a single combination.</p>
       <p>For practice, use the unlimited modes. Colordle Unlimited generates a random target color each round and shows the target swatch for you to guess. Colorfle Unlimited gives you a random target and a full color palette keyboard to select your guesses, just like the real game. Both modes use the same game logic as the daily versions, so the skills you develop transfer directly. Play five or ten rounds during a break and you will notice a real improvement within a week.</p>
-      <p>The archive pages let you look up any past answer by date. Use the interactive calendar to browse past Colordle or Colorfle puzzles and see the solution for any day since the games launched. The archive is a powerful study tool — browsing dozens of past answers in quick succession reveals patterns in the color pool and exposes you to obscure color names you might never encounter otherwise. Every tool on WordSolver is free, works on mobile and desktop, and requires no sign-up or account. The solvers run entirely in your browser — no data gets sent to any server. Your guesses, percentages, and game state stay on your device.</p>
+      <p>The archive pages let you look up any past answer by date. Use the interactive calendar to browse past Colordle or Colorfle puzzles and see the solution for any day since the games launched. The archive is a powerful study tool — browsing dozens of past answers in quick succession reveals patterns in the color pool and exposes you to obscure color names you might never encounter otherwise. Every tool on Colordle Answer is free, works on mobile and desktop, and requires no sign-up or account. The solvers run entirely in your browser — no data gets sent to any server. Your guesses, percentages, and game state stay on your device.</p>
     </div>
   </section>
 
@@ -197,7 +197,7 @@ const schema = JSON.stringify({
       <div class="author-avatar">AR</div>
       <div>
         <div class="author-name">Alex Rivera</div>
-        <div class="author-desc">Color puzzle enthusiast. Plays Colordle and Colorfle daily. Built WordSolver after getting stuck at 98% one too many times.</div>
+        <div class="author-desc">Color puzzle enthusiast. Plays Colordle and Colorfle daily. Built Colordle Answer after getting stuck at 98% one too many times.</div>
       </div>
     </div>
   </section>

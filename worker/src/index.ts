@@ -379,6 +379,37 @@ async function handleBackfill(env: Env, url: URL): Promise<Response> {
   });
 }
 
+// POST /api/admin/clear - Clear all answers from database
+async function handleClear(env: Env, url: URL): Promise<Response> {
+  const game = url.searchParams.get('game') || 'both'; // colordle, colorfle, or both
+  const confirm = url.searchParams.get('confirm');
+
+  if (confirm !== 'yes') {
+    return errorResponse('Add ?confirm=yes to confirm database clear. This action is irreversible.');
+  }
+
+  const results = { colordle: 0, colorfle: 0 };
+
+  try {
+    if (game === 'both' || game === 'colordle') {
+      const result = await env.DB.prepare('DELETE FROM colordle_answers').run();
+      results.colordle = result.meta?.changes || 0;
+    }
+    if (game === 'both' || game === 'colorfle') {
+      const result = await env.DB.prepare('DELETE FROM colorfle_answers').run();
+      results.colorfle = result.meta?.changes || 0;
+    }
+  } catch (err: any) {
+    return errorResponse(`Failed to clear database: ${err.message}`, 500);
+  }
+
+  return jsonResponse({
+    success: true,
+    message: `Cleared ${results.colordle} colordle and ${results.colorfle} colorfle answers`,
+    ...results,
+  });
+}
+
 // Cron handler - runs daily at 12:00 AM IST (18:30 UTC previous day)
 async function handleCron(env: Env): Promise<void> {
   console.log('Running daily cron job at', new Date().toISOString());
@@ -501,6 +532,11 @@ export default {
         return await handleBackfill(env, url);
       }
 
+      // Admin: clear database
+      if (path === '/api/admin/clear') {
+        return await handleClear(env, url);
+      }
+
       // Health check
       if (path === '/health' || path === '/') {
         return jsonResponse({
@@ -518,6 +554,7 @@ export default {
             'GET /api/colordle/search?color=name',
             'GET /api/stats',
             'GET /api/admin/backfill?start=YYYY-MM-DD&end=YYYY-MM-DD',
+            'GET /api/admin/clear?confirm=yes&game=both',
           ],
           today: getTodayIST(),
         });

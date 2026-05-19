@@ -1,4 +1,4 @@
-// Color utility functions for WordSolver
+// Color utility functions for Colordle Answer
 
 export interface RGB {
   r: number;

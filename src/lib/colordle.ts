@@ -1,4 +1,4 @@
-// Colordle game logic for WordSolver
+// Colordle game logic for Colordle Answer
 import { hexToRgb, colorDiff, type RGB } from './color-utils.js';
 import targetColorNames from '../data/colordle-targets.json';
 
