@@ -1,6 +1,6 @@
 <script>
-  import { getTargetColors } from '../lib/colordle.js';
-  import { getPuzzleAnswer, COLOR_NAMES, COLORS, WEIGHTS } from '../lib/colorfle.js';
+  import { getTargetColorsLite, getColordleDayNum } from '../lib/colordle-targets-lite.js';
+  import { getColorfleAnswerLite, COLOR_NAMES, COLORS, WEIGHTS } from '../lib/colorfle-lite.js';
 
   let {
     gameName = 'Puzzle',
@@ -28,10 +28,10 @@
 
   let theme = $derived(colorThemes[gameColor] || colorThemes.teal);
 
-  // Pre-compute colordle targets once
+  // Pre-compute colordle targets once using lite module
   let colordleTargets = $derived.by(() => {
     if (gameType !== 'colordle') return [];
-    return getTargetColors();
+    return getTargetColorsLite();
   });
 
   let calendarDays = $derived.by(() => {
@@ -139,8 +139,7 @@
   function computeColordleAnswer(dateKey) {
     try {
       const date = new Date(dateKey + 'T12:00:00Z');
-      const sd = new Date('2024-01-01T12:00:00Z');
-      const dayNum = Math.floor((date.getTime() - sd.getTime()) / 86400000);
+      const dayNum = getColordleDayNum(date);
       const color = colordleTargets[Math.abs(dayNum) % colordleTargets.length];
       const formattedDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
@@ -150,7 +149,7 @@
             <div style="width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;border:3px solid var(--border-subtle);box-shadow:var(--shadow-lg);display:flex;align-items:center;justify-content:center;background:${color.hex};font-size:0.85rem;font-weight:800;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.3);">${color.name}</div>
             <div style="font-size:1.5rem;font-weight:800;margin-bottom:0.375rem;color:var(--text-primary);">${color.name}</div>
             <div style="font-family:monospace;font-size:0.9rem;color:var(--text-muted);margin-bottom:0.25rem;">${color.hex}</div>
-            <div style="font-size:0.8rem;color:var(--text-muted);">Puzzle #${dayNum} &middot; ${formattedDate}</div>
+            <div style="font-size:0.8rem;color:var(--text-muted);">Puzzle #${Math.abs(dayNum)} &middot; ${formattedDate}</div>
           </div>
         `,
       };
@@ -163,7 +162,7 @@
   function computeColorfleAnswer(dateKey) {
     try {
       const date = new Date(dateKey + 'T12:00:00Z');
-      const answer = getPuzzleAnswer(date, 0);
+      const answer = getColorfleAnswerLite(date, 0);
       const formattedDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
       const colorBlocks = answer.colors.map((idx, i) => {
