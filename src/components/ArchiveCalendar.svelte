@@ -1,6 +1,6 @@
 <script>
-  import { getTargetColorsLite, getColordleDayNum } from '../lib/colordle-targets-lite.js';
-  import { getColorfleAnswerLite, COLOR_NAMES, COLORS, WEIGHTS } from '../lib/colorfle-lite.js';
+  // API base URL - Cloudflare Worker serving game answers
+  const API_BASE = 'https://colordleanswer-api.wordleanswerofficial.workers.dev';
 
   let {
     gameName = 'Puzzle',
@@ -16,6 +16,9 @@
   let answerRevealed = $state(false);
   let viewMode = $state('calendar');
   let searchQuery = $state('');
+  let loading = $state(false);
+  let error = $state(null);
+  let monthAnswers = $state({}); // Cache for current month answers
 
   const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -23,16 +26,9 @@
   const colorThemes = {
     teal: { primary: '#0D7C66', primaryLight: 'rgba(13,124,102,0.06)', primaryMid: 'rgba(13,124,102,0.12)', primaryBorder: 'rgba(13,124,102,0.2)' },
     pink: { primary: '#BE3A6B', primaryLight: 'rgba(190,58,107,0.06)', primaryMid: 'rgba(190,58,107,0.12)', primaryBorder: 'rgba(190,58,107,0.2)' },
-    blue: { primary: '#1B4965', primaryLight: 'rgba(27,73,101,0.06)', primaryMid: 'rgba(27,73,101,0.12)', primaryBorder: 'rgba(27,73,101,0.2)' },
   };
 
   let theme = $derived(colorThemes[gameColor] || colorThemes.teal);
-
-  // Pre-compute colordle targets once using lite module
-  let colordleTargets = $derived.by(() => {
-    if (gameType !== 'colordle') return [];
-    return getTargetColorsLite();
-  });
 
   let calendarDays = $derived.by(() => {
     const year = currentMonth.getFullYear();
@@ -114,105 +110,125 @@
 
   function prevMonth() {
     currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1);
+    loadMonthAnswers();
   }
 
   function nextMonth() {
     const next = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1);
     if (next <= new Date(today.getFullYear(), today.getMonth(), 1)) {
       currentMonth = next;
+      loadMonthAnswers();
     }
   }
 
   function goToMonth(date) {
     currentMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    loadMonthAnswers();
   }
 
-  function computeAnswer(dateKey) {
-    if (gameType === 'colordle') {
-      return computeColordleAnswer(dateKey);
-    } else if (gameType === 'colorfle') {
-      return computeColorfleAnswer(dateKey);
-    }
-    return null;
-  }
+  async function loadMonthAnswers() {
+    const year = currentMonth.getFullYear();
+    const month = currentMonth.getMonth() + 1;
+    const monthStr = `${year}-${String(month).padStart(2, '0')}`;
 
-  function computeColordleAnswer(dateKey) {
     try {
-      const date = new Date(dateKey + 'T12:00:00Z');
-      const dayNum = getColordleDayNum(date);
-      const color = colordleTargets[Math.abs(dayNum) % colordleTargets.length];
-      const formattedDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-
-      return {
-        html: `
-          <div style="text-align:center;">
-            <div style="width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;border:3px solid var(--border-subtle);box-shadow:var(--shadow-lg);display:flex;align-items:center;justify-content:center;background:${color.hex};font-size:0.85rem;font-weight:800;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.3);">${color.name}</div>
-            <div style="font-size:1.5rem;font-weight:800;margin-bottom:0.375rem;color:var(--text-primary);">${color.name}</div>
-            <div style="font-family:monospace;font-size:0.9rem;color:var(--text-muted);margin-bottom:0.25rem;">${color.hex}</div>
-            <div style="font-size:0.8rem;color:var(--text-muted);">Puzzle #${Math.abs(dayNum)} &middot; ${formattedDate}</div>
-          </div>
-        `,
-      };
+      const response = await fetch(`${API_BASE}/api/${gameType}/archive?month=${monthStr}`);
+      if (response.ok) {
+        const data = await response.json();
+        const cache = {};
+        if (data.answers) {
+          for (const answer of data.answers) {
+            cache[answer.date] = answer;
+          }
+        }
+        monthAnswers = cache;
+      }
     } catch (e) {
-      console.error('Error computing colordle answer:', e);
-      return null;
+      console.error('Failed to load month answers:', e);
     }
   }
 
-  function computeColorfleAnswer(dateKey) {
-    try {
-      const date = new Date(dateKey + 'T12:00:00Z');
-      const answer = getColorfleAnswerLite(date, 0);
-      const formattedDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-
-      const colorBlocks = answer.colors.map((idx, i) => {
-        const name = answer.colorNames[i];
-        const hex = answer.colorHexes[i];
-        const weight = WEIGHTS[0][i];
-        return `<div style="text-align:center;">
-          <div style="width:56px;height:56px;border-radius:12px;background:${hex};border:2px solid var(--border-subtle);margin:0 auto 0.375rem;box-shadow:var(--shadow-sm);"></div>
-          <div style="font-weight:700;font-size:0.85rem;color:var(--text-primary);">${name}</div>
-          <div style="font-size:0.7rem;color:var(--text-muted);font-family:monospace;">${hex}</div>
-          <div style="margin-top:0.25rem;padding:0.15rem 0.5rem;border-radius:6px;background:rgba(236,72,153,0.08);border:1px solid rgba(236,72,153,0.12);font-size:0.65rem;font-weight:700;color:var(--accent-pink);display:inline-block;">
-            ${Math.round(weight * 100)}%
-          </div>
-        </div>`;
-      }).join('');
-
-      return {
-        html: `
-          <div style="text-align:center;">
-            <div style="width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;border:3px solid var(--border-subtle);box-shadow:var(--shadow-lg);background:${answer.targetHex};"></div>
-            <div style="display:flex;justify-content:center;gap:1.25rem;margin-bottom:1rem;flex-wrap:wrap;">
-              ${colorBlocks}
-            </div>
-            <div style="margin-top:0.75rem;">
-              <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:0.375rem;">Mixed to produce:</div>
-              <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
-                <div style="width:32px;height:32px;border-radius:50%;background:${answer.targetHex};border:2px solid var(--border-subtle);"></div>
-                <span style="font-family:monospace;font-size:1rem;font-weight:800;color:var(--text-primary);">${answer.targetHex}</span>
-              </div>
-            </div>
-            <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.75rem;">Puzzle #${answer.puzzleNumber} &middot; ${formattedDate}</div>
-          </div>
-        `,
-      };
-    } catch (e) {
-      console.error('Error computing colorfle answer:', e);
-      return null;
-    }
-  }
-
-  function handleDateClick(dateKey) {
+  async function handleDateClick(dateKey) {
     selectedDate = dateKey;
     answerRevealed = false;
+    loading = true;
+    error = null;
+
     try {
-      selectedAnswer = computeAnswer(dateKey);
+      // Check cache first
+      if (monthAnswers[dateKey]) {
+        selectedAnswer = monthAnswers[dateKey];
+        loading = false;
+        return;
+      }
+
+      // Fetch from API
+      const response = await fetch(`${API_BASE}/api/${gameType}/archive/${dateKey}`);
+      if (response.ok) {
+        selectedAnswer = await response.json();
+      } else {
+        error = 'Failed to load answer';
+        selectedAnswer = null;
+      }
     } catch (e) {
-      console.error('Error getting answer:', e);
+      console.error('Error fetching answer:', e);
+      error = 'Network error - please try again';
       selectedAnswer = null;
+    } finally {
+      loading = false;
     }
   }
+
+  function renderColordleAnswer(answer) {
+    if (!answer) return '';
+    return `
+      <div style="text-align:center;">
+        <div style="width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;border:3px solid var(--border-subtle);box-shadow:var(--shadow-lg);display:flex;align-items:center;justify-content:center;background:${answer.hex};font-size:0.85rem;font-weight:800;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.3);">${answer.colorName}</div>
+        <div style="font-size:1.5rem;font-weight:800;margin-bottom:0.375rem;color:var(--text-primary);">${answer.colorName}</div>
+        <div style="font-family:monospace;font-size:0.9rem;color:var(--text-muted);margin-bottom:0.25rem;">${answer.hex}</div>
+        <div style="font-size:0.8rem;color:var(--text-muted);">Puzzle #${answer.dayNumber || ''} &middot; ${answer.formattedDate || answer.date}</div>
+      </div>
+    `;
+  }
+
+  function renderColorfleAnswer(answer) {
+    if (!answer) return '';
+    const colorBlocks = (answer.colors || []).map((idx, i) => {
+      const name = answer.colorNames?.[i] || '';
+      const hex = answer.colorHexes?.[i] || '';
+      const weight = answer.weights?.[i] || 0;
+      return `<div style="text-align:center;">
+        <div style="width:56px;height:56px;border-radius:12px;background:${hex};border:2px solid var(--border-subtle);margin:0 auto 0.375rem;box-shadow:var(--shadow-sm);"></div>
+        <div style="font-weight:700;font-size:0.85rem;color:var(--text-primary);">${name}</div>
+        <div style="font-size:0.7rem;color:var(--text-muted);font-family:monospace;">${hex}</div>
+        <div style="margin-top:0.25rem;padding:0.15rem 0.5rem;border-radius:6px;background:rgba(190,58,107,0.08);border:1px solid rgba(190,58,107,0.12);font-size:0.65rem;font-weight:700;color:var(--accent-pink);display:inline-block;">
+          ${Math.round(weight * 100)}%
+        </div>
+      </div>`;
+    }).join('');
+
+    return `
+      <div style="text-align:center;">
+        <div style="width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;border:3px solid var(--border-subtle);box-shadow:var(--shadow-lg);background:${answer.targetHex};"></div>
+        <div style="display:flex;justify-content:center;gap:1.25rem;margin-bottom:1rem;flex-wrap:wrap;">
+          ${colorBlocks}
+        </div>
+        <div style="margin-top:0.75rem;">
+          <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:0.375rem;">Mixed to produce:</div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+            <div style="width:32px;height:32px;border-radius:50%;background:${answer.targetHex};border:2px solid var(--border-subtle);"></div>
+            <span style="font-family:monospace;font-size:1rem;font-weight:800;color:var(--text-primary);">${answer.targetHex}</span>
+          </div>
+        </div>
+        <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.75rem;">Puzzle #${answer.puzzleNumber || ''} &middot; ${answer.formattedDate || answer.date}</div>
+      </div>
+    `;
+  }
+
+  // Load initial month answers
+  $effect(() => {
+    loadMonthAnswers();
+  });
 
   let isNextDisabled = $derived(
     currentMonth.getFullYear() === today.getFullYear() && currentMonth.getMonth() === today.getMonth()
@@ -341,29 +357,49 @@
     </div>
   {/if}
 
+  <!-- Loading State -->
+  {#if loading}
+    <div class="answer-section">
+      <div class="answer-card" style="text-align:center;padding:2rem;">
+        <div class="loading-spinner"></div>
+        <div style="color:var(--text-muted);font-size:0.875rem;margin-top:0.75rem;">Loading answer...</div>
+      </div>
+    </div>
+  {/if}
+
+  <!-- Error State -->
+  {#if error && !loading}
+    <div class="answer-section">
+      <div class="answer-card" style="text-align:center;padding:2rem;">
+        <p style="color:var(--accent-primary);font-weight:600;">{error}</p>
+        <button onclick={() => selectedDate && handleDateClick(selectedDate)} class="retry-btn" style="margin-top:0.75rem;">
+          Retry
+        </button>
+      </div>
+    </div>
+  {/if}
+
   <!-- Selected Date Answer -->
-  {#if selectedDate && selectedAnswer}
+  {#if selectedDate && selectedAnswer && !loading && !error}
     <div id="archive-answer" class="answer-section">
       <div class="answer-card" style="--theme-primary: {theme.primary}; --theme-light: {theme.primaryLight}; --theme-mid: {theme.primaryMid}; --theme-border: {theme.primaryBorder};">
         <div class="answer-label">{gameName} Answer — {selectedDate}</div>
 
         {#if !answerRevealed}
           <button class="reveal-btn" onclick={() => answerRevealed = true}>
-            <div class="reveal-circle">
-              ?
-            </div>
+            <div class="reveal-circle">?</div>
             <div class="reveal-text">Click to reveal the answer</div>
           </button>
         {:else}
           <div class="reveal-content">
-            {@html selectedAnswer.html}
+            {@html gameType === 'colordle' ? renderColordleAnswer(selectedAnswer) : renderColorfleAnswer(selectedAnswer)}
           </div>
         {/if}
       </div>
     </div>
   {/if}
 
-  {#if selectedDate && !selectedAnswer}
+  {#if selectedDate && !selectedAnswer && !loading && !error}
     <div class="answer-section">
       <div class="answer-card" style="text-align:center;padding:2rem;">
         <p style="color:var(--text-muted);">No answer data available for {selectedDate}.</p>
@@ -766,5 +802,36 @@
     color: var(--text-muted);
     font-size: 0.8rem;
     font-weight: 500;
+  }
+
+  /* Loading */
+  .loading-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--border-subtle);
+    border-top-color: var(--theme-primary, var(--accent-teal));
+    border-radius: 50%;
+    margin: 0 auto;
+    animation: spin 0.6s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .retry-btn {
+    padding: 0.5rem 1.25rem;
+    border-radius: var(--radius-md);
+    background: var(--accent-primary);
+    color: white;
+    font-weight: 600;
+    font-size: 0.8rem;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+  }
+
+  .retry-btn:hover {
+    opacity: 0.9;
   }
 </style>

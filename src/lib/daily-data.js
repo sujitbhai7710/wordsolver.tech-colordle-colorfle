@@ -1,4 +1,5 @@
 import { getPuzzleAnswer, buildColorfleAnswerPayload } from './colorfle.js';
+import resolvedHexMap from '../data/colordle-resolved-colors.json';
 
 // Get today's date for daily answers
 function getToday() {
@@ -13,6 +14,11 @@ function getDateKey(date) {
   return date.toISOString().slice(0, 10);
 }
 
+// Normalize color name for hex lookup
+function normalizeColorName(name) {
+  return name.toLowerCase().replace(/ /g, '');
+}
+
 // Generate Colordle answer data
 export function getColordleTodayData() {
   // Colordle uses a pre-computed list of target colors indexed by day number
@@ -23,9 +29,13 @@ export function getColordleTodayData() {
   const startDate = new Date('2024-01-01T12:00:00Z');
   const dayNum = Math.floor((today.getTime() - startDate.getTime()) / 86400000);
   const colorName = targets[Math.abs(dayNum) % targets.length];
+  const normalized = normalizeColorName(colorName);
+  const hex = resolvedHexMap[normalized] || '#888888';
+  const displayName = colorName.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
   
   return {
-    colorName,
+    colorName: displayName,
+    hex,
     dayNum,
     formattedDate: formatDate(today),
     dateKey: getDateKey(today)

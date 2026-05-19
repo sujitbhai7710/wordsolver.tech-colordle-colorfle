@@ -1,6 +1,6 @@
-// SEO helper functions for WordSolver (wordsolver.tech)
+// SEO helper functions for WordSolver (colordleanswer.me)
 
-const SITE_URL = 'https://wordsolver.tech';
+const SITE_URL = 'https://colordleanswer.me';
 const SITE_NAME = 'WordSolver';
 
 export function generateOrganizationSchema() {

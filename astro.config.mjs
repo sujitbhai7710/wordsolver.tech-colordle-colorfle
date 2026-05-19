@@ -3,7 +3,7 @@ import svelte from '@astrojs/svelte';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://wordsolver.tech',
+  site: 'https://colordleanswer.me',
   output: 'static',
   integrations: [svelte(), sitemap()],
   build: {
