@@ -34,6 +34,10 @@ function errorResponse(message: string, status = 400): Response {
   return jsonResponse({ error: message, success: false }, status);
 }
 
+// Colordle started on 2023-08-07, Colorfle started on 2022-04-25
+const COLORDLE_MIN_DATE = '2023-08-07';
+const COLORFLE_MIN_DATE = '2022-04-25';
+
 // Validate date format YYYY-MM-DD
 function isValidDate(dateStr: string): boolean {
   return /^\d{4}-\d{2}-\d{2}$/.test(dateStr) && !isNaN(new Date(dateStr + 'T12:00:00Z').getTime());
@@ -203,11 +207,10 @@ async function handleColordleArchive(env: Env, dateStr: string): Promise<Respons
     return errorResponse('Invalid date format. Use YYYY-MM-DD');
   }
 
-  // Check date range
-  const minDate = '2022-04-25';
+  // Check date range - Colordle started 2023-08-07
   const maxDate = getTodayIST();
-  if (dateStr < minDate || dateStr > maxDate) {
-    return errorResponse(`Date must be between ${minDate} and ${maxDate}`);
+  if (dateStr < COLORDLE_MIN_DATE || dateStr > maxDate) {
+    return errorResponse(`Date must be between ${COLORDLE_MIN_DATE} and ${maxDate}`);
   }
 
   const answer = await ensureColordleAnswer(env.DB, dateStr);
@@ -220,10 +223,9 @@ async function handleColorfleArchive(env: Env, dateStr: string): Promise<Respons
     return errorResponse('Invalid date format. Use YYYY-MM-DD');
   }
 
-  const minDate = '2022-04-25';
   const maxDate = getTodayIST();
-  if (dateStr < minDate || dateStr > maxDate) {
-    return errorResponse(`Date must be between ${minDate} and ${maxDate}`);
+  if (dateStr < COLORFLE_MIN_DATE || dateStr > maxDate) {
+    return errorResponse(`Date must be between ${COLORFLE_MIN_DATE} and ${maxDate}`);
   }
 
   const answer = await ensureColorfleAnswer(env.DB, dateStr);
@@ -243,7 +245,7 @@ async function handleColordleMonthArchive(env: Env, monthStr: string): Promise<R
   const answers = [];
   for (let d = 1; d <= daysInMonth; d++) {
     const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-    if (dateStr < '2022-04-25' || dateStr > today) continue;
+    if (dateStr < COLORDLE_MIN_DATE || dateStr > today) continue;
     const answer = await ensureColordleAnswer(env.DB, dateStr);
     answers.push(answer);
   }
@@ -268,7 +270,7 @@ async function handleColorfleMonthArchive(env: Env, monthStr: string): Promise<R
   const answers = [];
   for (let d = 1; d <= daysInMonth; d++) {
     const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-    if (dateStr < '2022-04-25' || dateStr > today) continue;
+    if (dateStr < COLORFLE_MIN_DATE || dateStr > today) continue;
     const answer = await ensureColorfleAnswer(env.DB, dateStr);
     answers.push(answer);
   }
@@ -352,13 +354,13 @@ async function handleBackfill(env: Env, url: URL): Promise<Response> {
   while (currentDate <= endDate) {
     const dateStr = currentDate.toISOString().slice(0, 10);
     
-    if (dateStr >= '2022-04-25' && dateStr <= today) {
+    if (dateStr <= today) {
       try {
-        if (game === 'both' || game === 'colordle') {
+        if ((game === 'both' || game === 'colordle') && dateStr >= COLORDLE_MIN_DATE) {
           await ensureColordleAnswer(env.DB, dateStr);
           results.colordle++;
         }
-        if (game === 'both' || game === 'colorfle') {
+        if ((game === 'both' || game === 'colorfle') && dateStr >= COLORFLE_MIN_DATE) {
           await ensureColorfleAnswer(env.DB, dateStr);
           results.colorfle++;
         }

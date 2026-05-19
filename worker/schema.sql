@@ -1,5 +1,7 @@
 -- Schema for colordleanswer-db D1 database
 -- Stores daily puzzle answers for Colordle and Colorfle
+-- Colordle launched: 2023-08-07 (day #500, with dayOffset=500)
+-- Colorfle launched: 2022-04-25
 
 -- Colordle answers table
 CREATE TABLE IF NOT EXISTS colordle_answers (

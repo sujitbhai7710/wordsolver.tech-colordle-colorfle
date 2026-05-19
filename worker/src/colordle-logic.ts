@@ -3,13 +3,16 @@
 
 // The upstream color list from colordle.ryantanen.com/colors.json
 // We store this as a static list since it rarely changes
-// Start date: 2022-04-25, Day offset: 500
+// Start date: 2023-08-07, Day offset: 500
+// NOTE: Colordle did NOT start on 2022-04-25. That is the Colorfle launch date.
+// Colordle launched on 2023-08-07 (day #500).
 
-export const COLORDLE_START_DATE = new Date('2022-04-25T00:00:00Z');
+export const COLORDLE_START_DATE = new Date('2023-08-07T00:00:00Z');
 export const COLORDLE_DAY_OFFSET = 500;
 
-// Full color list from the upstream API - 973 colors
+// Full color list from the upstream API - 976 colors
 // This is the canonical list used by colordle.ryantanen.com
+// Source: https://colordle.ryantanen.com/colors.json
 export const COLORDLE_COLORS: string[] = [
   "night sky", "smoke", "sage", "navy blue", "aqua", "dark blue", "periwinkle",
   "red brown", "royal blue", "plum", "green yellow", "teal", "brown red", "gold",

@@ -112,12 +112,15 @@ All endpoints return JSON with this structure:
 
 ### Colordle
 
-- **Source**: External upstream API at `colordle.ryantanen.com/colors.json`
-- **Start date**: April 25, 2022 (day number 500)
-- **Algorithm**: Sequential index into color list based on days since start date
-- **Rollover**: 16:30 UTC (10:00 PM IST)
+- **Source**: Static color list from upstream API at `colordle.ryantanen.com/colors.json`
+- **Start date**: **August 7, 2023** (day number 500, with `dayOffset=500`)
+- **IMPORTANT**: Colordle did NOT start on April 25, 2022. That is the Colorfle launch date. Colordle launched on 2023-08-07.
+- **Algorithm**: Sequential index into color list based on days since start date (each day maps to the next color in the list)
+- **Rollover**: 16:30 UTC (visible date offset +1 day)
 - **Answer type**: Named color with hex code (e.g., "Night Sky" → `#292b31`)
-- **Color count**: ~973 colors in the canonical list
+- **Color count**: 976 colors in the canonical list
+- **Day offset**: 500 (the first puzzle on 2023-08-07 is numbered day #500, meaning there were 499 earlier puzzles from a different system)
+- **Color resolution**: Color names are resolved to hex codes using the `color-name-list` database. Names missing from that database use manual overrides (see `colordle-logic.ts` `COLOR_HEX_MAP` for the 12 overrides from the reference repo).
 
 ### Colorfle
 
@@ -204,10 +207,16 @@ wrangler d1 execute colordleanswer-db --file=./schema.sql
 
 ### Step 4: Backfill Historical Data
 
-Option A - Using the API endpoint (slower, runs on the edge):
+Option A - Using the API endpoint (runs on the edge, use 3-month batches to avoid Cloudflare subrequest limits):
 ```bash
-curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/admin/backfill?start=2022-04-25&end=2026-05-19"
+# Colorfle (started 2022-04-25)
+curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/admin/backfill?start=2022-04-25&end=2023-04-25&game=colorfle"
+
+# Both games from Colordle start (2023-08-07)
+curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/admin/backfill?start=2023-08-07&end=2023-12-31&game=both"
 ```
+
+**Important**: The backfill endpoint automatically respects game start dates. For Colordle, only dates from 2023-08-07 onward will be computed. For Colorfle, dates from 2022-04-25 onward. Use `game=colordle`, `game=colorfle`, or `game=both`.
 
 Option B - Using direct D1 execution (faster, recommended for initial seed):
 ```bash
@@ -329,15 +338,24 @@ worker/
 └── README.md              # This file
 ```
 
+## Game Start Dates Reference
+
+| Game | Start Date | First Day # | End Date (Current) | Total Answers |
+|------|-----------|-------------|-------------------|--------------|
+| Colordle | 2023-08-07 | 500 | 2026-05-19 | ~1,017 |
+| Colorfle | 2022-04-25 | 0 | 2026-05-19 | ~1,486 |
+
+**Key Insight**: Colordle and Colorfle have different start dates. Do NOT use 2022-04-25 for Colordle — it started over a year later on 2023-08-07. This was verified from the reference repo `toviralideasyt7/wordsolverx-z-ai` which uses `startDate: '2023-08-07'` and `dayOffset: 500` for Colordle.
+
 ## Frontend Integration
 
-The Astro frontend (`/home/z/my-project/wordsolver/`) connects to this Worker API through the `ArchiveCalendar.svelte` component. The API base URL is configured in that component:
+The Astro frontend (`/home/z/my-project/wordsolver/`) connects to this Worker API through the `ArchiveCalendar.svelte` component and the `daily-data.js` module. The API base URL is configured in those files:
 
 ```javascript
 const API_BASE = 'https://colordleanswer-api.wordleanswerofficial.workers.dev';
 ```
 
-To change the API URL, update this constant in the Svelte component.
+To change the API URL, update this constant in the Svelte component and the daily-data module.
 
 ## Troubleshooting
 
@@ -349,7 +367,16 @@ To change the API URL, update this constant in the Svelte component.
 
 ### Backfill fails or times out
 
-For large date ranges, use the direct D1 execution method instead of the API endpoint:
+Cloudflare Workers have a subrequest limit (~50 per invocation). For large date ranges, break the backfill into smaller batches (3-month chunks recommended):
+
+```bash
+# Example: batch backfill
+curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/admin/backfill?start=2023-08-07&end=2023-12-31&game=both"
+curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/admin/backfill?start=2024-01-01&end=2024-03-31&game=both"
+# Continue with more batches...
+```
+
+Alternatively, use direct D1 execution:
 ```bash
 npx tsx scripts/generate-seed.ts > seed.sql
 wrangler d1 execute colordleanswer-db --file=./seed.sql
