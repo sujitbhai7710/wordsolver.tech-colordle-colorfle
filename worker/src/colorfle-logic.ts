@@ -24,10 +24,16 @@ export const WEIGHTS: number[][] = [
   [0.4, 0.3, 0.2, 0.1]
 ];
 
-const LAUNCH_DATE = new Date('4/25/2022 17:00:00');
+const LAUNCH_DATE = new Date('2022-04-25T12:00:00Z');
 
 interface RGB { r: number; g: number; b: number; }
 interface YCC { r: number; y: number; b: number; }
+
+function getUtcDayDifference(date: Date, startDate: Date): number {
+  const current = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+  const start = Date.UTC(startDate.getUTCFullYear(), startDate.getUTCMonth(), startDate.getUTCDate());
+  return Math.floor((current - start) / 86400000);
+}
 
 function hexToRgb(hex: string): RGB {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -121,10 +127,7 @@ function mixColors(colorIndices: number[], mode = 0): RGB {
 
 // Get puzzle number for a date
 export function getPuzzleNumber(date: Date): number {
-  const utcMs = date.getTime() + date.getTimezoneOffset() * 60000;
-  const launchUtcMs = LAUNCH_DATE.getTime() + LAUNCH_DATE.getTimezoneOffset() * 60000;
-  const diffMs = utcMs - launchUtcMs;
-  return Math.floor(diffMs / 86400000);
+  return getUtcDayDifference(date, LAUNCH_DATE);
 }
 
 // Get the seed string for a date and mode

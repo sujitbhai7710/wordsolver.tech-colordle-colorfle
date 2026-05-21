@@ -3,7 +3,7 @@ import {
   getTargetColorNames,
   resolveTargetColors,
   type ColorData,
-} from '../../src/lib/colordle.ts';
+} from './colordle-shared';
 
 export const COLORDLE_START_DATE = new Date('2023-08-07T12:00:00Z');
 
@@ -80,7 +80,7 @@ async function fetchLiveTargetNames(): Promise<string[]> {
 }
 
 function getBundledTargetNames(): string[] {
-  return getTargetColorNames().map((value) => String(value));
+  return getTargetColorNames();
 }
 
 async function loadColordleDataset(): Promise<ColordleDataset> {

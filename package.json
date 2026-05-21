@@ -11,7 +11,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "cloudflare:deploy": "node scripts/cloudflare-deploy.mjs",
-    "cloudflare:setup": "node scripts/cloudflare-deploy.mjs --setup-only"
+    "cloudflare:setup": "node scripts/cloudflare-deploy.mjs --setup-only",
+    "verify:api": "node scripts/verify-answer-api.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^13.5.2",

@@ -20,7 +20,13 @@ export const WEIGHTS = [
   [0.4, 0.3, 0.2, 0.1]
 ];
 
-const LAUNCH_DATE = new Date('4/25/2022 17:00:00');
+const LAUNCH_DATE = new Date('2022-04-25T12:00:00Z');
+
+function getUtcDayDifference(date, startDate) {
+  const current = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+  const start = Date.UTC(startDate.getUTCFullYear(), startDate.getUTCMonth(), startDate.getUTCDate());
+  return Math.floor((current - start) / 86400000);
+}
 
 export function hexToRgb(hex) {
   const match = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -114,9 +120,7 @@ export function mixColors(colorIndices, mode = 0) {
 }
 
 export function getPuzzleNumber(date = new Date()) {
-  const utcMs = date.getTime() + date.getTimezoneOffset() * 60000;
-  const launchUtcMs = LAUNCH_DATE.getTime() + LAUNCH_DATE.getTimezoneOffset() * 60000;
-  return Math.floor((utcMs - launchUtcMs) / 86400000);
+  return getUtcDayDifference(date, LAUNCH_DATE);
 }
 
 function getSeedString(date, mode = 0) {

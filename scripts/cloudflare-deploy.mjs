@@ -258,16 +258,16 @@ function main() {
     return;
   }
 
+  if (!skipWorker) {
+    deployWorker(env);
+  }
+
   if (!skipBuild) {
     buildSite(env);
   }
 
   if (!skipPages) {
     deployPages(env);
-  }
-
-  if (!skipWorker) {
-    deployWorker(env);
   }
 
   info('Cloudflare deploy complete.');
