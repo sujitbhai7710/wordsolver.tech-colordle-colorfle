@@ -2,8 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import { getColorfleTodayData, getRecentColorfleEntries } from '../lib/daily-data.js';
 
-const data = getColorfleTodayData();
-const recent = getRecentColorfleEntries(7);
+const data = await getColorfleTodayData();
+const recent = await getRecentColorfleEntries(7);
 
 const schema = JSON.stringify({
   "@context": "https://schema.org",

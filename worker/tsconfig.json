@@ -3,16 +3,22 @@
     "target": "ES2022",
     "module": "ES2022",
     "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "lib": ["ES2022"],
+    "rootDir": "..",
     "types": ["@cloudflare/workers-types"],
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "outDir": "dist",
-    "rootDir": "src"
+    "outDir": "dist"
   },
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*.ts",
+    "../src/lib/colordle.ts",
+    "../src/lib/color-utils.ts",
+    "../src/data/**/*.json"
+  ],
   "exclude": ["node_modules", "dist"]
 }

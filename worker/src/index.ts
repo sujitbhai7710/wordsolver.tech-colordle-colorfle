@@ -1,8 +1,8 @@
 // Cloudflare Worker for colordleanswer.me API
 // Serves Colordle and Colorfle daily puzzle answers from D1 SQL database
 
-import { getColordleAnswer, getTodayIST, getColordleColorHex, getColordleDisplayName, COLORDLE_COLORS, COLORDLE_START_DATE } from './colordle-logic';
-import { getColorfleAnswer, COLORS, COLOR_NAMES, WEIGHTS } from './colorfle-logic';
+import { getColordleAnswer, getTodayIST } from './colordle-logic';
+import { getColorfleAnswer } from './colorfle-logic';
 
 interface Env {
   DB: D1Database;
@@ -34,6 +34,10 @@ function errorResponse(message: string, status = 400): Response {
   return jsonResponse({ error: message, success: false }, status);
 }
 
+function getSettledError(result: PromiseSettledResult<unknown>): unknown {
+  return result.status === 'rejected' ? result.reason : null;
+}
+
 // Colordle started on 2023-08-07, Colorfle started on 2022-04-25
 const COLORDLE_MIN_DATE = '2023-08-07';
 const COLORFLE_MIN_DATE = '2022-04-25';
@@ -41,13 +45,6 @@ const COLORFLE_MIN_DATE = '2022-04-25';
 // Validate date format YYYY-MM-DD
 function isValidDate(dateStr: string): boolean {
   return /^\d{4}-\d{2}-\d{2}$/.test(dateStr) && !isNaN(new Date(dateStr + 'T12:00:00Z').getTime());
-}
-
-// Get date for N days ago/from now
-function getDateOffset(days: number): string {
-  const d = new Date();
-  d.setDate(d.getDate() + days);
-  return d.toISOString().slice(0, 10);
 }
 
 // Ensure a colordle answer exists in DB, compute if missing
@@ -131,8 +128,8 @@ async function ensureColorfleAnswer(db: D1Database, dateStr: string, mode = 0): 
   return answer;
 }
 
-// Trigger GitHub Actions rebuild
-async function triggerGitHubRebuild(env: Env): Promise<boolean> {
+// Trigger GitHub Actions rebuild after both answers are safely stored in D1
+async function triggerGitHubRebuild(env: Env, targetDate: string): Promise<boolean> {
   if (!env.GITHUB_TOKEN || !env.GITHUB_REPO) {
     console.log('GitHub token or repo not configured, skipping rebuild trigger');
     return false;
@@ -150,16 +147,25 @@ async function triggerGitHubRebuild(env: Env): Promise<boolean> {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          event_type: 'daily_update',
+          event_type: 'pages-publish-requested',
           client_payload: {
-            date: getTodayIST(),
+            group: 'site',
+            source: 'worker-cron',
+            target_date: targetDate,
             timestamp: new Date().toISOString(),
           }
         }),
       }
     );
-    console.log(`GitHub rebuild trigger response: ${response.status}`);
-    return response.status === 204 || response.status === 200;
+
+    if (response.status === 204 || response.status === 200) {
+      console.log(`GitHub rebuild trigger response: ${response.status}`);
+      return true;
+    }
+
+    const body = await response.text().catch(() => '');
+    console.error(`GitHub rebuild trigger failed with status ${response.status}${body ? `: ${body}` : ''}`);
+    return false;
   } catch (error) {
     console.error('Failed to trigger GitHub rebuild:', error);
     return false;
@@ -417,33 +423,52 @@ async function handleCron(env: Env): Promise<void> {
   const today = getTodayIST();
   console.log('Today (IST):', today);
 
-  // Ensure today's answers are in the DB
-  try {
-    await ensureColordleAnswer(env.DB, today);
+  const storedAnswers = await Promise.allSettled([
+    ensureColordleAnswer(env.DB, today),
+    ensureColorfleAnswer(env.DB, today),
+  ]);
+
+  const colordleStored = storedAnswers[0].status === 'fulfilled';
+  const colorfleStored = storedAnswers[1].status === 'fulfilled';
+
+  if (colordleStored) {
     console.log('Colordle answer for', today, 'ensured in DB');
-  } catch (err) {
-    console.error('Failed to ensure colordle answer:', err);
+  } else {
+    console.error('Failed to ensure colordle answer:', getSettledError(storedAnswers[0]));
   }
 
-  try {
-    await ensureColorfleAnswer(env.DB, today);
+  if (colorfleStored) {
     console.log('Colorfle answer for', today, 'ensured in DB');
-  } catch (err) {
-    console.error('Failed to ensure colorfle answer:', err);
+  } else {
+    console.error('Failed to ensure colorfle answer:', getSettledError(storedAnswers[1]));
   }
 
   // Update metadata
   try {
-    await env.DB.prepare(
-      'INSERT OR REPLACE INTO metadata (key, value, updated_at) VALUES (?, ?, datetime(\'now\'))'
-    ).bind('last_cron_run', new Date().toISOString()).run();
+    const nowIso = new Date().toISOString();
+    await env.DB.batch([
+      env.DB.prepare(
+        'INSERT OR REPLACE INTO metadata (key, value, updated_at) VALUES (?, ?, datetime(\'now\'))'
+      ).bind('last_cron_run', nowIso),
+      env.DB.prepare(
+        'INSERT OR REPLACE INTO metadata (key, value, updated_at) VALUES (?, ?, datetime(\'now\'))'
+      ).bind('last_cron_target_date', today),
+      env.DB.prepare(
+        'INSERT OR REPLACE INTO metadata (key, value, updated_at) VALUES (?, ?, datetime(\'now\'))'
+      ).bind('last_cron_status', colordleStored && colorfleStored ? 'stored' : 'store_failed'),
+    ]);
   } catch (err) {
     console.error('Failed to update metadata:', err);
   }
 
+  if (!colordleStored || !colorfleStored) {
+    console.log('Skipping GitHub rebuild because at least one daily answer failed to persist.');
+    return;
+  }
+
   // Trigger GitHub rebuild
   try {
-    const rebuildTriggered = await triggerGitHubRebuild(env);
+    const rebuildTriggered = await triggerGitHubRebuild(env, today);
     console.log('GitHub rebuild triggered:', rebuildTriggered);
   } catch (err) {
     console.error('Failed to trigger GitHub rebuild:', err);

@@ -102,7 +102,7 @@ wordsolver/
 ├── worker/                            # Cloudflare Worker backend
 │   ├── src/
 │   │   ├── index.ts                  # Main request handler + routes + cron
-│   │   ├── colordle-logic.ts         # Colordle answer computation (976 colors)
+│   │   ├── colordle-logic.ts         # Colordle answer computation (shared canonical logic)
 │   │   └── colorfle-logic.ts         # Colorfle answer computation (seeded PRNG)
 │   ├── scripts/
 │   │   ├── generate-seed.mjs         # Standalone seed data generator
@@ -182,7 +182,7 @@ wordsolver/
 
 ### Data Flow
 
-1. **Today pages**: Answers are computed at **Astro build time** using `daily-data.js`. The build is triggered daily by the Worker's cron job via GitHub `repository_dispatch`. No API calls are needed at runtime.
+1. **Today pages**: Answers are embedded at **Astro build time** using `daily-data.js`, which fetches `/api/today` from the Worker first and only falls back to local deterministic logic if the API is unavailable. The Worker's daily cron stores both answers in D1 before it triggers the GitHub rebuild, so normal builds and archive pages share the same source of truth.
 
 2. **Archive pages**: The `ArchiveCalendar.svelte` component fetches answer data from the **Worker API** at runtime. When a user clicks a date on the calendar, the component calls `/api/{game}/archive/{date}` and displays the answer behind a JavaScript-powered reveal button.
 
@@ -199,9 +199,9 @@ wordsolver/
 **How answers are determined:**
 
 - **Start date**: August 7, 2023 (the game uses Day #500 as the first day, meaning there were 499 prior days from an earlier numbering scheme)
-- **Algorithm**: Sequential index into a 976-color canonical list from `colordle.ryantanen.com/colors.json`
+- **Algorithm**: Sequential index into the canonical Colordle target list sourced from `colordle.ryantanen.com/colors.json`
 - **Day number calculation**: `dayNumber = 500 + days_since_2023_08_07`
-- **Color selection**: `colorName = COLOR_LIST[dayNumber % 976]`
+- **Color selection**: `colorName = COLOR_LIST[days_since_2023_08_07 % COLOR_LIST.length]`
 - **Rollover time**: 16:30 UTC (after 16:30 UTC, the next day's puzzle is shown)
 - **Color resolution**: Each color name is resolved to a hex code using a built-in `COLOR_HEX_MAP` with 600+ entries and 12 manual overrides from the reference repo
 
@@ -209,8 +209,8 @@ wordsolver/
 ```
 Days since 2023-08-07 = 1017
 Day number = 500 + 1017 = 1517
-Index = 1517 % 976 = 541
-Color = COLOR_LIST[541] = "blueberry"
+Index = 1017 % COLOR_LIST.length = 44
+Color = COLOR_LIST[44] = "blueberry"
 Hex = COLOR_HEX_MAP["blueberry"] = "#464196"
 ```
 
@@ -221,9 +221,9 @@ Hex = COLOR_HEX_MAP["blueberry"] = "#464196"
 - `src/lib/daily-data.js` — Build-time answer computation for today pages
 - `src/data/colordle-targets.json` — Full target list
 - `src/data/colordle-resolved-colors.json` — Name-to-hex mapping
-- `worker/src/colordle-logic.ts` — Worker version (976-color list with extended hex map)
+- `worker/src/colordle-logic.ts` — Worker wrapper around the shared Colordle logic
 
-**IMPORTANT**: The frontend `daily-data.js` uses a shorter color list (178 colors) with `startDate = '2022-04-25'` and `dayOffset = 500`, while the Worker uses the full 976-color list with `startDate = '2023-08-07'` and `dayOffset = 500`. These produce different answers for the same date. The Worker is the source of truth for archive data.
+**IMPORTANT**: The frontend and Worker now share the same Colordle rules: the full target list, start date `2023-08-07`, and day offset `500`. `daily-data.js` prefers the Worker API at build time, with the local implementation kept only as a fallback when the API is unavailable.
 
 ### Colorfle Game Logic
 
@@ -436,12 +436,12 @@ wrangler d1 execute colordleanswer-db --local --file=./schema.sql
 
 ## Important Notes
 
-1. **Two different Colordle answer algorithms**: The frontend `daily-data.js` uses a 178-color list starting from 2022-04-25 with offset 500, while the Worker uses the full 976-color list starting from 2023-08-07 with offset 500. These produce different color names for the same date. The **Worker is the source of truth** for archive data. The today page uses the frontend algorithm. This discrepancy should be resolved by updating `daily-data.js` to use the same 976-color list and start date as the Worker.
+1. **Aligned answer logic**: Colordle and Colorfle today pages, archive pages, and the Worker now use the same answer rules. The Worker/D1 layer is the operational source of truth, and `daily-data.js` only falls back to local deterministic generation if the API is temporarily unavailable during a build.
 
 2. **CSS reveal conflict**: The global `.reveal-content { display: none }` style in `Layout.astro` was hiding the archive's answer content. The archive now uses `.archive-reveal-content` with `display: block !important` to work around this.
 
 3. **D1 lazy computation**: The Worker computes and caches answers on-the-fly. If a date hasn't been stored in D1 yet, the Worker computes it, stores it, and returns it. This means the full archive works even without backfill.
 
-4. **Cron-triggered rebuilds**: The daily cron at 12 AM IST triggers a GitHub `repository_dispatch` event to rebuild the Astro frontend, ensuring the static today pages have the latest answer. This requires `GITHUB_TOKEN` and `GITHUB_REPO` secrets to be set on the Worker.
+4. **Cron-triggered rebuilds**: The daily cron at 12 AM IST first stores both answers in D1, writes cron metadata, and only then sends the GitHub `repository_dispatch` event (`pages-publish-requested`) to rebuild the Astro frontend. This requires `GITHUB_TOKEN` and `GITHUB_REPO` secrets to be set on the Worker.
 
 5. **No user data collection**: The site has no accounts, no tracking, no cookies, and no server-side user data. All solver and unlimited game computation happens in the browser. The only server-side data is the answer database and metadata.

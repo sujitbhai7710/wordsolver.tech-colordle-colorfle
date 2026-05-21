@@ -1,9 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getColordleTodayData, getColorfleTodayData } from '../lib/daily-data.js';
+import { getTodayAnswers } from '../lib/daily-data.js';
 
-const colordle = getColordleTodayData();
-const colorfle = getColorfleTodayData();
+const { colordle, colorfle } = await getTodayAnswers();
 
 const schema = JSON.stringify({
   "@context": "https://schema.org",

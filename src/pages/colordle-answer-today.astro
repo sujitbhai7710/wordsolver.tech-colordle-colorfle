@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { getColordleTodayData } from '../lib/daily-data.js';
 
-const data = getColordleTodayData();
+const data = await getColordleTodayData();
 
 const schema = JSON.stringify({
   "@context": "https://schema.org",

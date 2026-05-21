@@ -344,19 +344,23 @@ export function getUniqueTargetColors(): ColorData[] {
   return unique;
 }
 
-// Colordle daily answer logic
-const COLORDLE_START_DATE = new Date('2022-04-25T00:00:00Z');
+const COLORDLE_START_DATE = new Date('2023-08-07T12:00:00Z');
+const COLORDLE_DAY_OFFSET = 500;
+
+function getUtcDayDifference(date: Date, startDate: Date): number {
+  const current = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+  const start = Date.UTC(startDate.getUTCFullYear(), startDate.getUTCMonth(), startDate.getUTCDate());
+  return Math.floor((current - start) / 86400000);
+}
 
 export function getColordleDayNumber(date: Date = new Date()): number {
-  const utcMs = date.getTime() + date.getTimezoneOffset() * 60000;
-  const startMs = COLORDLE_START_DATE.getTime();
-  return Math.floor((utcMs - startMs) / 86400000);
+  return COLORDLE_DAY_OFFSET + getUtcDayDifference(date, COLORDLE_START_DATE);
 }
 
 export function getColordleDailyAnswer(date: Date = new Date()): ColorData {
-  const dayNumber = getColordleDayNumber(date);
   const targets = getTargetColors();
-  const index = ((dayNumber % targets.length) + targets.length) % targets.length;
+  const dayOffset = getUtcDayDifference(date, COLORDLE_START_DATE);
+  const index = ((dayOffset % targets.length) + targets.length) % targets.length;
   return targets[index];
 }
 

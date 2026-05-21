@@ -1,16 +1,16 @@
 <script>
-  // API base URL - Cloudflare Worker serving game answers
-  const API_BASE = 'https://colordleanswer-api.wordleanswerofficial.workers.dev';
+  import { ANSWER_API_BASE } from '../lib/answer-source.js';
+  import { dateFromDateKey, formatDateKey, formatDisplayDate, getIstDateKey } from '../lib/site-date.js';
 
   let {
     gameName = 'Puzzle',
     gameColor = 'teal',
     gameType = 'colordle', // 'colordle' or 'colorfle'
-    startDate = new Date('2024-01-01'),
-    today = new Date(),
+    startDate = dateFromDateKey('2024-01-01'),
+    today = dateFromDateKey(getIstDateKey()),
   } = $props();
-
-  let currentMonth = $state(new Date(today.getFullYear(), today.getMonth(), 1));
+  let currentMonth = $state(createUtcDate(2000, 0, 1));
+  let hasInitializedMonth = $state(false);
   let selectedDate = $state(null);
   let selectedAnswer = $state(null);
   let answerRevealed = $state(false);
@@ -18,36 +18,81 @@
   let searchQuery = $state('');
   let loading = $state(false);
   let error = $state(null);
-  let monthAnswers = $state({}); // Cache for current month answers
+  let monthAnswers = $state({});
 
   const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const COLORDLE_DAY_OFFSET = 500;
 
   const colorThemes = {
     teal: { primary: '#0D7C66', primaryLight: 'rgba(13,124,102,0.06)', primaryMid: 'rgba(13,124,102,0.12)', primaryBorder: 'rgba(13,124,102,0.2)' },
     pink: { primary: '#BE3A6B', primaryLight: 'rgba(190,58,107,0.06)', primaryMid: 'rgba(190,58,107,0.12)', primaryBorder: 'rgba(190,58,107,0.2)' },
   };
 
+  function createUtcDate(year, month, day = 1) {
+    return new Date(Date.UTC(year, month, day, 12));
+  }
+
+  function addUtcMonths(date, months) {
+    return createUtcDate(date.getUTCFullYear(), date.getUTCMonth() + months, 1);
+  }
+
+  function getMonthKey(date) {
+    return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}`;
+  }
+
+  function getMonthLabel(date) {
+    return `${MONTH_NAMES[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
+  }
+
+  function getStartDateKey() {
+    return formatDateKey(startDate);
+  }
+
+  function getTodayDateKey() {
+    return formatDateKey(today);
+  }
+
+  function getStartDateValue() {
+    return dateFromDateKey(getStartDateKey());
+  }
+
+  function getTodayMonthStart() {
+    return createUtcDate(today.getUTCFullYear(), today.getUTCMonth(), 1);
+  }
+
+  function getPuzzleNumber(date) {
+    const current = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+    const start = Date.UTC(
+      getStartDateValue().getUTCFullYear(),
+      getStartDateValue().getUTCMonth(),
+      getStartDateValue().getUTCDate()
+    );
+    const dayIndex = Math.floor((current - start) / 86400000);
+    return gameType === 'colordle' ? COLORDLE_DAY_OFFSET + dayIndex : dayIndex;
+  }
+
   let theme = $derived(colorThemes[gameColor] || colorThemes.teal);
 
   let calendarDays = $derived.by(() => {
-    const year = currentMonth.getFullYear();
-    const month = currentMonth.getMonth();
-    const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const year = currentMonth.getUTCFullYear();
+    const month = currentMonth.getUTCMonth();
+    const firstDay = createUtcDate(year, month, 1).getUTCDay();
+    const daysInMonth = createUtcDate(year, month + 1, 0).getUTCDate();
+    const prevMonthDays = createUtcDate(year, month, 0).getUTCDate();
     const days = [];
 
-    const prevMonthDays = new Date(year, month, 0).getDate();
     for (let i = firstDay - 1; i >= 0; i--) {
       days.push({ day: prevMonthDays - i, currentMonth: false, date: null });
     }
 
     for (let d = 1; d <= daysInMonth; d++) {
-      const date = new Date(year, month, d);
+      const date = createUtcDate(year, month, d);
       const dateKey = formatDateKey(date);
-      const isFuture = date > today;
-      const isToday = dateKey === formatDateKey(today);
-      const isAfterStart = date >= startDate;
+      const isFuture = dateKey > getTodayDateKey();
+      const isToday = dateKey === getTodayDateKey();
+      const isAfterStart = dateKey >= getStartDateKey();
+
       days.push({
         day: d,
         currentMonth: true,
@@ -68,84 +113,85 @@
 
   let allPuzzles = $derived.by(() => {
     const puzzles = [];
-    const d = new Date(startDate);
-    while (d <= today) {
-      const dateKey = formatDateKey(d);
+    const current = new Date(getStartDateValue());
+
+    while (formatDateKey(current) <= getTodayDateKey()) {
+      const dateKey = formatDateKey(current);
       puzzles.push({
-        date: new Date(d),
+        date: new Date(current),
         dateKey,
-        formatted: d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-        dayNum: puzzles.length + 1,
+        formatted: formatDisplayDate(dateKey),
+        dayNum: getPuzzleNumber(current),
       });
-      d.setDate(d.getDate() + 1);
+      current.setUTCDate(current.getUTCDate() + 1);
     }
+
     return puzzles.reverse();
   });
 
   let filteredPuzzles = $derived.by(() => {
     if (!searchQuery.trim()) return allPuzzles.slice(0, 60);
     const q = searchQuery.toLowerCase();
-    return allPuzzles.filter(p =>
-      p.formatted.toLowerCase().includes(q) || String(p.dayNum).includes(q)
+    return allPuzzles.filter((puzzle) =>
+      puzzle.formatted.toLowerCase().includes(q) || String(puzzle.dayNum).includes(q)
     ).slice(0, 60);
   });
 
   let availableMonths = $derived.by(() => {
     const months = [];
-    const d = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
-    const end = new Date(today.getFullYear(), today.getMonth(), 1);
-    while (d <= end) {
-      months.push({ label: MONTH_NAMES[d.getMonth()] + ' ' + d.getFullYear(), date: new Date(d) });
-      d.setMonth(d.getMonth() + 1);
+    const start = getStartDateValue();
+    const current = createUtcDate(start.getUTCFullYear(), start.getUTCMonth(), 1);
+    const end = getTodayMonthStart();
+
+    while (current <= end) {
+      months.push({
+        label: getMonthLabel(current),
+        date: new Date(current),
+      });
+      current.setUTCMonth(current.getUTCMonth() + 1);
     }
+
     return months.reverse();
   });
 
-  function formatDateKey(date) {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, '0');
-    const d = String(date.getDate()).padStart(2, '0');
-    return `${y}-${m}-${d}`;
-  }
-
   function prevMonth() {
-    currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1);
-    loadMonthAnswers();
+    currentMonth = addUtcMonths(currentMonth, -1);
   }
 
   function nextMonth() {
-    const next = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1);
-    if (next <= new Date(today.getFullYear(), today.getMonth(), 1)) {
+    const next = addUtcMonths(currentMonth, 1);
+    if (next <= getTodayMonthStart()) {
       currentMonth = next;
-      loadMonthAnswers();
     }
   }
 
   function goToMonth(date) {
-    currentMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-    loadMonthAnswers();
+    currentMonth = createUtcDate(date.getUTCFullYear(), date.getUTCMonth(), 1);
   }
 
   async function loadMonthAnswers() {
-    const year = currentMonth.getFullYear();
-    const month = currentMonth.getMonth() + 1;
+    const year = currentMonth.getUTCFullYear();
+    const month = currentMonth.getUTCMonth() + 1;
     const monthStr = `${year}-${String(month).padStart(2, '0')}`;
+    const cache = {};
 
     try {
-      const response = await fetch(`${API_BASE}/api/${gameType}/archive?month=${monthStr}`);
-      if (response.ok) {
-        const data = await response.json();
-        const cache = {};
-        if (data.answers) {
-          for (const answer of data.answers) {
-            cache[answer.date] = answer;
-          }
-        }
-        monthAnswers = cache;
+      const response = await fetch(`${ANSWER_API_BASE}/api/${gameType}/archive?month=${monthStr}`);
+      if (!response.ok) {
+        throw new Error(`Month archive request failed with status ${response.status}`);
       }
-    } catch (e) {
-      console.error('Failed to load month answers:', e);
+
+      const data = await response.json();
+      if (data.answers) {
+        for (const answer of data.answers) {
+          cache[answer.date] = answer;
+        }
+      }
+    } catch (fetchError) {
+      console.error('Failed to load month answers:', fetchError);
     }
+
+    monthAnswers = cache;
   }
 
   async function handleDateClick(dateKey) {
@@ -155,24 +201,20 @@
     error = null;
 
     try {
-      // Check cache first
       if (monthAnswers[dateKey]) {
         selectedAnswer = monthAnswers[dateKey];
-        loading = false;
         return;
       }
 
-      // Fetch from API
-      const response = await fetch(`${API_BASE}/api/${gameType}/archive/${dateKey}`);
-      if (response.ok) {
-        selectedAnswer = await response.json();
-      } else {
-        error = 'Failed to load answer';
-        selectedAnswer = null;
+      const response = await fetch(`${ANSWER_API_BASE}/api/${gameType}/archive/${dateKey}`);
+      if (!response.ok) {
+        throw new Error(`Archive request failed with status ${response.status}`);
       }
-    } catch (e) {
-      console.error('Error fetching answer:', e);
-      error = 'Network error - please try again';
+
+      selectedAnswer = await response.json();
+    } catch (fetchError) {
+      console.error('Error fetching answer:', fetchError);
+      error = 'Failed to load answer';
       selectedAnswer = null;
     } finally {
       loading = false;
@@ -183,14 +225,14 @@
     if (!answer) return '';
     const hex = answer.colorHex || answer.hex || '#888888';
     const name = answer.colorName || answer.name || 'Unknown';
-    const dayNum = answer.dayNumber || answer.dayNum || '';
+    const dayNum = answer.dayNumber || answer.dayNum || answer.puzzleNumber || '';
     const dateLabel = answer.formattedDate || answer.date || '';
     return `
       <div style="text-align:center;">
         <div style="width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;border:3px solid var(--border-subtle);box-shadow:var(--shadow-lg);display:flex;align-items:center;justify-content:center;background:${hex};font-size:0.85rem;font-weight:800;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.3);">${name}</div>
         <div style="font-size:1.5rem;font-weight:800;margin-bottom:0.375rem;color:var(--text-primary);">${name}</div>
         <div style="font-family:monospace;font-size:0.9rem;color:var(--text-muted);margin-bottom:0.25rem;">${hex}</div>
-        <div style="font-size:0.8rem;color:var(--text-muted);">Puzzle #${dayNum} &middot; ${dateLabel}</div>
+        <div style="font-size:0.8rem;color:var(--text-muted);">Puzzle #${dayNum} - ${dateLabel}</div>
       </div>
     `;
   }
@@ -201,10 +243,10 @@
     const targetHex = answer.targetHex || (answer.targetColor && answer.targetColor.hex) || '#888888';
     const puzzleNum = answer.puzzleNumber || '';
     const dateLabel = answer.formattedDate || answer.date || '';
-    const colorBlocks = colors.map((c, i) => {
-      const name = c.name || answer.colorNames?.[i] || '';
-      const hex = c.hex || answer.colorHexes?.[i] || '';
-      const weight = c.weight || answer.weights?.[i] || 0;
+    const colorBlocks = colors.map((color, index) => {
+      const name = color.name || answer.colorNames?.[index] || '';
+      const hex = color.hex || answer.colorHexes?.[index] || '';
+      const weight = color.weight || answer.weights?.[index] || 0;
       return `<div style="text-align:center;">
         <div style="width:56px;height:56px;border-radius:12px;background:${hex};border:2px solid var(--border-subtle);margin:0 auto 0.375rem;box-shadow:var(--shadow-sm);"></div>
         <div style="font-weight:700;font-size:0.85rem;color:var(--text-primary);">${name}</div>
@@ -228,23 +270,24 @@
             <span style="font-family:monospace;font-size:1rem;font-weight:800;color:var(--text-primary);">${targetHex}</span>
           </div>
         </div>
-        <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.75rem;">Puzzle #${puzzleNum} &middot; ${dateLabel}</div>
+        <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.75rem;">Puzzle #${puzzleNum} - ${dateLabel}</div>
       </div>
     `;
   }
 
-  // Load initial month answers
   $effect(() => {
+    if (!hasInitializedMonth) {
+      currentMonth = getTodayMonthStart();
+      hasInitializedMonth = true;
+      return;
+    }
+
     loadMonthAnswers();
   });
 
-  let isNextDisabled = $derived(
-    currentMonth.getFullYear() === today.getFullYear() && currentMonth.getMonth() === today.getMonth()
-  );
-  let isPrevDisabled = $derived(
-    currentMonth.getFullYear() === startDate.getFullYear() && currentMonth.getMonth() === startDate.getMonth()
-  );
-  let monthLabel = $derived(MONTH_NAMES[currentMonth.getMonth()] + ' ' + currentMonth.getFullYear());
+  let isNextDisabled = $derived(getMonthKey(currentMonth) === getMonthKey(getTodayMonthStart()));
+  let isPrevDisabled = $derived(getMonthKey(currentMonth) === getMonthKey(getStartDateValue()));
+  let monthLabel = $derived(getMonthLabel(currentMonth));
 </script>
 
 <div class="archive-calendar">
@@ -282,11 +325,11 @@
     <div class="calendar-card" style="--theme-primary: {theme.primary}; --theme-light: {theme.primaryLight}; --theme-mid: {theme.primaryMid}; --theme-border: {theme.primaryBorder};">
       <!-- Month Navigation -->
       <div class="month-nav">
-        <button onclick={prevMonth} disabled={isPrevDisabled} class="nav-btn">
+        <button onclick={prevMonth} disabled={isPrevDisabled} class="nav-btn" aria-label="Previous month">
           <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         </button>
         <h2 class="month-title">{monthLabel}</h2>
-        <button onclick={nextMonth} disabled={isNextDisabled} class="nav-btn">
+        <button onclick={nextMonth} disabled={isNextDisabled} class="nav-btn" aria-label="Next month">
           <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </button>
       </div>

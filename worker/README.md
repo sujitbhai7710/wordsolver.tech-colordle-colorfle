@@ -59,14 +59,14 @@ All answers are **deterministic** — computed algorithmically from the game rul
 
 | Game | Start Date | Day Offset | Answer Source |
 |------|-----------|------------|---------------|
-| **Colordle** | 2023-08-07 | 500 (first entry is Day #500) | Deterministic (976-color list indexed by day number) |
+| **Colordle** | 2023-08-07 | 500 (first entry is Day #500) | Deterministic (canonical target list indexed by day offset) |
 | **Colorfle** | 2022-04-25 | 0 (first entry is Day #0) | Deterministic (seeded PRNG + YCC/RGB color mixing) |
 
 > **Important**: Colordle did NOT start on 2022-04-25. That is the Colorfle launch date. Colordle launched on **2023-08-07** (day #500, meaning there were 499 earlier puzzles from a different numbering system).
 
 ### Colordle Logic
 
-- **Algorithm**: Sequential index into a 976-color canonical list from `colordle.ryantanen.com/colors.json`
+- **Algorithm**: Sequential index into the canonical Colordle target list from `colordle.ryantanen.com/colors.json`
 - **Rollover**: 16:30 UTC (after 16:30 UTC, the next day's puzzle is shown)
 - **Answer type**: Named color with hex code (e.g., "Night Sky" → `#292b31`)
 - **Day numbering**: `dayNumber = 500 + daysSinceStart`
@@ -373,7 +373,7 @@ curl "https://colordleanswer-api.wordleanswerofficial.workers.dev/api/admin/clea
 worker/
 ├── src/
 │   ├── index.ts            # Main request handler + cron trigger
-│   ├── colordle-logic.ts   # Colordle answer computation (976 colors, day offset 500)
+│   ├── colordle-logic.ts   # Colordle answer computation (shared canonical logic, day offset 500)
 │   └── colorfle-logic.ts   # Colorfle answer computation (20 colors, seeded PRNG, YCC+RGB mixing)
 ├── scripts/
 │   ├── generate-seed.mjs   # Standalone seed data generator (no imports, runs with node)
@@ -557,9 +557,9 @@ At each cron invocation, the `scheduled` handler:
 1. **Computes today's Colordle answer** using the deterministic algorithm and stores it in D1 (via `INSERT OR REPLACE`)
 2. **Computes today's Colorfle answer** using the seeded PRNG and stores it in D1
 3. **Updates the metadata table** with `last_cron_run` timestamp
-4. **Triggers a GitHub `repository_dispatch` event** (`event_type: "daily_update"`) to rebuild the Astro frontend so the static today page reflects the new answer
+4. **Triggers a GitHub `repository_dispatch` event** (`event_type: "pages-publish-requested"`) to rebuild the Astro frontend so the static today page reflects the new answer
 
-If any step fails, the error is logged but does not prevent other steps from executing.
+If either answer fails to persist, the rebuild trigger is skipped and the failure is recorded in the `metadata` table as `last_cron_status = "store_failed"`.
 
 ---
 
@@ -589,10 +589,10 @@ const API_BASE = 'https://colordleanswer-api.wordleanswerofficial.workers.dev';
 |---|---|---|
 | `ArchiveCalendar.svelte` | `GET /api/{game}/archive?month=YYYY-MM` | Fetch monthly batch for calendar display |
 | `ArchiveCalendar.svelte` | `GET /api/{game}/archive/YYYY-MM-DD` | Fetch single date answer |
-| Today page | `GET /api/today` | Fetch both game answers |
-| Daily data module | `GET /api/colordle/today` / `GET /api/colorfle/today` | Fetch individual game answers |
+| `daily-data.js` | `GET /api/today` | Fetch both answers during Astro builds |
+| `daily-data.js` fallback | Local deterministic logic | Used only if the Worker API is unavailable during build |
 
-To change the API URL, update the `API_BASE` constant in those frontend files.
+To change the API URL, set `PUBLIC_ANSWER_API_BASE` for the Astro build or update the default in `src/lib/answer-source.js`.
 
 ---
 
@@ -632,8 +632,8 @@ curl https://colordleanswer-api.wordleanswerofficial.workers.dev/health
 
 ## Notes
 
-- **Colordle answers** are deterministic based on a 976-color list indexed by day number. The list is sourced from `colordle.ryantanen.com/colors.json` and stored statically in `colordle-logic.ts`.
-- **Colorfle answers** use a seeded PRNG (a minimal implementation of the Alea/xorshift algorithm matching `seedrandom` behavior) with YCC+RGB dual-space color mixing for perceptually accurate color blending.
+- **Colordle answers** are deterministic based on the canonical target list sourced from `colordle.ryantanen.com/colors.json`, using the shared frontend/worker logic so the site and API stay in sync.
+- **Colorfle answers** use `seedrandom` with YCC+RGB dual-space color mixing for perceptually accurate color blending.
 - **The Worker computes answers on-the-fly** if not in D1, then caches them. This means the API always returns a valid answer even for dates that haven't been backfilled.
 - **Colordle rolls over at 16:30 UTC** — after 16:30 UTC, the next day's puzzle becomes the "current" one.
 - **Colorfle rolls over at 15:00 UTC** — after 15:00 UTC, the next day's puzzle becomes the "current" one.

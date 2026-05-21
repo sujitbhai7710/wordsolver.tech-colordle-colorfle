@@ -276,25 +276,40 @@ export function getUniqueTargetColors() {
   return unique;
 }
 
-// Get today's colordle answer
-const COLORDLE_START_DATE = new Date('2024-01-01T12:00:00Z');
+const COLORDLE_START_DATE = new Date('2023-08-07T12:00:00Z');
+const COLORDLE_DAY_OFFSET = 500;
 
-export function getColordleDayNum(date = new Date()) {
-  const diffMs = date.getTime() - COLORDLE_START_DATE.getTime();
-  return Math.floor(diffMs / 86400000);
+function getUtcDayDifference(date, startDate) {
+  const current = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+  const start = Date.UTC(startDate.getUTCFullYear(), startDate.getUTCMonth(), startDate.getUTCDate());
+  return Math.floor((current - start) / 86400000);
 }
 
-export function getColordleToday() {
-  const dayNum = getColordleDayNum();
+export function getColordleDayNum(date = new Date()) {
+  return COLORDLE_DAY_OFFSET + getUtcDayDifference(date, COLORDLE_START_DATE);
+}
+
+export function getColordleDailyAnswer(date = new Date()) {
   const targets = getTargetColors();
-  const color = targets[dayNum % targets.length];
-  const today = new Date();
-  const formattedDate = today.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  const dayOffset = getUtcDayDifference(date, COLORDLE_START_DATE);
+  const index = ((dayOffset % targets.length) + targets.length) % targets.length;
+  return targets[index];
+}
+
+export function getColordleToday(date = new Date()) {
+  const color = getColordleDailyAnswer(date);
+  const dayNum = getColordleDayNum(date);
+  const formattedDate = date.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC'
+  });
 
   return {
     color,
     dayNum,
     formattedDate,
-    dateKey: today.toISOString().slice(0, 10)
+    dateKey: date.toISOString().slice(0, 10)
   };
 }

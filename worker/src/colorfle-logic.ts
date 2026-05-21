@@ -2,6 +2,8 @@
 // Based on reference repo: toviralideasyt7/wordsolverx-z-ai
 // Colorfle uses a deterministic seeded PRNG - no external data needed
 
+import seedrandom from 'seedrandom';
+
 export const COLORS = [
   '#FFFFFF', '#FFFAC8', '#FABEBE', '#AAFFC3', '#E6BEFF',
   '#46F0F0', '#FFE119', '#BCF60C', '#F58231', '#3CB44B',
@@ -26,35 +28,6 @@ const LAUNCH_DATE = new Date('4/25/2022 17:00:00');
 
 interface RGB { r: number; g: number; b: number; }
 interface YCC { r: number; y: number; b: number; }
-
-// Seeded PRNG - matches the seedrandom library behavior
-// This is a minimal implementation of the Alea algorithm used by seedrandom
-function seedrandom(seed: string): () => number {
-  // Simple but effective seeded PRNG matching seedrandom's algorithm
-  let s = 0;
-  for (let i = 0; i < seed.length; i++) {
-    s = ((s << 5) - s) + seed.charCodeAt(i);
-    s = s & s; // Convert to 32-bit integer
-  }
-  
-  // Marsaglia's algorithm
-  let m = s | 0;
-  let c = 1;
-  
-  return function() {
-    // xorshift32
-    m ^= m << 13;
-    m ^= m >> 17;
-    m ^= m << 5;
-    
-    // Mix with counter
-    c = (c + 1) | 0;
-    
-    // Return value in [0, 1)
-    const t = Math.imul(m ^ c, 0x6c078965);
-    return ((t >>> 0) / 4294967296);
-  };
-}
 
 function hexToRgb(hex: string): RGB {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
