@@ -1,13 +1,14 @@
 <script>
   import { ANSWER_API_BASE } from '../lib/answer-source.js';
-  import { dateFromDateKey, formatDateKey, formatDisplayDate, getIstDateKey } from '../lib/site-date.js';
+  import { getPuzzleDateForGame } from '../lib/puzzle-window.ts';
+  import { dateFromDateKey, formatDateKey, formatDisplayDate } from '../lib/site-date.js';
 
   let {
     gameName = 'Puzzle',
     gameColor = 'teal',
     gameType = 'colordle', // 'colordle' or 'colorfle'
     startDate = dateFromDateKey('2024-01-01'),
-    today = dateFromDateKey(getIstDateKey()),
+    today = getPuzzleDateForGame(gameType),
   } = $props();
   let currentMonth = $state(createUtcDate(2000, 0, 1));
   let hasInitializedMonth = $state(false);

@@ -1,16 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getTodayAnswers } from '../lib/daily-data.js';
+import { getPuzzleDateForGame } from '../lib/puzzle-window.ts';
+import { formatDisplayDate } from '../lib/site-date.js';
 
 const { colordle, colorfle } = await getTodayAnswers();
+const requestedColordleDate = formatDisplayDate(getPuzzleDateForGame('colordle'));
+const requestedColorfleDate = formatDisplayDate(getPuzzleDateForGame('colorfle'));
+const primaryDateLabel = colordle?.formattedDate ?? colorfle.formattedDate;
+const datesAreSplit = Boolean(colordle && colordle.formattedDate !== colorfle.formattedDate);
+const pageTitle = datesAreSplit
+  ? `Latest Color Puzzle Answers`
+  : `Today's Color Puzzle Answers - ${primaryDateLabel}`;
+const pageDescription = datesAreSplit
+  ? 'Get the latest verified Colordle and Colorfle answers. Each game card follows its own current puzzle window so rollover mismatches do not leak through.'
+  : `Get today's Colordle and Colorfle answers for ${primaryDateLabel}. Free daily puzzle solutions and solvers.`;
 
 const schema = JSON.stringify({
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebPage",
-      "name": `Today's Color Puzzle Answers - ${colordle.formattedDate}`,
-      "description": `Get today's Colordle and Colorfle answers for ${colordle.formattedDate}. Free daily puzzle solutions and solvers.`,
+      "name": pageTitle,
+      "description": pageDescription,
       "url": "https://colordleanswer.me/today"
     },
     {
@@ -25,8 +37,8 @@ const schema = JSON.stringify({
 ---
 
 <Layout
-  title={`Today's Color Puzzle Answers - ${colordle.formattedDate} | Colordle Answer`}
-  description={`Get today's Colordle and Colorfle answers for ${colordle.formattedDate}. Free daily puzzle solutions updated every day.`}
+  title={`${pageTitle} | Colordle Answer`}
+  description={pageDescription}
   keywords="colordle answer today, colorfle answer today, daily puzzle answer, today color puzzle solution"
   schema={schema}
 >
@@ -34,7 +46,11 @@ const schema = JSON.stringify({
     <div class="container">
       <span class="hero-badge">Daily Updates</span>
       <h1>Today's Answers</h1>
-      <p>Colordle and Colorfle answers for <strong>{colordle.formattedDate}</strong>. Click to reveal, or use the solvers if you prefer to work through it yourself.</p>
+      <p>
+        {datesAreSplit
+          ? `Colordle and Colorfle do not always roll over at the exact same moment, so each card below uses its own current verified puzzle window.`
+          : `Colordle and Colorfle answers for ${primaryDateLabel}. Click to reveal, or use the solvers if you prefer to work through it yourself.`}
+      </p>
     </div>
   </section>
 
@@ -54,8 +70,17 @@ const schema = JSON.stringify({
         </div>
         <div style="background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.12);border-radius:12px;padding:1.25rem;margin-bottom:1.25rem;">
           <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--accent-indigo);margin-bottom:0.5rem;">Today's Answer</div>
-          <div style="font-size:1.5rem;font-weight:800;color:var(--text-primary);">{colordle.colorName}</div>
-          <div style="font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;">Puzzle #{colordle.dayNum}</div>
+          {colordle ? (
+            <>
+              <div style="font-size:1.5rem;font-weight:800;color:var(--text-primary);">{colordle.colorName}</div>
+              <div style="font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;">Puzzle #{colordle.dayNum} • {colordle.formattedDate}</div>
+            </>
+          ) : (
+            <>
+              <div style="font-size:1.1rem;font-weight:800;color:var(--text-primary);">Answer not verified yet</div>
+              <div style="font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;">Waiting for the official Colordle source for {requestedColordleDate}.</div>
+            </>
+          )}
         </div>
         <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;margin-bottom:1.25rem;">See the full answer with hex code, reveal animation, strategy tips, and a searchable archive of previous colors.</p>
         <span class="btn btn-primary" style="font-size:0.85rem;">View Full Answer</span>
@@ -81,7 +106,7 @@ const schema = JSON.stringify({
             <span style="color:var(--text-muted);font-size:1.25rem;">&rarr;</span>
             <div style="width:36px;height:36px;border-radius:8px;background:colorfle.targetColor.hex;border:2px solid var(--border-subtle);" title={colorfle.targetColor.hex}></div>
           </div>
-          <div style="font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;">Puzzle #{colorfle.puzzleNumber}</div>
+          <div style="font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;">Puzzle #{colorfle.puzzleNumber} • {colorfle.formattedDate || requestedColorfleDate}</div>
         </div>
         <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;margin-bottom:1.25rem;">See the three source colors, their weights, the target hex, and a color circle reveal animation.</p>
         <span class="btn btn-primary" style="font-size:0.85rem;">View Full Answer</span>
@@ -93,10 +118,10 @@ const schema = JSON.stringify({
   <section class="container" style="padding-bottom:3rem;">
     <div class="content-section">
       <h2>How Daily Color Puzzles Work</h2>
-      <p>Both Colordle and Colorfle reset on a daily cycle, which means every player around the world sees the exact same puzzle on any given day. Colordle resets at midnight UTC, while Colorfle resets at midnight Japan Standard Time, which is 15:00 UTC. This staggered reset schedule means that if you play both games, there is a brief window each day where one game has updated and the other has not. Understanding the reset times helps you plan when to check for new answers or when to squeeze in one last attempt before the puzzle rotates.</p>
+      <p>Both Colordle and Colorfle reset on a daily cycle, which means every player around the world sees the exact same puzzle on any given day. The important detail is that the two games do not always become the "current" puzzle at the exact same moment on this site. We now track each game with its own verified puzzle window, so if Colorfle rolls first and Colordle lags behind, the page keeps those dates separate instead of forcing both cards onto one shared day. That removes the off-by-one errors that can happen around rollover time.</p>
       <p>Each day produces a single unique answer that every player sees, regardless of account, device, or location. There is no variation between sessions and no randomized element in the daily mode. The answers are determined algorithmically from the date itself. Colordle uses a date-based index into a curated list of named colors, and Colorfle uses a seeded random number generator where the seed is derived from the current date. This deterministic approach is what makes daily answer pages possible: because the same date always produces the same puzzle, we can precompute and publish the solution.</p>
       <p>Colordle assigns each day a target color from a curated list of hundreds of named colors. The list cycles through its entries sequentially, so you rarely see the same color twice within a few months. The named colors range from common entries like "Red" and "Blue" to more obscure selections like "Celadon," "Gamboge," and "Amaranth." Colorfle generates its daily puzzle by selecting three source colors from a fixed palette of twenty, each with predetermined mixing weights of 50%, 34%, and 16%. The combination of these three weighted colors produces the target you see on screen.</p>
-      <p>This page updates automatically at build time. When the daily puzzle resets, the next build pulls the new answer and publishes it. If you are seeing yesterday's answer, wait a few minutes for the build to refresh, or check the date shown on the answer card. The build typically completes within two to three minutes of the reset time, so any delay is brief.</p>
+      <p>This page updates automatically through the Worker and D1 pipeline. The worker stores the verified answers first, then triggers the rebuild, and it also retries later in the day if the upstream Colordle source is late. That means the page either shows the correct verified answer or waits safely instead of publishing a recycled color for the wrong day.</p>
     </div>
 
     <div class="content-section">

@@ -170,7 +170,7 @@ wordsolver/
 └──────────────────────────────────────────────────────────────────┘
 
 ┌──────────────────────────────────────────────────────────────────┐
-│                  Daily Cron (12:00 AM IST = 18:30 UTC)           │
+│             Daily Cron Windows (12:00 AM, 9:00 AM, 5:01 PM IST)  │
 │                                                                  │
 │  1. Compute today's Colordle answer → store in D1               │
 │  2. Compute today's Colorfle answer → store in D1               │
@@ -182,7 +182,7 @@ wordsolver/
 
 ### Data Flow
 
-1. **Today pages**: Answers are embedded at **Astro build time** using `daily-data.js`, which fetches `/api/today` from the Worker first and only falls back to local deterministic logic if the API is unavailable. The Worker's daily cron stores both answers in D1 before it triggers the GitHub rebuild, so normal builds and archive pages share the same source of truth.
+1. **Today pages**: Answers are embedded at **Astro build time** using `daily-data.js`, which fetches `/api/today` from the Worker first and only falls back to local deterministic logic if the API is unavailable. Colordle and Colorfle now use separate puzzle windows, so the combined today page can safely show different current dates when the games roll over at different times.
 
 2. **Archive pages**: The `ArchiveCalendar.svelte` component fetches answer data from the **Worker API** at runtime. When a user clicks a date on the calendar, the component calls `/api/{game}/archive/{date}` and displays the answer behind a JavaScript-powered reveal button.
 
@@ -332,14 +332,14 @@ See `worker/README.md` for complete Worker documentation. Key summary:
 
 - **Worker URL**: `colordleanswer-api.wordleanswerofficial.workers.dev`
 - **D1 Database**: `colordleanswer-db` (ID: `82c632eb-0b4e-4693-8b6c-32fb24b9ae40`)
-- **Cron**: `30 18 * * *` (12:00 AM IST daily)
+- **Cron**: `30 18 * * *`, `30 3 * * *`, `31 11 * * *` (12:00 AM, 9:00 AM, and 5:01 PM IST)
 
 ### API Endpoints
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/` or `/health` | GET | Health check + endpoint list |
-| `/api/today` | GET | Both games' answers for today |
+| `/api/today` | GET | Both games' current answers plus a per-game `dates` object |
 | `/api/colordle/today` | GET | Today's Colordle answer |
 | `/api/colorfle/today` | GET | Today's Colorfle answer |
 | `/api/colordle/archive?month=YYYY-MM` | GET | Month batch for Colordle |
@@ -361,11 +361,12 @@ Three tables in D1 SQLite:
 
 ### Cron Job
 
-At 18:30 UTC (12:00 AM IST) daily:
-1. Compute and store today's Colordle answer
-2. Compute and store today's Colorfle answer
-3. Update metadata
-4. Trigger GitHub `repository_dispatch` to rebuild the Astro frontend
+At three daily windows — 18:30 UTC, 03:30 UTC, and 11:31 UTC — the worker:
+1. Computes and stores the current verified Colordle answer if the official list already includes that date
+2. Computes and stores the current Colorfle answer
+3. Validates and fixes stale D1 rows before serving them again
+4. Updates metadata
+5. Triggers GitHub `repository_dispatch` to rebuild the Astro frontend only after both answers are safely stored
 
 ---
 
@@ -373,7 +374,11 @@ At 18:30 UTC (12:00 AM IST) daily:
 
 ### Frontend (Cloudflare Pages)
 
-The Astro site is deployed to Cloudflare Pages. Each push to the `main` branch triggers an automatic rebuild and deploy.
+The Astro site is deployed to Cloudflare Pages.
+
+- The GitHub workflow deploys to **Cloudflare Pages**, not GitHub Pages. GitHub is only the runner.
+- For direct local deployment to Cloudflare, create `cloudflare.env.local` from `cloudflare.env.example` and run `npm run cloudflare:deploy`.
+- The midnight Worker cron still uses GitHub `repository_dispatch`, because it needs a remote build trigger after both daily answers are safely stored in D1.
 
 **Build configuration:**
 - Build command: `npm run build`
@@ -437,11 +442,13 @@ wrangler d1 execute colordleanswer-db --local --file=./schema.sql
 ## Important Notes
 
 1. **Aligned answer logic**: Colordle and Colorfle today pages, archive pages, and the Worker now use the same answer rules. The Worker/D1 layer is the operational source of truth, and `daily-data.js` only falls back to local deterministic generation if the API is temporarily unavailable during a build.
+2. **Per-game current dates**: The site no longer assumes Colordle and Colorfle share one universal "today" date. Each game follows its own puzzle window, which fixes rollover mismatches on the combined today page and archives.
 
 2. **CSS reveal conflict**: The global `.reveal-content { display: none }` style in `Layout.astro` was hiding the archive's answer content. The archive now uses `.archive-reveal-content` with `display: block !important` to work around this.
 
 3. **D1 lazy computation**: The Worker computes and caches answers on-the-fly. If a date hasn't been stored in D1 yet, the Worker computes it, stores it, and returns it. This means the full archive works even without backfill.
 
-4. **Cron-triggered rebuilds**: The daily cron at 12 AM IST first stores both answers in D1, writes cron metadata, and only then sends the GitHub `repository_dispatch` event (`pages-publish-requested`) to rebuild the Astro frontend. This requires `GITHUB_TOKEN` and `GITHUB_REPO` secrets to be set on the Worker.
+4. **Cron-triggered rebuilds**: The worker now runs at 12:00 AM IST, 9:00 AM IST, and 5:01 PM IST. It first stores both answers in D1, writes cron metadata, and only then sends the GitHub `repository_dispatch` event (`pages-publish-requested`) to rebuild the Astro frontend. This requires `GITHUB_TOKEN` and `GITHUB_REPO` secrets to be set on the Worker.
+5. **No Colordle wraparound**: If the official Colordle list has not published the next date yet, the site now shows unavailable instead of wrapping to an older color or reusing the last available answer.
 
 5. **No user data collection**: The site has no accounts, no tracking, no cookies, and no server-side user data. All solver and unlimited game computation happens in the browser. The only server-side data is the answer database and metadata.

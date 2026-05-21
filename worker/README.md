@@ -15,7 +15,7 @@ All answers are **deterministic** — computed algorithmically from the game rul
 | **Runtime** | Cloudflare Worker with D1 SQL database |
 | **Worker URL** | `colordleanswer-api.wordleanswerofficial.workers.dev` |
 | **D1 Database** | `colordleanswer-db` (ID: `82c632eb-0b4e-4693-8b6c-32fb24b9ae40`) |
-| **Cron** | `30 18 * * *` (12:00 AM IST daily) — ensures today's answers are in DB and triggers GitHub rebuild |
+| **Cron** | `30 18 * * *`, `30 3 * * *`, `31 11 * * *` (12:00 AM, 9:00 AM, and 5:01 PM IST) — ensures today's answers are in DB and retries later if the upstream source was late |
 | **Compatibility** | `nodejs_compat` flag enabled |
 
 ```
@@ -44,7 +44,7 @@ All answers are **deterministic** — computed algorithmically from the game rul
 └──────────────────────────────────────────────────────────┘
 
 ┌──────────────────────────────────────────────────────────┐
-│                Daily Cron (12 AM IST)                     │
+│           Daily Cron + Retry Windows (IST)                │
 │                                                           │
 │  1. Compute today's Colordle answer → store in D1        │
 │  2. Compute today's Colorfle answer → store in D1        │
@@ -70,7 +70,7 @@ All answers are **deterministic** — computed algorithmically from the game rul
 - **Rollover**: 16:30 UTC (after 16:30 UTC, the next day's puzzle is shown)
 - **Answer type**: Named color with hex code (e.g., "Night Sky" → `#292b31`)
 - **Day numbering**: `dayNumber = 500 + daysSinceStart`
-- **Color resolution**: Names are resolved to hex using a built-in `COLOR_HEX_MAP` with ~600+ entries, including 12 manual overrides from the reference repo (e.g., `bloodred` → `#980002`, `oceanblue` → `#009DC4`)
+- **Color resolution**: Names are resolved to hex using the shared frontend mapping with manual overrides, and the worker refuses dates beyond the latest official list instead of wrapping to older colors
 
 ### Colorfle Logic
 
@@ -111,7 +111,7 @@ curl https://colordleanswer-api.wordleanswerofficial.workers.dev/health
 
 #### `GET /api/today`
 
-Get today's answers for **both** games in a single request.
+Get the current answers for **both** games in a single request. The response includes a per-game `dates` object because Colordle and Colorfle can be on different visible puzzle dates for about one hour each day.
 
 ```bash
 curl https://colordleanswer-api.wordleanswerofficial.workers.dev/api/today
@@ -504,7 +504,7 @@ wrangler secret put GITHUB_TOKEN
 
 # GitHub repo name in owner/repo format
 wrangler secret put GITHUB_REPO
-# Enter: sujitbhai7710/wordsolver.tech-colordle-colorfle
+# Enter: akarohitmishra/colordlebro
 ```
 
 #### 7. Deploy
@@ -535,7 +535,7 @@ Set via `wrangler secret put` or the Cloudflare Dashboard.
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `GITHUB_TOKEN` | No* | GitHub Personal Access Token with `repo` scope for triggering `repository_dispatch` events |
-| `GITHUB_REPO` | No* | GitHub repository in `owner/repo` format (e.g., `sujitbhai7710/wordsolver.tech-colordle-colorfle`) |
+| `GITHUB_REPO` | No* | GitHub repository in `owner/repo` format (e.g., `akarohitmishra/colordlebro`) |
 
 \*Required only for automatic GitHub rebuild triggers via cron. If not set, the cron will still compute and store answers, but won't trigger the Astro frontend rebuild.
 
@@ -550,14 +550,20 @@ The cron is configured in `wrangler.toml`:
 crons = ["30 18 * * *"]
 ```
 
-This fires at **18:30 UTC**, which is **12:00 AM IST** (midnight India Standard Time, UTC+5:30).
+The worker now fires at three times:
+
+- **18:30 UTC** = **12:00 AM IST** primary publish window
+- **03:30 UTC** = **9:00 AM IST** retry window
+- **11:31 UTC** = **5:01 PM IST** late retry window
 
 At each cron invocation, the `scheduled` handler:
 
-1. **Computes today's Colordle answer** using the deterministic algorithm and stores it in D1 (via `INSERT OR REPLACE`)
-2. **Computes today's Colorfle answer** using the seeded PRNG and stores it in D1
+1. **Computes the current Colordle date and current Colorfle date separately** using the same puzzle-window rules as the frontend
+2. **Computes the verified Colordle answer** and stores it in D1 only if the official list already contains that date
+3. **Computes today's Colorfle answer** using the seeded PRNG and stores it in D1
+4. **Validates existing D1 rows** and overwrites any stale or mismatched entries
 3. **Updates the metadata table** with `last_cron_run` timestamp
-4. **Triggers a GitHub `repository_dispatch` event** (`event_type: "pages-publish-requested"`) to rebuild the Astro frontend so the static today page reflects the new answer
+5. **Triggers a GitHub `repository_dispatch` event** (`event_type: "pages-publish-requested"`) to rebuild the Astro frontend only after both answers were safely stored
 
 If either answer fails to persist, the rebuild trigger is skipped and the failure is recorded in the `metadata` table as `last_cron_status = "store_failed"`.
 
@@ -589,7 +595,7 @@ const API_BASE = 'https://colordleanswer-api.wordleanswerofficial.workers.dev';
 |---|---|---|
 | `ArchiveCalendar.svelte` | `GET /api/{game}/archive?month=YYYY-MM` | Fetch monthly batch for calendar display |
 | `ArchiveCalendar.svelte` | `GET /api/{game}/archive/YYYY-MM-DD` | Fetch single date answer |
-| `daily-data.js` | `GET /api/today` | Fetch both answers during Astro builds |
+| `daily-data.js` | `GET /api/today` | Fetch both answers during Astro builds, with per-game dates |
 | `daily-data.js` fallback | Local deterministic logic | Used only if the Worker API is unavailable during build |
 
 To change the API URL, set `PUBLIC_ANSWER_API_BASE` for the Astro build or update the default in `src/lib/answer-source.js`.

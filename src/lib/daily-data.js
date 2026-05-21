@@ -1,14 +1,19 @@
 import { fetchTodayBundle } from './answer-source.js';
-import { getColordleDailyAnswer, getColordleDayNum } from './colordle.js';
+import { getBoundedColordleDailyAnswer, getColordleBundledLatestDateKey, getColordleDayNum } from './colordle.js';
 import { buildColorfleAnswerPayload } from './colorfle.js';
-import { dateFromDateKey, formatDateKey, formatDisplayDate, getIstDateKey } from './site-date.js';
+import { dateFromDateKey, formatDateKey, formatDisplayDate } from './site-date.js';
+import { getPuzzleDateKeyForGame } from './puzzle-window.ts';
 
 let hasWarnedAboutFallback = false;
 let fallbackTodayBundle = null;
 
 function buildColordleFallback(dateKey) {
   const date = dateFromDateKey(dateKey);
-  const answer = getColordleDailyAnswer(date);
+  const answer = getBoundedColordleDailyAnswer(date);
+
+  if (!answer) {
+    return null;
+  }
 
   return {
     colorName: answer.name,
@@ -59,10 +64,11 @@ function normalizeColorfleAnswer(answer) {
 
 async function getFallbackTodayBundle() {
   if (!fallbackTodayBundle) {
-    const todayDateKey = getIstDateKey();
+    const colordleDateKey = getPuzzleDateKeyForGame('colordle');
+    const colorfleDateKey = getPuzzleDateKeyForGame('colorfle');
     fallbackTodayBundle = {
-      colordle: buildColordleFallback(todayDateKey),
-      colorfle: buildColorfleFallback(todayDateKey),
+      colordle: buildColordleFallback(colordleDateKey),
+      colorfle: buildColorfleFallback(colorfleDateKey),
     };
   }
 
@@ -72,14 +78,11 @@ async function getFallbackTodayBundle() {
 export async function getTodayAnswers() {
   try {
     const payload = await fetchTodayBundle();
-
-    if (!payload?.colordle || !payload?.colorfle) {
-      throw new Error('Today API response did not include both game payloads.');
-    }
+    const fallbackBundle = await getFallbackTodayBundle();
 
     return {
-      colordle: normalizeColordleAnswer(payload.colordle),
-      colorfle: normalizeColorfleAnswer(payload.colorfle),
+      colordle: payload?.colordle ? normalizeColordleAnswer(payload.colordle) : fallbackBundle.colordle,
+      colorfle: payload?.colorfle ? normalizeColorfleAnswer(payload.colorfle) : fallbackBundle.colorfle,
     };
   } catch (error) {
     warnAboutFallback(error);
@@ -98,7 +101,7 @@ export async function getColorfleTodayData() {
 }
 
 export async function getRecentColorfleEntries(days = 7) {
-  const todayDateKey = getIstDateKey();
+  const todayDateKey = getPuzzleDateKeyForGame('colorfle');
   const todayDate = dateFromDateKey(todayDateKey);
 
   return Array.from({ length: days }, (_, index) => {
@@ -106,4 +109,10 @@ export async function getRecentColorfleEntries(days = 7) {
     entryDate.setUTCDate(entryDate.getUTCDate() - index);
     return buildColorfleFallback(formatDateKey(entryDate));
   });
+}
+
+export function getBundledColordleAvailability() {
+  return {
+    latestDateKey: getColordleBundledLatestDateKey(),
+  };
 }

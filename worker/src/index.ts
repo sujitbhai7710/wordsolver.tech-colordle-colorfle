@@ -1,7 +1,8 @@
 // Cloudflare Worker for colordleanswer.me API
 // Serves Colordle and Colorfle daily puzzle answers from D1 SQL database
 
-import { getColordleAnswer, getTodayIST } from './colordle-logic';
+import { getPuzzleDateKeyForGame } from '../../src/lib/puzzle-window.ts';
+import { getColordleAnswer, getLatestAvailableColordleDate } from './colordle-logic';
 import { getColorfleAnswer } from './colorfle-logic';
 
 interface Env {
@@ -10,7 +11,6 @@ interface Env {
   GITHUB_REPO?: string;
 }
 
-// CORS headers for all API responses
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS',
@@ -18,7 +18,10 @@ const CORS_HEADERS = {
   'Access-Control-Max-Age': '86400',
 };
 
-function jsonResponse(data: any, status = 200, extraHeaders: Record<string, string> = {}): Response {
+type ColordleAnswer = Awaited<ReturnType<typeof getColordleAnswer>>;
+type ColorfleAnswer = ReturnType<typeof getColorfleAnswer>;
+
+function jsonResponse(data: unknown, status = 200, extraHeaders: Record<string, string> = {}): Response {
   return new Response(JSON.stringify(data), {
     status,
     headers: {
@@ -30,133 +33,214 @@ function jsonResponse(data: any, status = 200, extraHeaders: Record<string, stri
   });
 }
 
-function errorResponse(message: string, status = 400): Response {
-  return jsonResponse({ error: message, success: false }, status);
+function errorResponse(message: string, status = 400, extraData: Record<string, unknown> = {}): Response {
+  return jsonResponse({ error: message, success: false, ...extraData }, status);
 }
 
 function getSettledError(result: PromiseSettledResult<unknown>): unknown {
   return result.status === 'rejected' ? result.reason : null;
 }
 
-// Colordle started on 2023-08-07, Colorfle started on 2022-04-25
 const COLORDLE_MIN_DATE = '2023-08-07';
 const COLORFLE_MIN_DATE = '2022-04-25';
 
-// Validate date format YYYY-MM-DD
 function isValidDate(dateStr: string): boolean {
-  return /^\d{4}-\d{2}-\d{2}$/.test(dateStr) && !isNaN(new Date(dateStr + 'T12:00:00Z').getTime());
+  return /^\d{4}-\d{2}-\d{2}$/.test(dateStr) && !Number.isNaN(new Date(`${dateStr}T12:00:00Z`).getTime());
 }
 
-// Ensure a colordle answer exists in DB, compute if missing
-async function ensureColordleAnswer(db: D1Database, dateStr: string): Promise<any> {
-  // Check DB first
-  const existing = await db.prepare(
-    'SELECT date, day_number, color_name, color_hex FROM colordle_answers WHERE date = ?'
-  ).bind(dateStr).first();
+function normalizeColordleDbAnswer(existing: Record<string, unknown>) {
+  const date = existing.date as string;
+  const formattedDate = new Date(`${date}T12:00:00Z`).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
 
-  if (existing) {
-    const date = new Date(dateStr + 'T12:00:00Z');
-    const formattedDate = date.toLocaleDateString('en-US', {
-      month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC'
-    });
-    return {
-      date: existing.date as string,
-      dayNumber: existing.day_number as number,
-      colorName: existing.color_name as string,
-      colorHex: existing.color_hex as string,
-      formattedDate
-    };
+  return {
+    date,
+    dayNumber: existing.day_number as number,
+    colorName: existing.color_name as string,
+    colorHex: existing.color_hex as string,
+    formattedDate,
+  };
+}
+
+function colordleAnswersMatch(
+  existing: ReturnType<typeof normalizeColordleDbAnswer>,
+  expected: NonNullable<ColordleAnswer>
+): boolean {
+  return (
+    existing.date === expected.date &&
+    existing.dayNumber === expected.dayNumber &&
+    existing.colorName === expected.colorName &&
+    existing.colorHex.toLowerCase() === expected.colorHex.toLowerCase()
+  );
+}
+
+async function ensureColordleAnswer(db: D1Database, dateStr: string): Promise<NonNullable<ColordleAnswer> | null> {
+  const [existing, expected] = await Promise.all([
+    db
+      .prepare('SELECT date, day_number, color_name, color_hex FROM colordle_answers WHERE date = ?')
+      .bind(dateStr)
+      .first<Record<string, unknown>>(),
+    getColordleAnswer(dateStr),
+  ]);
+
+  if (!expected) {
+    if (existing) {
+      await db.prepare('DELETE FROM colordle_answers WHERE date = ?').bind(dateStr).run();
+    }
+    return null;
   }
 
-  // Compute and store
-  const answer = getColordleAnswer(dateStr);
-  await db.prepare(
-    'INSERT OR REPLACE INTO colordle_answers (date, day_number, color_name, color_hex, updated_at) VALUES (?, ?, ?, ?, datetime(\'now\'))'
-  ).bind(answer.date, answer.dayNumber, answer.colorName, answer.colorHex).run();
-
-  return answer;
-}
-
-// Ensure a colorfle answer exists in DB, compute if missing
-async function ensureColorfleAnswer(db: D1Database, dateStr: string, mode = 0): Promise<any> {
-  // Check DB first
-  const existing = await db.prepare(
-    'SELECT * FROM colorfle_answers WHERE date = ? AND mode = ?'
-  ).bind(dateStr, mode).first();
-
   if (existing) {
-    const date = new Date(dateStr + 'T12:00:00Z');
-    const formattedDate = date.toLocaleDateString('en-US', {
-      month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC'
-    });
-    return {
-      date: existing.date as string,
-      puzzleNumber: existing.puzzle_number as number,
-      mode: existing.mode as number,
-      colors: JSON.parse(existing.color_indices as string).map((idx: number, i: number) => ({
-        index: idx,
-        name: JSON.parse(existing.color_names as string)[i],
-        hex: JSON.parse(existing.color_hexes as string)[i],
-        weight: JSON.parse(existing.color_weights as string)[i],
-      })),
-      targetColor: {
-        rgb: JSON.parse(existing.target_rgb as string),
-        hex: existing.target_hex as string,
-      },
-      formattedDate
-    };
+    const normalized = normalizeColordleDbAnswer(existing);
+    if (colordleAnswersMatch(normalized, expected)) {
+      return normalized;
+    }
   }
 
-  // Compute and store
-  const answer = getColorfleAnswer(dateStr, mode);
-  await db.prepare(
-    `INSERT OR REPLACE INTO colorfle_answers 
-     (date, puzzle_number, mode, color_indices, color_names, color_hexes, color_weights, target_hex, target_rgb, updated_at) 
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))`
-  ).bind(
-    answer.date,
-    answer.puzzleNumber,
-    answer.mode,
-    JSON.stringify(answer.colors.map(c => c.index)),
-    JSON.stringify(answer.colors.map(c => c.name)),
-    JSON.stringify(answer.colors.map(c => c.hex)),
-    JSON.stringify(answer.colors.map(c => c.weight)),
-    answer.targetColor.hex,
-    JSON.stringify(answer.targetColor.rgb)
-  ).run();
+  await db
+    .prepare(
+      'INSERT OR REPLACE INTO colordle_answers (date, day_number, color_name, color_hex, updated_at) VALUES (?, ?, ?, ?, datetime(\'now\'))'
+    )
+    .bind(expected.date, expected.dayNumber, expected.colorName, expected.colorHex)
+    .run();
 
-  return answer;
+  return expected;
 }
 
-// Trigger GitHub Actions rebuild after both answers are safely stored in D1
-async function triggerGitHubRebuild(env: Env, targetDate: string): Promise<boolean> {
+function normalizeColorfleDbAnswer(existing: Record<string, unknown>) {
+  const colorIndices = JSON.parse(existing.color_indices as string) as number[];
+  const colorNames = JSON.parse(existing.color_names as string) as string[];
+  const colorHexes = JSON.parse(existing.color_hexes as string) as string[];
+  const colorWeights = JSON.parse(existing.color_weights as string) as number[];
+  const targetRgb = JSON.parse(existing.target_rgb as string) as { r: number; g: number; b: number };
+  const date = existing.date as string;
+
+  return {
+    date,
+    puzzleNumber: existing.puzzle_number as number,
+    mode: existing.mode as number,
+    colors: colorIndices.map((idx, index) => ({
+      index: idx,
+      name: colorNames[index],
+      hex: colorHexes[index],
+      weight: colorWeights[index],
+    })),
+    targetColor: {
+      rgb: targetRgb,
+      hex: existing.target_hex as string,
+    },
+    formattedDate: new Date(`${date}T12:00:00Z`).toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+      timeZone: 'UTC',
+    }),
+  };
+}
+
+function colorfleAnswersMatch(
+  existing: ReturnType<typeof normalizeColorfleDbAnswer>,
+  expected: ColorfleAnswer
+): boolean {
+  if (
+    existing.date !== expected.date ||
+    existing.puzzleNumber !== expected.puzzleNumber ||
+    existing.mode !== expected.mode ||
+    existing.targetColor.hex.toLowerCase() !== expected.targetColor.hex.toLowerCase() ||
+    existing.colors.length !== expected.colors.length
+  ) {
+    return false;
+  }
+
+  return existing.colors.every((color, index) => {
+    const expectedColor = expected.colors[index];
+    return (
+      color.index === expectedColor.index &&
+      color.name === expectedColor.name &&
+      color.hex.toLowerCase() === expectedColor.hex.toLowerCase() &&
+      Math.abs(color.weight - expectedColor.weight) < 1e-9
+    );
+  });
+}
+
+async function ensureColorfleAnswer(db: D1Database, dateStr: string, mode = 0): Promise<ColorfleAnswer> {
+  const expected = getColorfleAnswer(dateStr, mode);
+  const existing = await db
+    .prepare('SELECT * FROM colorfle_answers WHERE date = ? AND mode = ?')
+    .bind(dateStr, mode)
+    .first<Record<string, unknown>>();
+
+  if (existing) {
+    const normalized = normalizeColorfleDbAnswer(existing);
+    if (colorfleAnswersMatch(normalized, expected)) {
+      return normalized;
+    }
+  }
+
+  await db
+    .prepare(
+      `INSERT OR REPLACE INTO colorfle_answers
+       (date, puzzle_number, mode, color_indices, color_names, color_hexes, color_weights, target_hex, target_rgb, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))`
+    )
+    .bind(
+      expected.date,
+      expected.puzzleNumber,
+      expected.mode,
+      JSON.stringify(expected.colors.map((color) => color.index)),
+      JSON.stringify(expected.colors.map((color) => color.name)),
+      JSON.stringify(expected.colors.map((color) => color.hex)),
+      JSON.stringify(expected.colors.map((color) => color.weight)),
+      expected.targetColor.hex,
+      JSON.stringify(expected.targetColor.rgb)
+    )
+    .run();
+
+  return expected;
+}
+
+async function buildColordleUnavailableResponse(dateStr: string, status = 503): Promise<Response> {
+  const latestAvailableDate = await getLatestAvailableColordleDate();
+  return errorResponse(`No verified Colordle answer is available yet for ${dateStr}.`, status, {
+    requestedDate: dateStr,
+    availableThroughDate: latestAvailableDate,
+  });
+}
+
+async function triggerGitHubRebuild(
+  env: Env,
+  targetDates: { colordle: string; colorfle: string }
+): Promise<boolean> {
   if (!env.GITHUB_TOKEN || !env.GITHUB_REPO) {
     console.log('GitHub token or repo not configured, skipping rebuild trigger');
     return false;
   }
 
   try {
-    const response = await fetch(
-      `https://api.github.com/repos/${env.GITHUB_REPO}/dispatches`,
-      {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${env.GITHUB_TOKEN}`,
-          'Accept': 'application/vnd.github.v3+json',
-          'User-Agent': 'colordleanswer-api',
-          'Content-Type': 'application/json',
+    const response = await fetch(`https://api.github.com/repos/${env.GITHUB_REPO}/dispatches`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${env.GITHUB_TOKEN}`,
+        Accept: 'application/vnd.github.v3+json',
+        'User-Agent': 'colordleanswer-api',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        event_type: 'pages-publish-requested',
+        client_payload: {
+          group: 'site',
+          source: 'worker-cron',
+          target_date:
+            targetDates.colordle === targetDates.colorfle ? targetDates.colordle : targetDates.colorfle,
+          target_dates: targetDates,
+          timestamp: new Date().toISOString(),
         },
-        body: JSON.stringify({
-          event_type: 'pages-publish-requested',
-          client_payload: {
-            group: 'site',
-            source: 'worker-cron',
-            target_date: targetDate,
-            timestamp: new Date().toISOString(),
-          }
-        }),
-      }
-    );
+      }),
+    });
 
     if (response.status === 204 || response.status === 200) {
       console.log(`GitHub rebuild trigger response: ${response.status}`);
@@ -172,64 +256,68 @@ async function triggerGitHubRebuild(env: Env, targetDate: string): Promise<boole
   }
 }
 
-// ============================================
-// Route handlers
-// ============================================
-
-// GET /api/today - Get today's answers for both games
 async function handleToday(env: Env): Promise<Response> {
-  const today = getTodayIST();
-  
+  const colordleDate = getPuzzleDateKeyForGame('colordle');
+  const colorfleDate = getPuzzleDateKeyForGame('colorfle');
+
   const [colordle, colorfle] = await Promise.all([
-    ensureColordleAnswer(env.DB, today),
-    ensureColorfleAnswer(env.DB, today),
+    ensureColordleAnswer(env.DB, colordleDate),
+    ensureColorfleAnswer(env.DB, colorfleDate),
   ]);
 
   return jsonResponse({
     success: true,
-    date: today,
+    ...(colordleDate === colorfleDate ? { date: colordleDate } : {}),
+    dates: {
+      colordle: colordleDate,
+      colorfle: colorfleDate,
+    },
     colordle,
     colorfle,
   });
 }
 
-// GET /api/colordle/today - Get today's Colordle answer
 async function handleColordleToday(env: Env): Promise<Response> {
-  const today = getTodayIST();
+  const today = getPuzzleDateKeyForGame('colordle');
   const answer = await ensureColordleAnswer(env.DB, today);
+
+  if (!answer) {
+    return buildColordleUnavailableResponse(today);
+  }
+
   return jsonResponse({ success: true, ...answer });
 }
 
-// GET /api/colorfle/today - Get today's Colorfle answer
 async function handleColorfleToday(env: Env): Promise<Response> {
-  const today = getTodayIST();
+  const today = getPuzzleDateKeyForGame('colorfle');
   const answer = await ensureColorfleAnswer(env.DB, today);
   return jsonResponse({ success: true, ...answer });
 }
 
-// GET /api/colordle/archive/:date - Get Colordle answer for a specific date
 async function handleColordleArchive(env: Env, dateStr: string): Promise<Response> {
   if (!isValidDate(dateStr)) {
     return errorResponse('Invalid date format. Use YYYY-MM-DD');
   }
 
-  // Check date range - Colordle started 2023-08-07
-  const maxDate = getTodayIST();
+  const maxDate = getPuzzleDateKeyForGame('colordle');
   if (dateStr < COLORDLE_MIN_DATE || dateStr > maxDate) {
     return errorResponse(`Date must be between ${COLORDLE_MIN_DATE} and ${maxDate}`);
   }
 
   const answer = await ensureColordleAnswer(env.DB, dateStr);
+  if (!answer) {
+    return buildColordleUnavailableResponse(dateStr);
+  }
+
   return jsonResponse({ success: true, ...answer });
 }
 
-// GET /api/colorfle/archive/:date - Get Colorfle answer for a specific date
 async function handleColorfleArchive(env: Env, dateStr: string): Promise<Response> {
   if (!isValidDate(dateStr)) {
     return errorResponse('Invalid date format. Use YYYY-MM-DD');
   }
 
-  const maxDate = getTodayIST();
+  const maxDate = getPuzzleDateKeyForGame('colorfle');
   if (dateStr < COLORFLE_MIN_DATE || dateStr > maxDate) {
     return errorResponse(`Date must be between ${COLORFLE_MIN_DATE} and ${maxDate}`);
   }
@@ -238,7 +326,6 @@ async function handleColorfleArchive(env: Env, dateStr: string): Promise<Respons
   return jsonResponse({ success: true, ...answer });
 }
 
-// GET /api/colordle/archive?month=YYYY-MM - Get Colordle answers for a month
 async function handleColordleMonthArchive(env: Env, monthStr: string): Promise<Response> {
   if (!/^\d{4}-\d{2}$/.test(monthStr)) {
     return errorResponse('Invalid month format. Use YYYY-MM');
@@ -246,14 +333,19 @@ async function handleColordleMonthArchive(env: Env, monthStr: string): Promise<R
 
   const [year, month] = monthStr.split('-').map(Number);
   const daysInMonth = new Date(year, month, 0).getDate();
-  const today = getTodayIST();
+  const maxDate = getPuzzleDateKeyForGame('colordle');
 
-  const answers = [];
-  for (let d = 1; d <= daysInMonth; d++) {
-    const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-    if (dateStr < COLORDLE_MIN_DATE || dateStr > today) continue;
+  const answers: NonNullable<ColordleAnswer>[] = [];
+  for (let day = 1; day <= daysInMonth; day += 1) {
+    const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    if (dateStr < COLORDLE_MIN_DATE || dateStr > maxDate) {
+      continue;
+    }
+
     const answer = await ensureColordleAnswer(env.DB, dateStr);
-    answers.push(answer);
+    if (answer) {
+      answers.push(answer);
+    }
   }
 
   return jsonResponse({
@@ -263,7 +355,6 @@ async function handleColordleMonthArchive(env: Env, monthStr: string): Promise<R
   });
 }
 
-// GET /api/colorfle/archive?month=YYYY-MM - Get Colorfle answers for a month
 async function handleColorfleMonthArchive(env: Env, monthStr: string): Promise<Response> {
   if (!/^\d{4}-\d{2}$/.test(monthStr)) {
     return errorResponse('Invalid month format. Use YYYY-MM');
@@ -271,12 +362,15 @@ async function handleColorfleMonthArchive(env: Env, monthStr: string): Promise<R
 
   const [year, month] = monthStr.split('-').map(Number);
   const daysInMonth = new Date(year, month, 0).getDate();
-  const today = getTodayIST();
+  const maxDate = getPuzzleDateKeyForGame('colorfle');
 
-  const answers = [];
-  for (let d = 1; d <= daysInMonth; d++) {
-    const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-    if (dateStr < COLORFLE_MIN_DATE || dateStr > today) continue;
+  const answers: ColorfleAnswer[] = [];
+  for (let day = 1; day <= daysInMonth; day += 1) {
+    const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    if (dateStr < COLORFLE_MIN_DATE || dateStr > maxDate) {
+      continue;
+    }
+
     const answer = await ensureColorfleAnswer(env.DB, dateStr);
     answers.push(answer);
   }
@@ -288,55 +382,56 @@ async function handleColorfleMonthArchive(env: Env, monthStr: string): Promise<R
   });
 }
 
-// GET /api/colordle/search?color=hex - Search for dates when a color appeared
 async function handleColordleColorSearch(env: Env, query: string): Promise<Response> {
   const normalizedQuery = query.toLowerCase().replace(/ /g, '');
-  
-  // Search in DB first
+
   const results = await env.DB.prepare(
     "SELECT date, day_number, color_name, color_hex FROM colordle_answers WHERE LOWER(REPLACE(color_name, ' ', '')) LIKE ? ORDER BY date DESC LIMIT 50"
-  ).bind(`%${normalizedQuery}%`).all();
+  )
+    .bind(`%${normalizedQuery}%`)
+    .all();
 
   return jsonResponse({
     success: true,
     query,
-    results: results.results.map((r: any) => ({
-      date: r.date,
-      dayNumber: r.day_number,
-      colorName: r.color_name,
-      colorHex: r.color_hex,
+    results: results.results.map((row: Record<string, unknown>) => ({
+      date: row.date,
+      dayNumber: row.day_number,
+      colorName: row.color_name,
+      colorHex: row.color_hex,
     })),
   });
 }
 
-// GET /api/stats - Get statistics
 async function handleStats(env: Env): Promise<Response> {
   const [colordleCount, colorfleCount, lastColordleUpdate, lastColorfleUpdate] = await Promise.all([
-    env.DB.prepare('SELECT COUNT(*) as count FROM colordle_answers').first(),
-    env.DB.prepare('SELECT COUNT(*) as count FROM colorfle_answers').first(),
-    env.DB.prepare('SELECT MAX(updated_at) as last_update FROM colordle_answers').first(),
-    env.DB.prepare('SELECT MAX(updated_at) as last_update FROM colorfle_answers').first(),
+    env.DB.prepare('SELECT COUNT(*) as count FROM colordle_answers').first<Record<string, unknown>>(),
+    env.DB.prepare('SELECT COUNT(*) as count FROM colorfle_answers').first<Record<string, unknown>>(),
+    env.DB.prepare('SELECT MAX(updated_at) as last_update FROM colordle_answers').first<Record<string, unknown>>(),
+    env.DB.prepare('SELECT MAX(updated_at) as last_update FROM colorfle_answers').first<Record<string, unknown>>(),
   ]);
 
   return jsonResponse({
     success: true,
     colordle: {
-      totalAnswers: (colordleCount as any)?.count || 0,
-      lastUpdate: (lastColordleUpdate as any)?.last_update || null,
+      totalAnswers: (colordleCount?.count as number) || 0,
+      lastUpdate: (lastColordleUpdate?.last_update as string) || null,
     },
     colorfle: {
-      totalAnswers: (colorfleCount as any)?.count || 0,
-      lastUpdate: (lastColorfleUpdate as any)?.last_update || null,
+      totalAnswers: (colorfleCount?.count as number) || 0,
+      lastUpdate: (lastColorfleUpdate?.last_update as string) || null,
     },
-    today: getTodayIST(),
+    today: {
+      colordle: getPuzzleDateKeyForGame('colordle'),
+      colorfle: getPuzzleDateKeyForGame('colorfle'),
+    },
   });
 }
 
-// POST /api/admin/backfill - Backfill answers for a date range
 async function handleBackfill(env: Env, url: URL): Promise<Response> {
   const startStr = url.searchParams.get('start');
   const endStr = url.searchParams.get('end');
-  const game = url.searchParams.get('game') || 'both'; // colordle, colorfle, or both
+  const game = url.searchParams.get('game') || 'both';
 
   if (!startStr || !endStr) {
     return errorResponse('Missing start or end date parameters. Use ?start=YYYY-MM-DD&end=YYYY-MM-DD');
@@ -346,9 +441,10 @@ async function handleBackfill(env: Env, url: URL): Promise<Response> {
     return errorResponse('Invalid date format. Use YYYY-MM-DD');
   }
 
-  const startDate = new Date(startStr + 'T12:00:00Z');
-  const endDate = new Date(endStr + 'T12:00:00Z');
-  const today = getTodayIST();
+  const startDate = new Date(`${startStr}T12:00:00Z`);
+  const endDate = new Date(`${endStr}T12:00:00Z`);
+  const colordleToday = getPuzzleDateKeyForGame('colordle');
+  const colorfleToday = getPuzzleDateKeyForGame('colorfle');
 
   if (startDate > endDate) {
     return errorResponse('Start date must be before end date');
@@ -359,23 +455,27 @@ async function handleBackfill(env: Env, url: URL): Promise<Response> {
   const currentDate = new Date(startDate);
   while (currentDate <= endDate) {
     const dateStr = currentDate.toISOString().slice(0, 10);
-    
-    if (dateStr <= today) {
-      try {
-        if ((game === 'both' || game === 'colordle') && dateStr >= COLORDLE_MIN_DATE) {
-          await ensureColordleAnswer(env.DB, dateStr);
-          results.colordle++;
+
+    try {
+      if ((game === 'both' || game === 'colordle') && dateStr >= COLORDLE_MIN_DATE && dateStr <= colordleToday) {
+        const answer = await ensureColordleAnswer(env.DB, dateStr);
+        if (answer) {
+          results.colordle += 1;
+        } else {
+          results.errors.push(`${dateStr}: No verified Colordle answer is available yet.`);
         }
-        if ((game === 'both' || game === 'colorfle') && dateStr >= COLORFLE_MIN_DATE) {
-          await ensureColorfleAnswer(env.DB, dateStr);
-          results.colorfle++;
-        }
-      } catch (err: any) {
-        results.errors.push(`${dateStr}: ${err.message}`);
       }
+
+      if ((game === 'both' || game === 'colorfle') && dateStr >= COLORFLE_MIN_DATE && dateStr <= colorfleToday) {
+        await ensureColorfleAnswer(env.DB, dateStr);
+        results.colorfle += 1;
+      }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      results.errors.push(`${dateStr}: ${message}`);
     }
 
-    currentDate.setDate(currentDate.getDate() + 1);
+    currentDate.setUTCDate(currentDate.getUTCDate() + 1);
   }
 
   return jsonResponse({
@@ -385,9 +485,8 @@ async function handleBackfill(env: Env, url: URL): Promise<Response> {
   });
 }
 
-// POST /api/admin/clear - Clear all answers from database
 async function handleClear(env: Env, url: URL): Promise<Response> {
-  const game = url.searchParams.get('game') || 'both'; // colordle, colorfle, or both
+  const game = url.searchParams.get('game') || 'both';
   const confirm = url.searchParams.get('confirm');
 
   if (confirm !== 'yes') {
@@ -405,8 +504,9 @@ async function handleClear(env: Env, url: URL): Promise<Response> {
       const result = await env.DB.prepare('DELETE FROM colorfle_answers').run();
       results.colorfle = result.meta?.changes || 0;
     }
-  } catch (err: any) {
-    return errorResponse(`Failed to clear database: ${err.message}`, 500);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    return errorResponse(`Failed to clear database: ${message}`, 500);
   }
 
   return jsonResponse({
@@ -416,34 +516,35 @@ async function handleClear(env: Env, url: URL): Promise<Response> {
   });
 }
 
-// Cron handler - runs daily at 12:00 AM IST (18:30 UTC previous day)
 async function handleCron(env: Env): Promise<void> {
-  console.log('Running daily cron job at', new Date().toISOString());
-  
-  const today = getTodayIST();
-  console.log('Today (IST):', today);
+  console.log('Running cron job at', new Date().toISOString());
+
+  const targetDates = {
+    colordle: getPuzzleDateKeyForGame('colordle'),
+    colorfle: getPuzzleDateKeyForGame('colorfle'),
+  };
+  console.log('Target dates:', targetDates);
 
   const storedAnswers = await Promise.allSettled([
-    ensureColordleAnswer(env.DB, today),
-    ensureColorfleAnswer(env.DB, today),
+    ensureColordleAnswer(env.DB, targetDates.colordle),
+    ensureColorfleAnswer(env.DB, targetDates.colorfle),
   ]);
 
-  const colordleStored = storedAnswers[0].status === 'fulfilled';
-  const colorfleStored = storedAnswers[1].status === 'fulfilled';
+  const colordleStored = storedAnswers[0].status === 'fulfilled' && Boolean(storedAnswers[0].value);
+  const colorfleStored = storedAnswers[1].status === 'fulfilled' && Boolean(storedAnswers[1].value);
 
   if (colordleStored) {
-    console.log('Colordle answer for', today, 'ensured in DB');
+    console.log('Colordle answer for', targetDates.colordle, 'ensured in DB');
   } else {
     console.error('Failed to ensure colordle answer:', getSettledError(storedAnswers[0]));
   }
 
   if (colorfleStored) {
-    console.log('Colorfle answer for', today, 'ensured in DB');
+    console.log('Colorfle answer for', targetDates.colorfle, 'ensured in DB');
   } else {
     console.error('Failed to ensure colorfle answer:', getSettledError(storedAnswers[1]));
   }
 
-  // Update metadata
   try {
     const nowIso = new Date().toISOString();
     await env.DB.batch([
@@ -452,13 +553,16 @@ async function handleCron(env: Env): Promise<void> {
       ).bind('last_cron_run', nowIso),
       env.DB.prepare(
         'INSERT OR REPLACE INTO metadata (key, value, updated_at) VALUES (?, ?, datetime(\'now\'))'
-      ).bind('last_cron_target_date', today),
+      ).bind('last_cron_colordle_date', targetDates.colordle),
+      env.DB.prepare(
+        'INSERT OR REPLACE INTO metadata (key, value, updated_at) VALUES (?, ?, datetime(\'now\'))'
+      ).bind('last_cron_colorfle_date', targetDates.colorfle),
       env.DB.prepare(
         'INSERT OR REPLACE INTO metadata (key, value, updated_at) VALUES (?, ?, datetime(\'now\'))'
       ).bind('last_cron_status', colordleStored && colorfleStored ? 'stored' : 'store_failed'),
     ]);
-  } catch (err) {
-    console.error('Failed to update metadata:', err);
+  } catch (error) {
+    console.error('Failed to update metadata:', error);
   }
 
   if (!colordleStored || !colorfleStored) {
@@ -466,36 +570,28 @@ async function handleCron(env: Env): Promise<void> {
     return;
   }
 
-  // Trigger GitHub rebuild
   try {
-    const rebuildTriggered = await triggerGitHubRebuild(env, today);
+    const rebuildTriggered = await triggerGitHubRebuild(env, targetDates);
     console.log('GitHub rebuild triggered:', rebuildTriggered);
-  } catch (err) {
-    console.error('Failed to trigger GitHub rebuild:', err);
+  } catch (error) {
+    console.error('Failed to trigger GitHub rebuild:', error);
   }
 }
-
-// ============================================
-// Main request handler
-// ============================================
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
     const path = url.pathname;
 
-    // Handle CORS preflight
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: CORS_HEADERS });
     }
 
-    // Only allow GET requests (except for admin endpoints)
     if (request.method !== 'GET' && !path.startsWith('/api/admin')) {
       return errorResponse('Method not allowed', 405);
     }
 
     try {
-      // API routes
       if (path === '/api/today') {
         return await handleToday(env);
       }
@@ -508,7 +604,6 @@ export default {
         return await handleColorfleToday(env);
       }
 
-      // Colordle archive - month batch
       if (path === '/api/colordle/archive') {
         const month = url.searchParams.get('month');
         if (month) {
@@ -517,7 +612,6 @@ export default {
         return errorResponse('Missing month parameter. Use ?month=YYYY-MM');
       }
 
-      // Colorfle archive - month batch
       if (path === '/api/colorfle/archive') {
         const month = url.searchParams.get('month');
         if (month) {
@@ -526,19 +620,16 @@ export default {
         return errorResponse('Missing month parameter. Use ?month=YYYY-MM');
       }
 
-      // Colordle archive - specific date
       const colordleDateMatch = path.match(/^\/api\/colordle\/archive\/(\d{4}-\d{2}-\d{2})$/);
       if (colordleDateMatch) {
         return await handleColordleArchive(env, colordleDateMatch[1]);
       }
 
-      // Colorfle archive - specific date
       const colorfleDateMatch = path.match(/^\/api\/colorfle\/archive\/(\d{4}-\d{2}-\d{2})$/);
       if (colorfleDateMatch) {
         return await handleColorfleArchive(env, colorfleDateMatch[1]);
       }
 
-      // Color search
       if (path === '/api/colordle/search') {
         const color = url.searchParams.get('color') || url.searchParams.get('q');
         if (!color) {
@@ -547,22 +638,18 @@ export default {
         return await handleColordleColorSearch(env, color);
       }
 
-      // Stats
       if (path === '/api/stats') {
         return await handleStats(env);
       }
 
-      // Admin: backfill
       if (path === '/api/admin/backfill') {
         return await handleBackfill(env, url);
       }
 
-      // Admin: clear database
       if (path === '/api/admin/clear') {
         return await handleClear(env, url);
       }
 
-      // Health check
       if (path === '/health' || path === '/') {
         return jsonResponse({
           status: 'ok',
@@ -581,18 +668,21 @@ export default {
             'GET /api/admin/backfill?start=YYYY-MM-DD&end=YYYY-MM-DD',
             'GET /api/admin/clear?confirm=yes&game=both',
           ],
-          today: getTodayIST(),
+          today: {
+            colordle: getPuzzleDateKeyForGame('colordle'),
+            colorfle: getPuzzleDateKeyForGame('colorfle'),
+          },
         });
       }
 
       return errorResponse('Not found', 404);
-    } catch (error: any) {
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
       console.error('Unhandled error:', error);
-      return errorResponse(`Internal server error: ${error.message}`, 500);
+      return errorResponse(`Internal server error: ${message}`, 500);
     }
   },
 
-  // Cron trigger handler
   async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
     ctx.waitUntil(handleCron(env));
   },

@@ -1,19 +1,31 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getColordleTodayData } from '../lib/daily-data.js';
+import { getPuzzleDateForGame } from '../lib/puzzle-window.ts';
+import { formatDisplayDate } from '../lib/site-date.js';
 
 const data = await getColordleTodayData();
+const requestedDate = getPuzzleDateForGame('colordle');
+const requestedFormattedDate = formatDisplayDate(requestedDate);
+const requestedDateKey = requestedDate.toISOString().slice(0, 10);
+const pageDateLabel = data?.formattedDate ?? requestedFormattedDate;
+const pageTitle = data
+  ? `Colordle Answer Today (${data.formattedDate})`
+  : `Colordle Answer Today (${requestedFormattedDate})`;
+const pageDescription = data
+  ? `Today's Colordle answer for ${data.formattedDate} is ${data.colorName}. See the hex code, strategy tips, and guess trail on Colordle Answer.`
+  : `The verified Colordle answer for ${requestedFormattedDate} is not available yet. Use the archive or solver while the latest official source catches up.`;
 
 const schema = JSON.stringify({
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "Article",
-      "headline": `Colordle Answer Today - ${data.formattedDate}`,
-      "description": `Today's Colordle answer for ${data.formattedDate} is ${data.colorName}. Get the hex code, strategy hints, and a complete guess trail.`,
+      "headline": pageTitle,
+      "description": pageDescription,
       "url": "https://colordleanswer.me/colordle-answer-today",
-      "datePublished": `${data.dateKey}T00:00:00Z`,
-      "dateModified": `${data.dateKey}T00:00:00Z`,
+      "datePublished": `${data?.dateKey ?? requestedDateKey}T00:00:00Z`,
+      "dateModified": `${data?.dateKey ?? requestedDateKey}T00:00:00Z`,
       "author": {
         "@type": "Person",
         "name": "Alex Rivera",
@@ -38,11 +50,13 @@ const schema = JSON.stringify({
 ---
 
 <Layout
-  title={`Colordle Answer Today (${data.formattedDate}) | Colordle Answer`}
-  description={`Today's Colordle answer for ${data.formattedDate} is ${data.colorName}. See the hex code, strategy tips, and guess trail on Colordle Answer.`}
+  title={`${pageTitle} | Colordle Answer`}
+  description={pageDescription}
   keywords="colordle answer today, colordle hint, colordle solution, daily color puzzle answer"
   schema={schema}
 >
+  {data ? (
+    <>
   <section class="hero">
     <div class="container">
       <span class="hero-badge">Daily Color Puzzle</span>
@@ -91,8 +105,8 @@ const schema = JSON.stringify({
 
     <div class="content-section">
       <h2>How Today's Answer Was Determined</h2>
-      <p>Colordle assigns each day a sequential puzzle number starting from a fixed launch date. Today is puzzle #{data.dayNum}. The target color is selected from a pre-defined list of named colors indexed by that day number. The list cycles through, so after it exhausts all entries, it starts over from the beginning. The answer for {data.formattedDate} is <strong>{data.colorName}</strong>. This deterministic selection process means that everyone who plays Colordle on the same day gets the exact same target color, regardless of their timezone, device, or browser.</p>
-      <p>This page generates the answer at build time using the same logic. We resolve the color name against a large database of named colors — the same one Colordle pulls from — to get the exact hex code. If the name is a compound like "sea green" or "dark slate," we strip spaces and check against both the spaced and unspaced versions. The hex code you see is the one the game uses — no approximation, no guesswork. Our build process runs automatically each day, so the answer updates precisely when the daily puzzle resets.</p>
+      <p>Colordle assigns each day a sequential puzzle number starting from a fixed launch date. Today is puzzle #{data.dayNum}. The target color is selected from the official Colordle source list for that date, and the answer for {data.formattedDate} is <strong>{data.colorName}</strong>. This deterministic selection process means that everyone who plays Colordle on the same day gets the exact same target color, regardless of their timezone, device, or browser.</p>
+      <p>This page generates the answer from the same verified source path used by our Worker and archive. We resolve the color name against a large database of named colors — the same one Colordle pulls from — to get the exact hex code. If the official source has not published the next color yet, we now wait instead of wrapping to an older entry, which keeps wrong answers off the page.</p>
       <p>The answer reveal above uses a CSS-only mechanism rather than JavaScript. The answer starts invisible and becomes visible only when you click the reveal button. This approach is lighter, faster, and works even if JavaScript is disabled in your browser. Your choice to reveal or not is entirely in your hands — we intentionally designed it so you can read the strategy tips below without accidentally seeing the solution. If you want to solve the puzzle yourself first, simply scroll past the answer card and use the solver link instead.</p>
     </div>
 
@@ -121,4 +135,38 @@ const schema = JSON.stringify({
       </div>
     </div>
   </section>
+    </>
+  ) : (
+    <>
+  <section class="hero">
+    <div class="container">
+      <span class="hero-badge">Daily Color Puzzle</span>
+      <h1>Colordle Answer Today</h1>
+      <p>The verified Colordle answer for <strong>{requestedFormattedDate}</strong> is not available yet.</p>
+    </div>
+  </section>
+
+  <section class="container" style="padding-bottom:2rem;">
+    <div class="card" style="text-align:center;padding:2.5rem 2rem;">
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--accent-teal);margin-bottom:1.25rem;">Waiting For Verification</div>
+      <div style="width:110px;height:110px;border-radius:50%;background:rgba(13,124,102,0.08);border:3px solid rgba(13,124,102,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:2.75rem;font-weight:900;color:var(--accent-teal);">?</div>
+      <p style="max-width:40rem;margin:0 auto;color:var(--text-secondary);line-height:1.8;">
+        The official Colordle source has not published a verified answer for {requestedFormattedDate} yet, so this page is intentionally holding back instead of showing a recycled color from an older day.
+      </p>
+      <div style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;margin-top:1.5rem;">
+        <a href="/colordle-archive" class="btn btn-primary">Browse Colordle Archive</a>
+        <a href="/colordle-solver" class="btn btn-secondary">Open Colordle Solver</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="container" style="padding-bottom:2.5rem;">
+    <div class="content-section">
+      <h2>Why The Page Is Blank Instead Of Guessing</h2>
+      <p>Colordle's official color list can occasionally lag behind the live date. When that happens, the safe choice is to wait for the verified source instead of wrapping to the next bundled color or repeating the last available one. That is the safeguard now running on this page.</p>
+      <p>The archive and solver are still available while the source catches up. Once the official list updates, the worker stores the new answer, triggers the rebuild, and this page will publish the verified color automatically.</p>
+    </div>
+  </section>
+    </>
+  )}
 </Layout>

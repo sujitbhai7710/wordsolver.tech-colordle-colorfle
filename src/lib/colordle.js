@@ -289,6 +289,26 @@ export function getColordleDayNum(date = new Date()) {
   return COLORDLE_DAY_OFFSET + getUtcDayDifference(date, COLORDLE_START_DATE);
 }
 
+export function getBoundedColordleDailyAnswer(date = new Date()) {
+  const targets = getTargetColors();
+  const dayOffset = getUtcDayDifference(date, COLORDLE_START_DATE);
+  if (dayOffset < 0 || dayOffset >= targets.length) {
+    return null;
+  }
+  return targets[dayOffset];
+}
+
+export function getColordleBundledLatestDateKey() {
+  const targets = getTargetColors();
+  if (targets.length === 0) {
+    return null;
+  }
+
+  const latest = new Date(COLORDLE_START_DATE);
+  latest.setUTCDate(latest.getUTCDate() + targets.length - 1);
+  return latest.toISOString().slice(0, 10);
+}
+
 export function getColordleDailyAnswer(date = new Date()) {
   const targets = getTargetColors();
   const dayOffset = getUtcDayDifference(date, COLORDLE_START_DATE);
